@@ -1,0 +1,224 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <title>快捷筛选项目</title>
+
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="../../lib/Hui-iconfont/1.0.8/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/skin/default/skin.css" id="skin" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/style.css" />
+
+    <!--分页样式表，需要分页的页面加入-->
+    <link rel="stylesheet" type="text/css" href="../../lib/laypage/1.2/skin/laypage.css">
+    <link rel="stylesheet" type="text/css" href="../../css/doctorOrder.css?rev=@@hash">
+    <link rel="stylesheet" type="text/css" href="../../css/doctorList.css?rev=@@hash">
+	<style>
+		.spu-cont .inputText {width: 40%;display: inline-block;}
+		.form .row{margin-left: 0 !important;margin-right: 0 !important;}
+		.subWrap{padding:20px 0px;text-align: center;}
+		.paixu{width: 100px;display: inline-block;border:none;text-align: center;background:#fff;}
+		.malr06{margin:0 6px}
+		.continueAdd{margin-right:20px}
+		.select-box.spans{width:100%;}
+	</style>
+</head>
+
+<body>
+    <nav class="breadcrumb">
+        <i class="Hui-iconfont">&#xe67f;</i> 首页
+        <span class="c-gray en">&gt;</span>	商城配置页
+        <span class="c-gray en">&gt;</span> 快捷筛选项目
+        <a class="btn btn-success radius r" style="line-height:1.6em;margin:3px 0 0 20px" href="javascript:location.replace(location.href);"
+            title="刷新">
+            <i class="Hui-iconfont">&#xe68f;</i>刷新
+        </a>
+    </nav>
+
+    <div class="Hui-article">
+        <article class="cl pd-20">
+
+            <div class="panel panel-default search-bar-width">
+                <div class="panel-body">
+
+                    <!--筛选条件区域-->
+                    <div class="condition-wrap cl common-form-wrap" id="pageSearchForm">
+                    	
+                    	<div class="condition-parent cl">
+                            <span class="title">地区省</span>
+                            <select class="white-list" name="province" id="province">
+                                
+                            </select>
+							<span class="title">城市</span>
+                            <select class="white-list" name="city" id="city">
+                                <option value="">请选择城市</option>
+                            </select>
+                        </div>
+                        
+                        <div class="condition-parent cl">
+                            <span class="title">项目类别</span>
+                            <select class="white-list" name="cat" id="cat">
+                                <option value="">请选择项目类别</option>
+                                    <option value="玻尿酸">玻尿酸</option>
+                                    <option value="肉毒素">肉毒素</option>
+                                    <option value="水光针">水光针</option>
+                                    <option value="脂肪填充">脂肪填充</option>
+                                    <option value="眼部整形">眼部整形</option>
+                                    <option value="鼻部整形">鼻部整形</option>
+                                    <option value="半永久妆">半永久妆</option>
+                                    <option value="激光脱毛">激光脱毛</option>
+                                    <option value="皮肤美容">皮肤美容</option>
+                                    <option value="美体塑形">美体塑形</option>
+                                    <option value="面部轮廓">面部轮廓</option>
+                                    <option value="胸部整形">胸部整形</option>
+                                    <option value="口腔齿科">牙齿美容</option>
+                                    <option value="毛发种植">毛发种植</option>
+                                    <option value="抗衰抗初老">抗衰抗初老</option>
+                                    <option value="失败修复">失败修复</option>
+                                    <option value="下巴">下巴</option>
+                                    <option value="私密整形">私密整形</option>
+                                    <option value="唇部整形 ">唇部整形  </option>
+                            </select>
+                        </div>
+
+                        <div class="button-wrap">
+                            <button type="button" class="btn btn-primary" id="screeBtn">
+                                <i class="Hui-iconfont">&#xe665;</i> 筛选</button>
+                            <button type="button" class="btn btn-primary" id="resetBtn">
+                                <i class="Hui-iconfont">&#xe66b;</i> 重置</button>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="control-panel">
+                <button id="addBtn" type="button" class="btn btn-primary">
+                    <i class="Hui-iconfont">&#xe600;</i> 添加</button>
+            </div>
+
+            <div class="goods-list">
+                <table class="table table-border table-bordered table-hover table-bg">
+	                <thead>
+			            <tr class="text-c">
+			                <th width="60">商品ID</th>
+			                <th width="60">项目类别</th>
+			                <th width="60">医院</th>
+			                <th width="60">地区</th>
+			                <th width="60">顺序</th>
+			                <th width="70">操作</th>
+			            </tr>
+		            </thead>
+		            <tbody id="listCtnWrap">
+		            	
+		            </tbody>
+		        </table> 
+            </div>
+
+            <div class="pagination cl" id="pagination"></div>
+
+        </article>
+    </div>
+
+    <!--footer 作为公共模版分离出去-->
+    <script type="text/javascript" src="../../lib/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="../../lib/layer/2.4/layer.js"></script>
+    <script type="text/javascript" src="../../static/h-ui/js/H-ui.min.js"></script>
+    <script type="text/javascript" src="../../static/h-ui.admin/js/H-ui.admin.js"></script>
+    <!--footer 作为公共模版分离出去-->
+    <script type="text/javascript" src="../../lib/ueditor/1.4.3/ueditor.config.js"></script>
+    <script type="text/javascript" src="../../lib/ueditor/1.4.3/ueditor.all.min.js"></script>
+    <script type="text/javascript" src="../../lib/arttemplate/template-web.js"></script>
+    <script type="text/javascript" src="../../lib/laypage/1.2/laypage.js"></script>
+    <script type="text/javascript" src="../../js/base/public.js?rev=@@hash"></script>
+    <script type="text/javascript" src="../../js/common/common.js"></script>
+    <script type="text/javascript" src="../../js/page/quick.js?rev=@@hash"></script>
+
+</body>
+<script id="addTempla" type="text/html">
+	<div class="containers">
+        <div class="cl pd-20">
+            <div class="spu-cont">
+                <div id="form-step-1" class="form form-horizontal form-step active">
+                    
+                    <div class="row cl">
+                        <label class="form-label col-xs-2 col-sm-2">
+                            <span class="red">*</span>商品ID：</label>
+                        <div class="formControls col-xs-10 col-sm-10">
+                        	<div class="inputText">
+	                            <input id="goodId" class="input-text" placeholder="请输入商品ID" type="tel" name="goodId">
+	                            <span class="s-mark"></span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row cl">
+                        <label class="form-label col-xs-2 col-sm-2">
+                            <span class="red">*</span>项目类别：</label>
+                        <div class="formControls col-xs-10 col-sm-10">
+                        	<div class="inputText">
+	                            <span class="select-box spans ">
+	                                <select id="cats" class="select" name="cats">
+	                                    <option value="">请选择项目类别</option>
+	                                    <option value="玻尿酸">玻尿酸</option>
+	                                    <option value="肉毒素">肉毒素</option>
+	                                    <option value="水光针">水光针</option>
+	                                    <option value="脂肪填充">脂肪填充</option>
+	                                    <option value="眼部整形">眼部整形</option>
+	                                    <option value="鼻部整形">鼻部整形</option>
+	                                    <option value="半永久妆">半永久妆</option>
+	                                    <option value="激光脱毛">激光脱毛</option>
+	                                    <option value="皮肤美容">皮肤美容</option>
+	                                    <option value="美体塑形">美体塑形</option>
+	                                    <option value="面部轮廓">面部轮廓</option>
+	                                    <option value="胸部整形">胸部整形</option>
+	                                    <option value="口腔齿科">牙齿美容</option>
+	                                    <option value="毛发种植">毛发种植</option>
+	                                    <option value="抗衰抗初老">抗衰抗初老</option>
+	                                    <option value="失败修复">失败修复</option>
+	                                    <option value="下巴">下巴</option>
+	                                    <option value="私密整形">私密整形</option>
+	                                    <option value="唇部整形 ">唇部整形  </option>
+	                                </select>
+	                            </span>
+	                        </div>    
+                        </div>
+                    </div>
+                    
+                    <div class="row cl">
+                        <label class="form-label col-xs-2 col-sm-2">
+                            <span class="red">*</span>城市：</label>
+                        <div class="formControls col-xs-10 col-sm-10">
+                            <span class="select-box inline">
+                                <select id="provinces" class="select" name="provinces">
+                                    
+                                </select>
+                            </span>
+                            <span class="select-box inline">
+                                <select id="citys" class="select" name="citys">
+                                    <option value="">请选择城市</option>
+                                </select>
+                            </span>
+                        </div>
+                    </div>
+
+					<div class="row cl subWrap">
+                        <div class="subWrap">
+                        	<span class="btn btn-primary continueAdd" >继续添加</span>
+                            <span class="btn btn-primary addBtns" >保存</span>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>    
+        </div>
+    </div>    
+</script>
+</html>

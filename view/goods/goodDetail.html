@@ -1,0 +1,293 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <title>商品详情</title>
+
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="../../lib/Hui-iconfont/1.0.8/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/skin/default/skin.css" id="skin" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/style.css" />
+
+    <!--分页样式表，需要分页的页面加入-->
+    <link rel="stylesheet" type="text/css" href="../../lib/laypage/1.2/skin/laypage.css">
+    <style>
+        .buttons{
+            display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */ 
+            display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */ 
+            display: -ms-flexbox; /* TWEENER - IE 10 */
+            display: -webkit-flex; /* NEW - Chrome */ 
+            display: flex; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+            flex-direction: row-reverse;
+            padding-right: 100px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="container pd-10">
+        <div class="row cl">
+            <table class="table table-border table-striped">
+                <div class="header">
+                    <h3 style="text-align:center;">商品详情</h3>
+                    <div class="buttons" style="margin-bottom:20px;">
+                        <button class="btn btn-primary" id="preview">预览</button>
+                        <button class="btn btn-primary" style="margin-right:20px;" id="edit">编辑</button>
+                    </div>
+                </div>
+
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!--_footer 作为公共模版分离出去-->
+    <script type="text/javascript" src="../../lib/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="../../lib/layer/2.4/layer.js"></script>
+    <script type="text/javascript" src="../../static/h-ui/js/H-ui.min.js"></script>
+    <script type="text/javascript" src="../../static/h-ui.admin/js/H-ui.admin.js"></script>
+    <script type="text/javascript" src="../../js/base/public.js?rev=@@hash"></script>
+    <!--/_footer 作为公共模版分离出去-->
+
+    <!--请在下方写此页面业务相关的脚本-->
+    <!--分页JS，需要分页的页面加入-->
+    <script type="text/javascript" src="../../lib/laypage/1.2/laypage.js"></script>
+    <script type="text/javascript" src="../../lib/arttemplate/template-web.js"></script>
+    
+</body>
+    <script>
+        var detailUtil = {
+            'cache': {},
+            //初始化
+            'init': function () {
+                var path = location.href;
+                if (path.indexOf('?') >= 0) {
+                    var params = path.substring(path.indexOf('?')+1, path.length).split('&'),
+                        id = '',
+                        his_id = '',
+                        status = '';
+                    for (var i = 0; i < params.length; i++) {
+                        if (params[i].indexOf('id')!=-1) {
+                            id = params[i].split('=')[1];
+                        }else if (params[i].indexOf("hisId")!=-1) {
+                            his_id = params[i].split("=")[1];
+                        }else if (params[i].indexOf("status")!=-1) {
+                            status = params[i].split("=")[1];
+                        }
+                    }
+                    if(status){
+                        detailUtil.status=status;
+                    }
+                    if(status=="10"||status=="11"){
+                        if (id) {
+                            detailUtil.id=id;
+                            detailUtil.getGoodInfo(id,true);
+                        }
+                    }else{
+                        if(his_id){
+                            detailUtil.his_id=his_id;
+                            detailUtil.getGoodInfo(his_id,false);
+                        }
+                    }
+                }
+            },
+            'getGoodInfo': function (id,boolean) {
+                var url= base,
+                    data={};
+                if(boolean){
+                    url+='mall/getGoods';
+                    data.id=id;
+                }else{
+                    url+='mall/getGoodsByHisId';
+                    data.his_id=id;
+                }     
+                $.get(url, data, function (res) {
+                    if (res.message) {
+                        $('.container .table tbody').html('');
+                        $.Huimodalalert(res.message, 2000);
+                    } else if (!res.message) {
+                        detailUtil.cache.details = res.data;
+                        detailUtil.renderGoodDetails(res);
+                    } else {
+                        $('.container .table tbody').html('');
+                    }
+                })
+            },
+            // 渲染详情
+            'renderGoodDetails': function (data) {
+                data.data.imgPath=imgPath;
+                var html = template("goodInfo", data.data);
+                $('.container .table tbody').html(html);
+            }
+        }
+
+        $(function () {
+            // 商品详情初始化
+            detailUtil.init();
+
+            // 商品编辑
+            $('#edit').on('click',function(){
+                var toUrl = "editSPU.html?";
+                if (detailUtil.status == "10" || detailUtil.status == "11") {
+                    toUrl += "id=" + detailUtil.id + "&status=" + detailUtil.status;
+                } else {
+                    toUrl += "hisId=" + detailUtil.his_id + "&status=" + detailUtil.status;
+                }
+                parent.layer.open({
+                    type: 2,
+                    title: "编辑商品",
+                    shadeClose: false,
+                    shade: [0.5, "#000"],
+                    maxmin: false, //开启最大化最小化按钮
+                    area: ["90%", "90%"],
+                    content: toUrl,
+                    end:function(){
+                        parent.window.location.reload();
+                        detailUtil.init()
+                    }
+                })
+            })
+
+            // 商品预览
+            $('#preview').on('click',function(){
+                var toUrl = "goodPreview.html?";
+                if (detailUtil.status == "10" || detailUtil.status == "11") {
+                    toUrl += "id=" + detailUtil.id + "&status=" + detailUtil.status;
+                } else {
+                    toUrl += "hisId=" + detailUtil.his_id + "&status=" + detailUtil.status;
+                }
+                parent.layer.open({
+                    type: 2,
+                    title: "编辑商品",
+                    shadeClose: true,
+                    shade: [0.5, "#000"],
+                    maxmin: false, //开启最大化最小化按钮
+                    area: ["37.5%", "80%"],
+                    content: toUrl,
+                    end:function(){
+                    }
+                })
+            })
+
+        })
+
+        // 查看详情
+        function viewDetail(self){
+            var self = $(self);
+        
+            layer.open({
+                    title: "商品详情",
+                    shadeClose: true,
+                    shade: [0.5, "#000"],
+                    maxmin: false, //开启最大化最小化按钮
+                    area: ["375px", "80%"],
+                    content: '<div id="content"></div>',
+                    success: function (obj) {
+                        obj.find('#content').append(self.attr('data'))
+                    },
+                    end:function(){
+                    }
+                })    
+        }
+    </script>
+
+    <!-- 商品详情模版 -->
+    <script id="goodInfo" type="text/html">
+            <tr>
+                <th width="20%">商品分类</th>
+                <td id="cat-{{catid}}">{{cat||''}}</td>
+            </tr>
+            <tr>
+                <th>产品品牌</th>
+                <td>{{brand||''}}</td>
+            </tr>
+            <tr>
+                <th>产品规格</th>
+                <td>{{standard||''}}</td>
+            </tr>
+            <tr>
+                <th>商品名称</th>
+                <td>{{name||''}}</td>
+            </tr>
+
+            <tr>
+                <th>所在医院</th>
+                <td>{{hospital_name||hospital_id||''}}</td>
+            </tr>
+            <tr>
+                <th>操作人员</th>
+                <td>{{doctor_name||doctor_id||''}}</td>
+            </tr>
+            <tr>
+                <th>服务承诺</th>
+                <td>{{commitment||''}}</td>
+            </tr>
+
+            <tr>
+                <th>全价</th>
+                <td>{{hos_price||''}}元</td>
+            </tr>
+            <tr>
+                <th>平台价</th>
+                <td>{{qzd_price||''}}元</td>
+            </tr>
+            <tr>
+                <th>预约金</th>
+                <td>{{appo_price||''}}元</td>
+            </tr>
+            <tr>
+                <th>尾款</th>
+                <td>{{left_price||''}}元</td>
+            </tr>
+            <tr>
+                <th>商品图片</th>
+                <td>
+                    {{if goods_video_url}}
+                    <p>视频</p>
+                    <video src="{{goods_video_url}}" autoplay loop></video>
+                    <p>视频封面</p>
+                    <img src="{{imgPath + goods_video_url_pic}}" alt="">
+                    {{/if}}
+                    <p>商品图片</p>
+                    {{each goods_urls item i}}
+                    <img src="{{imgPath+item}}" class="img-responsive" width="50%" alt="">
+                    {{/each}}
+                </td>
+            </tr>
+            <tr>
+                <th>商品详情页</th>
+                {{if detail_page}}
+                <td onclick='viewDetail(this)' data= "{{detail_page}}">
+                    点击查看
+                </td>
+                {{else}}
+                {{if goods_detail_url}} 
+                <td>
+                    <img src="{{imgPath + goods_detail_url}}" alt="">
+                </td>    
+                {{/if}}
+                {{/if}}
+            </tr>
+            <tr>
+                <th>截止日期</th>
+                <td>{{validityTime||''}}</td>
+            </tr>
+            <tr>
+                <th>日记返现</th>
+                <td>{{rebate||''}}元</td>
+            </tr>
+            <tr>
+                <th>返现结束时间</th>
+                <td>{{rebate_endTime||''}}</td>
+            </tr>
+    </script>
+
+</html>

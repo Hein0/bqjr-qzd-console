@@ -1,0 +1,548 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <title>新增案例</title>
+
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="../../lib/Hui-iconfont/1.0.8/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/skin/default/skin.css" id="skin" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/style.css" />
+    <link rel="stylesheet" href="../../bootstrap-3.3.7-dist/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="../../css/logSpu.css?rev=@@hash">
+    <style>
+        .upload-pic-wrap {border: none;}
+        .type-select-panel .top-part ul {width: 30%;}
+        .type-select-panel .bottom-part .result {float: none;}
+        .preoperWrap {display: inline-block;}
+        .preoperWrap .textarea{width:50%;}
+        .textSpan{margin-top:10px;}
+        .row {box-sizing: border-box;margin-left: 0px !important;margin-right: 0px !important; }
+		.red {color: red;}
+		.addWrap{cursor:pointer ;}
+    	.upload-pic-content .pic-wrapImg{position: relative;width: 122px;height: auto;float: left;margin: 10px; overflow: hidden;}
+    	.pic-wrapImg .loadpic {float: none!important;width: 100%!important;margin: 0px!important;box-sizing: border-box;}
+    	.pic-wrapImg .loadpic-label span { position: absolute;bottom: 6px;display: inline-block;line-height: 30px;left: 45px;}
+    	.items-leftCen{}
+    	.items-text{margin-left: 19%;}
+    	.loadpic-wrap p span {color: #333333;}
+    	.set-cover {float: left; cursor: pointer;}
+    	.del-img,.delImg {float: right;cursor: pointer;}
+    	
+    	
+    
+    </style>
+</head>
+
+<body>
+    <div class="Hui-article">
+        <article class="cl pd-20">
+            <div class="spu-nav">
+                <ul>
+                    <li class="goods-step active">填写基本信息</li>
+                    <li>&nbsp;&nbsp;&nbsp;→&nbsp;&nbsp;&nbsp;</li>
+                    <li class="goods-step">发表日志内容</li>
+                </ul>
+                <div class="hr-gray"></div>
+            </div>
+            <div class="spu-cont">
+                <form id="form-step-1" class="form form-horizontal form-step active" action="#" method="post">
+
+                    <div class="row cl">
+                        <label class="form-label col-xs-2 col-sm-2">
+                            <span class="red">*</span>手术时间：</label>
+                        <div class="formControls col-xs-10 col-sm-10">
+                            <input type="text" onfocus="WdatePicker({ maxDate:'%y-%M-%d' })" id="operationTime" class="input-text Wdate f-l" readonly
+                                name="operationTime" />
+                        </div>
+                    </div>
+
+                    <div class="row cl">
+                        <label class="form-label col-xs-2 col-sm-2">
+                            <span class="red">*</span>所在医院：</label>
+                        <div class="formControls col-xs-10 col-sm-10">
+                            <div class="input-text">
+                                <span class="value-wrap select-hospital col-xs-10 col-sm-10" style="margin: -4px 0 0 -4px;">请选择所在医院</span>
+                                <div class="name-select-panel hospital_id" style="width:39%;top: 30px;left: 17px;">
+                                    <div class="search-bar">
+                                        <input type="text" value="" id="hospital_id" style="height: 28px;">
+                                    </div>
+                                    <ul></ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row cl">
+                        <label class="form-label col-xs-2 col-sm-2">
+                            <span class="red">*</span>商品：</label>
+                        <div class="formControls col-xs-10 col-sm-10">
+                            <div class="input-text">
+                                <span class="value-wrap select-order col-xs-10 col-sm-10" style="margin: -4px 0 0 -4px;">请选择商品</span>
+                                <div class="name-select-panel order_sn" style="width:40%;">
+                                    <ul></ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row cl">
+                        <label class="form-label col-xs-2 col-sm-2">
+                            <span class="red">*</span>治疗负责人：</label>
+                        <div class="formControls col-xs-10 col-sm-10">
+                            <div class="input-text">
+                                <span class="value-wrap select-doctor col-xs-10 col-sm-10" style="margin: -4px 0 0 -4px;">请选择治疗负责人</span>
+                                <div class="name-select-panel doctor_id" style="width:40%;">
+                                    <ul></ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+					
+					<div class="classWrap">
+						<div class="row cl">
+	                        <label class="form-label col-xs-2 col-sm-2">项目类别：</label>
+	                        <div class="keywords classification">
+	                        	<input type="text" name="" class="value-wrap keywVal" disabled="disabled" />
+	                            <!--<span class="value-wrap select-classify"></span>-->
+	                        </div>
+	                        <span class="addWrap"><i class="Hui-iconfont">&#xe604;</i></span>
+	                   </div>
+	                    
+	                    <div class="type-select-panel condition-panel">
+                            <div class="top-part cl">
+                                <ul class="ul-a"></ul>
+                                <ul class="ul-b"></ul>
+                                <ul class="ul-c"></ul>
+                            </div>
+                            <div class="bottom-part cl">
+                                <p class="result">已选择的项目类别:
+                                    <em></em>
+                                </p>
+                                <button type="button" class="btn btn-primary close-panel">关闭</button>
+                                <button type="button" class="btn btn-primary get-result">确认选择</button>
+                            </div>
+                        </div>
+	                </div>    
+
+                    <div class="row cl">
+                        <label class="form-label col-xs-2 col-sm-2">
+                            <span class="red">*</span>评分：</label>
+                        <div class="formControls col-xs-10 col-sm-10">
+                            <div class="clearfix">
+                                <div id="star-5" class="star-bar size-M f-l mr-10 va-m"></div>
+                                <strong id="result-5" class="f-l va-m">非常满意</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row cl ">
+                        <label class="form-label col-xs-2 col-sm-2">
+                            <span class="red">*</span>术前照片：</label>
+                        <div class="upload-pic-wrap default-pic-wrap">
+                            <div class="upload-pic-content items-leftCen">
+                            	<div class="videoWraps isNoShow videoHide">
+                            		<div class="pic-wrapImg ">
+	                                	<div class="loadpic">
+		                                    <input name="file" class="loadpic-input" accept="video/*" type="file" data-name="before_main_video" id="before_main_video">
+		                                    <label class="loadpic-label">
+		                                        <i class="Hui-iconfont">&#xe600;</i>
+		                                        <span>视频</span>
+		                                    </label>
+		                                </div>
+		                                <p>
+	                                        <span class="delImg del-Befimg">删除</span>
+	                                    </p>
+	                                </div>
+	                                <div class="pic-wrapImg ">
+	                                	<div class="loadpic">
+		                                    <input name="file" class="loadpic-input" accept="image/jpg,image/jpeg,image/png" type="file" data-name="before_main_video_pic" id="before_main_video_pic">
+		                                    <label class="loadpic-label">
+		                                        <i class="Hui-iconfont">&#xe600;</i>
+		                                        <span>视频封面</span>
+		                                    </label>
+		                                </div>
+		                                <p>
+	                                        <span class="delImg del-Befimg">删除</span>
+	                                    </p>
+	                                </div>
+                            	</div>
+                            	
+                                <div class="imgWraps isNoShow">
+                                	<div class="pic-wrapImg">
+	                                	<div class="loadpic">
+		                                    <input name="file" class="loadpic-input" accept="image/jpg,image/jpeg,image/png" type="file" data-name="before_main" id="before_main">
+		                                    <label class="loadpic-label">
+		                                        <i class="Hui-iconfont">&#xe600;</i>
+		                                    </label>
+		                                </div>
+		                                <p>
+	                                        <span class="set-cover">设为封面</span>
+	                                        <span class="delImg del-Befimg">删除</span>
+	                                    </p>
+	                                </div>
+	                                
+	                                <div class="pic-wrapImg">
+		                                <div class="loadpic">
+		                                    <input name="file" class="loadpic-input" accept="image/jpg,image/jpeg,image/png" type="file" data-name="before_two" id="before_two">
+		                                    <label class="loadpic-label">
+		                                        <i class="Hui-iconfont">&#xe600;</i>
+		                                    </label>
+		                                </div>
+		                                <p>
+	                                        <span class="set-cover">设为封面</span>
+	                                        <span class="delImg del-Befimg">删除</span>
+	                                    </p>
+		                            </div> 
+		                            
+		                            <div class="pic-wrapImg">
+		                                <div class="loadpic">
+		                                    <input name="file" class="loadpic-input" accept="image/jpg,image/jpeg,image/png" type="file" data-name="before_three" id="before_three">
+		                                    <label class="loadpic-label">
+		                                        <i class="Hui-iconfont">&#xe600;</i>
+		                                    </label>
+		                                </div>
+		                                <p>
+	                                        <span class="set-cover">设为封面</span>
+	                                        <span class="delImg del-Befimg">删除</span>
+	                                    </p>
+		                            </div>
+                                </div>
+                            </div>
+                            <div class="items-text">
+                            	●支持上传图片和视频，但不共存<br />
+                            	●视频限制1个，长度限制为15秒。仟姿app有视频长度截取功能<br />
+                            	●如果是图片，最多3张<br />
+                            	●推荐尺寸比例为16:9<br />
+                            </div>
+                        </div>
+                        <div class="spec-items"></div>
+                        <div class="sku-pic-wrap"></div>
+                    </div>
+                    
+                    <div class="row cl">
+                        <label class="form-label col-xs-2 col-sm-2">
+                            <span class="red"></span>术前日记：</label>
+                        <div class="formControls preoperWrap col-xs-10 col-sm-10">
+                            <textarea id="beforeContent" class="textarea" type="text" name="beforeContent"></textarea>
+                        <p class="textSpan">●可以谈谈到院后的感受，医院环境如何，在医院遇到的有趣经历，手术前的心态等</p>
+                        </div>
+                        
+                    </div>
+
+                    <div class="row cl">
+                        <div class="col-xs-10 col-sm-10 col-xs-offset-2 col-sm-offset-2">
+                            <input class="btn btn-primary next-btn" value="下一步" type="button">
+                        </div>
+                    </div>
+                </form>
+
+                <form id="form-step-2" class="form form-horizontal form-step" action="#" method="post">
+                    <div class="row cl">
+                        <label class="form-label col-xs-2 col-sm-2">
+                            <span class="red">*</span>记录日记：</label>
+                        <div class="formControls col-xs-10 col-sm-10">
+                            <textarea id="introduce" class="textarea" type="text" name="introduce"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="row cl ">
+                        <label class="form-label col-xs-2 col-sm-2">
+                            <span class="red">*</span>术后照片：</label>
+                        <div class="upload-pic-wrap default-pic-wrap" >
+                            <div class="upload-pic-content">
+                            	<div class="videoWraps isNoShow videoHide">
+                            		<div class="pic-wrapImg">
+		                                <div class="loadpic">
+		                                    <input name="file" class="loadpic-input" accept="video/*" type="file" id="after_main_video">
+		                                    <label class="loadpic-label">
+		                                        <i class="Hui-iconfont">&#xe600;</i>
+		                                        <span>视频</span>
+		                                    </label>
+		                                </div>
+		                                <p>
+	                                        <span class="del-img">删除</span>
+	                                    </p>
+		                            </div>
+                            		<div class="pic-wrapImg">
+		                                <div class="loadpic">
+		                                    <input name="file" class="loadpic-input" accept="image/jpg,image/jpeg,image/png" type="file" id="after_main_video_pic">
+		                                    <label class="loadpic-label">
+		                                        <i class="Hui-iconfont">&#xe600;</i>
+		                                        <span>视频封面</span>
+		                                    </label>
+		                                </div>
+		                                <p>
+	                                        <span class="del-img">删除</span>
+	                                    </p>
+		                            </div>
+                            	</div>
+	                            
+	                            <div class="imgWraps isNoShow">
+	                                <div class="pic-wrapImg">
+		                                <div class="loadpic">
+		                                    <input name="file" class="loadpic-input" accept="image/jpg,image/jpeg,image/png" type="file" id="after1">
+		                                    <label class="loadpic-label">
+		                                        <i class="Hui-iconfont">&#xe600;</i>
+		                                    </label>
+		                                </div>
+		                                <p>
+	                                        <span class="set-cover">设为封面</span>
+	                                        <span class="del-img">删除</span>
+	                                    </p>
+		                            </div>   
+			                        
+			                        <div class="pic-wrapImg">
+		                                <div class="loadpic">
+		                                    <input name="file" class="loadpic-input" accept="image/jpg,image/jpeg,image/png" type="file" id="after2">
+		                                    <label class="loadpic-label">
+		                                        <i class="Hui-iconfont">&#xe600;</i>
+		                                    </label>
+		                                </div>
+		                                <p>
+	                                        <span class="set-cover">设为封面</span>
+	                                        <span class="del-img">删除</span>
+	                                    </p>
+		                            </div>
+		                            
+		                            <div class="pic-wrapImg">    
+		                                <div class="loadpic">
+		                                    <input name="file" class="loadpic-input" accept="image/jpg,image/jpeg,image/png" type="file" id="after3">
+		                                    <label class="loadpic-label">
+		                                        <i class="Hui-iconfont">&#xe600;</i>
+		                                    </label>
+		                                </div>
+		                                <p>
+	                                        <span class="set-cover">设为封面</span>
+	                                        <span class="del-img">删除</span>
+	                                    </p>
+		                            </div>
+			                            
+			                        <div class="pic-wrapImg">     
+		                                <div class="loadpic">
+		                                    <input name="file" class="loadpic-input" accept="image/jpg,image/jpeg,image/png" type="file" id="after4">
+		                                    <label class="loadpic-label">
+		                                        <i class="Hui-iconfont">&#xe600;</i>
+		                                    </label>
+		                                </div>
+		                                <p>
+	                                        <span class="set-cover">设为封面</span>
+	                                        <span class="del-img">删除</span>
+	                                    </p>
+		                            </div>
+		                            
+		                            <div class="pic-wrapImg"> 
+		                                <div class="loadpic">
+		                                    <input name="file" class="loadpic-input" accept="image/jpg,image/jpeg,image/png" type="file" id="after5">
+		                                    <label class="loadpic-label">
+		                                        <i class="Hui-iconfont">&#xe600;</i>
+		                                    </label>
+		                                </div>
+		                                <p>
+	                                        <span class="set-cover">设为封面</span>
+	                                        <span class="del-img">删除</span>
+	                                    </p>
+		                            </div> 
+		                            
+		                            <div class="pic-wrapImg">     
+		                                <div class="loadpic">
+		                                    <input name="file" class="loadpic-input" accept="image/jpg,image/jpeg,image/png" type="file" id="after6">
+		                                    <label class="loadpic-label">
+		                                        <i class="Hui-iconfont">&#xe600;</i>
+		                                    </label>
+		                                </div>
+		                                <p>
+	                                        <span class="set-cover">设为封面</span>
+	                                        <span class="del-img">删除</span>
+	                                    </p>
+		                            </div>  
+		                            
+		                            <div class="pic-wrapImg">     
+		                                <div class="loadpic">
+		                                    <input name="file" class="loadpic-input" accept="image/jpg,image/jpeg,image/png" type="file" id="after7">
+		                                    <label class="loadpic-label">
+		                                        <i class="Hui-iconfont">&#xe600;</i>
+		                                    </label>
+		                                </div>
+		                                <p>
+	                                        <span class="set-cover">设为封面</span>
+	                                        <span class="del-img">删除</span>
+	                                    </p>
+		                            </div>  
+		                        </div>    
+		                            
+                            </div>
+                        </div>
+                        <div class="spec-items">
+                        </div>
+                        <div class="sku-pic-wrap"></div>
+                    </div>
+
+                    <div class="row cl">
+                        <label class="form-label col-xs-2 col-sm-2">
+                            <span class="red"></span>显示状态：</label>
+                        <div class="formControls col-xs-10 col-sm-10">
+                            <div class="radio-box">
+                                <input type="radio" id="radio_1" name="show_status" checked>
+                                <label for="radio_1">公开</label>
+                            </div>
+                            <div class="radio-box">
+                                <input type="radio" id="radio_2" name="show_status">
+                                <label for="radio_2">私密</label>
+                            </div>
+                            <div class="radio-box">
+                                <input type="radio" id="radio_3" name="show_status">
+                                <label for="radio_3">匿名公开</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row cl">
+                        <label class="form-label col-xs-2 col-sm-2">
+                            <span class="red"></span>美容反馈：</label>
+                        <div class="formControls col-xs-10 col-sm-10">
+                            <div class="clearfix">
+                                <span class="f-l f-15 va-m">满意度：</span>
+                                <div id="star-1" class="star-bar size-M f-l mr-10 va-m"></div>
+                                <strong id="result-1" class="f-l va-m">非常满意</strong>
+                            </div>
+                            <div class="clearfix">
+                                <span class="f-l f-15 va-m">肿胀度：</span>
+                                <div id="star-2" class="star-bar size-M f-l mr-10 va-m"></div>
+                                <strong id="result-2" class="f-l va-m">完全不肿</strong>
+                            </div>
+                            <div class="clearfix">
+                                <span class="f-l f-15 va-m">疼痛感：</span>
+                                <div id="star-3" class="star-bar size-M f-l mr-10 va-m"></div>
+                                <strong id="result-3" class="f-l va-m">完全不疼</strong>
+                            </div>
+                            <div class="clearfix">
+                                <span class="f-l f-15 va-m">疤痕度：</span>
+                                <div id="star-4" class="star-bar size-M f-l mr-10 va-m"></div>
+                                <strong id="result-4" class="f-l va-m">完全无疤</strong>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row cl">
+                        <div class="col-xs-10 col-sm-10 col-xs-offset-2 col-sm-offset-2">
+                            <input class="btn btn-default pre-btn" value="上一步" type="button">
+                            <input class="btn btn-primary submit-btn" value="提交" type="button">
+                            <input class="btn btn-primary continueBtn" value="继续续写" type="button">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </article>
+    </div>
+
+    <!--footer 作为公共模版分离出去-->
+    <script type="text/javascript" src="../../lib/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="../../lib/layer/2.4/layer.js"></script>
+    <script type="text/javascript" src="../../static/h-ui/js/H-ui.min.js"></script>
+    <script type="text/javascript" src="../../static/h-ui.admin/js/H-ui.admin.js"></script>
+    <!--footer 作为公共模版分离出去-->
+
+    <script type="text/javascript" src="../../lib/laypage/1.2/laypage.js"></script>
+    <script type="text/javascript" src="../../js/base/public.js?rev=@@hash"></script>
+    <script type="text/javascript" src="../../js/common/common.js?rev=@@hash"></script>
+    <!-- <script type="text/javascript" src="../../js/logList.js?rev=@@hash"></script> -->
+    <script type="text/javascript" src="../../js/page/logSpu.js?rev=@@hash"></script>
+    
+    <script type="text/javascript" src="../../lib/My97DatePicker/4.8/WdatePicker.js"></script>
+    <script type="text/javascript" src="../../bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../lib/ueditor/1.4.3/ueditor.config.js"></script>
+    <script type="text/javascript" src="../../lib/ueditor/1.4.3/ueditor.all.min.js"></script>
+    <script type="text/javascript" src="../../lib/lrz.bundle.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#star-1").raty({
+                hints: ['1', '2', '3', '4', '5'],//自定义分数
+                starOff: 'iconpic-star-S-default.png',//默认灰色星星
+                starOn: 'iconpic-star-S.png',//黄色星星
+                path: '../../static/h-ui/images/star',//可以是相对路径
+                number: 5,//星星数量，要和hints数组对应
+                showHalf: true,
+                targetKeep: true,
+                click: function (score, evt) {//点击事件
+                    //第一种方式：直接取值
+                    $("#result-1").html('你的评分是' + score + '分');
+                    $("#result-1").attr("data-score", score);
+                }
+            });
+            $("#star-2").raty({
+                hints: ['1', '2', '3', '4', '5'],
+                starOff: 'iconpic-star-S-default.png',
+                starOn: 'iconpic-star-S.png',
+                path: '../../static/h-ui/images/star',
+                number: 5,
+                showHalf: true,
+                targetKeep: true,
+                click: function (score, evt) {//点击事件
+                    //第一种方式：直接取值
+                    $("#result-2").html('你的评分是' + score + '分');
+                    $("#result-2").attr("data-score", score);
+                }
+            });
+            $("#star-3").raty({
+                hints: ['1', '2', '3', '4', '5'],
+                starOff: 'iconpic-star-S-default.png',
+                starOn: 'iconpic-star-S.png',
+                path: '../../static/h-ui/images/star',
+                number: 5,
+                showHalf: true,
+                targetKeep: true,
+                click: function (score, evt) {//点击事件
+                    //第一种方式：直接取值
+                    $("#result-3").html('你的评分是' + score + '分');
+                    $("#result-3").attr("data-score", score);
+                }
+            });
+            $("#star-4").raty({
+                hints: ['1', '2', '3', '4', '5'],
+                starOff: 'iconpic-star-S-default.png',
+                starOn: 'iconpic-star-S.png',
+                path: '../../static/h-ui/images/star',
+                number: 5,
+                showHalf: true,
+                targetKeep: true,
+                click: function (score, evt) {//点击事件
+                    //第一种方式：直接取值
+                    $("#result-4").html('你的评分是' + score + '分');
+                    $("#result-4").attr("data-score", score);
+                }
+            });
+            $("#star-5").raty({
+                hints: ['1', '2', '3', '4', '5'],
+                starOff: 'iconpic-star-S-default.png',
+                starOn: 'iconpic-star-S.png',
+                path: '../../static/h-ui/images/star',
+                number: 5,
+                showHalf: true,
+                targetKeep: true,
+                click: function (score, evt) {//点击事件
+                    //第一种方式：直接取值
+                    $("#result-5").html('你的评分是' + score + '分');
+                    $("#result-5").attr("data-score", score);
+                }
+            });
+            $('.select-hospital').on('click', function () {
+                var $self = $(this),
+                    $target = $self.siblings('.name-select-panel');
+
+                $target.toggle();
+            });
+        });
+
+
+
+    </script>
+
+</body>
+
+</html>

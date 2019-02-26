@@ -1,0 +1,24 @@
+<!-- class="customer-service"主页面容器，类名不能修改 -->
+<!--<div class="rongcloud-consult">
+    <button onclick="RCS.showCommon()"><span class="rongcloud-cs-icon">咨询客服</span></button>
+</div>
+<div class="customer-service" style="display: none;"></div>-->
+<div class="main_inner" id="main_inner">
+	<div class="rongcloud-consult rongcloud-im-consult">
+		<div class="tabWrap">
+			<div class="bar leftdNav">
+				<span data-val="1" class=" nuber btn allbut btn-default btn-primary" onclick="RCS.tabShow($(this),$(this).attr('data-val'))">全部(<i class="qb">{%this.all%}</i>)</span>
+				<span data-val="2" class=" nuber btn allbut btn-default" onclick="RCS.tabShow($(this),$(this).attr('data-val'))">未回复(<i class="whf">{%this.unReply%}</i>)</span>
+				<span data-val="3" class=" nuber btn allbut btn-default" onclick="RCS.tabShow($(this),$(this).attr('data-val'))">已回复(<i class="yhf">{%this.reply%}</i>)</span>
+			</div>
+		</div>
+		<!--列表数据-->
+		<div class="customer-service">
+			
+		</div>
+	</div>
+	<!--聊天框-->
+	<div class="rcs-chat-wrapper rcs-chat-im-wrapper">
+		
+	</div>
+</div>

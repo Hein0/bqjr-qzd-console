@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="renderer" content="webkit|ie-comp|ie-stand">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+	    <meta http-equiv="Cache-Control" content="no-siteapp" />
+		<title>私信列表</title>
+		
+		<link rel="stylesheet" type="text/css" href="../../static/h-ui/css/H-ui.min.css" />
+	    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/H-ui.admin.css" />
+	    <link rel="stylesheet" type="text/css" href="../../lib/Hui-iconfont/1.0.8/iconfont.css" />
+	    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/skin/default/skin.css" id="skin" />
+	    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/style.css" />
+	    <link rel="stylesheet" type="text/css" href="../../lib/laypage/1.2/skin/laypage.css">
+		
+		<style>
+			#rcs-app{padding:15px;}
+			.loadings{width:200px;height:200px;display:block;background:url(../../images/page/timg.gif);background-size:100%;margin: 0 auto; }
+		</style>
+		<link rel="stylesheet" type="text/css" href="im.css">
+	</head>
+
+	<body>
+		
+		<div id="rcs-app">
+			<div class="loadings" style="display: none;"></div>
+		</div>
+
+	</body>
+
+	<!-- SDK 文档：http://www.rongcloud.cn/docs/web.html#sdk -->
+	<!--footer 作为公共模版分离出去-->
+	<script type="text/javascript" src="../../lib/jquery/1.9.1/jquery.min.js"></script>
+	<script type="text/javascript" src="../../lib/layer/2.4/layer.js"></script>
+	<script type="text/javascript" src="../../static/h-ui/js/H-ui.min.js"></script>
+	<script type="text/javascript" src="../../static/h-ui.admin/js/H-ui.admin.js"></script>
+	<script type="text/javascript" src="../../js/base/public.js?rev=@@hash"></script>
+	<script type="text/javascript" src="../../js/common/common.js"></script>
+
+	<script src="../../js/common/rongyunIm/RongIMLib-2.3.0.js"></script>
+	<!-- <script src="./libs/RongEmoji.js"></script> -->
+	<script src="//cdn.ronghub.com/RongEmoji-2.2.6.min.js"></script>
+	<!--<script src="../../js/common/rongyunIm/RongEmoji-2.2.6.min.js"></script>-->
+
+	<script src="./libs/utils.js"></script>
+	<script src="./libs/qiniu-upload.js"></script>
+
+	<script src="./template.js"></script>
+	<script src="./emoji.js"></script>
+	<script src="./im.js"></script>
+
+	<!-- 实例化 -->
+	<script>
+		/*
+		具体使用时：
+		1：切换到自己的 key 和 token
+		2：移除 im.js 里的 sendTextMessage(instance); 这行代码
+		3：自行二次开发
+		4：参考
+		    - 用户数据处理 http://support.rongcloud.cn/kb/NjQ5
+		    - 消息状态 http://support.rongcloud.cn/kb/NjMz
+		    - 集成指南 https://rongcloud.github.io/websdk-demo/integrate/guide.html
+		    - 其他 demo https://github.com/rongcloud/websdk-demo
+		*/
+		(function() {
+			var appKey = JSON.parse(localStorage.getItem("imData")).appKey;
+			var token = JSON.parse(localStorage.getItem("imData")).token;
+			var logoUrl = JSON.parse(localStorage.getItem("imData")).logoUrl;
+
+			$(".loadings").show();
+			RCS.init({
+				appKey: appKey,
+				token: token,
+				logoUrl: logoUrl,
+				target: document.getElementById('rcs-app'),
+				showConversitionList: true,
+				templates: {
+//					button: ['<div class="main_inner"><div class="rongcloud-consult rongcloud-im-consult">',
+//						'   <button onclick="RCS.showCommon()"><span class="rongcloud-im-icon">进入 IM</span></button>',
+//						'</div>',
+//						'<div class="customer-service"></div></div>'
+//					].join('') //"templates/button.html",
+					// chat: "templates/chat.html",
+					// closebefore: 'templates/closebefore.html',
+					// conversation: 'templates/conversation.html',
+					// endconversation: 'templates/endconversation.html',
+					// evaluate: 'templates/evaluate.html',
+					// imageView: 'templates/imageView.html',
+					// leaveword: 'templates/leaveword.html',
+					// main: 'templates/main.html',
+					// message: 'templates/message.html',
+					// messageTemplate: 'templates/messageTemplate.html',
+					// userInfo: 'templates/userInfo.html', 
+				},
+				extraInfo: {
+					// 当前登陆用户信息
+					userInfo: {
+						name: "游客",
+						grade: "VIP"
+					},
+					// 产品信息
+					requestInfo: {
+						productId: "123",
+						referrer: "10001",
+						define: "" // 自定义信息
+					}
+				}
+			});
+		})();
+		
+
+		
+		
+	</script>
+
+</html>

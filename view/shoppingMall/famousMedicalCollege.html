@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+	    <meta http-equiv="Cache-Control" content="no-siteapp" />
+	    <title>名医名院</title>
+
+	    <link rel="stylesheet" type="text/css" href="../../static/h-ui/css/H-ui.min.css" />
+	    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/H-ui.admin.css" />
+	    <link rel="stylesheet" type="text/css" href="../../lib/Hui-iconfont/1.0.8/iconfont.css" />
+	    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/skin/default/skin.css" id="skin" />
+	    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/style.css" />
+	    <link rel="stylesheet" type="text/css" href="../../lib/laypage/1.2/skin/laypage.css">
+	    <!--<link rel="stylesheet" type="text/css" href="../../css/teleStatisticsList.css?rev=@@hash"/>-->
+	    
+	    <!--分页样式表，需要分页的页面加入-->
+	    <link rel="stylesheet" type="text/css" href="../../css/doctorOrder.css?rev=@@hash">
+    	<link rel="stylesheet" type="text/css" href="../../css/doctorList.css?rev=@@hash">
+    	<style>
+			.malr06{margin:0 6px;}
+			.paixu {width: 100px; display: inline-block;border: none; text-align: center;background: #fff;}
+		</style>
+    
+    
+	</head>
+	<body>
+		<nav class="breadcrumb">
+	        <i class="Hui-iconfont">&#xe67f;</i> 首页
+	        <span class="c-gray en">&gt;</span>	商城配置页
+	        <span class="c-gray en">&gt;</span> 名医名院
+	        <a class="btn btn-success radius r" style="line-height:1.6em;margin:3px 0 0 20px" href="javascript:location.replace(location.href);"
+	            title="刷新">
+	            <i class="Hui-iconfont">&#xe68f;</i>刷新
+	        </a>
+	    </nav>
+
+	    <div class="page-container">
+	    	<!--状态选择按钮-->
+            <div class="btn-group mb-20">
+            	<span val="1" class="btn allbut btn-default btn-primary">名医配置</span>
+                <span val="2" class="btn btn-default">名院配置</span>
+            </div>
+	    	<!--查询条件板块-->
+			<div class="panel panel-default search-bar-width">
+                <div class="panel-body">
+                    <!--筛选条件区域-->
+                    <div class="condition-wrap cl common-form-wrap search" id="pageSearchForm">
+                    	<form class="search-form">
+	                    	<div class="condition-parent cl">
+	                            <span class="title">地区省</span>
+	                            <select class="white-list" name="province" id="province">
+	                                
+	                            </select>
+								<span class="title">城市</span>
+	                            <select class="white-list" name="city" id="city">
+	                                <option value="">请选择城市</option>
+	                            </select>
+	                        </div>
+	
+	                        <div class="button-wrap">
+	                            <button type="button" class="btn btn-primary" id="screeBtn">
+	                                <i class="Hui-iconfont">&#xe665;</i> 筛选</button>
+	                            <button type="button" class="btn btn-primary" id="resetBtn">
+	                                <i class="Hui-iconfont">&#xe66b;</i> 重置</button>
+	                        </div>
+	                    </form>    
+                    </div>
+                </div>
+            </div>
+            
+            <!--名医添加-->
+            <div class="control-panel famousDoctor">
+                <button id="addBtnDoctor" type="button" class="btn btn-primary">
+                    <i class="Hui-iconfont">&#xe600;</i> 添加</button>
+            </div>
+            
+			<!--名医配置数据-->
+	        <div class="mt-20 table-con tableAll" style="display: none;">
+	            <table class="table table-bg table-border table-bordered table-hover zhc-table">
+	                <thead>
+	                    <tr class="text-c">
+	                        <th width="60px">名称</th>
+					    	<th width="60px">ID编号</th>
+					    	<th width="60px">顺序</th>
+					    	<th width="70px">操作</th>
+	                    </tr>
+	                </thead>
+	                <tbody id="tableAllList" class="listCtnWrap">
+	                	
+				  	</tbody>
+	            </table>
+	        </div>
+	        
+			<!--名院添加-->
+            <div class="control-panel famousCourtyard" style="display: none;">
+                <button id="addBtnCourtyard" type="button" class="btn btn-primary">
+                    <i class="Hui-iconfont">&#xe600;</i> 添加</button>
+            </div>
+            
+	        <!--名院配置数据-->
+	        <div class="mt-20 table-con tableTwo" style="display: none;">
+	            <table class="table table-bg table-border table-bordered table-hover zhc-table">
+	                <thead>
+	                    <tr class="text-c">
+	                        <th width="60px">名称</th>
+					    	<th width="60px">ID编号</th>
+					    	<th width="60px">顺序</th>
+					    	<th width="70px">操作</th>
+	                    </tr>
+	                </thead>
+	                <tbody id="tableTwoList" class="listCtnWrap">
+	                	
+				  	</tbody>
+	            </table>
+	        </div>
+	        
+	        <!--分页-->
+			<div class="pagination cl" id="pagination"></div>
+	    </div>
+
+		
+		<!--组件-->
+		<script type="text/javascript" src="../../lib/jquery/1.9.1/jquery.min.js"></script>
+		<script type="text/javascript" src="../../lib/My97DatePicker/4.8/WdatePicker.js"></script>
+	    <script type="text/javascript" src="../../lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+	    <script type="text/javascript" src="../../lib/laypage/1.2/laypage.js"></script>
+	    <script type="text/javascript" src="../../js/common/jquery.tmpl.min.js" ></script>
+	    <script type="text/javascript" src="../../lib/layer/2.4/layer.js"></script>
+	    <script type="text/javascript" src="../../static/h-ui/js/H-ui.min.js"></script>
+	    <script type="text/javascript" src="../../static/h-ui.admin/js/H-ui.admin.js"></script>
+
+	    <!--业务逻辑-->
+	    <script type="text/javascript" src="../../js/base/public.js?rev=@@hash"></script>
+	    <script type="text/javascript" src="../../js/common/common.js?rev=@@hash"></script>
+	    <script type="text/javascript" src="../../js/page/famousMedicalCollege.js?rev=@@hash" ></script>
+	   
+
+	</body>
+</html>

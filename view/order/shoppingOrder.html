@@ -1,0 +1,365 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <title>商品订单</title>
+
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="../../lib/Hui-iconfont/1.0.8/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/skin/default/skin.css" id="skin" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/style.css" />
+
+    <!--分页样式表，需要分页的页面加入-->
+    <link rel="stylesheet" type="text/css" href="../../lib/laypage/1.2/skin/laypage.css">
+    <link rel="stylesheet" type="text/css" href="../../lib/My97DatePicker/4.8/skin/WdatePicker.css">
+    <link rel="stylesheet" type="text/css" href="../../css/shoppingOrder.css?rev=@@hash">
+
+</head>
+
+<body>
+    <nav class="breadcrumb">
+        <i class="Hui-iconfont">&#xe67f;</i> 首页
+        <span class="c-gray en">&gt;</span> 商品管理
+        <span class="c-gray en">&gt;</span> 商品订单
+        <a class="btn btn-success radius r" style="line-height:1.6em;margin:3px 0 0 20px" href="javascript:location.replace(location.href);"
+            title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a>
+        <button type="button" class="btn btn-primary r" style="line-height:1.6em;margin-top:3px" id="createExcel"><i class="Hui-iconfont">&#xe644;</i> 导出</button>
+    </nav>
+
+    <div class="Hui-article">
+        <article class="cl pd-20">
+        	<!--实物、虚拟商品切换按钮-->
+        	<div class="is-real-wrap mb-20">
+        		<a class="real-btn change-btn" href="shoppingOrder.html">实物商品订单</a>
+        		<a class="unreal-btn change-btn" href="virtualOrder.html">虚拟商品订单</a>
+        	</div>
+
+            <!--订单状态选择按钮-->
+            <div class="btn-group mb-20" id="tradeStatus">
+                <span class="btn btn-primary" data-key="0">全部订单</span>
+                <span class="btn btn-default" data-key="1">待支付</span>
+                <span class="btn btn-default" data-key="2">待采购</span>
+                <span class="btn btn-default" data-key="3">待发货</span>
+                <span class="btn btn-default" data-key="4">待收货</span>
+                <!-- <span class="btn btn-default" data-key="5">退换货</span> -->
+                <span class="btn btn-default" data-key="7">已完成</span>
+                <span class="btn btn-default" data-key="6">已取消</span>
+                <!--<span class="btn btn-default" data-key="8">分期成功</span>-->
+                <span class="btn btn-default jd-refuse" data-key="9">拒收(京东)<span></span></span>
+                <span class="btn btn-default jd-earlywarning" data-key="10">12天未妥收预警<span></span></span>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+
+                    <!--筛选条件区域-->
+                    <div class="condition-wrap cl common-form-wrap" id="pageSearchForm">
+
+                        <div class="condition-parent cl">
+                            <span class="title">购物订单号</span>
+                            <input type="text" name="tradeId" value="" data-check="number">
+                        </div>
+
+						<div class="condition-parent cl">
+                            <span class="title">搜索</span>
+                            <input style="width: 200px;" type="text" name="skuKeyword" placeholder="输入商品名称/货号/支付流水号" value="">
+                        </div>
+
+                        <div class="condition-parent cl">
+                            <span class="title">下单姓名</span>
+                            <input type="text" name="name" value="">
+                        </div>
+
+                        <div class="condition-parent cl">
+                            <span class="title">下单手机</span>
+                            <input type="text" name="mobile" value="" data-check="number">
+                        </div>
+
+                        <div class="condition-parent cl">
+                            <span class="title">收货姓名</span>
+                            <input type="text" name="receiveName" value="">
+                        </div>
+
+                        <div class="condition-parent cl">
+                            <span class="title">收货手机</span>
+                            <input type="text" name="receiveMobile" value="" data-check="number">
+                        </div>
+
+                        <div class="condition-parent cl">
+                            <span class="title">地区</span>
+                            <input type="text" name="areaStr" value="">
+                        </div>
+						
+						<div class="condition-parent cl">
+                            <span class="title">支付渠道来源</span>
+                            <select class="pay-channel common-slide-list" name="payChannel" data-key="31" value=""></select>
+                        </div>
+						
+                        <div class="condition-parent cl">
+                            <span class="title">采购渠道</span>
+                            <select class="buy-channel" name="goodsChannelId" value=""></select>
+                        </div>
+
+                        <div class="condition-parent cl">
+                            <span class="title">终端来源</span>
+                            <select class="common-slide-list" name="origin" data-key="3" value=""></select>
+                        </div>
+
+                        <div class="condition-parent cl">
+                            <span class="title">订单来源</span>
+                            <input type="text" name="activitySource" value="">
+                            <!-- <select class="common-slide-list" name="activitySource" data-key="21" value=""></select> -->
+                        </div>
+
+                        <!--<div class="condition-parent cl">
+                            <span class="title">订单状态</span>
+                            <select class="common-slide-list" name="tradeStatus" data-key="1" value=""></select>
+                        </div>-->
+
+                        <!--<div class="condition-parent cl">
+                            <span class="title">合同状态</span>
+                            <select class="" name="" value=""></select>
+                        </div>-->
+
+                        <div class="condition-parent cl">
+                            <span class="title">商品金额</span>
+                            <input type="number" id="" name="startAmount" value="" data-check="number">
+                            <span class="add">至</span>
+                            <input type="number" id="" name="endAmount" value="" data-check="number">
+                        </div>
+
+                        <div class="condition-parent cl">
+                            <span class="title">分期金额</span>
+                            <input type="number" id="" name="loanStartAmount" value="" data-check="number">
+                            <span class="add">至</span>
+                            <input type="number" id="" name="loanEndAmount" value="" data-check="number">
+                        </div>
+
+                        <div class="condition-parent cl common-date-wrap">
+                            <span class="title">用户下单时间</span>
+                            <input type="text" class="common-date-pick Wdate" id="orderFirstDate" name="startCreateTime" value="">
+                            <span class="add">至</span>
+                            <input type="text" class="common-date-pick Wdate" id="orderLastDate" name="endCreateTime" value="">
+                        </div>
+
+                        <div class="condition-parent cl">
+                            <span class="title">白名单</span>
+                            <select class="white-list" name="isWhite" value="">
+                                <option value="">全部</option>
+                            </select>
+                        </div>
+						
+						<div class="condition-parent cl">
+							<span class="title">运费预警</span>
+                            <select name="postageWarning" value="">
+                            	<option value="">全部</option>
+                                <option value="1">是</option>
+                                <option value="0">否</option>
+                            </select>
+                        </div>
+						
+                        <div class="button-wrap">
+                            <button type="button" class="btn btn-primary" id="screeBtn"><i class="Hui-iconfont">&#xe665;</i> 筛选</button>
+                            <button type="button" class="btn btn-primary" id="resetBtn"><i class="Hui-iconfont">&#xe66b;</i> 重置</button>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <table class="table table-bg table-border table-bordered table-hover zhc-table">
+                <thead>
+                    <tr class="text-c">
+                        <th width="150px">订单号</th>
+                        <th width="150px">京东订单号</th>
+                        <th width="200px">商品信息</th>
+                        <th width="60px">spu</th>
+                        <th width="100px">商品货号</th>
+                        <th width="60px">商品单价</th>
+                        <th width="60px">数量</th>
+                        <th width="60px">订单金额</th>
+                        <th width="60px">订单优惠</th>
+                        <th width="60px">应付金额</th>
+                        <th width="60px">订单状态</th>
+                        <th width="100px">支付渠道来源</th>
+                        <th width="100px">支付流水号</th>
+                        <th width="60px">采购渠道</th>
+                        <th width="60px">分期金额</th>
+                        <th width="60px">分期数</th>
+                        <th width="150px">用户下单时间</th>
+                        <th width="60px">终端来源</th>
+                        <th width="80px">省份</th>
+                        <th width="80px">城市</th>
+                        <th width="60px">下单姓名</th>
+                        <th width="100px">下单手机</th>
+                        <th width="60px">收货姓名</th>
+                        <th width="100px">收货手机</th>
+                        <th width="150px">合同号</th>
+                        <th width="60px">合同状态</th>
+                        <th width="60px">白名单</th>
+                        <th width="100px">订单来源</th>
+                        <th width="100px">取消角色</th>
+                        <th width="150px">备注</th>
+                        <!-- <th width="100px">操作</th> -->
+                    </tr>
+                </thead>
+                <tbody id="searchResultTable"></tbody>
+            </table>
+
+            <div class="pagination cl" id="pagination"></div>
+
+        </article>
+    </div>
+
+    <!--下单弹出层-->
+    <div id="setOrderInfo" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="myModalLabel">下单</h3>
+                    <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>
+                </div>
+                <div class="modal-body text-c">
+
+                    <div class="modal-form-wrap common-form-wrap" id="sendOrderForm">
+                        <div class="modal-form-line cl">
+                            <span class="title">采购渠道</span>
+                            <select class="buy-channel" id="sendOrderChannel" name="channelId" data-check="empty" value=""></select>
+                        </div>
+                        <div class="modal-form-line cl">
+                            <span class="title">渠道单号</span>
+                            <input type="number" class="can-disabled" name="channelOrderId" value="" data-check="empty,number">
+                        </div>
+                        <div class="modal-form-line cl">
+                            <span class="title">采购银行</span>
+                            <select class="common-slide-list can-disabled" name="purchaseBankId" data-check="empty" data-key="8" data-tit="请选择" value=""></select>
+                        </div>
+                        <div class="modal-form-line cl">
+                            <span class="title">采购时间</span>
+                            <input type="text" class="now-time Wdate" name="createTime" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" value="">
+                        </div>
+                        <div class="modal-form-line cl">
+                            <span class="title">商品金额</span>
+                            <input type="number" class="goods-price" name="" value="">
+                        </div>
+                        <div class="modal-form-line cl">
+                            <span class="title">采购金额</span>
+                            <input type="number" name="purchaseAmount" value="" data-check="empty,number">
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" id="submitSendOrder">确定</button>
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--发货弹出层-->
+    <div id="setStreamInfo" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="myModalLabel">发货</h3>
+                    <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>
+                </div>
+                <div class="modal-body text-c">
+
+                    <div class="modal-form-wrap common-form-wrap" id="sendGoodsForm">
+                        <div class="modal-form-line cl">
+                            <span class="title">物流公司</span>
+                            <select id="tranferCpy" name="expressId" data-check="empty" value=""></select>
+                        </div>
+                        <div class="modal-form-line cl">
+                            <span class="title">物流单号</span>
+                            <input type="text" name="logisticsNo" value="" data-check="empty,number" placeholder="请输入物流单号">
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" id="submitSendGoods">确定</button>
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--footer 作为公共模版分离出去-->
+    <script type="text/javascript" src="../../lib/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="../../lib/layer/2.4/layer.js"></script>
+    <script type="text/javascript" src="../../static/h-ui/js/H-ui.min.js"></script>
+    <script type="text/javascript" src="../../static/h-ui.admin/js/H-ui.admin.js"></script>
+    <!--footer 作为公共模版分离出去-->
+
+    <script type="text/javascript" src="../../lib/doT/doT.min.js"></script>
+    <script type="text/javascript" src="../../lib/My97DatePicker/4.8/WdatePicker.js"></script>
+    <script type="text/javascript" src="../../lib/laypage/1.2/laypage.js"></script>
+    <script type="text/javascript" src="../../js/base/public.js?rev=@@hash"></script>
+    <script type="text/javascript" src="../../js/shoppingOrder.js?rev=@@hash"></script>
+
+    <script id="searchResultTableTmp" type="text/x-dot-template">
+        {{~it.data:item}}
+        <tr class="text-c">
+        	{{? item.postageWarning == 1 && item.tradeStatus != 5 && item.tradeStatus != 20}}
+        	<td class="order-detail">{{=item.tradeId || ''}}<span class="postage_warn">运费异常预警</span></td>
+        	{{??}}
+        	<td class="order-detail">{{=item.tradeId || ''}}</td>
+        	{{?}}
+            <td>{{=item.channelOrderId || ''}}</td>
+            <td>{{=item.goodsName || ''}}</td>
+            <td>{{=item.spuId || ''}}</td>
+            <td>{{=item.sn || ''}}</td>
+            <td>{{=item.unitPrice || ''}}</td>
+            <td>{{=item.tradeCount || ''}}</td>
+            <td>{{=item.amount || ''}}</td>
+            <td>{{=item.totalTradeDiscountAmount}}</td>
+            <td>{{=item.shoudleAmount || ''}}</td>
+            <td>{{=item.tradeStatusStr || ''}}</td>
+            {{? item.bankName}}
+            <td>{{=item.payChannelStr || ''}}-{{=item.bankName || ''}}</td>
+            {{??}}
+             <td>{{=item.payChannelStr || ''}}</td>
+            {{?}}
+            <td>{{=item.requestNo || ''}}</td>
+            <td>{{=item.goodsChannel || ''}}</td>
+            <td>{{=item.loadAmount || ''}}</td>
+            <td>{{=item.periods || ''}}</td>
+            <td>{{=item.createTime || ''}}</td>
+            <td>{{=item.originStr || ''}}</td>
+            <td>{{=item.provinceName || ''}}</td>
+            <td>{{=item.cityName || ''}}</td>
+            <td>{{=item.name || ''}}</td>
+            <td>{{=item.mobile || ''}}</td>
+            <td>{{=item.receiveName || ''}}</td>
+            <td>{{=item.receiveMobile || ''}}</td>
+            <td>{{=item.contractId || ''}}</td>
+            <td>{{=item.contractStatusStr || ''}}</td>
+            <td>{{=item.flag || ''}}</td>
+            <td>{{=item.tradeSource || ''}}</td>
+            <td>{{=item.strCloseReseon || ''}}</td>
+            <td>{{=item.remark || ''}}</td>
+            <!-- <td class="operate">
+                {{?item.tradeStatus == 20}}
+                <span class="send-order">下单</span>
+                {{??item.tradeStatus == 25}}
+                <span class="send-goods">发货</span>
+                {{?}}
+                <span class="order-detail">详情</span>
+            </td> -->
+        </tr>
+        {{~}}
+    </script>
+
+</body>
+
+</html>

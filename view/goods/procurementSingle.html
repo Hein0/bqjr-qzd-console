@@ -1,0 +1,1080 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <title>单个采购</title>
+
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="../../lib/Hui-iconfont/1.0.8/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/skin/default/skin.css" id="skin" />
+    <link rel="stylesheet" type="text/css" href="../../lib/laypage/1.2/skin/laypage.css">
+    <link rel="stylesheet" type="text/css" href="../../lib/laypage/1.2/skin/laypage.css">
+    <link rel="stylesheet" type="text/css" href="../../css/reset.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/goods.css" />
+    <style type="text/css">
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .se_style {
+            content: '';
+            overflow: hidden;
+            display: block;
+            clear: both;
+        }
+
+        .table th,
+        .table td {
+            border: 1px solid #DEDEDE;
+        }
+
+        .shadebox {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            top: 0;
+            display: none;
+            z-index: 200;
+        }
+
+        .shadeboxcon {
+            position: fixed;
+            width: 1000px;
+            min-height: 300px;
+            background: white;
+            z-index: 100;
+            left: 50%;
+            top: 100px;
+            margin-left: -500px;
+            border: 1px solid #DEDEDE;
+            box-shadow: 0 0 4px #000000;
+            padding-bottom: 30px;
+            display: none;
+            z-index: 900;
+        }
+
+        .title {
+            height: 60px;
+            border-bottom: 1px solid #DEDEDE;
+        }
+
+        .title span:nth-child(1) {
+            line-height: 50px;
+            margin-left: 20px;
+            font-size: 18px;
+        }
+
+        .title img {
+            float: right;
+            margin: 10px 20px 0 0;
+        }
+
+        .conlisttab {
+            width: 90%;
+            margin: 0 auto;
+        }
+
+        .conlisttab th,
+        .conlisttab td {
+            border: 1px solid #DEDEDE;
+            text-align: center;
+            line-height: 30px;
+        }
+
+        .statusbar {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .statusbar button {
+            width: 80px;
+            height: 30px;
+            margin: 0 20px;
+        }
+
+        .input-text {
+            text-align: center;
+            width: 80px;
+        }
+
+        .tradeId:hover {
+            text-decoration: underline;
+            color: skyblue;
+        }
+
+        .conlist {
+            overflow-y: scroll;
+            height: 164px;
+        }
+
+        .step3-info span {
+            display: inline-block;
+            width: 200px;
+            text-align: left;
+        }
+
+        .relative-td {
+            position: relative;
+        }
+
+        .relative-td em {
+            font-weight: 400;
+        }
+
+        .relative-td .test-price {
+            position: relative;
+            width: 70px;
+            z-index: 2;
+        }
+
+        .relative-td .price-tips {
+            position: absolute;
+            height: 26px;
+            line-height: 26px;
+            top: 3px;
+            left: 50%;
+            margin-left: 35px;
+            border: 1px solid red;
+            color: red;
+            white-space: nowrap;
+        }
+    </style>
+</head>
+
+<body style="overflow-x: scroll;">
+
+    <nav class="breadcrumb">
+        <i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 商品管理 <span class="c-gray en">&gt;</span> 单个采购
+        <a class="btn btn-success r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a>
+        <button type="button" class="btn btn-primary r" style="line-height:1.6em;margin-top:3px;margin-right: 20px;" id="createExcel"><i class="Hui-iconfont"></i> 导出</button>
+    </nav>
+
+    <div class="Hui-article">
+        <article class="cl pd-20">
+            <div class="btn-group mb-20">
+                <a href="procurement.html"><span val="0" class="btn btn-default">待采购（批量采购）</span></a>
+                <span val="10" class="btn btn-primary">待采购（单个采购）</span>
+                <a href="Sendout.html"><span val="20" class="btn btn-default">待发货</span></a>
+            </div>
+
+            <div class="panel panel-default">
+                <form class="search-form">
+                    <div class="panel-body pb-0 cl search">
+                        <div class="se_style">
+                            <div class="f-l mr-15 mb-15">
+                                <span class="text-c f-l">订单号</span>
+                                <input type="text" placeholder="输入订单号" style="width: 180px;" class="input-text" name="ordernum" />
+                            </div>
+                            <div class="f-l mr-15 mb-15">
+                                <span class="text-c f-l">下单姓名</span>
+                                <input type="text" placeholder="输入下单姓名" style="width: 180px;" class="input-text" name="ordername" />
+                            </div>
+                            <div class="f-l mr-15 mb-15">
+                                <span class="text-c f-l">下单手机</span>
+                                <input type="text" placeholder="输入下单手机" style="width: 180px;" class="input-text" name="orderphone" />
+                            </div>
+                            <div class="f-l mr-15 mb-15">
+                                <span class="text-c f-l">用户下单时间</span>
+                                <input id="passOneTime" onfocus="WdatePicker({ maxDate: '#F{$dp.$D(\'passTwoTime\')||\'%y-%M-%d\'}' })" class="input-text Wdate" name="passOneTime" type="text"> 至
+                                <input id="passTwoTime" onfocus="WdatePicker({ minDate: '#F{$dp.$D(\'passOneTime\')}', maxDate: '%y-%M-%d' })" class="input-text Wdate" name="passTwoTime" type="text">
+                            </div>
+                        </div>
+                        <div class="se_style" style="margin-top: 20px;">
+                            <div class="f-l mr-15 mb-15">
+                                <span class="text-c f-l">搜索</span>
+                                <input type="text" placeholder="输入商品名称/货号" style="width: 180px;" class="input-text" name="shopname" />
+                            </div>
+                            <div class="f-l mr-15 mb-15">
+                                <span class="text-c f-l">收货人省份</span>
+                                <select class="select user-status" id="province" name="status">
+			                <option value="">全部</option>
+			            </select>
+                                <select class="select user-status" id="city" name="status">
+			                <option value="">全部</option>
+			            </select>
+                                <select class="select user-status" id="street" name="status">
+			                <option value="">全部</option>
+			            </select>
+                            </div>
+                            <div class="text-l m-t10 f-r">
+                                <button type="button" class="btn btn-primary mr-10 mb-15" id="screeBtn" onclick="getSingleList()"><i class="Hui-iconfont">&#xe665;</i> 筛选</button>
+                                <button type="button" class="btn btn-primary mb-15" id="resetBtn" onclick="util.reset()"><i class="Hui-iconfont">&#xe66b;</i> 重置</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="mt-20 table-con" id="content">
+                <table class="table table-border table-hover table-bg table-sort">
+                    <thead>
+                        <tr class="text-c">
+                            <th>订单号</th>
+                            <th>商品信息</th>
+                            <th>商品货号</th>
+                            <th>商品单价</th>
+                            <th>商品数量</th>
+                            <th>订单金额</th>
+                            <th>订单优惠</th>
+                            <th>应付金额</th>
+                            <th>用户下单时间</th>
+                            <th>下单姓名</th>
+                            <th>下单手机</th>
+                            <th>收货姓名</th>
+                            <th>收货手机</th>
+                            <th>收货人省市区</th>
+                            <th>收货详细地址</th>
+                            <th>备注</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id="list"></tbody>
+                </table>
+            </div>
+
+            <!--分页-->
+            <div class="pagination mt-20" id="pagination"></div>
+        </article>
+    </div>
+    <div class="shadebox"></div>
+    <div class="shadeboxcon">
+        <div class="title">
+            <span>采购</span>
+            <span><img src='../../images/guanbi.png'/></span>
+        </div>
+        <div class="pro-con" style="margin-left: 5%;">
+            <p class="shop_name">商品：<span></span></p>
+            <p class="shop_canshu">规格：<span></span></p>
+            <p class="shop_price">商品单价：<span></span></p>
+            <p class="shopnum">商品数量：<span></span></p>
+            <p class="JDbalance">京东账户余额：¥<span></span></p>
+        </div>
+        <div class="conlist">
+            <table class="conlisttab">
+                <thead>
+                    <tr style="background: #F2F2F2;">
+                        <th></th>
+                        <th>编号</th>
+                        <th>采购渠道</th>
+                        <th width="40%">渠道价</th>
+                        <th>今日库存</th>
+                    </tr>
+                </thead>
+                <tbody id="channellist"></tbody>
+
+            </table>
+        </div>
+        <div class="statusbar">
+            <button>取消</button>
+            <button class="singleSubmit">确认</button>
+        </div>
+    </div>
+
+    <!-- 其他供应商 渠道单号 下单时间等等信息 -->
+    <div id="step2" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content radius">
+                <div class="modal-header">
+                    <h3 class="modal-title">采购</h3>
+                    <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>
+                </div>
+                <div class="modal-body" id="stepSecondInfo">
+                    <p class="mb-20 text-c"><label>渠道单号：　<input class="input-text" type="number" name="channelOrderId" id="channelOrderId" style="width:180px;text-align:left;"></label></p>
+                    <p class="mb-20 text-c"><label>采购银行：　<select class="select" name="purchaseBankId" id="purchaseBankId" style="width:180px;height:31px;text-align:left;"></select></label></p>
+                    <p class="text-c"><label>采购时间：　<input class="input-text Wdate" type="text" name="purchaseTimeStr" id="purchaseTimeStr" style="width:180px;text-align:left;" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})"></label></p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" id="stepSecondSbt">确定</button>
+                    <button class="btn" id="stepSecondRst" data-dismiss="modal" aria-hidden="true">返回</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 最后提交采购信息确认窗口 -->
+    <div id="step3" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content radius">
+                <div class="modal-header">
+                    <h3 class="modal-title">确认采购信息</h3>
+                    <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>
+                </div>
+                <div class="modal-body step3-info" id="stepThreeInfo">
+                    <p class="mb20 text-c">确认采购渠道：　<span id="specName"></span></p>
+                    <p class="mb20 text-c">确认渠道价格：　<span></span></p>
+                    <p class="mb20 text-c spec-type">确认渠道单号：　<span></span></p>
+                    <p class="mb20 text-c spec-type">确认采购银行：　<span></span></p>
+                    <p class="mb20 text-c spec-type">确认采购时间：　<span></span></p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" id="stepThreeSbt">确定</button>
+                    <button class="btn" id="stepThreeRst" data-dismiss="modal" aria-hidden="true">返回</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--_footer 作为公共模版分离出去-->
+    <script type="text/javascript" src="../../lib/jquery/1.9.1/jquery.min.js?rev=@@hash"></script>
+    <script type="text/javascript" src="../../lib/layer/2.4/layer.js?rev=@@hash"></script>
+    <script type="text/javascript" src="../../static/h-ui/js/H-ui.min.js?rev=@@hash"></script>
+    <script type="text/javascript" src="../../static/h-ui.admin/js/H-ui.admin.js?rev=@@hash"></script>
+    <script type="text/javascript" src="../../js/base/public.js?rev=@@hash"></script>
+    <!--/_footer 作为公共模版分离出去-->
+
+    <!--请在下方写此页面业务相关的脚本-->
+    <script type="text/javascript" src="../../lib/My97DatePicker/4.8/WdatePicker.js?rev=@@hash"></script>
+    <script type="text/javascript" src="../../lib/laypage/1.2/laypage.js?rev=@@hash"></script>
+    <script src="../../js/common/jquery.tmpl.min.js?rev=@@hash"></script>
+    <script type="text/javascript" src="../../js/common/imgPlugin.js?rev=@@hash"></script>
+
+    <script type="text/javascript">
+        // 命名空间
+        var zhc = {
+            // 跳转记录
+            stepType: 0,
+
+            // 判断跳转
+            judgeStep: function(type) {
+                // 判断供应商类型跳转
+                if (type == '2') {
+                    // 直接到第三步提交
+                    zhc.stepType = 2
+                    zhc.stepThree('hide');
+                } else {
+                    // 到第二步填写渠道单号、采购银行、采购时间等信息
+                    zhc.stepType = 0
+                    zhc.stepSecond();
+                }
+            },
+
+            // 跳转采购第二步
+            // 填写渠道单号、采购时间、采购银行等信息
+            stepSecond: function() {
+                // 弹窗初始化
+                var $wrap = $('#stepSecondInfo'),
+                    $channelOrderId = $wrap.find('#channelOrderId'),
+                    $purchaseBankId = $wrap.find('#purchaseBankId'),
+                    $purchaseTimeStr = $wrap.find('#purchaseTimeStr');
+
+                $channelOrderId.val('');
+                $purchaseBankId.val('');
+                $purchaseTimeStr.val(zhc.getTimeFormat());
+
+                $('#step2').modal('show');
+            },
+
+            // 跳转采购第三步 确认采购信息弹窗
+            stepThree: function(type) {
+                // 初始化弹窗信息
+                var $wrap = $('#stepThreeInfo'),
+                    $spanList = $wrap.find('span'),
+                    infoList = [],
+                    i = 0;
+
+                infoList.push(submitInfo.channelName);
+
+                submitInfo.tradeAmount ? infoList.push('¥' + submitInfo.tradeAmount) : infoList.push('无');
+
+                if (type == 'hide') {
+                    $wrap.find('.spec-type').hide();
+                } else {
+                    $wrap.find('.spec-type').show();
+                    infoList.push(submitInfo.channelOrderId);
+                    infoList.push(submitInfo.purchaseBankName);
+                    infoList.push(submitInfo.purchaseTimeStr);
+                }
+
+                for (; i < infoList.length; i++) {
+                    $($spanList[i]).text(infoList[i]);
+                }
+
+                if (submitInfo.channelName.indexOf('接口') > -1) {
+                    $('#specName').css('color', 'red')
+                } else {
+                    $('#specName').css('color', '#333')
+                }
+
+                $("#step3").modal("show");
+            },
+
+            // 格式化当前时间
+            getTimeFormat: function() {
+                var str = '',
+                    date = new Date()
+
+                str += date.getFullYear() + '-' + zhc.addZero(+date.getMonth() + 1) + '-' + zhc.addZero(date.getDate()) + ' ' + zhc.addZero(date.getHours()) + ':' + zhc.addZero(date.getMinutes()) + ':' + zhc.addZero(date.getSeconds());
+
+                return str;
+            },
+
+            addZero: function(num) {
+                return +num < 10 ? ('0' + num) : num;
+            },
+
+            // 渲染采购渠道
+            renderChannel: function(item, type) {
+                var html = ''
+
+                if (type == 2) {
+                    html += '<td class="channelName" data-id="' + item.id + '" data-type="' + item.redirectType + '">' + item.companyName + '</td>'
+                } else {
+                    html += zhc.renderChannelSelect(item)
+                }
+
+                return html;
+            },
+
+            // 渲染采购渠道下拉列表
+            renderChannelSelect: function(arr) {
+                var html = '<td class="channelName"><select class="buy-channel" value=""><option value="">请选择其他渠道</option>'
+
+                $.each(arr, function(index, item) {
+                    html += '<option data-id="' + item.id + '" data-type="' + item.redirectType + '">' + item.companyName + '</option>'
+                })
+
+                html += '</select></td>'
+
+                return html
+            },
+
+            // 渲染渠道价输入框
+            renderPriceIpt: function(item, type, price, tips) {
+                var html = ''
+
+                if (type == 2 && item.companyName.indexOf('接口') > -1) {
+                    html += '<td class="Channelprice relative-td"><em>' + price + '</em>' + tips + '</td>'
+                } else {
+                    html += '<td class="relative-td"><input type="text" class="input-text test-price" name="stock" value="" onkeyup="testinteger1(this)"></td>'
+                }
+
+                return html
+            }
+        }
+
+        //获取京东账户余额
+        $.get(base + 'purchase/getJDbalance.do', function(res) {
+            if (res.status == '0' && res.data) {
+                $('.JDbalance').find('span').html(res.data)
+            } else if (res.status == '9999') {
+                // 未登录
+                window.top.location.href = '../../login.html';
+            }
+        })
+
+        // 获取采购银行信息
+        $.get(base + '/dictionary/getInfo', {
+            type: 8
+        }, function(res) {
+            var html = '<option value="">请选择</option>',
+                temp = null;
+
+            if (res.status == '0') {
+                if (res.data && res.data['8']) {
+                    temp = res.data['8'];
+
+                    $.each(temp, function(key, value) {
+                        html += '<option value="' + key + '">' + value + '</option>';
+                    })
+
+                    $('#purchaseBankId').html(html);
+                }
+            }
+        })
+
+        //商品信息
+        var shopmes;
+
+        // 提交采购订单信息
+        var submitInfo = null;
+
+        //商品skuId
+        var skuId;
+
+        //渠道信息
+        var channelList;
+
+        // 模糊搜索
+        // var bind_name = 'input';
+        // if (navigator.userAgent.indexOf("MSIE") != -1) {
+        //     bind_name = 'propertychange';
+        // }
+        // $(".input-text").bind(bind_name, function() {
+        //     getSingleList()
+        // })
+
+        //获取单个采购列表
+        var SkuIdstr = location.href.split("=")
+
+        if (SkuIdstr[1]) {
+            var SkuId = SkuIdstr[1].split("&&")[0];
+        } else {
+            var SkuId = "";
+        }
+
+        var unitPrice = SkuIdstr[2] || " "
+
+        getSingleList()
+
+        function getSingleList(obj) {
+            var tradeId = $('input[name=ordernum]').val();
+            var name = $('input[name=ordername]').val();
+            var mobile = $('input[name=orderphone]').val();
+            var skuKeyword = $('input[name=shopname]').val();
+            var startCreateTime = $('input[name=passOneTime]').val();
+            var endCreateTime = $('input[name=passTwoTime]').val();
+            var province = $('#province').find('option:checked').attr('value');
+            var city = $('#city').find('option:checked').attr('value');
+            var district = $('#street').find('option:checked').attr('value');
+            var arrObj = $("#user-form").find("input,select").serializeObject();
+            pageNum = (obj && obj.curr) || 1; // 默认第1页
+            pageRows = (obj && obj.pageSize) || 20; // 默认一页20条数据
+            arrObj['pageNum'] = pageNum;
+            arrObj['pageRows'] = pageRows;
+
+            $.post(base + 'purchase/single.do', {
+                pageNum: pageNum,
+                pageSize: pageRows,
+                skuId: SkuId,
+                tradeId: tradeId,
+                name: name,
+                mobile: mobile,
+                startCreateTime: startCreateTime,
+                endCreateTime: endCreateTime,
+                skuKeyword: skuKeyword,
+                province: province,
+                city: city,
+                district: district,
+                unitPrice: unitPrice
+            }, function(res) {
+                $('#list').children().remove()
+                if (res.status == '0' && res.data) {
+                    shopmes = res.data
+                    for (var i = 0; i < res.data.length; i++) {
+                        var Tr = $("<tr class='text-c'></tr>")
+                        var Td1 = $("<td style='cursor: pointer;' class='tradeId' onclick='gotoordermes(" + res.data[i].tradeId + ")'>" + res.data[i].tradeId + "</td>")
+                        var Td2 = $("<td>" + res.data[i].skuName + "</td>")
+                        var Td3 = $("<td>" + res.data[i].sn + "</td>")
+                        var Td4 = $("<td>" + res.data[i].unitPrice + "</td>")
+                        var Td5 = $("<td>" + res.data[i].tradeCount + "</td>")
+                        var Td6 = $("<td>" + res.data[i].amount + "</td>")
+                        var Td16 = $("<td>" + res.data[i].totalTradeDiscountAmount + "</td>")
+                        var Td17 = $("<td>" + res.data[i].shoudleAmount + "</td>")
+                        var Td7 = $("<td>" + res.data[i].createTime + "</td>")
+                        var Td8 = $("<td>" + res.data[i].name + "</td>")
+                        var Td9 = $("<td>" + res.data[i].mobile + "</td>")
+                        var Td10 = $("<td>" + res.data[i].receiveName + "</td>")
+                        var Td11 = $("<td>" + res.data[i].receiveMobile + "</td>")
+                        var Td12 = $("<td>" + res.data[i].provinceName + '/' + res.data[i].cityName + '/' + res.data[i].districtName + "</td>")
+                        var Td13 = $("<td>" + res.data[i].userReceiverAddress + "</td>")
+                        var Td14 = $("<td>" + res.data[i].remark + "</td>")
+                        var Td15 = $("<td width='80px'><a class='tab-A' onclick='distribution(" + i + "," + res.data[i].unitPrice + ",\"" + res.data[i].sn + "\")'>采购</a></td>")
+                        Tr.append(Td1)
+                        Tr.append(Td2)
+                        Tr.append(Td3)
+                        Tr.append(Td4)
+                        Tr.append(Td5)
+                        Tr.append(Td6)
+                        Tr.append(Td16)
+                        Tr.append(Td17)
+                        Tr.append(Td7)
+                        Tr.append(Td8)
+                        Tr.append(Td9)
+                        Tr.append(Td10)
+                        Tr.append(Td11)
+                        Tr.append(Td12)
+                        Tr.append(Td13)
+                        Tr.append(Td14)
+                        Tr.append(Td15)
+                        $('#list').append(Tr)
+                    }
+                } else if (res.status == '9999') {
+                    // 未登录
+                    window.top.location.href = '../../login.html';
+                } else {
+                    $('#list').append("<tr><td colspan='17' style='text-align:center; color:#ddd;'>暂无相关数据！</td></tr>")
+                }
+                setPagination({
+                    elem: $('#pagination'),
+                    totalCount: res.dataCount,
+                    curr: arrObj['pageNum'],
+                    pageSize: arrObj['pageRows'],
+                    callback: function(obj) {
+                        getSingleList(obj);
+                    }
+                });
+            })
+        }
+
+        //跳转到单个订单页面
+        function gotoordermes(tradeId) {
+            var $self = $(this);
+            $self.attr('data-href', 'view/order/shoppingOrderDetail.html?tradeId=' + tradeId)
+            $self.attr('data-title', '购物订单详情');
+            Hui_admin_tab($self.get());
+        }
+
+        //重置
+        $("#resetBtn").on('click', function() {
+            $('#city').children().remove();
+            $('#city').append('<option>全部</option>')
+            $('#street').children().remove();
+            $('#street').append('<option>全部</option>')
+        })
+
+        function selectAll() {
+            var checklist = document.getElementsByName("selected");
+            if (document.getElementById("controlAll").checked) {
+                for (var i = 0; i < checklist.length; i++) {
+                    checklist[i].checked = 1;
+                }
+            } else {
+                for (var j = 0; j < checklist.length; j++) {
+                    checklist[j].checked = 0;
+                }
+            }
+        }
+
+        //导出
+        $('#createExcel').on('click', function() {
+            if ($('#list').children().length == 0) {
+                $.Huimodalalert('导出订单不能为空', 2000);
+            } else {
+                var tradeId = $('input[name=ordernum]').val();
+                var name = $('input[name=ordername]').val();
+                var mobile = $('input[name=orderphone]').val();
+                var skuKeyword = $('input[name=shopname]').val();
+                var startCreateTime = $('input[name=passOneTime]').val();
+                var endCreateTime = $('input[name=passTwoTime]').val();
+                var province = $('#province').find('option:checked').attr('value');
+                var city = $('#city').find('option:checked').attr('value');
+                var district = $('#city').find('option:checked').attr('value');
+
+                var url = base + 'purchase/exportSingle.do?tradeId=' + tradeId + '&name=' + name + '&mobile=' + mobile +
+                    '&startCreateTime=' + startCreateTime + '&endCreateTime=' + endCreateTime + '&skuKeyword=' + skuKeyword +
+                    '&province=' + province + '&city=' + city + '&district=' + district;
+
+                location.href = url;
+            }
+        })
+
+        //采购
+        //订单编号
+        var tradeId;
+
+        // 当前订单金额
+        var currentTradeAmount = '';
+
+        function distribution(j, price, sn) {
+            var Specification = '',
+                tips = ''
+
+            // 获取京东渠道价
+            $.ajax({
+                url: base + 'purchase/getJdPrice.do',
+                type: 'POST',
+                async: false,
+                data: {
+                    'sn': sn
+                },
+                success: function(res) {
+                    if (res.status == '0') {
+                        shopmes[j].shopPrice = res.data;
+                    } else {
+                        $.Huimodalalert('系统异常，请刷新页面后继续操作', 2000);
+                    }
+                }
+            })
+
+            currentTradeAmount = price;
+
+            skuId = shopmes[j].skuId
+            tradeId = shopmes[j].tradeId
+            $('.shadeboxcon').show();
+            $('.shadebox').show();
+            $('.shop_name').find('span').html(shopmes[j].skuName);
+            for (var i = 0; i < JSON.parse(shopmes[j].spec).length; i++) {
+                Specification += (" " + JSON.parse(shopmes[j].spec)[i].value);
+            }
+            $('.shop_canshu').find('span').html(Specification);
+            $('.shop_price').find('span').html(shopmes[j].unitPrice);
+            $('.shopnum').find('span').html(shopmes[j].tradeCount || 0);
+
+            if (shopmes[j].shopPrice > price) {
+                tips = "<span class='price-tips'>成本渠道价高于客户购买价</span>"
+            }
+
+            //采购渠道
+            $.post(base + 'company/list', function(res) {
+                var channel = [],
+                    selectChannel = [],
+                    html = '';
+
+                $('#channellist').empty();
+
+                if (res.status == '0' && res.data) {
+
+                    channelList = res.data;
+
+                    res.data.length && $.each(res.data, function(index, item) {
+                        if (item.showType == 2) {
+                            // 单行展示
+                            channel.push(item)
+                        } else if (item.showType == 1) {
+                            // 下拉列表选择
+                            selectChannel.push(item)
+                        }
+                    })
+
+                    channel.push(selectChannel)
+					
+					//京东接口库存ID
+					var jdId;
+					
+                    $.each(channel, function(index, item) {
+                        var itemType = Object.prototype.toString.call(item),
+                            type = '';
+                            
+                        //京东接口库存ID
+	                    if (item.id == 4) {
+	                    	jdId = 'jd_store';
+	                    } else {
+	                    	jdId = '';
+	                    }
+
+                        if (itemType === '[object Object]') {
+                            type = '2'
+                        } else {
+                            type = '1'
+                        }
+
+                        html += '<tr class="radioTr">\
+                                    <td>\
+                                        <input type="radio" name="selected">\
+                                    </td>\
+                                    <td>' + (++index) + '</td>\
+                                    ' + zhc.renderChannel(item, type) + '\
+                                    ' + zhc.renderPriceIpt(item, type, shopmes[j].shopPrice, tips) + '\
+                                    <td>\
+                                        <input type="text" name="shopnumber" id="' + jdId + '" class="input-text store-num">\
+                                    </td>\
+                                </tr>'
+                    })
+
+                    $('#channellist').html(html)
+                    console.log(res);
+					getJDstore(tradeId,sn)
+                    // for (var i = 0; i < res.data.length; i++) {
+                    //     var Tr = $("<tr class='radioTr'></tr>")
+                    //     var Td1 = $("<td><input type='radio' name='selected' value=" + res.data[i].id + " channelName=" + res.data[i].companyName + " data-type=" + res.data[i].redirectType + "></td>")
+                    //     var Td2 = $("<td>" + [i + 1] + "</td>")
+                    //     var Td3 = $("<td>" + res.data[i].companyName + "</td>")
+                    //     if (res.data[i].companyName.indexOf('接口') > -1) {
+                    //         var Td4 = $("<td class='Channelprice relative-td'><em>" + shopmes[j].shopPrice + "</em>" + tips + "</td>")
+                    //     } else {
+                    //         var Td4 = $("<td class='relative-td'><input onkeyup='testinteger1(this)' type='text' name='stock' id='' value='' class='input-text test-price'></td>")
+                    //     }
+                    //     var Td5 = $("<td><input type='text' name='shopnumber' id='' value='' class='input-text'/></td>")
+                    //     Tr.append(Td1)
+                    //     Tr.append(Td2)
+                    //     Tr.append(Td3)
+                    //     Tr.append(Td4)
+                    //     Tr.append(Td5)
+                    //     $('#channellist').append(Tr)
+                    // }
+
+                } else if (res.status == '9999') {
+                    // 未登录
+                    window.top.location.href = '../../login.html';
+                }
+            })
+        }
+		
+		//获取京东接口库存
+        function getJDstore (tradeId,sn) {
+            var param = {tradeId: tradeId, sn: sn};
+        	$.get(base + 'purchase/getJdPriceAndStock.do', param, function (res) {
+	        	if (res.status == 0) {
+	        		$('#channellist #jd_store').val(res.data.goodsNumber);
+	        	} else {
+	        		$.Huimodalalert('查询京东商城(接口)库存失败', 2000);
+	        	}
+	        })
+        }
+		
+        //选择渠道
+        function testinteger1(self) {
+            var $self = $(self),
+                $parent = $self.parent(),
+                html = ''
+
+            if (!/^[0-9].*$/.test($self.val())) {
+                $self.val('')
+            }
+
+            if ($self.val() > currentTradeAmount) {
+                if (!$parent.find('.price-tips').length) {
+                    html = '<span class="price-tips">成本渠道价高于客户购买价</span>'
+                    $parent.append(html)
+                }
+            } else {
+                $parent.find('.price-tips').remove()
+            }
+        }
+
+        //关闭
+        $('.title').find('img').on("click", function() {
+            $('.shadeboxcon').hide();
+            $('.shadebox').hide();
+        })
+
+        //取消
+        $('.statusbar').find('button').eq(0).on("click", function() {
+            $('.shadeboxcon').hide();
+            $('.shadebox').hide();
+        })
+
+        //采购确定
+        $('.statusbar').find('button').eq(1).on("click", function() {
+            var $checkedEle = $('input[type=radio]:checked'),
+                $wrap = $checkedEle.closest('.radioTr'),
+                $channel = $wrap.find('.channelName'),
+                $temp = $channel.find('select'),
+                channelId = '',
+                channelName = '',
+                tradeAmount = '',
+                redirectType = '',
+                storeNum = $wrap.find('.store-num').val();
+
+            if ($temp.length) {
+                channelId = $temp.find(':checked').attr('data-id')
+                redirectType = $temp.find(':checked').attr('data-type')
+                channelName = $temp.find(':checked').text()
+            } else {
+                channelId = $channel.attr('data-id')
+                redirectType = $channel.attr('data-type')
+                channelName = $channel.text()
+            }
+
+            if (!channelId) {
+                $.Huimodalalert('请选择一个采购渠道', 1500);
+                return false;
+            }
+			
+			//判断京东接口库存数量
+			if (channelId == 4) {
+				if (storeNum < 1) {
+					$.Huimodalalert('京东商城(接口)库存为0，请选择其他采购渠道', 1500);
+					 return false;
+				}
+			}
+			
+            if (channelName.indexOf('接口') > -1) {
+                tradeAmount = $('.Channelprice').find('em').text()
+            } else {
+                tradeAmount = $wrap.find('input[name=stock]').val()
+            }
+
+            var tradeCount = $('.shopnum').find('span').html();
+            var amount = $('.shop_price').find('span').html();
+            var tradeListJson = JSON.stringify([{
+                'tradeId': tradeId,
+                'tradeCount': tradeCount,
+                'amount': amount
+            }])
+
+            submitInfo = {
+                skuId: skuId,
+                tradeId: tradeId,
+                channelId: channelId,
+                channelName: channelName,
+                tradeListJson: tradeListJson,
+                tradeAmount: tradeAmount,
+                purchaseAmount: tradeAmount
+            }
+
+            $('.shadeboxcon').hide();
+            $('.shadebox').hide();
+
+            if (+tradeAmount > currentTradeAmount) {
+                layer.open({
+                    content: '渠道价高于用户下单商品单价，确认采购吗？',
+                    btn: ["确认", "取消"],
+                    yes: function() {
+                        layer.closeAll()
+                        zhc.judgeStep(redirectType)
+                    }
+                })
+            } else {
+                zhc.judgeStep(redirectType)
+            }
+        })
+
+        //获取省市区
+        getArea(1)
+
+        //区
+        $("#city").on("change", function() {
+            getstreet()
+        })
+
+        function getstreet() {
+            var code1 = $('#city').find('option:checked').attr('value');
+            if (code1) {
+                $.post(base + 'purchase/getArea.do', {
+                    parentid: code1,
+                }, function(res) {
+                    if (res.status == '0' && res.data) {
+                        $('#street').children().remove();
+                        $('#street').append('<option>全部</option>')
+                        for (var i = 0; i < res.data.length; i++) {
+                            $('#street').append('<option value=' + res.data[i].code + '>' + res.data[i].name + '</option>')
+                        }
+                    } else if (res.status == '9999') {
+                        // 未登录
+                        window.top.location.href = '../../login.html';
+                    }
+                })
+            } else {
+                $('#street').children().remove();
+                $('#street').append('<option>全部</option>')
+            }
+
+        }
+
+        //市
+        $('#province').on('change', function() {
+            var code = $('#province').find('option:checked').attr('value');
+            if (code) {
+                $.post(base + 'purchase/getArea.do', {
+                    parentid: code,
+                }, function(res) {
+                    if (res.status == '0' && res.data) {
+
+                        $('#city').children().remove();
+                        $('#city').append('<option>全部</option>')
+                        for (var i = 0; i < res.data.length; i++) {
+                            $('#city').append('<option value=' + res.data[i].code + '>' + res.data[i].name + '</option>')
+                        }
+                        getstreet();
+                    } else if (res.status == '9999') {
+                        // 未登录
+                        window.top.location.href = '../../login.html';
+                    }
+                })
+            } else {
+                $('#city').children().remove();
+                $('#street').children().remove();
+                $('#city').append('<option>全部</option>')
+                $('#street').append('<option>全部</option>')
+            }
+        })
+
+        //省
+        function getArea(level) {
+            $.post(base + 'purchase/getArea.do', {
+                level: level,
+            }, function(res) {
+                if (res.status == '0' && res.data) {
+                    for (var i = 0; i < res.data.length; i++) {
+                        $('#province').append('<option value=' + res.data[i].code + '>' + res.data[i].name + '</option>')
+                    }
+                } else if (res.status == '9999') {
+                    // 未登录
+                    window.top.location.href = '../../login.html';
+                }
+            })
+        }
+
+        $(function() {
+            // 采购第二步提交
+            $('#stepSecondSbt').click(function() {
+                var $wrap = $('#stepSecondInfo'),
+                    $channelOrderId = $wrap.find('#channelOrderId'),
+                    $purchaseBankId = $wrap.find('#purchaseBankId'),
+                    $purchaseTimeStr = $wrap.find('#purchaseTimeStr');
+
+                // 验证输入
+                if (!$channelOrderId.val()) {
+                    $.Huimodalalert('请填写渠道单号', 1500);
+                    return false;
+                }
+
+                if (!$purchaseBankId.val()) {
+                    $.Huimodalalert('请选择采购银行', 1500);
+                    return false;
+                }
+
+                if (!$purchaseTimeStr.val()) {
+                    $.Huimodalalert('请选择采购时间', 1500);
+                    return false;
+                }
+
+                submitInfo.channelOrderId = $channelOrderId.val();
+                submitInfo.purchaseBankId = $purchaseBankId.val();
+                submitInfo.purchaseBankName = $purchaseBankId.find(':checked').text();
+                submitInfo.purchaseTimeStr = $purchaseTimeStr.val();
+
+                $('#step2').modal('hide');
+                zhc.stepThree('show');
+            })
+
+            // 提交单个采购信息
+            $('#stepThreeSbt').click(function() {
+                var $self = $(this);
+
+                if ($self.attr('data-uping') == 'yes') {
+                    return false;
+                }
+
+                $self.attr('data-uping', 'yes');
+
+                $.post(base + 'purchase/singlePurchase.do', submitInfo, function(res) {
+                    $self.attr('data-uping', 'no');
+                    if (res.status == '0') {
+                        $.Huimodalalert(res.message, 1000);
+                        setTimeout(function() {
+                            location.reload();
+                        }, 1000)
+                    } else if (res.status == '9999') {
+                        // 未登录
+                        window.top.location.href = '../../login.html';
+                    } else {
+                        $.Huimodalalert(res.message, 2000);
+                    }
+                })
+            })
+
+            // 第二步返回第一步
+            $('#stepSecondRst').click(function() {
+                $('.shadeboxcon').show();
+                $('.shadebox').show();
+            })
+
+            // 第三步返回
+            $('#stepThreeRst').click(function() {
+                if (zhc.stepType == 2) {
+                    $('.shadeboxcon').show();
+                    $('.shadebox').show();
+                } else {
+                    $('#step2').modal('show');
+                }
+            })
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,286 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <title>用户管理</title>
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="../../lib/Hui-iconfont/1.0.8/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/skin/default/skin.css" id="skin" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="../../lib/laypage/1.2/skin/laypage.css">
+    <link href="../../css/styles.css" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+        .table tr td.td-manage i.Hui-iconfont { font-size: 20px; }
+        .radio-box { padding-left: 10px !important; padding-right:5px !important; }
+        .radio-class { height: 30px; display: table-cell; vertical-align: middle; }
+        .radio-class > input[type=radio] { width: 20px !important; height: 20px !important; }
+        .table .text-c th, .table .text-c td { overflow:hidden; }
+        #UserContent a{color: dodgerblue;}
+        .pop-table{border: 1px solid #ddd;}
+        .pop-table-change{width: 70%;}
+        .pop-table th, .pop-table td{
+        	text-align: center;
+        	height: 40px;
+        }
+        #mymodal #cold-reason{
+        	width: 400px;
+        	height: 30px;
+        	border: 1px solid lightgray;
+        	text-indent: .5em;
+        }
+        #change-mobile{
+        	width: 200px;
+        	height: 30px;
+        	border: 1px solid lightgray;
+        	text-indent: .5em;
+        }
+        .red{color: red;}
+        .pop-reason-wrap{height: 30px;line-height: 30px;margin-top: 10px;}
+        #cold-reason{display: none;}
+        .cold-pop{display: none;}
+        .change-pop{padding-left: 100px; display: none;}
+    </style>
+</head>
+
+<body>
+    <nav class="breadcrumb">
+        <i class="Hui-iconfont">&#xe67f;</i><a href="userList.html"> 首页 </a><span class="c-gray en">&gt;</span> <a href="userList.html"> 用户管理</a> <span class="c-gray en">&gt;</span> <a href="userList.html"> 用户列表</a>
+        <a class="btn btn-success r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont"></i></a>
+        <button type="button" class="btn btn-primary f-r mr-10" id="exportBtn" onclick="userList.exportExcel();" style="margin-top:3px;"><i class="Hui-iconfont">&#xe644;</i> 导出</button>
+
+    </nav>
+    <div class="page-container">
+        <div class="panel panel-default">
+            <form class="search-form" id="user-form">
+
+                <div class="panel-body pb-0 cl search">
+                    <div class="f-l mr-15 mb-15">
+                        <span class="text-c f-l">用户姓名</span>
+                        <input class="input-text" id="" name="name" type="text" style="width:180px;" />
+                    </div>
+                    <div class="f-l mr-15 mb-15">
+                        <span class="text-c f-l">用户手机</span><input class="input-text mobile" id="mobile" name="mobile" type="text" style="width:180px;" />
+                    </div><div class="f-l mr-15 mb-15">
+                        <span class="text-c f-l">用户身份证</span><input class="input-text idCard" id="certId" name="certId" type="text" style="width:180px;">
+                    </div>
+                    <div class="f-l mr-15 mb-15">
+                        <span class="text-c f-l">
+                            注册渠道
+                        </span>
+                        <select class="select user-channel" name="organization">
+                            <option value="">全部</option>
+                        </select>
+                    </div>
+                    <div class="f-l mr-15 mb-15">
+                        <span class="text-c f-l">
+                            注册终端
+                        </span>
+                        <select class="select user-origin" id="" name="origin">
+                            <option value="">全部</option>
+                        </select>
+                    </div>
+                    <div class="f-l mr-15 mb-15">
+                        <span class="text-c f-l">
+                            注册时间
+                        </span>
+                        <input type="text" id="registerStartTime" onfocus="WdatePicker({ maxDate: '#F{$dp.$D(\'registerEndTime\')||\'%y-%M-%d\'}' })" class="input-text Wdate" name="registerStartTime"> 至
+                        <input type="text" id="registerEndTime" onfocus="WdatePicker({ minDate: '#F{$dp.$D(\'registerStartTime\')}', maxDate: '%y-%M-%d' })" class="input-text Wdate" name="registerEndTime">
+
+                    </div>
+                    <div class="f-l mr-15 mb-15">
+                        <span class="text-c f-l">
+                            开通状态
+                        </span>
+                        <select class="select user-status" id="status" name="status">
+                            <option value="">全部</option>
+                        </select>
+
+                    </div>
+                    <div class="f-l mr-15 mb-15">
+                        <span class="text-c f-l">
+                            完成审核时间
+                        </span>
+                        <input type="text" id="passOneTime" onfocus="WdatePicker({ maxDate: '#F{$dp.$D(\'passTwoTime\')||\'%y-%M-%d\'}' })" class="input-text Wdate" name="passOneTime"> 至
+                        <input type="text" id="passTwoTime" onfocus="WdatePicker({ minDate: '#F{$dp.$D(\'passOneTime\')}', maxDate: '%y-%M-%d' })" class="input-text Wdate" name="passTwoTime">
+                    </div>
+                    <div class="f-l mr-15 mb-15">
+                        <span class="text-c f-l">
+                            提交申请时间
+                        </span>
+                        <input type="text" id="applyOneTime" onfocus="WdatePicker({ maxDate: '#F{$dp.$D(\'applyTwoTime\')||\'%y-%M-%d\'}' })" class="input-text Wdate" name="applyOneTime"> 至
+                        <input type="text" id="applyTwoTime" onfocus="WdatePicker({ minDate: '#F{$dp.$D(\'applyOneTime\')}', maxDate: '%y-%M-%d' })" class="input-text Wdate" name="applyTwoTime">
+                    </div>
+                    <div class="f-l mr-15 mb-15">
+                        <span class="text-c f-l">
+                            白名单
+                        </span>
+                        <select class="select user-white" id="isWhite" name="isWhite">
+                            <option value="">全部</option>
+                        </select>
+                    </div>
+                    <div class="f-l mr-15 mb-15">
+                        <span class="text-c f-l">
+                            用户状态
+                        </span>
+                        <select class="select acount-status" id="acount_status" name="useStatus">
+                            <option value="0">正常</option>
+                            <option value="1">冻结</option>
+                        </select>
+                    </div>
+                    <div class="text-l  mb-15  f-r">
+                        <!--<input type="text" class="input-text" style="width:250px" placeholder="输入会员名称、电话、邮箱" id="" name="">-->
+                        <button type="button" class="btn btn-primary" id="searchBtn" onclick="userList.getData();"><i class="Hui-iconfont">&#xe665;</i> 筛选</button>
+                        <button type="button" class="btn btn-primary" id="resetBtn" onclick="userList.resetSearch();"><i class="Hui-iconfont">&#xe66b;</i> 重置</button>
+
+                    </div>
+                </div>
+
+            </form>
+        </div>
+        <!--<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a href="javascript:;" onclick="member_add('添加用户','member-add.html','','510')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加用户</a></span>  <span class="r">共有数据：<strong>88</strong> 条</span> </div>-->
+        <div class="mt-10">
+            <table style="min-width: 1600px;" class="table table-border table-bordered table-hover table-bg ">
+                <thead>
+                    <tr class="text-c">
+                        <th width="8%">用户姓名</th>
+                        <th width="8%">用户手机</th>
+                        <th width="13%">用户身份证</th>
+                        <th width="7%">白名单</th>
+                        <th width="7%">注册终端</th>
+                        <th width="7%">开通状态</th>
+                        <th width="10%">注册时间</th>
+                        <th width="7%">注册渠道</th>
+                        <th width="10%">提交申请时间</th>
+                        <th width="10%">完成审核时间</th>
+                        <!--<th width="10%">审核不通过时间</th>-->
+                        <th width="20%">操作</th>
+                    </tr>
+                </thead>
+                <tbody id="UserContent">
+                    <tr>
+                        <td colspan="11" style="text-align:center; color:#ddd;">请选择条件筛选数据！</td>
+                    </tr>
+                </tbody>
+            </table>
+            <!--分页-->
+            <div class="pagination cl mt-20 mb-20" id="pagination"></div>
+        </div>
+    </div>
+	
+	<!--弹窗-->
+	<div id="mymodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	    <div class="modal-dialog">
+	        <div class="modal-content radius">
+	            <div class="modal-header">
+	                <h3 class="modal-title">导出</h3>
+	                <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void(0);">×</a>
+	            </div>
+	            <div class="modal-body">
+	                <!--冻结、解冻、删除手机号弹窗-->
+	                <div class="cold-pop">
+	                	<p><b>确认<span class="action-txt">冻结</span>该用户账号？</b></p>
+	                	<table class="pop-table" border="" cellspacing="" cellpadding="">
+	                		<tr><th>用户手机</th><th>用户姓名</th><th>用户身份证</th></tr>
+	                		<tr><td><span class="pop-mobile"></span></td><td><span class="pop-name"></span></td><td><span class="pop-certId"></span></td></tr>
+	                	</table>
+	                	<p class="pop-reason-wrap"><span class="red">*</span><span>冻结原因：</span><input type="text" id="cold-reason" value="" placeholder="请输入冻结原因(必填)" /><span class="un-cold-reason"></span></p>
+	                </div>
+	                <!--变更手机号码弹窗-->
+	                <div class="change-pop">
+	                	<p><b>确认变更该用户手机号码？</b></p>
+	                	<p><span>用户姓名：</span><span class="pop-name"></span></p>
+	                	<p><span>用户身份证：</span><span class="pop-certId"></span></p>
+	                	<table class="pop-table pop-table-change" border="" cellspacing="" cellpadding="">
+	                		<tr><th>原手机号码</th><th><span class="pop-mobile"></span></th></tr>
+	                		<tr><td>变更为</td><td><input type="text" id="change-mobile" value="" placeholder="请输入变更后的手机号码"/></td></tr>
+	                	</table>
+	                </div>
+	                
+	                
+	            </div>
+	            <div class="modal-footer">
+	                <button id="submit" class="btn btn-primary" onclick="userList.submitFn(this)">确定</button>
+	                <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+	
+	
+    <!--_footer 作为公共模版分离出去-->
+    <script type="text/javascript" src="../../lib/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="../../lib/layer/2.4/layer.js"></script>
+    <script type="text/javascript" src="../../static/h-ui/js/H-ui.min.js"></script>
+    <script type="text/javascript" src="../../static/h-ui.admin/js/H-ui.admin.js"></script>
+    <!--/_footer 作为公共模版分离出去-->
+    <!--请在下方写此页面业务相关的脚本-->
+    <script type="text/javascript" src="../../lib/My97DatePicker/4.8/WdatePicker.js"></script>
+    <script type="text/javascript" src="../../lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="../../lib/laypage/1.2/laypage.js"></script>
+    <script src="../../js/common/jquery.tmpl.min.js" type="text/javascript"></script>
+    <script src="../../js/base/public.js" type="text/javascript"></script>
+    <script src="../../js/page/userList.js" type="text/javascript"></script>
+
+    <script type="text/html" id="tmplUserList">
+        {{if data.length>0}}
+        {{each(i,v) data}}
+        <tr class="text-c">
+            <td>{{= v.name}}</td>
+            <td>{{= v.mobile}}</td>
+            <td>{{= v.certId}}</td>
+            <td>{{= v.flag}}</td>
+            <td>
+                {{= v.strOrigin}}
+            </td>
+            <td class="td-status">
+                <span class="label label-success radius">
+                    {{= v.strStatus}}
+                </span>
+            </td>
+            <td>{{= v.createTime}}</td>
+            <td>{{= v.organizationStr}}</td>
+            <td>{{= v.checkApplyTime}}</td>
+            <td>{{= v.updateTime}}</td>
+            <!--<td>{{= v.notPassTime}}</td>-->
+            <td class="td-manage">
+                <!--onclick="userList.getDetailMsg('用户详情', 'userDetail.html?id={{= userId}}', '1', '900', '900')"-->
+                <!--href="userDetail.html?id={{= userId}}"-->
+                <a title="用户详情" onclick="userList.getDetailMsg({{= userId}},this);" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe695;</i></a>
+                <a style="text-decoration:none" class="ml-5" onclick="userList.resetUserLoginPwd('{{= userId}}', '{{= mobile}}', '{{= name}}')" href="javascript:;"
+                   title="重置用户登录密码"><i class="Hui-iconfont">&#xe62e;</i></a>
+                <a style="text-decoration:none" class="ml-5" onclick="userList.resetPaymentPwd('{{= userId}}','{{= mobile}}','{{= name}}')" href="javascript:;"
+                   title="重置支付密码"><i class="Hui-iconfont">&#xe63f;</i></a>
+                <!--冻结、解冻/钱包、删除-->
+                <a class="to-wallet" href="javascript:;" onclick="userList.goTOwallet(this)" userId="{{= v.userId}}">钱包</a>
+                {{if v.useStatus == 0}}
+                <a class="change" href="javascript:;" onclick="userList.popShow(this)" mobile="{{= v.mobile}}" userName="{{= v.name}}" userId="{{= v.userId}}" certId="{{= v.certId}}">变更手机号码</a>
+                <a class="cold" href="javascript:;" onclick="userList.popShow(this)" mobile="{{= v.mobile}}" userName="{{= v.name}}" userId="{{= v.userId}}" certId="{{= v.certId}}">冻结</a>
+                {{else v.useStatus == 1}}
+                <a class="change" href="javascript:;" onclick="userList.popShow(this)" mobile="{{= v.mobile}}" userName="{{= v.name}}" userId="{{= v.userId}}" certId="{{= v.certId}}">变更手机号码</a>
+                <a class="un-cold" href="javascript:;" onclick="userList.popShow(this)" mobile="{{= v.mobile}}" freezeReason="{{= v.freezeReason}}" userName="{{= v.name}}" userId="{{= v.userId}}" certId="{{= v.certId}}">解冻</a>
+                {{/if}}
+                {{if v.status == 0 || v.status == 5 || v.status == 10 || v.status == 15}}
+                <a class="delete" href="javascript:;" onclick="userList.popShow(this)" mobile="{{= v.mobile}}" userName="{{= v.name}}" userId="{{= v.userId}}" certId="{{= v.certId}}">删除</a>
+                {{else}}
+                <a class="delete" href="javascript:;" onclick="userList.popShow(this)" mobile="{{= v.mobile}}" userName="{{= v.name}}" userId="{{= v.userId}}" certId="{{= v.certId}}"></a>
+                {{/if}}
+                
+            </td>
+        </tr>
+        {{/each}}
+        <input type="hidden" value="{{= dataCount}}" id="dataCount" />
+        {{else}}
+        <tr>
+            <td colspan="11" style="color:#ddd; text-align:center;">暂无相关数据！</td>
+        </tr>
+        {{/if}}
+    </script>
+</body>
+
+</html>

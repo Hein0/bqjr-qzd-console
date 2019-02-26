@@ -1,0 +1,224 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <title>消息管理-新建消息</title>
+
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="../../lib/Hui-iconfont/1.0.8/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/skin/default/skin.css" id="skin" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/imgUp.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/styles.css?rev=@@hash" />
+    <link rel="stylesheet" type="text/css" href="../../css/messageManagement.css?rev=@@hash">
+
+</head>
+
+<body>
+
+    <nav class="breadcrumb">
+
+        <i class="Hui-iconfont">&#xe67f;</i>
+        <a href="messageManagement.html">
+            首页
+        </a>
+        <span class="c-gray en">&gt;</span>
+        <a href="messageManagement.html">
+            内容管理
+        </a>  <span class="c-gray en">&gt;</span>
+        <a href="messageManagement.html">
+            消息管理
+        </a>
+        <span class="c-gray en">&gt;</span>
+        <a id="a-add"> 新建</a>
+        <!--<a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px"
+           href="javascript:location.replace(location.href);" title="刷新">
+            <i class="Hui-iconfont">&#xe68f;</i>
+        </a>-->
+    </nav>
+
+    <div class="page-container" id="createmsg-form">
+        <legend class="ml-10" style="margin-top:-15px;"><span style="font-size:16px; " id="xjxx">新建消息</span></legend>
+        <div class="row cl">
+            <label class="form-label col-sm-2 text-r">消息类型</label>
+            <div class="col-sm-6">
+                <input type="radio" id="radio-1" name="pushType" value="1">
+                <label for="radio-1">App外部推送</label>
+                <input type="radio" class="ml-20" id="radio-2" name="pushType" value="0">
+                <label for="radio-2">App内消息</label>
+            </div>
+        </div>
+        <div action="" method="post" class="form form-horizontal" id="demoform-1">
+            <div class="row cl">
+                <label class="form-label col-sm-2">标题：</label>
+                <div class="formControls col-sm-6">
+                    <input type="text" name="title" id="title" class="input-text" autocomplete="off" placeholder="用于标识消息,不会推送" />
+                </div>
+                <span class="title-tips">推送：苹果用户看不到此标题，安卓可看到此标题 消息：用户可看到此标题</span>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-sm-2">推送内容/简介：</label>
+                <div class="formControls col-xs-8 col-sm-6">
+                    <textarea name="context" id="context" class="textarea" placeholder="" datatype="*10-500" onkeyup="$.Huitextarealength(this,400)"></textarea>
+                    <p class="textarea-numberbar"><em class="textarea-length">0</em>/400</p>
+                </div>
+            </div>
+            
+            <div class="row cl up-img-wrap">
+                <label class="form-label col-sm-2">消息图片：</label>
+                <div class="formControls col-xs-8 col-sm-6">
+                    <div class="up-img-box">
+                    	<div class="z_file ">
+							<a class="img-up-btn" href="javascript:;" style="background: lightgray;">插入图片</a>
+							<input type="file" name="file" id="file" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" disabled="disabled" multiple />
+						</div>
+						<div class="show-upload-img">
+							<img id="up-img" src=""/>
+						</div>
+						<div class="up-img-tips">
+							<p>尺寸要求540*250</p>
+							<p>格式PNG</p>
+						</div>
+                    </div>
+                </div>
+            </div>
+            
+            
+            
+            <div class="row cl">
+                <label class="form-label col-sm-2">内容链接：</label>
+                <div class="formControls skin-minimal col-sm-6">
+                    <div class="col-md-3" style="margin: 0;padding: 0 10px 0 0; display:block;" id="keyBox">
+                        <input type="text" name="messageKey" id="messageKey" class="input-text" placeholder="key" />
+                    </div>
+                    <div class="col-md-9" style="margin-right: 0;padding-right: 0; padding-left:0;">
+                        <input type="text" id="messageValue" name="messageValue" class="input-text" autocomplete="off" placeholder="value" />
+                    </div>
+
+                </div>
+                 <span style="margin-top: 5px;" class="title-tips">点击消息跳转的页面链接</span>
+            </div>
+            
+            <div class="row cl">
+                <label class="form-label col-sm-2">链接：</label>
+                <div class="formControls skin-minimal col-sm-6">
+                    <div class="col-md-12" style="margin-right: 0;padding-right: 0; padding-left:0;">
+                        <input type="text" id="link-url" name="url" class="input-text" autocomplete="off" placeholder="value" />
+                    </div>
+
+                </div>
+                 <span style="margin-top: 5px;" class="title-tips">消息跳转链接</span>
+            </div>
+            
+            <div class="row cl insidePushType">
+                <label class="form-label col-sm-2">消息类型：</label>
+                <div class="formControls skin-minimal col-sm-6">
+                    <select class="select" name="insidePushType" id="insidePushType" style="height:30px;width:30%;color: lightgray;" disabled="disabled">
+                        <option value="" selected>请选择一个类型</option>
+                        <option value="3">优惠促销</option>
+                        <option value="4">个人消息</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-sm-2">目标用户：</label>
+                <div class="formControls skin-minimal col-sm-6">
+                    <input type="radio" id="radio-3" name="type" value="2" checked>
+                    <label for="radio-3">全部用户</label>
+                    <input type="radio" class="ml-20" id="radio-4" value="3" name="type">
+                    <label for="radio-4">指定用户</label>
+                    <!--<a href="javascript:" class="download-user" id="download-user" onclick="exportExcel();">下载用户列表</a>-->
+                    <ul id="userList" style="display:none;"></ul>
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-sm-2"></label>
+                <div class="formControls col-sm-6">
+                    <form id="fileElemForm" method="post">
+                        <span class="btn-upload form-group">
+                            <input class="input-text upload-url" type="text" name="uploadfile-2" id="uploadfile-2" readonly="">
+                            <a href="javascript:void();" class="btn btn-primary upload-btn up-file-btn" style="background: lightgray;border-color:lightgray"><i class="Hui-iconfont"></i> 浏览文件</a>
+                            <input type="file" name="fileElem" class="input-file" id="fileElem" disabled="disabled" />
+                        </span>
+                    </form>
+                    <div class="success-tip" id="successip">上传成功！</div>
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-sm-2">推送时间：</label>
+                <div class="formControls skin-minimal col-sm-6">
+                    <input type="radio" id="radio-5" name="sendType" value="0" checked>
+                    <label for="radio-5">立即推送</label>
+                    <input type="radio" class="ml-20" id="radio-6" value="1" name="sendType">
+                    <label for="radio-6">定时推送</label>
+                    <input type="text" onfocus="WdatePicker({ dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{\'%y-%M-%d\'}' })" id="pushBookTime" class="input-text Wdate ml-20" name="pushBookTime" style="width: 200px;display:none;" />
+                </div>
+            </div>
+            <div class="row cl tips-way">
+                <label class="form-label col-sm-2">提醒方式：</label>
+                <div class="formControls skin-minimal col-sm-6">
+                    <label class="mr-5">角标</label>
+                    <input type="radio" id="radio-7" name="corner" value="0" checked>
+                    <label for="radio-7">0</label>
+                    <input type="radio" class="ml-20" id="radio-8" value="1" name="corner">
+                    <label for="radio-8">1</label>
+                    <label class="ml-15" style="color: #999;">使app右上角展示的消息角标数量增加0或1</label>
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-sm-2"></label>
+                <div class="col-sm-6  mt-20  mb-20 saveUpdateButton">
+                    <input class="btn btn-primary submitButton" style="width: 96px;" onclick="submitFrom(0)" type="button" value="立即推送">
+                    <input class="btn btn-primary" style="display: none;" type="button" value="定时推送">
+                    <input class="btn btn-primary ml-20" type="button" onclick="submitFrom(-1)" value="保存为草稿">
+                </div>
+                <div class="col-sm-6  mt-20  mb-20" id="returnBox" style="display:none;">
+                    <a class="btn btn-primary" href="javascript:" id="returnBtn">返回列表</a>
+                </div>
+            </div>
+        </div>
+
+        <!--确认弹窗-->
+        <div id="tip-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content radius">
+                    <div class="modal-header">
+                        <h3 class="modal-title">确认推送</h3>
+                        <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>
+                    </div>
+                    <div class="modal-body">
+                        <p>
+                            是否从该时间 <span id="startTime"></span><br>
+                            开始推送该消息至手机？
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" onclick="createMessage();">确定</button>
+                        <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--_footer 作为公共模版分离出去-->
+    <script type="text/javascript" src="../../lib/jquery/1.9.1/jquery.min.js"></script>
+    <script src="../../js/common/jquery.form.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="../../lib/layer/2.4/layer.js"></script>
+    <script type="text/javascript" src="../../static/h-ui/js/H-ui.min.js"></script>
+    <script type="text/javascript" src="../../static/h-ui.admin/js/H-ui.admin.js"></script>
+    <script type="text/javascript" src="../../js/base/public.js?rev=@@hash"></script>
+    <!--/_footer 作为公共模版分离出去-->
+    <!--请在下方写此页面业务相关的脚本-->
+    <script type="text/javascript" src="../../lib/My97DatePicker/4.8/WdatePicker.js"></script>
+    <script src="../../js/common/imgPlugin.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" src="../../js/page/createMessage.js?rev=@@hash"></script>
+</body>
+</html>

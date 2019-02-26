@@ -1,0 +1,633 @@
+*{
+    line-height: 100%;
+}
+* {
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	-webkit-tap-highlight-color: transparent;
+}
+
+*::-webkit-scrollbar {
+	width: 0px;
+	height: 0px;
+}
+
+input,
+textarea {
+	border: 0;
+	-webkit-appearance: none;
+}
+
+* ::-webkit-scrollbar-thumb {
+	border-radius: 0px;
+	-webkit-box-shadow: inset 0 0 0px rgba(0, 0, 0, 0);
+	background: rgba(0, 0, 0, 0);
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+	display: none;
+}
+
+html,
+body,
+#app {
+	width: 100%;
+	height: 100%;
+}
+
+body {
+	/* position: relative; */
+	overflow: hidden;
+	overflow-y: hidden;
+	/* top: 0; */
+}
+ul li{list-style-type:none}
+body{ margin: 0;padding: 0;font-family: "微软雅黑";}
+body,html{-webkit-text-size-adjust: none;width: 100%;height: 100%;}
+*{text-decoration: none;list-style: none;}
+img{border: 0px;vertical-align: middle;text-align: center;}
+ul,li,dl,dd,dt,p,ol,h1,h2,h3,h4,h5{font-size: 12px;font-weight: 100;padding: 0;margin: 0;}
+.wrap{margin: 0 auto;}
+.fl{float: left;}
+.fr{float: right;}
+.index{overflow: hidden;}
+.clr{clear:both; height:0px; width:100%; font-size:1px; line-height:0px; visibility:hidden; overflow:hidden;}
+.pointer{cursor:pointer;}
+a,input,button{ outline:none; }
+::-moz-focus-inner{border:0px;}
+a{color: #000;}
+.wrapper{clear: both;width: 100%;}
+
+
+*{
+    line-height: 100%;
+}
+/* 评分开始 */
+.all{
+    position: relative;
+}
+.all>input{
+    opacity:0;
+    position: absolute;
+    width:0.4rem;
+    height:0.4rem;
+    margin:0;
+    margin-top: 0.25335rem;
+}
+.all>input:nth-of-type(1),
+.all>span:nth-of-type(1){
+    display:none;
+}
+.all>span{
+    display: inline-block;
+    width: 0.4rem;
+    height: 0.4rem;
+    border-radius: 0.0667rem;
+    font-size:0.3733rem;
+    line-height: 0.4rem;
+    color:#fff;
+    background-color: #ff5c7e;
+    text-align: center;
+    -webkit-transition:color .2s;
+    transition:color .2s;
+    font-weight: bold;
+    /* margin-right: 0.1333rem; */
+}
+.all>input:checked~span{
+    color:#fff;
+    background-color: #D3D3D3;
+}
+.all>input:checked+span{
+    color:#fff;
+    background-color: #ff5c7e;
+}
+/* 评分结束 */
+
+#hospitalDetail{
+    width: 100%;
+    height: 100%;
+    background-color: #f8f8f8;
+    /* margin-bottom: 1.4667rem; */
+    display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */ 
+    display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */ 
+    display: -ms-flexbox; /* TWEENER - IE 10 */
+    display: -webkit-flex; /* NEW - Chrome */ 
+    display: flex; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+    flex-direction: column;
+    overflow: hidden;
+    flex-wrap: nowrap;
+}
+#hospitalDetail .container{
+    -webkit-box-flex: 1; /* OLD - iOS 6-, Safari 3.1-6 */ 
+    -moz-box-flex: 1; /* OLD - Firefox 19- */ 
+    /* width: 20%; For old syntax, otherwise collapses. */
+    -webkit-flex: 1; /* Chrome */ 
+    -ms-flex: 1; /* IE 10 */ 
+    flex: 1; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+    flex: 1 1 auto;
+    overflow-x: hidden;
+    overflow-y: auto;
+    /*解决ios上滑动不流畅*/
+    -webkit-overflow-scrolling: touch;
+    position: relative;
+    height: 100%;
+}
+#hospitalDetail::-webkit-scrollbar {
+    display: none;
+}
+/* header */
+#hospitalDetail .container .header{
+    height: 6.3333rem;
+    background-color: #fff;
+    display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */ 
+    display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */ 
+    display: -ms-flexbox; /* TWEENER - IE 10 */
+    display: -webkit-flex; /* NEW - Chrome */ 
+    display: flex; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+    flex-direction: column;
+}
+#hospitalDetail .container .header .attention{
+    display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */ 
+    display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */ 
+    display: -ms-flexbox; /* TWEENER - IE 10 */
+    display: -webkit-flex; /* NEW - Chrome */ 
+    display: flex; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+    flex-direction: column;
+    align-items: center;
+    margin-top: 0.56rem;
+}
+#hospitalDetail .container .header .attention .hospitalIcon{
+    width: 1.6rem;
+    height: 1.6rem;
+    margin-bottom: 0.3333rem;
+}
+#hospitalDetail .container .header .attention .hospitalName{
+    color: #505050;
+    font-size: 0.3733rem;
+    margin-bottom: 0.24rem;
+}
+#hospitalDetail .container .header .attention .hospitalType{
+    color: #787878;
+    font-size: 0.32rem;
+    margin-bottom: 0.48rem;
+}
+#hospitalDetail .container .header .attention .hospitalAttention{
+    width: 1.44rem;
+    height: 0.5067rem;
+    border-radius: 0.2533rem;
+    border: none;
+    background-color: #ff66b2;
+    color: #fff;
+    margin-bottom: 0.64rem;
+    font-size: 0.32rem;
+}
+#hospitalDetail .container .header .bottom .popularity{
+    display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */ 
+    display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */ 
+    display: -ms-flexbox; /* TWEENER - IE 10 */
+    display: -webkit-flex; /* NEW - Chrome */ 
+    display: flex; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+    justify-content: space-between;
+}
+#hospitalDetail .container .header .bottom .popularity li{
+    display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */ 
+    display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */ 
+    display: -ms-flexbox; /* TWEENER - IE 10 */
+    display: -webkit-flex; /* NEW - Chrome */ 
+    display: flex; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+    flex-direction: column;
+    flex: 1;
+    font-size: 0.3733rem;
+    color: #787878;
+}
+#hospitalDetail .container .header .bottom .popularity li span{
+    text-align: center;
+}
+#hospitalDetail .container .header .bottom .popularity li span:first-child{
+    margin-bottom: 0.2933rem;
+}
+#hospitalDetail .container .header .bottom .popularity li:nth-of-type(1) span:first-child,
+#hospitalDetail .container .header .bottom .popularity li:nth-of-type(2) span:first-child{
+    border-right: 1px solid #e6e6e6;
+}
+#hospitalDetail .container .header .bottom .popularity li span:last-child{
+    color: #4f4f4f;
+}
+/* ortherInfo */
+#hospitalDetail .container .ortherInfo{
+    display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */ 
+    display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */ 
+    display: -ms-flexbox; /* TWEENER - IE 10 */
+    display: -webkit-flex; /* NEW - Chrome */ 
+    display: flex; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+    flex-direction: column;
+    margin-top: 0.2933rem;
+    background-color: #fff;
+    padding: 0 0.3733rem;
+}
+#hospitalDetail .container .ortherInfo li{
+    display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */ 
+    display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */ 
+    display: -ms-flexbox; /* TWEENER - IE 10 */
+    display: -webkit-flex; /* NEW - Chrome */ 
+    display: flex; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+    align-items: center;
+    padding: 0.1867rem 0;
+    border-bottom: 1px solid #e6e6e6;
+    position: relative;
+}
+#hospitalDetail .container .ortherInfo>li::after{
+    content: '';
+    display: block;
+    border: solid 0.0267rem #c8c8c8;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    position: absolute;
+    top: 50%;
+    right: 0.2667rem;
+    width: 0.1333rem;
+    height: 0.1333rem;
+    -webkit-transform: translateY(-50%) rotate(45deg);
+    transform: translateY(-50%) rotate(45deg);
+}
+#hospitalDetail .container .ortherInfo li:first-child{
+    /* padding-top: 0.2933rem; */
+    /* padding-bottom: 0.0667rem; */
+    align-items: flex-start;
+}
+#hospitalDetail .container .ortherInfo li:last-child{
+    border: none;
+}
+#hospitalDetail .container .ortherInfo li img{
+    width: 0.5067rem;
+    height: 0.5067rem;
+    margin-right: 0.1467rem;
+}
+#hospitalDetail .container .ortherInfo li span{
+    color: #787878;
+    font-size: 0.32rem;
+}
+#hospitalDetail .container .ortherInfo li:first-child span{
+    line-height: 0.5067rem;
+}
+#hospitalDetail .container .ortherInfo li .product{
+    display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */ 
+    display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */ 
+    display: -ms-flexbox; /* TWEENER - IE 10 */
+    display: -webkit-flex; /* NEW - Chrome */ 
+    display: flex; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-left: 0.2133rem;
+    flex: 1;
+}
+#hospitalDetail .container .ortherInfo li .product li{
+    padding: 0 0.1467rem;
+    border: 1px solid #ebebeb;
+    line-height: 0.6133rem;
+    font-size: 0.32rem;
+    color: #ff66b2;
+    border-radius: 0.6133rem;
+    margin-bottom: 0.2133rem;
+}
+/* banner */
+#hospitalDetail .container .banner{
+    margin-top: 0.2667rem;
+    width: 100%;
+    height: 3.7333rem;
+}
+#hospitalDetail .container .banner img{width:100%}
+#hospitalDetail .container .banner .mint-swipe{
+    width: 100%;
+    height: 100%;
+}
+#hospitalDetail .container .banner .mint-swipe img{
+    width: 100%;
+    height: 100%;
+}
+/* hospitalInfo */
+#hospitalDetail .container .hospitalInfo{
+    margin-top: 0.2667rem;
+    background-color: #fff;
+    width: 100%;
+    padding: 0 0.3733rem;
+    display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */ 
+    display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */ 
+    display: -ms-flexbox; /* TWEENER - IE 10 */
+    display: -webkit-flex; /* NEW - Chrome */ 
+    display: flex; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+    flex-direction: column;
+    justify-content: center;
+}
+#hospitalDetail .container .hospitalInfo .location{
+    display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */ 
+    display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */ 
+    display: -ms-flexbox; /* TWEENER - IE 10 */
+    display: -webkit-flex; /* NEW - Chrome */ 
+    display: flex; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+    align-items: center;
+    height: 0.9467rem;
+}
+#hospitalDetail .container .hospitalInfo .location img{
+    margin-right: 0.08rem;
+}
+#hospitalDetail .container .hospitalInfo .location span{
+    font-size: 0.3733rem;
+    color: #ff65b1;
+}
+#hospitalDetail .container .hospitalInfo .photos{
+    display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */ 
+    display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */ 
+    display: -ms-flexbox; /* TWEENER - IE 10 */
+    display: -webkit-flex; /* NEW - Chrome */ 
+    display: flex; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+#hospitalDetail .container .hospitalInfo .photos img{
+    width: 2.9333rem;
+    height: 2.8rem;
+    border-radius: 0.0667rem;
+    margin-bottom: 0.0933rem;
+}
+#hospitalDetail .container .hospitalInfo .photos img:not(:nth-of-type(3n)){
+    margin-right: 0.2267rem;
+}
+#hospitalDetail .container .hospitalInfo p{
+    font-size: 0.3733rem;
+    line-height: 0.4667rem;
+    color: #4f4f4f;
+    margin-top: 0.1733rem;
+    margin-bottom: 0.2667rem;
+}
+/* Commodities */
+#hospitalDetail .container .Commodities{
+    margin-top: 0.2667rem;
+}
+#hospitalDetail .container .title{
+    background-color: #fff;
+    padding: 0 0.3733rem;
+    
+}
+#hospitalDetail .container .title h3{
+    height: 0.9067rem;
+    line-height: 0.9067rem;
+    border-bottom: 1px solid #e6e6e6;
+    color: #282828;
+    font-size: 0.3733rem;
+}
+#hospitalDetail .container .Commodities ul{
+    background-color: #f8f8f8;
+}
+#hospitalDetail .container .Commodities ul li{
+    background-color: #fff;
+    height: 2.4rem;
+    padding: 0.0933rem 0.3733rem;
+    margin-bottom: 0.2667rem;
+    display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */ 
+    display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */ 
+    display: -ms-flexbox; /* TWEENER - IE 10 */
+    display: -webkit-flex; /* NEW - Chrome */ 
+    display: flex; /* NEW, Spec - Opera 12.1, Firefox 20+ */ 
+}
+#hospitalDetail .container .Commodities ul li img{
+    width: 2.1867rem;
+    height: 2.1867rem;
+    margin-right: 0.2667rem;
+}
+#hospitalDetail .container .Commodities ul li .commodityInfo{
+    display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */ 
+    display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */ 
+    display: -ms-flexbox; /* TWEENER - IE 10 */
+    display: -webkit-flex; /* NEW - Chrome */ 
+    display: flex; /* NEW, Spec - Opera 12.1, Firefox 20+ */ 
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 1;
+}
+#hospitalDetail .container .Commodities ul li .commodityInfo h4{
+    margin-top: 0.16rem;
+    font-size: 0.3733rem;
+    line-height: 0.48rem;
+}
+#hospitalDetail .container .Commodities ul li .commodityInfo .price{
+    margin-bottom: 0.4rem;
+    display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */ 
+    display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */ 
+    display: -ms-flexbox; /* TWEENER - IE 10 */
+    display: -webkit-flex; /* NEW - Chrome */ 
+    display: flex; /* NEW, Spec - Opera 12.1, Firefox 20+ */ 
+    align-items: flex-end;
+    position: relative;
+}
+#hospitalDetail .container .Commodities ul li .commodityInfo .price .sale{
+    font-size: 0.4rem;
+    color: #ff5c7e;
+    margin-right: 0.2rem;
+}
+#hospitalDetail .container .Commodities ul li .commodityInfo .price .discount{
+    font-size: 0.32rem;
+    color: #9b9b9c;
+}
+#hospitalDetail .container .Commodities ul li .commodityInfo .price .book{
+    font-size: 0.32rem;
+    color: #787878;
+    position: absolute;
+    right: 0;
+}
+/* doctor */
+#hospitalDetail .container .doctor{
+    background-color: #fff;
+}
+#hospitalDetail .container .doctor .doctorInfo{
+    display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */ 
+    display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */ 
+    display: -ms-flexbox; /* TWEENER - IE 10 */
+    display: -webkit-flex; /* NEW - Chrome */ 
+    display: flex; /* NEW, Spec - Opera 12.1, Firefox 20+ */ 
+    padding: 0 0.3733rem;
+    margin-top: 0.0933rem;
+}
+#hospitalDetail .container .doctor .doctorInfo img{
+    width: 2.1867rem;
+    height: 2.1867rem;
+    margin-right: 0.2667rem;
+}
+#hospitalDetail .container .doctor .doctorInfo .doctorDetail{
+    display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */ 
+    display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */ 
+    display: -ms-flexbox; /* TWEENER - IE 10 */
+    display: -webkit-flex; /* NEW - Chrome */ 
+    display: flex; /* NEW, Spec - Opera 12.1, Firefox 20+ */ 
+    flex-direction: column;
+    padding: 0.2rem 0;
+    justify-content: space-between;
+    flex: 1;
+}
+#hospitalDetail .container .doctor .doctorInfo .doctorDetail h4{
+    font-size: 0.3733rem;
+    line-height: 0.48rem;
+    color: #505050;
+}
+#hospitalDetail .container .doctor .doctorInfo .doctorDetail .adress{
+    font-size: 0.32rem;
+    line-height: 0.48rem;
+    color: #a0a0a0;
+}
+#hospitalDetail .container .doctor .doctorInfo .doctorDetail .book{
+    display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */ 
+    display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */ 
+    display: -ms-flexbox; /* TWEENER - IE 10 */
+    display: -webkit-flex; /* NEW - Chrome */ 
+    display: flex; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+    justify-content: space-between;
+}
+#hospitalDetail .container .doctor .doctorInfo .doctorDetail .book span{
+    font-size: 0.32rem;
+    color: #787878;
+}
+#hospitalDetail .container .doctor .ortherInfo{
+    margin-top: 0;
+}
+#hospitalDetail .container .doctor .ortherInfo>li:first-of-type{
+    padding-top: 0.2933rem;
+    padding-bottom: 0;
+}
+#hospitalDetail .container .doctor .ortherInfo>li:first-of-type::after{
+    display: none;
+}
+/* mainCase */
+#hospitalDetail .container .mainCase{
+    margin-top: 0.2667rem;
+    background-color: #fff;
+}
+#hospitalDetail .container .mainCase .case{
+    display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */ 
+    display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */ 
+    display: -ms-flexbox; /* TWEENER - IE 10 */
+    display: -webkit-flex; /* NEW - Chrome */ 
+    display: flex; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+    padding: 0.0933rem 0.3733rem;
+}
+#hospitalDetail .container .mainCase .case img{
+    width: 2.1867rem;
+    height: 2.1867rem;
+    margin-right: 0.3333rem;
+}
+#hospitalDetail .container .mainCase .case .caseInfo{
+    display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */ 
+    display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */ 
+    display: -ms-flexbox; /* TWEENER - IE 10 */
+    display: -webkit-flex; /* NEW - Chrome */ 
+    display: flex; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+    flex-direction: column;
+    justify-content: space-between;
+}
+#hospitalDetail .container .mainCase .case .caseInfo .caseName{
+    display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */ 
+    display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */ 
+    display: -ms-flexbox; /* TWEENER - IE 10 */
+    display: -webkit-flex; /* NEW - Chrome */ 
+    display: flex; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+    margin-top: 0.2667rem;
+    align-items: flex-end;
+}
+#hospitalDetail .container .mainCase .case .caseInfo .caseName h4{
+    font-size: 0.3733rem;
+    line-height: 0.48rem;
+    margin-right: 0.2133rem;
+}
+#hospitalDetail .container .mainCase .case .caseInfo .caseName span{
+    padding: 0.0533rem;
+    background-color: #5fc5ff;
+    border-radius: 0.0667rem;
+    height: 0.32rem;
+    color: #fff;
+    font-size: 0.24rem;
+    line-height: 0.24rem;
+}
+#hospitalDetail .container .mainCase .case .caseInfo .score{
+    display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */ 
+    display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */ 
+    display: -ms-flexbox; /* TWEENER - IE 10 */
+    display: -webkit-flex; /* NEW - Chrome */ 
+    display: flex; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+    align-items: center;
+}
+#hospitalDetail .container .mainCase .case .caseInfo .score>span{
+    font-size: 0.32rem;
+    color: #787878;
+}
+#hospitalDetail .container .mainCase .case .caseInfo .score .scoreNum{
+    color: #282828;
+    font-size: 0.3733rem;
+    margin-right: 0.16rem;
+}
+#hospitalDetail .container .mainCase .case .caseInfo .score .all span,
+#hospitalDetail .container .mainCase .case .caseInfo .score .all input{
+    width: 0.3467rem;
+    height: 0.3467rem;
+    line-height: 0.3467rem;
+    margin-right: 0.2rem;
+}
+#hospitalDetail .container .mainCase .case .caseInfo .score .all input{
+    margin-top: 0;
+}
+#hospitalDetail .container .mainCase .case .caseInfo .data{
+    margin-bottom: 0.2933rem;
+    font-size: 0.32rem;
+    color: #a0a0a0;
+}
+/* bottomBanner */
+#hospitalDetail .container .bottomBanner{
+    margin-top: 0.2667rem;
+    margin-bottom: 0.5733rem;
+    width: 100%;
+    height: 3.7333rem;
+}
+/* footer */
+#hospitalDetail .footer{
+    display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */ 
+    display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */ 
+    display: -ms-flexbox; /* TWEENER - IE 10 */
+    display: -webkit-flex; /* NEW - Chrome */ 
+    display: flex; /* NEW, Spec - Opera 12.1, Firefox 20+ */    
+    width: 100%;
+    height: 1.3067rem;
+}
+#hospitalDetail .footer button{
+    width: 50%;
+    height: 1.3067rem;
+    background-color: #ff9ccd;
+    border: none;
+    display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */ 
+    display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */ 
+    display: -ms-flexbox; /* TWEENER - IE 10 */
+    display: -webkit-flex; /* NEW - Chrome */ 
+    display: flex; /* NEW, Spec - Opera 12.1, Firefox 20+ */ 
+    justify-content: center;
+    align-items: center;
+}
+#hospitalDetail .footer button.online{
+    background-color: #ff65b1;
+}
+#hospitalDetail .footer button img{
+    vertical-align: middle;
+    margin-right: 0.0667rem;
+}
+#hospitalDetail .footer button span{
+    color: #fff;
+    font-size: 0.3733rem;
+    line-height: 0.3733rem;
+}
+ /* 图片轮播 */
+#hospitalDetail .swiper-container {
+    width: 100%;
+    height: 5.6rem;
+}
+#hospitalDetail .swiper-container img {
+    width: 100%;
+    height: 100%;
+}
+

@@ -1,0 +1,683 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <title>案例继续续写</title>
+
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="../../lib/Hui-iconfont/1.0.8/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/skin/default/skin.css" id="skin" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/style.css" />
+    <link rel="stylesheet" href="../../bootstrap-3.3.7-dist/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="../../css/logSpu.css?rev=@@hash">
+    <style>
+        .upload-pic-wrap {border: none;}
+        .type-select-panel .top-part ul {width: 30%;}
+        .type-select-panel .bottom-part .result {float: none;}
+        .upload-pic-content .pic-wrapImg {position: relative;width: 122px;height: auto;float: left;margin: 10px;overflow: hidden;}
+        .pic-wrapImg .loadpic {float: none!important;width: 100%!important;margin: 0px!important;box-sizing: border-box;}
+    	.pic-wrapImg .loadpic-label span { position: absolute;bottom: 6px;display: inline-block;line-height: 30px;left: 45px;}
+        .addWrap{cursor:pointer ;}
+        .items-text {margin-left: 19%;}
+        .redf{color:red;font-style:normal}
+        .loadpic-wrap p span {color: #333333;}
+        .set-cover {float: left; cursor: pointer;}
+    	.del-img {float: right;cursor: pointer;}
+        
+        
+    </style>
+</head>
+
+<body>
+    <div class="Hui-article">
+        <article class="cl pd-20">
+            <div class="spu-cont">
+				<div style="width:80%;height:80%;padding:10px;" class="continue">
+		            <form id="form-step-2" class="form form-horizontal form-step"  style="width:100%;height:100%;display: block;">
+		                <div class="row cl">
+		                    <label class="form-label col-xs-2 col-sm-2">
+		                        <span class="red">*</span>术后：</label>
+		                    <div class="formControls col-xs-10 col-sm-10">
+		                        <input id="oper_after_day" class="input-nub" min="1" name="oper_after_day" placeholder="请输入术后第几天" type="number" />
+		                        <span>天</span>
+		                    </div>
+		                </div>
+		                <div class="row cl">
+		                    <label class="form-label col-xs-2 col-sm-2">
+		                        <span class="red">*</span>记录日记：</label>
+		                    <div class="formControls col-xs-10 col-sm-10">
+		                        <textarea id="introduce" class="textarea" type="text" name="introduce"></textarea>
+		                    </div>
+		                </div>
+		
+		                <div class="row cl ">
+	                        <label class="form-label col-xs-2 col-sm-2">
+	                            <span class="red">*</span>术后照片：</label>
+	                        <div class="upload-pic-wrap default-pic-wrap">
+	                            <div class="upload-pic-content">
+	                            	<div class="videoWraps isNoShow videoHide">
+	                            		<div class="pic-wrapImg">
+			                                <div class="loadpic">
+			                                    <input name="file" class="loadpic-input" accept="video/*" type="file" data-name="after_main_video" id="after_main_video">
+			                                    <label class="loadpic-label">
+			                                        <i class="Hui-iconfont">&#xe600;</i>
+			                                        <span>视频</span>
+			                                    </label>
+			                                </div>
+			                                <p>
+		                                        <span class="del-img">删除</span>
+		                                    </p>
+			                            </div>
+	                            		<div class="pic-wrapImg">
+			                                <div class="loadpic">
+			                                    <input name="file" class="loadpic-input" accept="image/jpg,image/jpeg,image/png" type="file" data-name="after_main_video_pic" id="after_main_video_pic">
+			                                    <label class="loadpic-label">
+			                                        <i class="Hui-iconfont">&#xe600;</i>
+			                                        <span>视频封面</span>
+			                                    </label>
+			                                </div>
+			                                <p>
+		                                        <span class="del-img">删除</span>
+		                                    </p>
+			                            </div>
+	                            	</div>
+		                            
+		                            <div class="imgWraps isNoShow">
+		                                <div class="pic-wrapImg">
+			                                <div class="loadpic">
+			                                    <input name="file" class="loadpic-input" accept="image/jpg,image/jpeg,image/png" type="file" id="after1">
+			                                    <label class="loadpic-label">
+			                                        <i class="Hui-iconfont">&#xe600;</i>
+			                                    </label>
+			                                </div>
+			                                <p>
+		                                        <span class="set-cover">设为封面</span>
+		                                        <span class="del-img">删除</span>
+		                                    </p>
+			                            </div>   
+				                        
+				                        <div class="pic-wrapImg">
+			                                <div class="loadpic">
+			                                    <input name="file" class="loadpic-input" accept="image/jpg,image/jpeg,image/png" type="file" id="after2">
+			                                    <label class="loadpic-label">
+			                                        <i class="Hui-iconfont">&#xe600;</i>
+			                                    </label>
+			                                </div>
+			                                <p>
+		                                        <span class="set-cover">设为封面</span>
+		                                        <span class="del-img">删除</span>
+		                                    </p>
+			                            </div>
+			                            
+			                            <div class="pic-wrapImg">    
+			                                <div class="loadpic">
+			                                    <input name="file" class="loadpic-input" accept="image/jpg,image/jpeg,image/png" type="file" id="after3">
+			                                    <label class="loadpic-label">
+			                                        <i class="Hui-iconfont">&#xe600;</i>
+			                                    </label>
+			                                </div>
+			                                <p>
+		                                        <span class="set-cover">设为封面</span>
+		                                        <span class="del-img">删除</span>
+		                                    </p>
+			                            </div>
+				                            
+				                        <div class="pic-wrapImg">     
+			                                <div class="loadpic">
+			                                    <input name="file" class="loadpic-input" accept="image/jpg,image/jpeg,image/png" type="file" id="after4">
+			                                    <label class="loadpic-label">
+			                                        <i class="Hui-iconfont">&#xe600;</i>
+			                                    </label>
+			                                </div>
+			                                <p>
+		                                        <span class="set-cover">设为封面</span>
+		                                        <span class="del-img">删除</span>
+		                                    </p>
+			                            </div>
+			                            
+			                            <div class="pic-wrapImg"> 
+			                                <div class="loadpic">
+			                                    <input name="file" class="loadpic-input" accept="image/jpg,image/jpeg,image/png" type="file" id="after5">
+			                                    <label class="loadpic-label">
+			                                        <i class="Hui-iconfont">&#xe600;</i>
+			                                    </label>
+			                                </div>
+			                                <p>
+		                                        <span class="set-cover">设为封面</span>
+		                                        <span class="del-img">删除</span>
+		                                    </p>
+			                            </div> 
+			                            
+			                            <div class="pic-wrapImg">     
+			                                <div class="loadpic">
+			                                    <input name="file" class="loadpic-input" accept="image/jpg,image/jpeg,image/png" type="file" id="after6">
+			                                    <label class="loadpic-label">
+			                                        <i class="Hui-iconfont">&#xe600;</i>
+			                                    </label>
+			                                </div>
+			                                <p>
+		                                        <span class="set-cover">设为封面</span>
+		                                        <span class="del-img">删除</span>
+		                                    </p>
+			                            </div>  
+			                            
+			                            <div class="pic-wrapImg">     
+			                                <div class="loadpic">
+			                                    <input name="file" class="loadpic-input" accept="image/jpg,image/jpeg,image/png" type="file" id="after7">
+			                                    <label class="loadpic-label">
+			                                        <i class="Hui-iconfont">&#xe600;</i>
+			                                    </label>
+			                                </div>
+			                                <p>
+		                                        <span class="set-cover">设为封面</span>
+		                                        <span class="del-img">删除</span>
+		                                    </p>
+			                            </div>  
+			                        </div>    
+			                            
+	                            </div>
+	                        </div>
+	                    </div>
+		
+		                <div class="row cl">
+		                    <label class="form-label col-xs-2 col-sm-2">
+		                        <span class="red"></span>显示状态：</label>
+		                    <div class="formControls col-xs-10 col-sm-10">
+		                        <div class="radio-box">
+		                            <input type="radio" id="radio_1" name="show_status" checked>
+		                            <label for="radio_1">公开</label>
+		                        </div>
+		                        <div class="radio-box">
+		                            <input type="radio" id="radio_2" name="show_status">
+		                            <label for="radio_2">私密</label>
+		                        </div>
+		                        <div class="radio-box">
+		                            <input type="radio" id="radio_3" name="show_status">
+		                            <label for="radio_3">匿名公开</label>
+		                        </div>
+		                    </div>
+		                </div>
+		
+		                <div class="row cl">
+		                    <label class="form-label col-xs-2 col-sm-2">
+		                        <span class="red"></span>美容反馈：</label>
+		                    <div class="formControls col-xs-10 col-sm-10">
+		                        <div class="clearfix">
+		                            <span class="f-l f-15 va-m">满意度：</span>
+		                            <div id="star-1" class="star-bar size-M f-l mr-10 va-m"></div>
+		                            <strong id="result-1" class="f-l va-m">非常满意</strong>
+		                        </div>
+		                        <div class="clearfix">
+		                            <span class="f-l f-15 va-m">肿胀度：</span>
+		                            <div id="star-2" class="star-bar size-M f-l mr-10 va-m"></div>
+		                            <strong id="result-2" class="f-l va-m">完全不肿</strong>
+		                        </div>
+		                        <div class="clearfix">
+		                            <span class="f-l f-15 va-m">疼痛感：</span>
+		                            <div id="star-3" class="star-bar size-M f-l mr-10 va-m"></div>
+		                            <strong id="result-3" class="f-l va-m">完全不疼</strong>
+		                        </div>
+		                        <div class="clearfix">
+		                            <span class="f-l f-15 va-m">疤痕度：</span>
+		                            <div id="star-4" class="star-bar size-M f-l mr-10 va-m"></div>
+		                            <strong id="result-4" class="f-l va-m">完全无疤</strong>
+		                        </div>
+		                    </div>
+		                </div>
+		                <div class="row cl">
+		                    <div class="col-xs-10 col-sm-10 col-xs-offset-2 col-sm-offset-2">
+		                        <input class="btn btn-primary submit-btn" id="submit-btn" value="提交" type="button">&nbsp;&nbsp;&nbsp;&nbsp;
+		                    	<input class="btn btn-primary continueBtn" id="continueBtn" value="继续续写" type="button">
+		                    </div>
+		                </div>
+		            </form>
+		        </div>
+            </div>
+        </article>
+    </div>
+
+    <!--footer 作为公共模版分离出去-->
+    <script type="text/javascript" src="../../lib/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="../../lib/layer/2.4/layer.js"></script>
+    <script type="text/javascript" src="../../static/h-ui/js/H-ui.min.js"></script>
+    <script type="text/javascript" src="../../static/h-ui.admin/js/H-ui.admin.js"></script>
+    <script type="text/javascript" src="../../lib/My97DatePicker/4.8/WdatePicker.js"></script>
+    <!--footer 作为公共模版分离出去-->
+
+    <script type="text/javascript" src="../../lib/arttemplate/template-web.js"></script>
+    <!-- <script type="text/javascript" src="../../lib/laypage/1.2/laypage.js"></script> -->
+    <script type="text/javascript" src="../../js/base/public.js?rev=@@hash"></script>
+    <script type="text/javascript" src="../../js/common/common.js?rev=@@hash"></script>
+    <script type="text/javascript" src="../../bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../lib/lrz.bundle.js"></script>
+    <!--<script type="text/javascript" src="../../js/page/logRedact.js?rev=@@hash"></script>-->
+	<script type="text/javascript">
+        $(function () {
+            $("#star-1").raty({
+                hints: ['1', '2', '3', '4', '5'],//自定义分数
+                starOff: 'iconpic-star-S-default.png',//默认灰色星星
+                starOn: 'iconpic-star-S.png',//黄色星星
+                path: '../../static/h-ui/images/star',//可以是相对路径
+                number: 5,//星星数量，要和hints数组对应
+                showHalf: true,
+                targetKeep: true,
+                click: function (score, evt) {//点击事件
+                    //第一种方式：直接取值
+                    $("#result-1").html('你的评分是' + score + '分');
+                    $("#result-1").attr("data-score", score);
+                }
+            });
+            $("#star-2").raty({
+                hints: ['1', '2', '3', '4', '5'],
+                starOff: 'iconpic-star-S-default.png',
+                starOn: 'iconpic-star-S.png',
+                path: '../../static/h-ui/images/star',
+                number: 5,
+                showHalf: true,
+                targetKeep: true,
+                click: function (score, evt) {//点击事件
+                    //第一种方式：直接取值
+                    $("#result-2").html('你的评分是' + score + '分');
+                    $("#result-2").attr("data-score", score);
+                }
+            });
+            $("#star-3").raty({
+                hints: ['1', '2', '3', '4', '5'],
+                starOff: 'iconpic-star-S-default.png',
+                starOn: 'iconpic-star-S.png',
+                path: '../../static/h-ui/images/star',
+                number: 5,
+                showHalf: true,
+                targetKeep: true,
+                click: function (score, evt) {//点击事件
+                    //第一种方式：直接取值
+                    $("#result-3").html('你的评分是' + score + '分');
+                    $("#result-3").attr("data-score", score);
+                }
+            });
+            $("#star-4").raty({
+                hints: ['1', '2', '3', '4', '5'],
+                starOff: 'iconpic-star-S-default.png',
+                starOn: 'iconpic-star-S.png',
+                path: '../../static/h-ui/images/star',
+                number: 5,
+                showHalf: true,
+                targetKeep: true,
+                click: function (score, evt) {//点击事件
+                    //第一种方式：直接取值
+                    $("#result-4").html('你的评分是' + score + '分');
+                    $("#result-4").attr("data-score", score);
+                }
+            });
+            $("#star-5").raty({
+                hints: ['1', '2', '3', '4', '5'],
+                starOff: 'iconpic-star-S-default.png',
+                starOn: 'iconpic-star-S.png',
+                path: '../../static/h-ui/images/star',
+                number: 5,
+                showHalf: true,
+                targetKeep: true,
+                click: function (score, evt) {//点击事件
+                    //第一种方式：直接取值
+                    $("#result-5").html('你的评分是' + score + '分');
+                    $("#result-5").attr("data-score", score);
+                }
+            });
+            $('.select-hospital').on('click', function () {
+                var $self = $(this),
+                    $target = $self.siblings('.name-select-panel');
+
+                $target.toggle();
+            });
+        });
+
+    </script>
+
+</body>
+	<script type="text/javascript">
+		var spuUtils = {
+			//暂存
+			'cache': {},
+			'continue':{
+				after_pics: [],
+				after_main_video:"",
+				after_main_video_pic:"",
+			},
+			//续写的数据
+			logSpuData: {
+				id: "",
+				status:"",//
+				show_status: "", //显示状态
+				satisfaction: "", //满意度
+				swelling: "", //肿胀度
+				pain: "", //疼痛感
+				scar: "", //疤痕度
+				index:"",
+				case_slaves: [],
+				signImg: '',//记号上传图片
+				signVideo: '',//记号上传视频
+				isTrue : true,
+			},
+			//初始化
+	        init: function () {
+	            var path = location.href;
+	            var index = parent.layer.getFrameIndex(window.name);
+				spuUtils.logSpuData.index = index;
+	            if (path.indexOf('?') >= 0) {
+	                var params = path.substring(path.indexOf('?') + 1, path.length).split('&'),
+	                    id = '',
+	                    status = '';
+	                for (var i = 0; i < params.length; i++) {
+	                    if (params[i].indexOf('id') != -1) {
+	                        id = params[i].split('=')[1];
+	                    }else if (params[i].indexOf("status") != -1) {
+	                        status = params[i].split("=")[1];
+	                    }
+	                }
+                	spuUtils.logSpuData.id = id;
+                    spuUtils.logSpuData.status = status;
+	                spuUtils.getGoodInfo(id);//获取数据
+	            }
+	        },
+	        
+	        
+	        //获取数据
+	        getGoodInfo: function (id) {
+	            
+	            $.get(base+'case/getCaseById?id='+id, {}, function (res) {
+	                if (!res.message) {
+	                    spuUtils.cache.details = res.data;
+	                    console.log(spuUtils);
+	                }
+	            })
+	        },
+	        // 获取视频大小和时间
+			uploadVideoBefore: function (file, next) {
+		    	var size = file.size/1024/1024, video, time;
+		    		size = size.toFixed(2);
+		
+				if (size > 10) {
+					layer.msg('请上传小于10M的视频');
+					return
+				}
+				$('#up-video-be').remove();
+				video = '<video style="display: none" id="up-video-be"></video>';
+				$(video).appendTo($('body'));
+				video = $('#up-video-be');
+				video.attr('src', URL.createObjectURL(file));
+				video.bind('canplay', function () {
+					time = this.duration.toFixed(2);
+					if (time > 15) {
+		                layer.msg('视频长度超出15秒');
+					} else {
+						next();
+					}
+		        })
+				video.bind('error', function () {
+		            $.Huialert('视频错误,重新上传');
+		        })
+		   	},
+	        // 术后删除
+			delImg: function (objs,index,id) {
+			
+				if (objs.parents('.videoWraps').length) { // 删除视频信息
+					spuUtils.continue[id] = '';
+					$(objs).parents(".pic-wrapImg").find('input').attr("data-src","");
+					if(spuUtils.continue.after_main_video == '' && spuUtils.continue.after_main_video_pic == ''){
+						$(objs).parents(".upload-pic-content").find(".isNoShow").show();
+						spuUtils.logSpuData.signVideo = '';
+					}
+				} else {//删除图片
+					spuUtils.continue.after_pics.splice(index,1);
+					spuUtils.continue.after_pics = spuUtils.continue.after_pics.filter(function(v){
+						return v != "";
+					});
+					$(objs).parents(".pic-wrapImg").find('input').attr("data-src","");
+					if(spuUtils.continue.after_pics.length==0){
+						objs.parents(".upload-pic-content").find(".isNoShow").show();
+						spuUtils.logSpuData.signImg = '';
+					}
+				}
+		    },
+		    
+		    // 术后设置封面
+		    setImgToCover:function ($self) {
+				var str = '<span class="pic-cover">封面</span>';
+				$self.parents('.pic-wrapImg').siblings().children('.pic-cover').remove();
+				$self.parents('.pic-wrapImg').append(str);
+		        
+		        // 封面地址放到数组第一位
+		        var arr = spuUtils.continue.after_pics;
+				arr.unshift(arr.splice($self.index(), 1)[0])
+				spuUtils.continue.after_pics = arr; 
+		    },
+	        //保存SPU数据
+	        saveSPUData: function (types) {
+	        	if (spuUtils.cache.details == undefined) {
+	                return;
+	            }
+	            if (spuUtils.cache.details.case_slaves != undefined && spuUtils.cache.details.case_slaves.length > 0) {
+	                spuUtils.cache.details.case_slaves.push(spuUtils.continue);
+	            } else {
+	                spuUtils.cache.details.case_slaves = [];
+	                spuUtils.cache.details.case_slaves.push(spuUtils.continue);
+	            }
+	            var data = spuUtils.cache.details;
+	            	layer.load(2);
+	            if(spuUtils.logSpuData.isTrue){
+		        	spuUtils.logSpuData.isTrue = false;
+		            $.ajax({
+		                type: "POST",
+		                url: base + "case/insertCaseOrLog.do",
+		                data: JSON.stringify(data),
+		                contentType: "application/json;charset=utf-8",
+		                success: function (res) {
+		                    if (res.status == "0") {
+		                    	var id = res.data.id;
+								var status = res.data.status;
+								var goUrl = "logContinue.html?";
+		                        layer.msg(res.message);
+		                        if(types && types=="2"){
+		                        	goUrl +="id="+id + "&status=" + status;
+									parent.layer.iframeSrc(spuUtils.logSpuData.index, goUrl);//重置页面
+		                        
+		                        }else{
+		                        	setTimeout(function () {
+			                            var index = parent.layer.getFrameIndex(window.name);
+			                            //刷新列表
+			                            window.parent.location.href = window.parent.location.href;
+			                            parent.layer.close(index);
+			                        }, 1500);
+		                        }
+		                        
+		                    } else {
+		                        layer.msg(res.message);
+		                    }
+		                },
+		                complete: function () {
+		                	spuUtils.logSpuData.isTrue = true;
+		                    layer.closeAll("loading");
+		                }
+		            });
+		        }    
+	        },
+	        
+		}
+		
+		
+		$(function () {
+	        // 商品详情初始化
+	        spuUtils.init();
+	        
+	        //提交数据前判断逻辑
+			$(".spu-cont .submit-btn").on("click", function() {
+				submitBef()
+			});
+			//继续续写提交数据前判断逻辑
+			$(".spu-cont .continueBtn").on("click", function() {
+				submitBef("2");
+			});
+	        function submitBef(type){
+	        	
+           		if (!$("#oper_after_day").val() || $("#oper_after_day").val() == null) {
+                    layer.msg("请输入术后天数!");
+                    return;
+                } else {
+                	spuUtils.continue.oper_after_day = Number($("#oper_after_day").val());
+                }
+                if (!$("#introduce").val() || $("#introduce").val() == "") {
+                    layer.msg("请填写日志内容");
+                    return;
+                } else {
+                    spuUtils.continue.content = $("#introduce").val();
+                }
+             	
+				if (!spuUtils.continue.after_pics.length && !spuUtils.continue.after_main_video) {
+					tip("请上传术后图片或视频");
+					return;
+				}
+				if (spuUtils.logSpuData.signImg && !$('.upload-pic-content').first().find('.pic-cover').length){
+					tip("请设置封面");
+					return ;
+				}
+				if (spuUtils.logSpuData.signVideo && !$("#after_main_video_pic").attr("data-src")){
+					tip("请上传视频封面");
+					return ;
+				}
+				if (spuUtils.continue.after_main_video && !spuUtils.continue.after_pics.length && !spuUtils.continue.after_main_video_pic) {
+					tip("请上传术后视频封面");
+					return;
+				}
+				if (!spuUtils.continue.after_main_video && !spuUtils.continue.after_pics.length && spuUtils.continue.after_main_video_pic) {
+					tip("请上传术后视频");
+					return;
+				}
+               
+                if ($("#radio_1").attr("checked")) {
+                    spuUtils.continue.show_status = 1;
+                } else if ($("#radio_2").attr("checked")) {
+                    spuUtils.continue.show_status = 2;
+                } else {
+                    spuUtils.continue.show_status = 3;
+                }
+                if (!$("#result-1").attr("data-score")) {
+                    layer.msg("请给满意度打分！");
+                    return;
+                } else {
+                    spuUtils.continue.satisfaction = $("#result-1").attr("data-score");
+                }
+                if (!$("#result-2").attr("data-score")) {
+                    layer.msg("请给肿胀度打分！");
+                    return;
+                } else {
+                    spuUtils.continue.swelling = $("#result-2").attr("data-score");
+                }
+                if (!$("#result-3").attr("data-score")) {
+                    layer.msg("请给疼痛感打分！");
+                    return;
+                } else {
+                    spuUtils.continue.pain = $("#result-3").attr("data-score");
+                }
+                if (!$("#result-4").attr("data-score")) {
+                    layer.msg("请给疤痕度打分！");
+                    return;
+                } else {
+                    spuUtils.continue.scar = $("#result-4").attr("data-score");
+                }
+           		
+           		spuUtils.saveSPUData(type);
+			};
+			// 术后删除视频图片
+			$('.upload-pic-content .del-img').click(function () {
+				$(this).parents(".pic-wrapImg").find('label img,label video').remove();
+				$(this).parents(".pic-wrapImg").find(".pic-cover").length&&$(this).parents(".pic-wrapImg").find(".pic-cover").remove();
+				var idName = $(this).parents(".pic-wrapImg").find('input').attr("data-name");
+				spuUtils.delImg($(this),$(this).parents(".pic-wrapImg").index(),idName)
+		    });
+		    //术后上传视频封面
+			$("#after_main_video_pic").on("change", function() {
+				getImgEvent($(this));
+			});
+			//术后上传视频
+			$("#after_main_video").on("change",function(){
+				var self = $(this), str;
+				uploadVideoHandle($(this), function (data) {
+					spuUtils.continue["after_main_video"] = data;
+					self.attr("data-src",data);
+					self.parents(".videoWraps").siblings().hide();
+					str = '<video src='+ data +'></video>'
+					self.next().append($(str));
+					
+		        }, spuUtils.uploadVideoBefore)
+			});
+		    // 设置封面
+			$('.default-pic-wrap .set-cover').click(function () {
+				var length = $(this).parent().prev().find('img').length;
+				length && spuUtils.setImgToCover($(this))
+		    });
+		    
+			//术后7张照片
+			$("#after1").on("change", function() {
+				getImgEvent($(this), 1, 0);
+			});
+			$("#after2").on("change", function() {
+				getImgEvent($(this), 1, 1);
+			});
+			$("#after3").on("change", function() {
+				getImgEvent($(this), 1, 2);
+			});
+			$("#after4").on("change", function() {
+				getImgEvent($(this), 1, 3);
+			});
+			$("#after5").on("change", function() {
+				getImgEvent($(this), 1, 4);
+			});
+			$("#after6").on("change", function() {
+				getImgEvent($(this), 1, 5);
+			});
+			$("#after7").on("change", function() {
+				getImgEvent($(this), 1, 6);
+			});
+			
+			function getImgEvent(obj, type, i) {
+				//type传值说明是手术后7张的
+				newUploadImg(obj, function(src) {
+					spuUtils.imgs = [];
+					var idName = $(obj).parents(".pic-wrapImg").find('input').attr("data-name");
+					if(src) {
+						layer.closeAll("loading");
+						obj.attr("data-src", src);
+						if(!!type) {
+							spuUtils.continue.after_pics[i] = src;
+						}else{
+							spuUtils.continue[idName] = src;
+						}
+						if(obj.parents().hasClass("videoWraps")){
+							obj.parents(".upload-pic-content").find(".imgWraps").hide();
+						}else{
+							obj.parents(".upload-pic-content").find(".videoWraps").hide();
+						}
+						obj.next("label").prepend(
+								$('<img style="display: inline-block;width: 122px;height: 122px;" src=' +
+									imgPath +src +">"));			
+					} else {
+						$.Huialert("获取图片路径失败", 1500);
+					}
+					type &&(spuUtils.logSpuData.signImg = true);	
+				});
+			}
+			//提示框方法
+			function tip(msg) {
+				$.Huimodalalert(msg, 1500);
+			}
+			
+	    })    
+	</script>
+
+</html>

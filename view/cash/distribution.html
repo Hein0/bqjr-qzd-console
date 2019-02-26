@@ -1,0 +1,188 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <title>资金分配引擎</title>
+
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui/css/H-ui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/H-ui.admin.css"/>
+    <link rel="stylesheet" type="text/css" href="../../lib/Hui-iconfont/1.0.8/iconfont.css"/>
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/skin/default/skin.css" id="skin"/>
+    <link rel="stylesheet" type="text/css" href="../../lib/laypage/1.2/skin/laypage.css">
+    <link rel="stylesheet" type="text/css" href="../../lib/laypage/1.2/skin/laypage.css">
+    <link rel="stylesheet" type="text/css" href="../../css/reset.css"/>
+    <style>
+        .table-border th, .table-border td{ text-align: center;}
+        .modal-body p input{ width: 48px; text-align: center; border: 1px solid #999; margin: 0 5px;}
+        .modal-body label input{ width: auto; margin: 0 2px 0 12px;}
+    </style>
+</head>
+
+<body>
+
+<nav class="breadcrumb">
+    <i class="Hui-iconfont">&#xe67f;</i>
+    首页 <span class="c-gray en">&gt;</span>
+    现金分期 <span class="c-gray en">&gt;</span>
+    资金分配引擎
+    <a class="btn btn-success r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a>
+</nav>
+
+<div class="page-container">
+    <div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l">资金分配引擎</span> <span class="r"><a class="btn btn-primary radius" data-title="添加资讯" data-href="article-add.html" onclick="dist.popOpen()" href="javascript:;">新增资金分配规则</a></span> </div>
+
+    <div class="mt-20">
+        <table class="table table-border table-bordered table-hover table-bg table-sort">
+            <thead>
+                <tr class="text-c">
+                    <th width="9%">资方</th>
+                    <th width="10%">放款时间</th>
+                    <th width="10%">预计到账时间</th>
+                    <th width="14%">是否允许同一用户一天多单</th>
+                    <th width="9%">是否试算默认</th>
+                    <th width="9%">支持分期数</th>
+                    <th width="10%">现金分期比例（%）</th>
+                    <th width="10%">短期借款比例（%）</th>
+                    <th width="10%">消费分期比例（%）</th>
+                    <th width="9%">操作</th>
+                </tr>
+            </thead>
+            <tbody id="list">
+
+            </tbody>
+        </table>
+    </div>
+
+    <!--分页-->
+    <div class="pagination mt-20" id="pagination"></div>
+</div>
+
+<!--添加-->
+<div id="mymodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content radius">
+            <div class="modal-header">
+                <h3 class="modal-title">分配规则</h3>
+                <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void(0);">×</a>
+            </div>
+            <div class="modal-body">
+                <!--<p>
+                    资方：
+                    <select class="party"></select>
+                </p>
+                <p style="margin-top: 20px;">
+                    分配：
+                    现金分期<input type="text" id="cashPercent">%&nbsp;&nbsp;&nbsp;
+                    短期借款<input type="text" id="payloadPercent">%&nbsp;&nbsp;&nbsp;
+                    消费分期<input type="text" id="consumePercent">%
+                </p>
+                <p style="margin-top: 20px;">
+                    支持分期期数：<input type="text" style="width: 150px;" id="periodList" />
+                    <span style="color: red;">不填为支持全期，不同期数以逗号分隔</span>
+                </p>-->
+                <form class="search-form">
+                    <div class="panel-body pb-0 cl search">
+                        <div class="f-l mr-15 mb-15">
+                            <span class="text-c f-l">资方名称</span>
+                            <select name="captital" class="party">
+                            </select>
+                        </div>
+                        <div class="f-l mr-15 mb-15">
+                            <span class="text-c f-l">预计到账时间</span>
+                            <select name="type" class="type" style="width: 90px;">
+                                <option value="T">T</option>
+                                <option value="D">D</option>
+                            </select> &nbsp;+
+                            <input type="text" style="width: 60px; padding-left: 12px; border: 1px solid #a9a9a9" id="nDay" name="nDay" />
+                        </div>
+                        <div class="f-l mr-15 mb-15">
+                            <span class="text-c f-l">放款时间</span>
+                            <select name="arrivalDay" class="arrivalDay">
+                            </select>
+                        </div>
+                        <div class="f-l mr-15 mb-15">
+                            <span class="text-c f-l">是否试算默认</span>
+                            <select name="trial" class="trial">
+                                <option value="1">是</option>
+                                <option value="0">否</option>
+                            </select>
+                        </div>
+                        <div class="f-l mr-15 mb-15">
+                            <span class="text-c f-l">是否允许同一用户一天多单</span>
+                            <select name="moreOrnot" class="moreOrnot">
+                                <option value="1">是</option>
+                                <option value="0">否</option>
+                            </select>
+                        </div>
+                        <div class="f-l mr-15 mb-15">
+                            <span class="text-c f-l">是否允许同一用户多单</span>
+                            <select name="sameUserMore" class="sameUserMore">
+                                <option value="1">是</option>
+                                <option value="0">否</option>
+                            </select>
+                        </div>
+                        <div class="f-l mr-15 mb-15">
+                            支持分期期数
+                            <label><input type="checkbox" name="nper" value="3">3期</label>
+                            <label><input type="checkbox" name="nper" value="6">6期</label>
+                            <label><input type="checkbox" name="nper" value="9">9期</label>
+                            <label><input type="checkbox" name="nper" value="12">12期</label>
+                            <label><input type="checkbox" name="nper" value="18">18期</label>
+                        </div>
+                        <div class="f-l mr-15 mb-15">
+                            <p>
+                                资金分配比例：
+                                现金分期<input type="text" id="cashPercent" name="cashPercent">%&nbsp;&nbsp;&nbsp;
+                                短期借款<input type="text" id="payloadPercent" name="payloadPercent">%&nbsp;&nbsp;&nbsp;
+                                消费分期<input type="text" id="consumePercent" name="consumePercent">%
+                            </p>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" onclick="dist.add(1);">确定</button>
+                <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="../../lib/jquery/1.9.1/jquery.min.js?rev=@@hash"></script>
+<script type="text/javascript" src="../../lib/layer/2.4/layer.js?rev=@@hash"></script>
+<script type="text/javascript" src="../../static/h-ui/js/H-ui.min.js?rev=@@hash"></script>
+<script type="text/javascript" src="../../static/h-ui.admin/js/H-ui.admin.js?rev=@@hash"></script>
+<script type="text/javascript" src="../../js/base/public.js?rev=@@hash"></script>
+<!--/_footer 作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="../../lib/My97DatePicker/4.8/WdatePicker.js?rev=@@hash"></script>
+<script type="text/javascript" src="../../lib/laypage/1.2/laypage.js?rev=@@hash"></script>
+<script src="../../js/common/jquery.tmpl.min.js?rev=@@hash"></script>
+<script type="text/javascript" src="../../js/page/distribution.js?rev=@@hash"></script>
+<script type="text/html" id="distList">
+    {{each(i,item) data}}
+    <tr class="text-c">
+        <td>${item.captitalName}</td>
+        <td>${item.arrivalDay==1?"每天":"工作日"}</td>
+        <td>${item.type}+${item.nDay}</td>
+        <td>${item.moreOrnot==1?"是":"否"}</td>
+        <td>${item.trial==1?"是":"否"}</td>
+        <td>${item.periodList}</td>
+        <td>${item.cashPercent}</td>
+        <td>${item.payloadPercent}</td>
+        <td>${item.consumePercent}</td>
+        <td><a href="javascript:" onclick="dist.edit('${item.captital}','${item.type}','${item.nDay}','${item.arrivalDay}','${item.trial}','${item.moreOrnot}','${item.sameUserMore}','${item.cashPercent}','${item.payloadPercent}','${item.consumePercent}','${item.periodList}')" style="color: dodgerblue; text-decoration: underline;">修改配置</a></td>
+    </tr>
+    {{/each}}
+</script>
+</body>
+
+</html>

@@ -1,0 +1,363 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <title>帖子管理</title>
+
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="../../lib/Hui-iconfont/1.0.8/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/skin/default/skin.css" id="skin" />
+    <link rel="stylesheet" type="text/css" href="../../lib/My97DatePicker/4.8/skin/WdatePicker.css"/>
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/style.css" />
+
+    <!--分页样式表，需要分页的页面加入-->
+    <link rel="stylesheet" type="text/css" href="../../lib/laypage/1.2/skin/laypage.css">
+    <link rel="stylesheet" type="text/css" href="../../css/doctorOrder.css?rev=@@hash">
+
+	<style>
+		.deleteWrap{margin:0 12%}
+		.searchListWrap{margin:0 12%;position: relative;}
+		.control-panel{margin: 20px 0px ;}
+		.mls{margin: 0 5px;}
+		.long-ipt { position: relative;float: left; width: 240px; height: 28px;border: 1px solid #e6e6e6;}
+		.searchWrap{padding:15px 0px 10px;text-align: center;}
+		.searchInp{width:80%;float: left;text-align: center;}
+		.searchInp input {font-size: 14px;height:29px;text-indent:10px;line-height:29px;border: solid 1px #ddd;width:100%;}
+		.searchBut{width:16%;float: left;}
+		.lists{display:none;box-sizing: border-box;max-height:200px;position: absolute;top:53px;left:0;background:#FFFFFF;font-size:16px; width:100%;z-index: 1;overflow: auto;}
+		.listP{padding:3px 0px;font-size:14px;margin-bottom: 0px !important;cursor: pointer;}
+		.loadpic-wrap { position: relative;margin-right:8px;margin-bottom:8px;width: 122px;height: auto;float: left;}
+		.loadpic-wrap .loadpic { border: 1px solid #ddd;height: 122px;  position: relative; width: 100%;box-sizing: border-box;}
+		.loadpic-wrap  .loadpic .loadpic-input {cursor: pointer;display: block; height: 100%;opacity: 0;position: absolute;top: 0;left: 0;width: 100%;z-index: 1;}
+		.loadpic-wrap .loadpic .loadpic-label {background-color: #fff;display: block; height: 100%;width: 100%;text-align: center;line-height: 122px;}
+		.loadpic-wrap .loadpic .loadpic-label .Hui-iconfont {font-size: 30px;color: #aaa;}
+		.boderBot{border-bottom: 1px solid #ddd;}
+		.formTitle{float: left;width:30%;}
+		.Hei31{height: 31px;line-height: 31px;}
+		.formControls {padding-left: 0 !important;}
+		.formTextarea {width:100%;float: left;}
+		.formAfter{float: left;width:65%;}
+		.form-label.col-sm-2{padding-left: 0 !important;padding-right: 0 !important;}
+		.inputText{height:31px;background:#FFFFFF;cursor:pointer;padding:4px;border:none;text-align:right;-moz-box-sizing: border-box; -webkit-box-sizing: border-box;box-sizing: border-box;width: 100%;}
+		.inputT{height:31px;padding:4px;text-align:left;width:100%;border:none;}
+		.formAfter:after{position: absolute;right:0;top:10px;content: '';display: inline-block;width: 8px;height: 8px;border-top: 1px solid #656565;
+    		border-right: 1px solid #656565; transform: rotate(45deg); -webkit-transform: rotate(45deg);}
+		.pasTB{margin:10px 0px;}
+		.nubs{text-align: center;}
+		.reds{background:#ff8ad0 !important;}
+		.subWra{text-align: center;}
+		.definlists{border-bottom: 1px solid #ddd;}
+		.clickUl:after,.definUl:after{clear:both;content:'';display:block;width:0;height:0;visibility:hidden; }
+		.clickUl li{float:left;font-size:14px;margin-right:7px;margin-bottom:7px;cursor:pointer;line-height:20px;height:20px;padding: 5px;border-radius:5px;color:#FFFFFF;background: #b9e8d0;}
+		.definUl li{float:left;font-size:14px;margin-right:7px;margin-bottom:7px;cursor:pointer;line-height:20px;height:20px;padding: 5px;border-radius:5px;color:#FFFFFF;background:#ff8ad0;}
+		/*删除图片或者视频*/
+		.deletes{position:absolute;right: -5px;top:-5px;width:18px;height:18px;line-height:18px;cursor:pointer;z-index:5;color: #FFFFFF;background:#DEDEDE;border-radius: 50%;font-size:16px;text-align: center;}
+		/*编辑弹窗*/
+		.compileWrap{margin:0 12%}
+		.searchWrap2{padding:15px 0px 10px;text-align: center;}
+		.searchInp2{width:80%;float: left;text-align: center;}
+		.searchInp2 input {font-size: 14px;height:29px;text-indent:10px;line-height:29px;border: solid 1px #ddd;width:100%;}
+		.searchBut2{width:16%;float: left;}
+		.lists2{display:none;box-sizing: border-box;max-height:200px;position: absolute;top:53px;left:0;background:#FFFFFF;font-size:16px; width:100%;z-index: 1;overflow: auto;}
+		.listP2{padding:3px 0px;font-size:14px;margin-bottom: 0px !important;cursor: pointer;}
+		.inputText2{height:31px;background:#FFFFFF;cursor:pointer;padding:4px;border:none;text-align:right;-moz-box-sizing: border-box; -webkit-box-sizing: border-box;box-sizing: border-box;width: 100%;}
+		.inputT2{height:31px;padding:4px;text-align:left;width:100%;border:none;}
+		.clickUl2:after,.definUl2:after{clear:both;content:'';display:block;width:0;height:0;visibility:hidden; }
+		.clickUl2 li{float:left;font-size:14px;margin-right:7px;margin-bottom:7px;cursor:pointer;line-height:20px;height:20px;padding: 5px;border-radius:5px;color:#FFFFFF;background: #b9e8d0;}
+		.definUl2 li{float:left;font-size:14px;margin-right:7px;margin-bottom:7px;cursor:pointer;line-height:20px;height:20px;padding: 5px;border-radius:5px;color:#FFFFFF;background:#ff8ad0;}
+		
+		
+	
+	</style>
+</head>
+
+<body>
+    <nav class="breadcrumb">
+        <i class="Hui-iconfont">&#xe67f;</i> 首页
+        <span class="c-gray en">&gt;</span>	社区配置
+        <span class="c-gray en">&gt;</span> 帖子管理
+        <a class="btn btn-success radius r" style="line-height:1.6em;margin:3px 0 0 20px" href="javascript:location.replace(location.href);"
+            title="刷新">
+            <i class="Hui-iconfont">&#xe68f;</i>刷新
+        </a>
+    </nav>
+
+    <div class="Hui-article">
+        <article class="cl pd-20">
+
+            <div class="panel panel-default search-bar-width">
+                <div class="panel-body">
+
+                    <!--筛选条件区域-->
+                    <div class="condition-wrap cl common-form-wrap" id="pageSearchForm">
+                    	
+                    	<div class="condition-parent cl">
+                            <span class="title">标题名称</span>
+                            <input class="long-ipt" type="text" name="title" id="title" value="" placeholder="输入标题">
+                        </div>
+                        <div class="condition-parent cl">
+                            <span class="title">话题名称</span>
+                            <input class="long-ipt" type="text" name="names" id="names" value="" placeholder="输入话题名称">
+                        </div>
+                        <div class="condition-parent cl">
+                            <span class="title">创建时间</span>
+                            <div class="long-ipt" >
+                                <input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'endTime\')||\'%y-%M-%d\'}', minDate:'#F{$dp.$D(\'endTime\',{M:-1});}'})" style="width:110px;height:18px;display: -webkit-box;" id="beginTime"
+                                    class="input-text Wdate f-l" readonly name="beginTime" />
+                                <input type="text" onfocus="WdatePicker({minDate:'#F{$dp.$D(\'beginTime\')}',maxDate:'#F{$dp.$D(\'beginTime\',{M:1})||\'%y-%M-%d\'}'})" style="width:110px;height:18px;display: -webkit-box;" id="endTime"
+                                    class="input-text Wdate f-l" readonly name="endTime" />
+                                        
+                            </div>
+                        </div>
+
+                        <div class="button-wrap">
+                            <button type="button" class="btn btn-primary" id="screeBtn">
+                                <i class="Hui-iconfont">&#xe665;</i> 筛选</button>
+                            <button type="button" class="btn btn-primary" id="resetBtn">
+                                <i class="Hui-iconfont">&#xe66b;</i> 重置</button>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="control-panel">
+                <button id="addBtn" type="button" class="btn btn-primary">
+                    <i class="Hui-iconfont">&#xe600;</i> 新建帖子</button>
+            </div>
+
+            <div class="goods-list">
+                <table class="table table-border table-bordered table-hover table-bg">
+	                <thead>
+			            <tr class="text-c">
+			                <th width="60">id</th>
+			                <th width="60">标题</th>
+			                <th width="60">话题名称</th>
+			                <th width="60">兴趣相投</th>
+			                <th width="60">类型</th>
+			                <th width="60">浏览量</th>
+			                <th width="60">点赞数</th>
+			                <th width="60">评论数</th>
+			                <th width="60">分享数</th>
+			                <th width="60">创建人</th>
+			                <th width="60">创建时间</th>
+			                <th width="70">操作</th>
+			            </tr>
+		            </thead>
+		            <tbody id="listCtnWrap">
+		            	
+		            </tbody>
+		        </table> 
+            </div>
+
+            <div class="pagination cl" id="pagination"></div>
+
+        </article>
+    </div>
+
+    <!--footer 作为公共模版分离出去-->
+    <script type="text/javascript" src="../../lib/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="../../lib/layer/2.4/layer.js"></script>
+    <script type="text/javascript" src="../../static/h-ui/js/H-ui.min.js"></script>
+    <script type="text/javascript" src="../../static/h-ui.admin/js/H-ui.admin.js"></script>
+   	<script type="text/javascript" src="../../lib/My97DatePicker/4.8/WdatePicker.js"></script>
+    <script type="text/javascript" src="../../lib/lrz.bundle.js"></script>
+    	
+    <!--footer 作为公共模版分离出去-->
+    <script type="text/javascript" src="../../lib/ueditor/1.4.3/ueditor.config.js"></script>
+    <script type="text/javascript" src="../../lib/ueditor/1.4.3/ueditor.all.min.js"></script>
+    <script type="text/javascript" src="../../lib/arttemplate/template-web.js"></script>
+    <script type="text/javascript" src="../../lib/laypage/1.2/laypage.js"></script>
+    <script type="text/javascript" src="../../js/base/public.js?rev=@@hash"></script>
+    <script type="text/javascript" src="../../js/common/common.js"></script>
+    <script type="text/javascript" src="../../js/page/invitationManage.js?rev=@@hash"></script>
+
+</body>
+<!--创建话题-->
+<script id="adds" type="text/html">
+    <div class="deleteWrap" >
+        <div class=" cl searchWrap">
+        	<div class="searchWrapImg">
+	        	<div class="loadpic-wrap upImgVid">
+	                <div class="loadpic">
+	                    <input name="file" class="loadpic-input" accept="image/*;video/*" type="file" id="uploadVideo">
+	                    <label class="loadpic-label">
+	                        <i class="Hui-iconfont">&#xe600;</i>
+	                    </label>
+	                </div>
+	            </div>
+            </div>
+        </div>
+        <div class="cl pasTB boderBot">
+            <label class="form-label formTitle Hei31">添加话题(必填)</label>
+            <div class="formControls formAfter clickInpu col-xs-10">
+                <input class="inputText" name="topicIds" id="topicIds" type="text" disabled="disabled" />
+            </div>
+        </div>
+        <div class="cl pasTB boderBot">
+            <div class="formControls col-xs-10 col-sm-10">
+            	<input type="text" class="inputT" name="title" id="titles" maxlength="38" placeholder="有趣的标题更容易被大家看到~"/>
+            </div>
+            <!--<label class="form-label col-sm-2 nubs Hei31">38</label>-->
+        </div>
+        <div class="cl pasTB">
+            <div class="formControls pasTB formTextarea">
+            	<textarea id="contents" class="textarea" type="text" name="content" placeholder="分享点内容，引领话题吧！" maxlength="800"></textarea>
+            </div>
+        </div>
+        
+        <div class="cl pasTB subWra">
+            <div class="col-xs-10 col-sm-10">
+                <input class="btn btn-primary submitBtns" value="发布" type="button">
+            </div>
+        </div>
+        
+    </div>
+</script>
+
+<!--新增的搜索框-->
+<script id="searchList" type="text/html">
+    <div class="searchListWrap" >
+        <div class=" cl searchWrap">
+            <div class="formControls searchInp">
+                <input type="text" class="searchName" placeholder="搜索话题" />
+            </div>
+            <label class="form-label searchBut">
+                <input class="btn btn-primary submitAdd" value="新建话题" type="button">
+            </label>
+        </div>
+        <div class="cl definlists clickList" >
+           	<ul class="definUl">
+           		{{each searData ite i}}
+           			<li data-id="{{ite.id}}">{{ite.name}}</li>
+           		{{/each}}
+           	</ul>
+        </div>
+        <div class="cl hotlists clickList" >
+        	<h5 class="listTitle">按照热门程度</h5>
+           	<ul class="clickUl">
+           		{{each popularTopic item i}}
+           			<li data-id="{{item.id}}">{{item.name}}</li>
+           		{{/each}}
+           	</ul>
+        </div>
+        <div class="cl surgerylists clickList" >
+           	<h5 class="listTitle">按照手术项目</h5>
+           	<ul class="clickUl">
+           		{{each projectTopic item i}}
+           			<li data-id="{{item.id}}">{{item.name}}</li>
+           		{{/each}}
+           	</ul>
+        </div>
+        <div class="cl lists" id="lists">
+           
+        </div>
+        
+        <div class="cl pasTB subWra">
+            <div class="col-xs-10 pasTB col-sm-10">
+                <input class="btn btn-primary confirmBtns" value="确认" type="button">
+            </div>
+        </div>
+        
+    </div>
+</script>
+<!--------------编辑修改----------------------->
+<script id="compile" type="text/html">
+    <div class="compileWrap" >
+        <div class=" cl searchWrap2">
+        	<div class="searchWrapImg">
+	        	<div class="loadpic-wrap upImgVid">
+	                <div class="loadpic">
+	                    <input name="file" class="loadpic-input" accept="{{mediaType==1 ? "image/jpg,image/jpeg,image/png":"image/*;video/*"}}" type="file" id="uploadVideo">
+	                    <label class="loadpic-label">
+	                        <i class="Hui-iconfont">&#xe600;</i>
+	                    </label>
+	                </div>
+	            </div>
+            </div>
+        </div>
+        <div class="cl pasTB boderBot">
+            <label class="form-label formTitle Hei31">添加话题(必填)</label>
+            <div class="formControls formAfter clickInpu col-xs-10">
+                <input class="inputText2" name="topicIds" id="topicIds" type="text" disabled="disabled" value="{{topicName ? topicName.toString():""}}" />
+            </div>
+        </div>
+        <div class="cl pasTB boderBot">
+            <div class="formControls col-xs-10 col-sm-10">
+            	<input type="text" class="inputT2" name="title" id="titles" value="{{title}}" maxlength="38" placeholder="有趣的标题更容易被大家看到~"/>
+            </div>
+            <!--<label class="form-label col-sm-2 nubs Hei31">38</label>-->
+        </div>
+        <div class="cl pasTB">
+            <div class="formControls formTextarea pasTB">
+            	<textarea id="contents" class="textarea" type="text" name="content" placeholder="分享点内容，引领话题吧！" maxlength="800">{{content}}</textarea>
+            </div>
+        </div>
+        
+        <div class="cl pasTB subWra">
+            <div class="col-xs-10 col-sm-10">
+                <input class="btn btn-primary submitBtns" value="发布" type="button">
+            </div>
+        </div>
+        
+    </div>
+</script>
+
+<!--编辑搜索框-->
+<script id="amendSearchList" type="text/html">
+    <div class="searchListWrap" >
+        <div class=" cl searchWrap2">
+            <div class="formControls searchInp2">
+                <input type="text" class="searchTopic" placeholder="搜索话题" />
+            </div>
+            <label class="form-label searchBut2">
+                <input class="btn btn-primary addTopic" value="新建话题" type="button">
+            </label>
+        </div>
+        <div class="cl definlists clickList" >
+           	<ul class="definUl2">
+           		{{each topics ite i}}
+           			<li data-id="{{ite.id}}">{{ite.name}}</li>
+           		{{/each}}
+           	</ul>
+        </div>
+        <div class="cl hotlists clickList" >
+        	<h5 class="listTitle">按照热门程度</h5>
+           	<ul class="clickUl2">
+           		{{each popularTopic item i}}
+           			<li data-id="{{item.id}}">{{item.name}}</li>
+           		{{/each}}
+           	</ul>
+        </div>
+        <div class="cl surgerylists clickList" >
+           	<h5 class="listTitle">按照手术项目</h5>
+           	<ul class="clickUl2">
+           		{{each projectTopic item i}}
+           			<li data-id="{{item.id}}">{{item.name}}</li>
+           		{{/each}}
+           	</ul>
+        </div>
+        <div class="cl lists2" id="lists2">
+           
+        </div>
+        
+        <div class="cl pasTB subWra">
+            <div class="col-xs-10 pasTB col-sm-10">
+                <input class="btn btn-primary confirmBtns2" value="确认" type="button">
+            </div>
+        </div>
+        
+    </div>
+</script>
+
+
+
+
+</html>

@@ -1,0 +1,245 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <title>电销管理-用户详情</title>
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="../../lib/Hui-iconfont/1.0.8/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/skin/default/skin.css" id="skin" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="../../lib/My97DatePicker/4.8/skin/WdatePicker.css">
+    <link rel="stylesheet" href="../../css/styles.css" type="text/css" />
+    <style type="text/css">
+        /*.table-bordered th, .table-bordered td {
+            border-right: 0;
+            border-left: 0;
+        }*/
+        .table { width: 100%; border: solid 1px #ddd; }
+        .table thead th { border-bottom: solid 1px #ddd; }
+        .tab-list tr > th { width: 8% !important; }
+        .tab-list tr > td, .tab-list tr > th { border: 0 !important; }
+        .table th, .table td { padding-left: 20px; }
+        .table .user-list tr > th { width: 12%; font-weight: 500; }
+        .table .user-list tr > td { width: 40%; }
+        .table .user-list tr > td a { color: blue; text-decoration: underline; }
+        .clearfix:after { content: "\20"; display: block; height: 0; clear: both; visibility: hidden; }
+        .clearfix { zoom: 1; }
+        .tab-bar { border-bottom: none; }
+        .tab-bar span { position: relative; top: 1px; border: solid 1px #ddd; background-color: #ddd; cursor: pointer; display: inline-block; float: left; height: 30px; line-height: 30px; padding: 0 20px; font-size: 12px; margin-top: 1px; border-top-left-radius: 4px; border-top-right-radius: 4px; margin-right: 12px; }
+        .tab-bar span.current { background-color: #fff; color: #000; border-bottom: solid 1px #fff !important; }
+        .tab-con { display: none; border: solid 1px #ddd; padding: 20px 0; margin-bottom: 25px; }
+        .tab-con > table { border: none 0 !important; }
+        .edit-this { margin-left: 20px; color: #00f; text-decoration: underline; cursor: pointer; }
+        .modal .wrap { display: block; width: 500px; margin: 0 auto 10px; }
+        .modal .wrap .tit { display: inline-block; width: 60px; }
+
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button{
+            -webkit-appearance: none !important;
+            margin: 0;
+        }
+
+        input[type="number"]{-moz-appearance:textfield;}
+    </style>
+</head>
+<body>
+    <nav class="breadcrumb">
+        <i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 电销管理 <span class="c-gray en">&gt;</span> 用户详情 <a class="btn btn-success radius r" style="margin-top:4px;" href="javascript:location.replace(location.href);" title="刷新">
+            <i class="Hui-iconfont"></i>
+        </a>
+    </nav>
+    <div class="page-container">
+        <div id="userDetailContent" style="margin-top:-10px;">
+
+        </div>
+    </div>
+    <div id="msgshadeDiv" class="shade_bg" style="height:953px; display: none;"></div>
+
+    <!-- 修改用户姓名 -->
+    <div id="editName" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content radius">
+                <div class="modal-header">
+                    <h3 id="myModalLabel">编辑用户姓名</h3>
+                    <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>
+                </div>
+                <div class="modal-body">
+                    <div class="wrap"><span class="tit">编辑前</span><span class="old-value"></span></div>
+                    <div class="wrap"><span class="tit">编辑后</span><input type="text" class="input-text" id="editNameIpt" style="width:150px;"></div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" id="sbtName">确定</button>
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 修改手机号码 -->
+    <div id="editMobile" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content radius">
+                <div class="modal-header">
+                    <h3 id="myModalLabel">编辑手机号码</h3>
+                    <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>
+                </div>
+                <div class="modal-body">
+                    <div class="wrap"><span class="tit">编辑前</span><span class="old-value"></span></div>
+                    <div class="wrap"><span class="tit">编辑后</span><input type="number" class="input-text" id="editMobileIpt" style="width:200px;"></div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" id="sbtMobile">确定</button>
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 修改身份证号码 -->
+    <div id="editNumber" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content radius">
+                <div class="modal-header">
+                    <h3 id="myModalLabel">编辑身份证号码</h3>
+                    <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>
+                </div>
+                <div class="modal-body">
+                    <div class="wrap"><span class="tit">编辑前</span><span class="old-value"></span></div>
+                    <div class="wrap"><span class="tit">编辑后</span><input type="number" class="input-text" id="editNumberIpt" style="width:200px;"></div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" id="sbtNumber">确定</button>
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 修改身份证有效期 -->
+    <div id="editTime" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content radius">
+                <div class="modal-header">
+                    <h3 id="myModalLabel">编辑身份证有效期</h3>
+                    <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>
+                </div>
+                <div class="modal-body">
+                    <div class="wrap"><span class="tit">编辑前</span><span class="old-value"></span></div>
+                    <div class="wrap"><span class="tit">编辑后</span><input type="text" class="input-text Wdate" id="editTimeOne" style="width: 150px;" onfocus="WdatePicker({ maxDate: '#F{$dp.$D(\'editTimeTwo\')||\'%y-%M-%d\'}' })"> 至 <input type="text" class="input-text Wdate" id="editTimeTwo" style="width:150px;" onfocus="WdatePicker({ minDate: '#F{$dp.$D(\'editTimeOne\')}'})"><label style="display:inline-block;margin-left:20px;"><input type="checkbox" id="isLong"> 长期</label></div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" id="sbtTime">确定</button>
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--_footer 作为公共模版分离出去-->
+    <script type="text/javascript" src="../../lib/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="../../lib/layer/2.4/layer.js"></script>
+    <script type="text/javascript" src="../../static/h-ui/js/H-ui.min.js"></script>
+    <script type="text/javascript" src="../../static/h-ui.admin/js/H-ui.admin.js"></script>
+    <!--/_footer 作为公共模版分离出去-->
+
+    <!--请在下方写此页面业务相关的脚本-->
+    <script type="text/javascript" src="../../lib/My97DatePicker/4.8/WdatePicker.js"></script>
+    <script type="text/javascript" src="../../lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="../../lib/laypage/1.2/laypage.js"></script>
+    <script src="../../js/common/jquery.tmpl.min.js" type="text/javascript"></script>
+    <script src="../../js/base/public.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+        var userDetail = userDetail || {};
+
+        userDetail.getData = function() {
+            try {
+                var id = util.getQueryString("id");
+                var url = base + "telemarketing/getUserDetail.do";
+                $.get(url, { "id": id }, function(data) {
+                    var result = typeof(data);
+                    if (result == "string") {
+                        data = JSON.parse(data);
+                    }
+                    util.jumpLogin(data);
+                    if (data.status == "0") {
+                        $("#userDetailContent").empty().append($("#tmplUserDetail").tmpl(data.data));
+                    } else {
+                        $.Huimodalalert(data.message, 1500);
+                    }
+                }, "json");
+            } catch (ex) {
+                if (window.console) {
+                    console.log(ex);
+                }
+            }
+        }
+
+        $(function() {
+            userDetail.getData();
+        })
+
+        function addLine(str) {
+            return str.slice(0, 4) + '-' + str.slice(4, 6) + '-' + str.slice(6, 8);
+        }
+
+        function removeLine(str) {
+            return str.replace(/[--]/g, '');
+        }
+    </script>
+
+    <script type="text/html" id="tmplUserDetail">
+        <table class="table table-bg mt-10">
+            <thead>
+                <tr>
+                    <th colspan="4" scope="col">用户数据</th>
+                </tr>
+            </thead>
+            <tbody class="user-list">
+                <tr>
+                    <th>姓名：</th>
+                    <td><span>{{= userName || '无'}}</span></td>
+                    <th>钱包状态：</th>
+                    <td><span>{{= userStatusStr || '无'}}</span></td>
+                </tr>
+                <tr>
+                    <th>手机号：</th>
+                    <td><span>{{= mobile || '无'}}</span></td>
+                    <th> 注册时间：</th>
+                    <td><span>{{= registerTime || '无'}}</span></td>
+                </tr>
+                <tr>
+                    <th>身份证：</th>
+                    <td><span>{{= certId || '无'}}</span></td>
+                    <th>提交申请时间：</th>
+                    <td><span>{{= applyTime || '无'}}</span></td>
+                </tr>
+                <tr>
+                    <th>有效期：</th>
+                    <td><span>{{= certStartDate || '无'}} 至 {{= certEndDate || '无'}}</span></td>
+                    <th>审核通过时间：</th>
+                    <td><span>{{= openedTime || '无'}}</span></td>
+                </tr>
+                <tr>
+                    <th></th>
+                    <td><span ></span></td>
+                    <th>首次消费时间：</th>
+                    <td><span>{{= buyTime || '无'}}</span></td>
+                </tr>
+                <tr>
+                    <th></th>
+                    <td><span ></span></td>
+                    <th>首次提现时间：</th>
+                    <td><span>{{= payTime || '无'}}</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </script>
+</body>
+</html>

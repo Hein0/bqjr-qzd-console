@@ -1,0 +1,193 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <title>添加免息</title>
+
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="../../lib/Hui-iconfont/1.0.8/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/skin/default/skin.css" id="skin" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/style.css" />
+
+    <link rel="stylesheet" type="text/css" href="../../lib/laypage/1.2/skin/laypage.css">
+    <link rel="stylesheet" type="text/css" href="../../lib/layer/2.4/skin/layer.css" />
+    <link rel="stylesheet" type="text/css" href="../../lib/My97DatePicker/4.8/skin/WdatePicker.css">
+    <link rel="stylesheet" type="text/css" href="../../css/shoppingOrder.css?rev=@@hash">
+    <link rel="stylesheet" type="text/css" href="../../css/goodsList.css?rev=@@hash">
+
+    <style type="text/css">
+        .list-ctl {margin: 0 10px;cursor: pointer;}
+        .list-ctl:hover {color: rgb(90, 152, 222);text-decoration: underline;}
+        #freeActList .gray td {color: #999;}
+        .act-line {width: 700px;margin: 10px auto;}
+        .act-line .act-left,.act-line .act-right { float: left;}
+        .act-line .act-left {width: 150px;text-align: right;}
+        .act-line .act-right {width: 530px;margin-left: 20px;}
+        .free-strategy span { float: left;width: 150px;}
+        table td,table th{text-align: center;border: 1px solid #DDDDDD;padding: 10px;}
+        .Operation span{display: inline-block;padding: 3px 5px; cursor: pointer;color: #0000CC;}
+        .shadeboxseckill{width: 100%;height: 100%;background: black;position: absolute;background: black;opacity: 0.5;z-index: 300;filter: alpha(opacity=50);display: none;}
+   		.lookActiveMes{position: absolute;width: 80%;left: 10%;height: 650px;top: 50%;margin-top:-325px;background: white;z-index: 999;padding: 20px;display: none;}
+    	.fix_tips_close{font-size: 30px;cursor: pointer;height: 50px;border-bottom: 1px solid #707070;}
+    	.fix_tips_close span{float: left;}
+    	.fix_tips_close a{float: right;}
+    	.lookactivelist{margin-top: 40px;height: 500px;overflow-y: scroll}
+    	.Operationtip{position: fixed;width: 360px;height: 240px;background: white;z-index: 1000;font-size: 20px;left: 50%;top: 50%;margin-left: -180px;margin-top: -120px;display: none;}
+   		.Operationtip_title{height: 30px;line-height: 30px;background: #296CDA;color: white;padding:5px 10px;}
+   		.Operationtip_title a{float: right;color: white;font-size: 30px;}
+   		.OperationBtn{text-align: center;}
+   		.Operationtip .content{width: 300px;height: 120px;margin: 0 auto;line-height: 100px;text-align: center;}
+   		.OperationBtn span{display: inline-block;padding: 2px 8px;background: #296CDA;margin: 10px;color: white;cursor: pointer;border-radius: 4px;}
+    </style>
+
+</head>
+
+<body>
+	<div class="shadeboxseckill"></div>
+    <nav class="breadcrumb">
+        <i class="Hui-iconfont">&#xe67f;</i> 首页
+        <span class="c-gray en">&gt;</span> 秒杀活动
+        <span class="c-gray en">&gt;</span> 秒杀列表
+        <a class="btn btn-success radius r" style="line-height:1.6em;margin:3px 0 0 20px" href="javascript:location.replace(location.href);"
+            title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a>
+    </nav>
+
+    <div class="Hui-article">
+        <article class="cl pd-20">
+            <!--订单状态选择按钮-->
+            <div class="btn-group mb-20">
+                <a href="seckill.html" class="btn btn-default">添加活动</a>
+                <a href="#" class="btn btn-primary">活动列表</a>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <!--筛选条件区域-->
+                    <div class="condition-wrap cl common-form-wrap" id="pageSearchForm">
+                        <div class="condition-parent cl">
+                            <span class="title">主题</span>
+                            <input class="s-name" type="text" value="" placeholder="输入关键字搜索">
+                        </div>                                           
+                        <div class="condition-parent cl common-date-wrap">
+                            <span class="title">创建时间</span>
+							<input type="text" class="Wdate" id="createdBeginTime" value="" onClick=" WdatePicker({maxDate:'#F{$dp.$D(\'overEndTime\')}',dateFmt:'yyyy-M-d '})">
+                            <!--<span class="add">至</span>
+                            <input type="text" class="Wdate" id="listEnd" value="" onClick="WdatePicker({minDate:'#F{$dp.$D(\'listStart\')}',dateFmt:'yyyy-M-d H:mm:ss'})">-->
+                        </div>
+                        <div class="condition-parent cl common-date-wrap">
+                            <span class="title">有效时间</span>
+                            <input type="text" class="Wdate" id="overBeginTime" value="" onClick=" WdatePicker({maxDate:'#F{$dp.$D(\'overEndTime\')}',dateFmt:'yyyy-M-d '})">
+                            <span class="add">至</span>
+                            <input type="text" class="Wdate" id="overEndTime" value="" onClick="WdatePicker({minDate:'#F{$dp.$D(\'overBeginTime\')}',dateFmt:'yyyy-M-d '})">
+                        </div>
+						<div class="condition-parent cl">
+                            <span class="title">状态</span>
+                            <select class="white-list s-status" value="">
+                                <option value="">全部状态</option>
+                                <option value="1">未开始</option>
+                                <option value="2">进行中</option>
+                                <option value="3">已停用</option>
+                                <option value="4">已结束</option>
+                            </select>
+                        </div>	
+                        <div class="button-wrap">
+                            <button type="button" class="btn btn-primary" id="freeListSearch"><i class="Hui-iconfont">&#xe665;</i> 筛选</button>
+                            <!-- <button type="button" class="btn btn-primary" id="freeListReset"><i class="Hui-iconfont">&#xe66b;</i> 重置</button> -->
+                        </div>
+                    </div>
+                </div>
+            </div>        
+        </article>
+        
+        <div class="cl pd-20" id="activeList">
+        	<table calss="activeListtable" border="" cellspacing="" cellpadding="">
+        		<tr>
+        			<th width="20%">标题</th>
+        			<th width="15%">创建时间</th>
+        			<th width="30%">有效期</th>
+        			<th width="15%">状态</th>
+        			<th width="20%">操作</th>
+        		</tr>
+        		<!--<tr>
+        			<td>中秋活动</td>
+        			<td>2017-12-30 12:30:30</td>
+        			<td>2018-12-30 12:30:30-2018-12-30 12:30:30</td>
+        			<td>未开始</td>
+        			<td class="Operation">
+        				<span class="compile">编辑</span>
+        				<span class="enabled">启用</span>
+        				<span class="deletelist">删除</span>
+        				<span class="lookmes">查看</span>       			
+        			</td>
+        		</tr>-->
+        	</table>
+            <div id="paginationList" style="margin-top:20px;"></div>
+        </div>
+    </div>
+
+    <div class="lookActiveMes">
+    	<p class="fix_tips_close">
+    		<span>查看</span>
+    		<a href="javascript:;">X</a>  		
+    	</p>
+    	<div class="lookactivelist">
+    		<table border="" cellspacing="" id="lookactivelist" cellpadding="">
+    			<tr>
+    				<th width="20%">商品名称</th>
+    				<th width="15%">商品货号</th>
+    				<th width="15%">免息方案</th>
+    				<th width="10%">渠道价</th>
+    				<th width="10%">市场价</th>
+    				<th width="10%">活动价</th>
+    				<th width="10%">秒杀价</th>
+    				<th width="10%">每人限秒数量</th>
+    			</tr>
+    			<!--<tr>
+    				<td>发生了肯德基阿卡丽双方均按时亏了就</td>
+    				<td>lkasdjflajsdlf1251</td>
+    				<td>6期免息的聚少离多</td>
+    				<td>¥2000元</td>
+    				<td>¥2000元</td>
+    				<td>¥2000元</td>
+    				<td>¥2000元</td>
+    				<td>20件</td>
+    			</tr>-->
+    		</table>
+    	</div>
+        <div id="lookactive" style="margin-top:20px;"></div>
+    </div>
+	
+	<div class="Operationtip">
+		<p class="Operationtip_title">
+    		<span>提示</span>
+    		<a href="javascript:;">X</a>  		
+    	</p>
+    	<div class="content">
+    		活动正在进行中，确定要停用？
+    	</div>
+    	<div class="OperationBtn">
+    		<span>确定</span>
+    		<span>取消</span>
+    	</div>
+	</div>
+    <!--_footer 作为公共模版分离出去-->
+    <script type="text/javascript" src="../../lib/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="../../lib/layer/2.4/layer.js"></script>
+    <script type="text/javascript" src="../../static/h-ui/js/H-ui.min.js"></script>
+    <script type="text/javascript" src="../../static/h-ui.admin/js/H-ui.admin.js"></script>
+    <script type="text/javascript" src="../../js/base/public.js?rev=@@hash"></script>
+    <!--/_footer 作为公共模版分离出去-->
+
+    <script type="text/javascript" src="../../lib/laypage/1.2/laypage.js"></script>
+    <script type="text/javascript" src="../../lib/layer/2.4/layer.js"></script>
+    <script type="text/javascript" src="../../lib/My97DatePicker/4.8/WdatePicker.js"></script>
+    <script type="text/javascript" src="../../js/page/seckillList.js"></script>
+</body>
+
+</html>

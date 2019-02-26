@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta content="yes" name="apple-touch-fullscreen">
+		<meta content="telephone=no,email=no" name="format-detection">
+		<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1,maximum-scale=1, user-scalable=no">
+		<meta name="format-detection" content="telephone=no">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="x5-fullscreen" content="true">
+		<meta name="full-screen" content="yes">
+		<meta name="renderer" content="webkit">
+		<meta content="telephone=no" name="format-detection" />
+		<meta http-equiv="Cache-Control" content="no-cache" />
+		<meta http-equiv="x-rim-auto-match" content="none">
+		<link rel="stylesheet" type="text/css"  href="hospitalPreview.css" />
+		<link rel="stylesheet" href="../../lib/swiper/swiper-4.1.6.min.css">
+		<title>医院信息</title>
+		<style>
+			
+		</style>
+	</head>
+
+	<body scoll=no style="height:100%;">
+		<div id="app">
+			<div id="hospitalDetail">
+				
+			</div>
+		</div>
+		
+		
+		<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+		<script type="text/javascript" src="../../lib/arttemplate/template-web.js"></script>
+	    <script type="text/javascript" src="../../js/base/public.js?rev=@@hash"></script>
+	    <script type="text/javascript" src="../../lib/swiper/swiper-4.1.6.min.js"></script>  
+	</body>
+	<script>
+	    /**
+	 * 设置html-动态font-size rem
+	 */
+	    (function (win, lib) {
+	        var doc = win.document;
+	        var docEl = doc.documentElement;
+	        var metaEl = doc.querySelector('meta[name="viewport"]');
+	        var flexibleEl = doc.querySelector('meta[name="flexible"]');
+	        var dpr = 0;
+	        var scale = 0;
+	        var tid;
+	        var flexible = lib.flexible || (lib.flexible = {});
+	
+	        if (metaEl) {
+	            console.warn('将根据已有的meta标签来设置缩放比例');
+	            var match = metaEl.getAttribute('content').match(/initial\-scale=([\d\.]+)/);
+	            if (match) {
+	                scale = parseFloat(match[1]);
+	                dpr = parseInt(1 / scale);
+	            }
+	        } else if (flexibleEl) {
+	            var content = flexibleEl.getAttribute('content');
+	            if (content) {
+	                var initialDpr = content.match(/initial\-dpr=([\d\.]+)/);
+	                var maximumDpr = content.match(/maximum\-dpr=([\d\.]+)/);
+	                if (initialDpr) {
+	                    dpr = parseFloat(initialDpr[1]);
+	                    scale = parseFloat((1 / dpr).toFixed(2));
+	                }
+	                if (maximumDpr) {
+	                    dpr = parseFloat(maximumDpr[1]);
+	                    scale = parseFloat((1 / dpr).toFixed(2));
+	                }
+	            }
+	        }
+	
+	        if (!dpr && !scale) {
+	            var isAndroid = win.navigator.appVersion.match(/android/gi);
+	            var isIPhone = win.navigator.appVersion.match(/iphone/gi);
+	            var devicePixelRatio = win.devicePixelRatio;
+	            if (isIPhone) {
+	                // iOS下，对于2和3的屏，用2倍的方案，其余的用1倍方案
+	                if (devicePixelRatio >= 3 && (!dpr || dpr >= 3)) {
+	                    dpr = 3;
+	                } else if (devicePixelRatio >= 2 && (!dpr || dpr >= 2)) {
+	                    dpr = 2;
+	                } else {
+	                    dpr = 1;
+	                }
+	            } else {
+	                // 其他设备下，仍旧使用1倍的方案
+	                dpr = 1;
+	            }
+	            scale = 1 / dpr;
+	        }
+	
+	        docEl.setAttribute('data-dpr', dpr);
+	        if (!metaEl) {
+	            metaEl = doc.createElement('meta');
+	            metaEl.setAttribute('name', 'viewport');
+	            metaEl.setAttribute('content', 'initial-scale=' + scale + ', maximum-scale=' + scale + ', minimum-scale=' + scale + ', user-scalable=no');
+	            if (docEl.firstElementChild) {
+	                docEl.firstElementChild.appendChild(metaEl);
+	            } else {
+	                var wrap = doc.createElement('div');
+	                wrap.appendChild(metaEl);
+	                doc.write(wrap.innerHTML);
+	            }
+	        }
+	
+	        function refreshRem() {
+	            var width = docEl.getBoundingClientRect().width;
+	            // if (width / dpr > 540) {
+	            //     width = 540 * dpr;
+	            // }
+	            var rem = width / 10;
+	            docEl.style.fontSize = rem + 'px';
+	            flexible.rem = win.rem = rem;
+	        }
+	
+	        win.addEventListener('resize', function () {
+	            clearTimeout(tid);
+	            tid = setTimeout(refreshRem, 300);
+	        }, false);
+	        win.addEventListener('pageshow', function (e) {
+	            if (e.persisted) {
+	                clearTimeout(tid);
+	                tid = setTimeout(refreshRem, 300);
+	            }
+	        }, false);
+	
+	        if (doc.readyState === 'complete') {
+	            doc.body.style.fontSize = 12 * dpr + 'px';
+	        } else {
+	            doc.addEventListener('DOMContentLoaded', function (e) {
+	                doc.body.style.fontSize = 12 * dpr + 'px';
+	            }, false);
+	        }
+	
+	
+	        refreshRem();
+	
+	        flexible.dpr = win.dpr = dpr;
+	        flexible.refreshRem = refreshRem;
+	        flexible.rem2px = function (d) {
+	            var val = parseFloat(d) * this.rem;
+	            if (typeof d === 'string' && d.match(/rem$/)) {
+	                val += 'px';
+	            }
+	            return val;
+	        }
+	        flexible.px2rem = function (d) {
+	            var val = parseFloat(d) / this.rem;
+	            if (typeof d === 'string' && d.match(/px$/)) {
+	                val += 'rem';
+	            }
+	            return val;
+	        }
+	
+	    })(window, window['lib'] || (window['lib'] = {}));
+	
+	
+	    /**
+	     * ios阻止缩放 
+	    */
+	    window.onload = function () {
+	        document.addEventListener('gesturestart', function (e) {
+	            e.preventDefault();
+	        });
+	        document.addEventListener('dblclick', function (e) {
+	            e.preventDefault();
+	        });
+	        document.addEventListener('touchstart', function (event) {
+	            if (event.touches.length > 1) {
+	                event.preventDefault();
+	            }
+	        });
+	        var lastTouchEnd = 0;
+	        document.addEventListener('touchend', function (event) {
+	            var now = (new Date()).getTime();
+	            if (now - lastTouchEnd <= 300) {
+	                event.preventDefault();
+	            }
+	            lastTouchEnd = now;
+	        }, false);
+	    };
+	    document.documentElement.addEventListener('touchstart', function (event) {
+	        if (event.touches.length > 1) {
+	            event.preventDefault();
+	        }
+	    }, false);
+	    var lastTouchEnd = 0;
+	    document.documentElement.addEventListener('touchend', function (event) {
+	        var now = Date.now();
+	        if (now - lastTouchEnd <= 300) {
+	            event.preventDefault();
+	        }
+	        lastTouchEnd = now;
+	    }, false);
+	
+	</script>
+	<script>
+	    var detailUtil = {
+	            'cache': {},
+	            //初始化
+	            'init': function () {
+			        var path = location.href;
+			        if (path.indexOf('?') >= 0) {
+			            var params = path.substring(path.indexOf('?')+1, path.length).split('&'),
+			                id = '',
+			                status = '',
+			                his_id = '';
+			            for (var i = 0; i < params.length; i++) {
+			                if (params[i].indexOf('id')!=-1) {
+			                    id = params[i].split('=')[1];
+			                }else if(params[i].indexOf('status')!=-1){
+			                	status = params[i].split('=')[1];
+			                }else if(params[i].indexOf('hisId')!=-1){
+			                	his_id = params[i].split('=')[1];
+			                }
+			            }
+			            if(status){
+			            	detailUtil.status = status;
+			            }
+			            if(status =="10" || status =="11"){
+			            	if (id) {
+				            	detailUtil.id = id;
+				                detailUtil.getHospitalInfo(id,true);
+				            }
+			            }else{
+			            	if (his_id) {
+				            	detailUtil.his_id = his_id;
+				                detailUtil.getHospitalInfo(his_id,false);
+				            }
+			            }
+			        }
+			    },
+			    'getHospitalInfo': function (ids,boole) {
+			    	var url = base,
+			    		data = {};
+			    	if(boole){
+			    		url+="case/getHospitalInfoById";
+			    		data.id = ids;
+			    	}else{
+			    		url+="hospital/getHospitalByHisId";
+			    		data.his_id = ids;
+			    	}
+			        $.get(url, data, function (res) {
+			            if (res.message) {
+			                $('#hospitalDetail').html('');
+			                $.Huimodalalert(res.message, 2000);
+			            } else if (!res.message) {
+			                detailUtil.cache.details = res.data;
+			                detailUtil.renderHospitalDetails(res.data);
+			            } else {
+			                $('#hospitalDetail').html('');
+			            }
+			        })
+			    },
+	            // 渲染详情
+	            'renderHospitalDetails': function (data) {
+	            	data.imgPath=imgPath;
+			        var html = '';
+			        switch (data.ziben_type) {
+			            case 1:
+			                data.ziben_type = '公立医院';
+			                break;
+			            case 3:
+			                data.ziben_type = '民营医院';
+			                break;
+			            default:
+			                break;
+			        };
+			        switch (data.hospital_type) {
+			            case 26:
+			                data.hospital_type = '综合型整形医院';
+			                break;
+			            case 27:
+			                data.hospital_type = '整形外科专科医院';
+			                break;
+			            case 28:
+			                data.hospital_type = '齿科专科医院';
+			                break;
+			            case 29:
+			                data.hospital_type = '皮肤科专科医院';
+			                break;
+			            case 30:
+			                data.hospital_type = '医院整形外科';
+			                break;
+			            case 147:
+			                data.hospital_type = '眼科专科医院';
+			                break;
+			            case 152:
+			                data.hospital_type = '综合泌尿科';
+			                break;
+			            case 153:
+			                data.hospital_type = '妇科整形医院';
+			                break;
+			            case 154:
+			                data.hospital_type = '医疗美容诊所';
+			                break;
+			            case 155:
+			                data.hospital_type = '医疗美容地区医院';
+			                break;
+			            case 156:
+			                data.hospital_type = '医疗美容教学医院';
+			                break;
+			            case 157:
+			                data.hospital_type = '医疗美容区域医院';
+			                break;
+			            case 158:
+			                data.hospital_type = '医疗美容医学中心';
+			                break;
+			            case 167:
+			                data.hospital_type = '医疗美容医院';
+			                break;
+			            case 168:
+			                data.hospital_type = '医疗美容门诊部';
+			                break;
+			            case 170:
+			                data.hospital_type = '医疗美容诊所';
+			                break;
+			            case 181:
+			                data.hospital_type = '医疗美容机构';
+			                break;
+			            case 124:
+			                data.hospital_type = '其他';
+			                break;
+			            default:
+			                break;
+			        };
+			        switch (data.service_grade) {
+			            case 1:
+			                data.service_grade = '一级业务';
+			                break;
+			            case 2:
+			                data.service_grade = '二级业务';
+			                break;
+			            case 3:
+			                data.service_grade = '三级业务';
+			                break;
+			            case 4:
+			                data.service_grade = '四级业务';
+			                break;
+			            case 0:
+			                data.service_grade = '';
+			                break;
+			            default:
+			                break;
+			        };
+	                var html = template("hospitalTpl", data);
+	                $('#hospitalDetail').html(html);
+	                var mySwiper = new Swiper ('.swiper-container', {
+			            loop: true,
+			            autoplay:1500
+	                })
+	            }
+	        }
+	    $(function(){
+	        detailUtil.init();
+	    })
+	</script>
+	
+	<script id="hospitalTpl" type="text/html">
+       	<div class="container">
+			<div class="header">
+				<div class="attention">
+					<img src="{{imgPath+logo}}" alt="" class="hospitalIcon">
+					<span class="hospitalName">{{name}}</span>
+					<span class="hospitalType">综合门诊部</span>
+					<button class="hospitalAttention">+关注</button>
+				</div>
+				<div class="bottom">
+					<ul class="popularity">
+						<li class="order">
+							<span>预约</span>
+							<span class="orderNums">453</span>
+						</li>
+						<li class="case">
+							<span>案例</span>
+							<span class="caseNums">4562</span>
+						</li>
+						<li class="ranking">
+							<span>咨询排名</span>
+							<span class="rankingNums">879</span>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<ul class="ortherInfo">
+				<li>
+					<img src="yy_icon.png" alt="">
+					<span>医院口碑</span>
+				</li>
+			</ul>
+			<div class="hospitalInfo">
+				<div class="location">
+					<img src="dinwei_tb_@2.png" alt="">
+					<span>{{cityName+street}}</span>
+				</div>
+				<div class="swiper-container swipe">
+	                <div class="swiper-wrapper">
+	                    {{each pic_urls item i}}
+	                    <div class="swiper-slide"><img src="../../images/default.png" alt="" class="preview-img" style="background: url('{{imgPath+item}}') no-repeat center;background-size:cover;"></div>
+	                    {{/each}}
+	                </div>
+	            </div>
+				<!--<div class="photos">
+					<img src="{{imgPath+business_license}}" alt="">
+					<img src="{{imgPath+examination}}" alt="">
+					<img src="{{imgPath+licence}}" alt="">
+				</div>-->
+				<p>
+					{{introduce}}
+				</p>
+			</div>
+			<div class="Commodities">
+				<div class="title">
+					<h3>本院推荐</h3></div>
+				<ul>
+					<li>
+						<img src="Commodity1.jpg" alt="">
+						<div class="commodityInfo">
+							<h4>【商品示例】</h4>
+							<div class="price">
+								<span class="sale">￥399</span>
+								<span class="discount">￥540</span>
+								<span class="book">预约数：200</span>
+							</div>
+						</div>
+					</li>
+					<li>
+						<img src="Commodity2.jpg" alt="">
+						<div class="commodityInfo">
+							<h4>【商品示例】 </h4>
+							<div class="price">
+								<span class="sale">￥399</span>
+								<span class="discount">￥540</span>
+								<span class="book">预约数：200</span>
+							</div>
+						</div>
+					</li>
+					<li>
+						<img src="Commodity3.jpg" alt="">
+						<div class="commodityInfo">
+							<h4>【商品示例】 </h4>
+							<div class="price">
+								<span class="sale">￥399</span>
+								<span class="discount">￥540</span>
+								<span class="book">预约数：200</span>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+			<div class="doctor">
+				<div class="title">
+					<h3>本院医生</h3></div>
+				<div class="doctorInfo">
+					<img src="doctorAvatar.jpg" alt="">
+					<div class="doctorDetail">
+						<h4>主治医生： 医生示例</h4>
+						<span class="adress">深圳市爱美丽医疗美容医院</span>
+						<div class="book">
+							<span>案例： 200</span>
+							<span>预约数： 200</span>
+						</div>
+					</div>
+				</div>
+				<ul class="ortherInfo">
+					<li>
+						<img src="hotSale.png" alt="">
+						<span>热卖</span>
+						<ul class="product">
+							<li>超立体唇&nbsp;88预约</li>
+							<li>双眼皮&nbsp;6预约</li>
+							<li>填充&nbsp;6预约</li>
+							<li>超立体唇&nbsp;88预约</li>
+							<li>双眼皮&nbsp;6预约</li>
+						</ul>
+					</li>
+					<li>
+						<img src="comment.png" alt="">
+						<span>用户评价</span>
+					</li>
+				</ul>
+			</div>
+			
+		</div>
+		<div class="footer">
+			<button class="call">
+		        <img src="call.png" alt="">
+		        <span>电话咨询</span>
+		    </button>
+			<button class="online">
+		        <img src="online.png" alt="">
+		        <span>在线咨询</span>
+		    </button>
+		</div>
+	</script>
+</html>

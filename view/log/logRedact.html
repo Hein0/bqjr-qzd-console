@@ -1,0 +1,642 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <title>编辑SPU</title>
+
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="../../lib/Hui-iconfont/1.0.8/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/skin/default/skin.css" id="skin" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/style.css" />
+    <link rel="stylesheet" href="../../bootstrap-3.3.7-dist/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="../../css/logSpu.css?rev=@@hash">
+    <style>
+        .upload-pic-wrap {border: none;}
+        .type-select-panel .top-part ul {width: 30%;}
+        .type-select-panel .bottom-part .result {float: none;}
+        .upload-pic-content .pic-wrapImg {position: relative;width: 122px;height: auto;float: left;margin: 10px;overflow: hidden;}
+        .pic-wrapImg .loadpic {float: none!important;width: 100%!important;margin: 0px!important;box-sizing: border-box;}
+    	.pic-wrapImg .loadpic-label span { position: absolute;bottom: 6px;display: inline-block;line-height: 30px;left: 45px;}
+        .addWrap{cursor:pointer ;}
+        .items-text {margin-left: 19%;}
+        .redf{color:red;font-style:normal}
+        .loadpic-wrap p span {color: #333333;}
+        .set-cover {float: left; cursor: pointer;}
+    	.del-img {float: right;cursor: pointer;}
+        
+        
+    </style>
+</head>
+
+<body>
+    <div class="Hui-article">
+        <article class="cl pd-20">
+            <h4 class="titles">填写基本信息</h4>
+            <div class="spu-cont">
+
+            </div>
+        </article>
+    </div>
+
+    <!--footer 作为公共模版分离出去-->
+    <script type="text/javascript" src="../../lib/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="../../lib/layer/2.4/layer.js"></script>
+    <script type="text/javascript" src="../../static/h-ui/js/H-ui.min.js"></script>
+    <script type="text/javascript" src="../../static/h-ui.admin/js/H-ui.admin.js"></script>
+    <script type="text/javascript" src="../../lib/My97DatePicker/4.8/WdatePicker.js"></script>
+    <!--footer 作为公共模版分离出去-->
+
+    <script type="text/javascript" src="../../lib/arttemplate/template-web.js"></script>
+    <!-- <script type="text/javascript" src="../../lib/laypage/1.2/laypage.js"></script> -->
+    <script type="text/javascript" src="../../js/base/public.js?rev=@@hash"></script>
+    <script type="text/javascript" src="../../js/common/common.js?rev=@@hash"></script>
+    <script type="text/javascript" src="../../bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../lib/lrz.bundle.js"></script>
+    <script type="text/javascript" src="../../js/page/logRedact.js?rev=@@hash"></script>
+    <script type="text/javascript">
+        $(function () {
+
+
+        });
+
+
+
+    </script>
+
+</body>
+<script id="edit" type="text/html">
+    <div id="form-step-1" class="form form-horizontal  active">
+
+        <!-- <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2">
+                <span class="red">*</span>记录人：</label>
+            <div class="formControls col-xs-10 col-sm-10">
+                <input id="user_id" class="input-text" type="text" value="{{user_id||""}}">
+            </div>
+        </div> -->
+
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2">
+                <span class="red">*</span>手术时间：</label>
+            <div class="formControls col-xs-10 col-sm-10">
+                <input type="text" onfocus="WdatePicker({ maxDate:'%y-%M-%d' })" id="operationTime" class="input-text Wdate f-l" readonly name="operationTime" value="{{operationTime.substring(0,10)}}"
+                />
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2">
+                <span class="red">*</span>所在医院：</label>
+            <div class="formControls col-xs-10 col-sm-10">
+                <div class="input-text">
+                    <span class="value-wrap select-hospital col-xs-10 col-sm-10" style="margin: -4px 0 0 -4px;" data-id="{{hospital_id||""}}">{{hospital_name||""}}</span>
+                    <div class="name-select-panel hospital_id" style="width:39%;top: 30px;left: 17px;">
+                        <div class="search-bar">
+                            <input type="text" value="" id="hospital_id" style="height: 28px;">
+                        </div>
+                        <ul></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2">
+                <span class="red">*</span>商品：</label>
+            <div class="formControls col-xs-10 col-sm-10">
+                <div class="input-text">
+                    <span class="value-wrap select-order col-xs-10 col-sm-10" style="margin: -4px 0 0 -4px;" data-id="{{goods_id||""}}" data-keyword="{{goods_key_word||""}}" data-userkey="{{user_key_word||""}}">{{goods_name||""}}</span>
+                    <div class="name-select-panel order_sn" style="width:40%;">
+                        <ul></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2">
+                <span class="red">*</span>治疗负责人：</label>
+            <div class="formControls col-xs-10 col-sm-10">
+                <div class="input-text">
+                    <span class="value-wrap select-doctor col-xs-10 col-sm-10" style="margin: -4px 0 0 -4px;" data-id="{{doctor_id||""}}">{{doctor_name||""}}</span>
+                    <div class="name-select-panel doctor_id" style="width:40%;">
+                        <ul></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="classWrap">
+			<div class="row cl">
+                <label class="form-label col-xs-2 col-sm-2">项目类别：</label>
+                <div class="keywords classification">
+                	<input type="text" name="" class="value-wrap keywVal" disabled="disabled" value="{{goods_key_word||""}}" />
+                </div>
+                <span class="addWrap"><i class="Hui-iconfont">&#xe604;</i></span>
+            </div>
+            {{each user_key_wordList it k}}
+	            <div class="row cl newAdd">
+	            	<label class="form-label col-xs-2 col-sm-2">补充项目类别：</label>
+	            	<div class="long-iptK classification">
+	            		<input type="text" name="" class="value-wrap longIptK" value="{{it}}" data="{{k}}" disabled="disabled">
+	            	</div>
+	            </div>
+            {{/each}}
+            <div class="type-select-panel condition-panel">
+                <div class="top-part cl">
+                    <ul class="ul-a"></ul>
+                    <ul class="ul-b"></ul>
+                    <ul class="ul-c"></ul>
+                </div>
+                <div class="bottom-part cl">
+                    <p class="result">已选择的项目类别:
+                        <em></em>
+                    </p>
+                    <button type="button" class="btn btn-primary close-panel">关闭</button>
+                    <button type="button" class="btn btn-primary get-result">确认选择</button>
+                </div>
+            </div>
+        </div> 
+
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2">
+                <span class="red">*</span>评分：</label>
+            <div class="formControls col-xs-10 col-sm-10">
+                <div class="clearfix">
+                    <div id="star-5" class="star-bar size-M f-l mr-10 va-m"></div>
+                    <strong id="result-5" class="f-l va-m" data-score="{{scoreNum||""}}">你的评分是{{scoreNum||""}}分</strong>
+                </div>
+            </div>
+        </div>
+
+        <div class="row cl ">
+            <label class="form-label col-xs-2 col-sm-2">
+                <span class="red">*</span>术前影像/照片：</label>
+            <div class="upload-pic-wrap default-pic-wrap">
+                <div class="upload-pic-content">
+                	{{if before_main_video && before_main_video!='' || before_main_video_pic}}
+	                	<div class="videoWraps isNoShow videoHide">
+		                	<div class="pic-wrapImg videoHide">
+			                    <div class="loadpic">
+			                        <input name="file" class="loadpic-input" accept="video/*" type="file" data-name="before_main_video" id="before_main_video" onchange="spuUtils.uploadVid($(this))" data-src="{{before_main_video}}">
+			                        <label class="loadpic-label">
+			                        	{{if before_main_video}}
+			                           		<video src='{{before_main_video}}'></video>
+			                            {{/if}}
+			                            <i class="Hui-iconfont">&#xe600;</i>
+			                            <span>视频</span>
+			                        </label>
+			                    </div>
+			                    <p>
+	                                <span class="del-img" onclick="spuUtils.befDelImg($(this),$(this).index(),'before_main_video')">删除</span>
+	                            </p>
+			                </div>
+			                <div class="pic-wrapImg ">
+	                        	<div class="loadpic">
+	                                <input name="file" class="loadpic-input" accept="image/jpg,image/jpeg,image/png" type="file" data-name="before_main_video_pic"  id="before_main_video_pic" data-src="{{imgPath+before_main_video_pic||""}}">
+	                                <label class="loadpic-label">
+	                                	{{if before_main_video_pic && before_main_video_pic!=""}}
+			                            <img style="display: inline-block;width: 122px;height: 122px;" src="{{imgPath+before_main_video_pic||""}}">
+			                            {{/if}}
+	                                    <i class="Hui-iconfont">&#xe600;</i>
+	                                    <span>视频封面</span>
+	                                </label>
+	                            </div>
+	                            <p>
+	                                <span class="del-img delImg del-Befimg" onclick="spuUtils.befDelImg($(this),$(this).index(),'before_main_video_pic')">删除</span>
+	                            </p>
+	                        </div>
+		                </div>                
+		            
+	                {{else}}
+		                <div class="imgWraps isNoShow">
+		                	<div class="pic-wrapImg">
+			                    <div class="loadpic">
+			                        <input name="file" class="loadpic-input" accept="image/jpg,image/jpeg,image/png" type="file" data-name="before_main" id="before_main" data-src="{{before_main||""}}">
+			                        <label class="loadpic-label">
+			                            {{if before_main && before_main!=""}}
+			                            <img style="display: inline-block;width: 122px;height: 122px;" src="{{imgPath+before_main||""}}">
+			                            {{/if}}
+			                            <i class="Hui-iconfont">&#xe600;</i>
+			                        </label>
+			                    </div>
+			                    <p>
+			                    	<span class="set-cover" onclick="spuUtils.befSetImgToCover($(this))">设为封面</span>
+	                                <span class="del-img" onclick="spuUtils.befDelImg($(this),$(this).index(),'before_main')">删除</span>
+	                            </p>
+	                            {{if before_main}}
+	                            	<span class="pic-cover">封面</span>
+	                            {{/if}}
+			                </div>
+			                
+			                <div class="pic-wrapImg">
+			                    <div class="loadpic">
+			                        <input name="file" class="loadpic-input" accept="image/jpg,image/jpeg,image/png" type="file" data-name="before_two" id="before_two" data-src="{{before_two||""}}">
+			                        <label class="loadpic-label">
+			                                {{if before_two && before_two!=""}}
+			                                <img style="display: inline-block;width: 122px;height: 122px;" src="{{imgPath+before_two||""}}">
+			                                {{/if}}
+			                            <i class="Hui-iconfont">&#xe600;</i>
+			                        </label>
+			                    </div>
+			                    <p>
+	                                <span class="set-cover" onclick="spuUtils.befSetImgToCover($(this))">设为封面</span>
+	                                <span class="del-img" onclick="spuUtils.befDelImg($(this),$(this).index(),'before_two')">删除</span>
+	                            </p>
+			                </div> 
+			                <div class="pic-wrapImg">
+			                    <div class="loadpic">
+			                        <input name="file" class="loadpic-input" accept="image/jpg,image/jpeg,image/png" type="file" data-name="before_three" id="before_three" data-src="{{before_three||""}}">
+			                        <label class="loadpic-label">
+			                                {{if before_three && before_three!=""}}
+			                                <img style="display: inline-block;width: 122px;height: 122px;" src="{{imgPath+before_three||""}}">
+			                                {{/if}}
+			                            <i class="Hui-iconfont">&#xe600;</i>
+			                        </label>
+			                    </div>
+			                    <p>
+	                                <span class="set-cover" onclick="spuUtils.befSetImgToCover($(this))">设为封面</span>
+	                                <span class="del-img" onclick="spuUtils.befDelImg($(this),$(this).index(),'before_three')">删除</span>
+	                            </p>
+			                </div>
+			            </div>    
+	                {{/if}}
+	                
+                </div>
+                <div class="items-text">
+                	<em class="redf">●</em>支持上传图片和视频，但不共存<br />
+                	<em class="redf">●</em>视频限制1个，长度限制为15秒。仟姿app有视频长度截取功能<br />
+                	<em class="redf">●</em>如果是图片，最多3张<br />
+                	<em class="redf">●</em>推荐尺寸比例为16:9<br />
+                </div>
+            </div>
+        </div>
+        
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2">
+                <span class="red"></span>术前日记：</label>
+            <div class="formControls preoperWrap col-xs-10 col-sm-10">
+                <textarea id="beforeContent" class="textarea" type="text" name="beforeContent">{{beforeContent}}</textarea>
+            <p class="textSpan"><em class="redf">●</em>可以谈谈到院后的感受，医院环境如何，在医院遇到的有趣经历，手术前的心态等</p>
+            </div>
+            
+        </div>
+        
+    </div>
+
+    {{if case_slaves}}
+        {{each case_slaves item i}}
+            <h4 class="titles">续写{{i}}</h4>
+            <div class="form form-horizontal form-step-2">
+                <div class="row cl">
+                    <label class="form-label col-xs-2 col-sm-2">
+                        <span class="red">*</span>记录日记：</label>
+                    <div class="formControls col-xs-10 col-sm-10">
+                        <textarea id="{{'introduce'+i}}" class="textarea" type="text" name="introduce" value="{{item.content||""}}">{{item.content||""}}</textarea>
+                    </div>
+                </div>
+
+                <div class="row cl >
+                    <label class="form-label col-xs-2 col-sm-2">
+                        <span class="red">*</span>术后照片：</label>
+                    <div class="upload-pic-wrap default-pic-wrap">
+                        <div class="upload-pic-content">
+                        	{{if item.after_main_video && item.after_main_video!=""}}
+	                            <div class="videoWraps isNoShow videoHide">
+		                            <div class="pic-wrapImg">
+		                            	<div class="loadpic">
+		                                    <input name="file" class="loadpic-input" accept="video/*" type="file" id="afterVideo{{i}}"  onchange="spuUtils.afterVideo($(this), {{i}})">
+		                                    <label class="loadpic-label">
+		                                        <video src='{{item.after_main_video}}'></video>
+		                                        <i class="Hui-iconfont">&#xe600;</i>
+		                                        <span>视频</span>
+		                                    </label>
+		                                </div>
+		                                <p>
+		                                    <span class="del-img" onclick="spuUtils.delImg($(this),$(this).index(),{{i}})">删除</span>
+		                                </p>
+		                            </div>
+		                            <div class="pic-wrapImg">
+		                                <div class="loadpic">
+		                                    <input name="file" class="loadpic-input" accept="image/jpg,image/jpeg,image/png" type="file" id="after_main_video_pic{{i}}">
+		                                    <label class="loadpic-label">
+		                                    	{{if item.after_main_video_pic}}
+		                                        <img style="display: inline-block;width: 122px;height: 122px;" src="{{imgPath+item.after_main_video_pic||""}}">
+		                                        {{/if}}
+		                                        <i class="Hui-iconfont">&#xe600;</i>
+		                                        <span>视频封面</span>
+		                                    </label>
+		                                </div>
+		                                <p>
+	                                        <span class="del-img" id="afertDele{{i}}">删除</span>
+	                                    </p>
+		                            </div>
+		                        </div>    
+                            {{else}}
+	                            <div class="imgWraps isNoShow">
+		                            <div class="pic-wrapImg">
+			                            <div class="loadpic">
+			                                <input name="file" class="loadpic-input" accept="image/jpg,image/jpeg,image/png" type="file" id="{{'after1'+i}}" data-src="{{item.after_pics[0]||""}}">
+			                                <label class="loadpic-label">
+			                                        {{if item.after_pics[0]}}
+			                                        <img style="display: inline-block;width: 122px;height: 122px;" src="{{imgPath+item.after_pics[0]||""}}">
+			                                        {{/if}}
+			                                    <i class="Hui-iconfont">&#xe600;</i>
+			                                </label>
+			                            </div>
+			                            <p>
+		                                    <span class="set-cover" data-index="{{i}}">设为封面</span>
+		                                    <span class="del-img" onclick="spuUtils.delImg($(this),$(this).index(),{{i}})">删除</span>
+		                                </p>
+		                                {{if item.after_pics[0]}}
+		                                	<span class="pic-cover">封面</span>
+		                                {{/if}}
+		                            </div>
+		                            
+		                            <div class="pic-wrapImg">
+			                            <div class="loadpic">
+			                                <input name="file" class="loadpic-input" accept="image/jpg,image/jpeg,image/png" type="file" id="{{'after2'+i}}" data-src="{{item.after_pics[1]||""}}">
+			                                <label class="loadpic-label">
+			                                        {{if item.after_pics[1]}}
+			                                        <img style="display: inline-block;width: 122px;height: 122px;" src="{{imgPath+item.after_pics[1]||""}}">
+			                                        {{/if}}
+			                                    <i class="Hui-iconfont">&#xe600;</i>
+			                                </label>
+			                            </div>
+			                            <p>
+		                                    <span class="set-cover" data-index="{{i}}">设为封面</span>
+		                                    <span class="del-img"  onclick="spuUtils.delImg($(this),$(this).index(),{{i}})">删除</span>
+		                                </p>
+		                            </div>
+		                            
+		                            <div class="pic-wrapImg">
+			                            <div class="loadpic">
+			                                <input name="file" class="loadpic-input" accept="image/jpg,image/jpeg,image/png" type="file" id="{{'after3'+i}}" data-src="{{item.after_pics[2]||""}}">
+			                                <label class="loadpic-label">
+			                                        {{if item.after_pics[2]}}
+			                                        <img style="display: inline-block;width: 122px;height: 122px;" src="{{imgPath+item.after_pics[2]||""}}">
+			                                        {{/if}}
+			                                    <i class="Hui-iconfont">&#xe600;</i>
+			                                </label>
+			                            </div>
+			                            <p>
+		                                    <span class="set-cover" data-index="{{i}}">设为封面</span>
+		                                    <span class="del-img" onclick="spuUtils.delImg($(this),$(this).index(),{{i}})">删除</span>
+		                                </p>
+		                            </div>
+		                            
+		                            <div class="pic-wrapImg">
+			                            <div class="loadpic">
+			                                <input name="file" class="loadpic-input" accept="image/jpg,image/jpeg,image/png" type="file" id="{{'after4'+i}}" data-src="{{item.after_pics[3]||""}}">
+			                                <label class="loadpic-label">
+			                                        {{if item.after_pics[3]}}
+			                                        <img style="display: inline-block;width: 122px;height: 122px;" src="{{imgPath+item.after_pics[3]||""}}">
+			                                        {{/if}}
+			                                    <i class="Hui-iconfont">&#xe600;</i>
+			                                </label>
+			                            </div>
+			                            <p>
+		                                    <span class="set-cover" data-index="{{i}}">设为封面</span>
+		                                    <span class="del-img" onclick="spuUtils.delImg($(this),$(this).index(),{{i}})">删除</span>
+		                                </p>
+		                            </div>
+		                            
+		                            <div class="pic-wrapImg">
+			                            <div class="loadpic">
+			                                <input name="file" class="loadpic-input" accept="image/jpg,image/jpeg,image/png" type="file" id="{{'after5'+i}}" data-src="{{item.after_pics[4]||""}}">
+			                                <label class="loadpic-label">
+			                                        {{if item.after_pics[4]}}
+			                                        <img style="display: inline-block;width: 122px;height: 122px;" src="{{imgPath+item.after_pics[4]||""}}">
+			                                        {{/if}}
+			                                    <i class="Hui-iconfont">&#xe600;</i>
+			                                </label>
+			                            </div>
+			                            <p>
+		                                    <span class="set-cover" data-index="{{i}}">设为封面</span>
+		                                    <span class="del-img" onclick="spuUtils.delImg($(this),$(this).index(),{{i}})">删除</span>
+		                                </p>
+		                            </div>
+		                            
+		                            <div class="pic-wrapImg">
+			                            <div class="loadpic">
+			                                <input name="file" class="loadpic-input" accept="image/jpg,image/jpeg,image/png" type="file" id="{{'after6'+i}}" data-src="{{item.after_pics[5]||""}}">
+			                                <label class="loadpic-label">
+			                                        {{if item.after_pics[5]}}
+			                                        <img style="display: inline-block;width: 122px;height: 122px;" src="{{imgPath+item.after_pics[5]||""}}">
+			                                        {{/if}}
+			                                    <i class="Hui-iconfont">&#xe600;</i>
+			                                </label>
+			                            </div>
+			                            <p>
+		                                    <span class="set-cover" data-index="{{i}}"> 设为封面</span>
+		                                    <span class="del-img" onclick="spuUtils.delImg($(this),$(this).index(),{{i}})">删除</span>
+		                                </p>
+			                        </div>  
+			                        
+		                            <div class="pic-wrapImg">
+			                            <div class="loadpic">
+			                                <input name="file" class="loadpic-input" accept="image/jpg,image/jpeg,image/png" type="file" id="{{'after7'+i}}" data-src="{{item.after_pics[6]||""}}">
+			                                <label class="loadpic-label">
+			                                        {{if item.after_pics[6]}}
+			                                        <img style="display: inline-block;width: 122px;height: 122px;" src="{{imgPath+item.after_pics[6]||""}}">
+			                                        {{/if}}
+			                                    <i class="Hui-iconfont">&#xe600;</i>
+			                                </label>
+			                            </div>
+			                            <p>
+		                                    <span class="set-cover" data-index="{{i}}">设为封面</span>
+		                                    <span class="del-img" onclick="spuUtils.delImg($(this),$(this).index(),{{i}})">删除</span>
+		                                </p>
+		                            </div>
+		                        </div>    
+	                        {{/if}}    
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row cl">
+                    <label class="form-label col-xs-2 col-sm-2">
+                        <span class="red"></span>显示状态：</label>
+                    <div class="formControls col-xs-10 col-sm-10">
+                        <div class="radio-box">
+                            <input type="radio" id="{{'radio_1'+i}}" name="{{item.show_status+i}}" {{(item.show_status == "1") ? "checked='checked'" : ""}}>
+                            <label for="{{'radio_1'+i}}">公开</label>
+                        </div>
+                        <div class="radio-box">
+                            <input type="radio" id="{{'radio_2'+i}}" name="{{item.show_status+i}}" {{(item.show_status == "2" )? "checked='checked'" : ""}}>
+                            <label for="{{'radio_2'+i}}">私密</label>
+                        </div>
+                        <div class="radio-box">
+                            <input type="radio" id="{{'radio_3'+i}}" name="{{item.show_status+i}}" {{(item.show_status == "3" )? "checked='checked'" : ""}}>
+                            <label for="{{'radio_3'+i}}">匿名公开</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row cl">
+                    <label class="form-label col-xs-2 col-sm-2">
+                        <span class="red"></span>美容反馈：</label>
+                    <div class="formControls col-xs-10 col-sm-10">
+                        <div class="clearfix">
+                            <span class="f-l f-15 va-m">满意度：</span>
+                            <div id="{{'star-1'+i}}" class="star-bar size-M f-l mr-10 va-m"></div>
+                            <strong id="{{'result-1'+i}}" class="f-l va-m" data-score="{{item.satisfaction||""}}">你的评分是{{item.satisfaction||""}}分</strong>
+                        </div>
+                        <div class="clearfix">
+                            <span class="f-l f-15 va-m">肿胀度：</span>
+                            <div id="{{'star-2'+i}}" class="star-bar size-M f-l mr-10 va-m"></div>
+                            <strong id="{{'result-2'+i}}" class="f-l va-m" data-score="{{item.swelling||""}}">你的评分是{{item.swelling||""}}分</strong>
+                        </div>
+                        <div class="clearfix">
+                            <span class="f-l f-15 va-m">疼痛感：</span>
+                            <div id="{{'star-3'+i}}" class="star-bar size-M f-l mr-10 va-m"></div>
+                            <strong id="{{'result-3'+i}}" class="f-l va-m" data-score="{{item.pain||""}}">你的评分是{{item.pain||""}}分</strong>
+                        </div>
+                        <div class="clearfix">
+                            <span class="f-l f-15 va-m">疤痕度：</span>
+                            <div id="{{'star-4'+i}}" class="star-bar size-M f-l mr-10 va-m"></div>
+                            <strong id="{{'result-4'+i}}" class="f-l va-m" data-score="{{item.scar||""}}">你的评分是{{item.scar||""}}分</strong>
+                        </div>
+                    </div>
+                </div>      
+            {{/each}}
+        {{/if}}
+        <div class="row cl">
+            <div class="col-xs-10 col-sm-10 col-xs-offset-2 col-sm-offset-2">
+                <input class="btn btn-primary submit-btn" value="提交" type="button">
+            </div>
+        </div>
+    </div>
+</script>
+<!---术后图片模板--->
+<script type="text/html" id="imgTemplate">
+	{{each name item i}}
+	<div class="pic-wrapImg">
+	    <div class="loadpic">
+	        <input name="file" class="loadpic-input" accept="image/jpg,image/jpeg,image/png" type="file" id="after{{i+1}}{{item.index}}" data-src="">
+	        <label class="loadpic-label">
+	                <i class="Hui-iconfont"></i>
+	        </label>
+	    </div>
+	    <p>
+	        <span class="set-cover">设为封面</span>
+	        <span class="del-img" onclick="spuUtils.delImg($(this),$(this).index(),0)">删除</span>
+	    </p>
+	</div>
+	{{/each}}
+</script>
+<!--术后视频和视频封面模板-->
+<script type="text/html" id="videoTemplate">
+	<div class="videoWraps isNoShow videoHide">
+        <div class="pic-wrapImg">
+        	<div class="loadpic">
+                <input name="file" class="loadpic-input" accept="video/*" type="file" id="afterVideo{{name}}" >
+                <label class="loadpic-label">
+                    <i class="Hui-iconfont"></i>
+                    <span>视频</span>
+                </label>
+            </div>
+            <p>
+                <span class="del-img" onclick="spuUtils.delImg($(this),$(this).index(),3)">删除</span>
+            </p>
+        </div>
+        <div class="pic-wrapImg">
+            <div class="loadpic">
+                <input name="file" class="loadpic-input" accept="image/jpg,image/jpeg,image/png" type="file" id="after_main_video_pic{{name}}">
+                <label class="loadpic-label">
+                	
+                    <i class="Hui-iconfont"></i>
+                    <span>视频封面</span>
+                </label>
+            </div>
+            <p>
+                <span class="del-img" id="afertDele3">删除</span>
+            </p>
+        </div>
+    </div>
+</script>
+<!--- 术前视频和视频封面模板 --->
+<script type="text/html" id="beferVideoTem">
+	<div class="videoWraps isNoShow videoHide">
+    	<div class="pic-wrapImg videoHide">
+            <div class="loadpic">
+                <input name="file" class="loadpic-input" accept="video/*" type="file" data-name="before_main_video" id="before_main_video" onchange="spuUtils.uploadVid($(this))">
+                <label class="loadpic-label">
+                    <i class="Hui-iconfont">&#xe600;</i>
+                    <span>视频</span>
+                </label>
+            </div>
+            <p>
+                <span class="del-img" onclick="spuUtils.befDelImg($(this),$(this).index(),'before_main_video')">删除</span>
+            </p>
+        </div>
+        <div class="pic-wrapImg ">
+        	<div class="loadpic">
+                <input name="file" class="loadpic-input" accept="image/jpg,image/jpeg,image/png" type="file" data-name="before_main_video_pic"  id="before_main_video_pic" data-src="">
+                <label class="loadpic-label">
+                    <i class="Hui-iconfont">&#xe600;</i>
+                    <span>视频封面</span>
+                </label>
+            </div>
+            <p>
+                <span class="del-img delImg del-Befimg" onclick="spuUtils.befDelImg($(this),$(this).index(),'before_main_video_pic')">删除</span>
+            </p>
+        </div>
+    </div>
+	
+</script>
+
+<!--术前图片模板-->
+<script type="text/html" id="beferTemplate">
+	<div class="imgWraps isNoShow">
+		<div class="pic-wrapImg">
+	        <div class="loadpic">
+	            <input name="file" class="loadpic-input" accept="image/jpg,image/jpeg,image/png" type="file" data-name="before_main" id="before_main" data-src="">
+	            <label class="loadpic-label">
+	               
+	                <i class="Hui-iconfont">&#xe600;</i>
+	            </label>
+	        </div>
+	        <p>
+	        	<span class="set-cover">设为封面</span>
+	            <span class="del-img" onclick="spuUtils.befDelImg($(this),$(this).index(),'before_main')">删除</span>
+	        </p>
+	    </div>
+	    
+	    <div class="pic-wrapImg">
+	        <div class="loadpic">
+	            <input name="file" class="loadpic-input" accept="image/jpg,image/jpeg,image/png" type="file" data-name="before_two" id="before_two" data-src="">
+	            <label class="loadpic-label">
+	                
+	                <i class="Hui-iconfont">&#xe600;</i>
+	            </label>
+	        </div>
+	        <p>
+	            <span class="set-cover">设为封面</span>
+	            <span class="del-img" onclick="spuUtils.befDelImg($(this),$(this).index(),'before_two')">删除</span>
+	        </p>
+	    </div> 
+	    <div class="pic-wrapImg">
+	        <div class="loadpic">
+	            <input name="file" class="loadpic-input" accept="image/jpg,image/jpeg,image/png" type="file" data-name="before_three" id="before_three" data-src="">
+	            <label class="loadpic-label">
+	                    
+	                <i class="Hui-iconfont">&#xe600;</i>
+	            </label>
+	        </div>
+	        <p>
+	            <span class="set-cover">设为封面</span>
+	            <span class="del-img" onclick="spuUtils.befDelImg($(this),$(this).index(),'before_three')">删除</span>
+	        </p>
+	    </div>
+	</div>  
+</script>
+
+</html>

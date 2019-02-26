@@ -1,0 +1,198 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <title>通道路由设置</title>
+
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui/css/H-ui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/H-ui.admin.css"/>
+    <link rel="stylesheet" type="text/css" href="../../lib/Hui-iconfont/1.0.8/iconfont.css"/>
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/skin/default/skin.css" id="skin"/>
+    <link rel="stylesheet" type="text/css" href="../../lib/laypage/1.2/skin/laypage.css">
+    <link rel="stylesheet" type="text/css" href="../../lib/laypage/1.2/skin/laypage.css">
+    <link rel="stylesheet" type="text/css" href="../../css/reset.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/kalendar.css"/>
+</head>
+
+<body>
+
+<nav class="breadcrumb">
+    <i class="Hui-iconfont">&#xe67f;</i>
+    首页 <span class="c-gray en">&gt;</span>
+    现金分期 <span class="c-gray en">&gt;</span>
+    通道路由设置
+</nav>
+
+<div id="content" style="width: 100%; height: 100%; position: fixed;">
+    <div class="page-container">
+        <div id='wrap'>
+            <!-- 因为日历初始显示的内容要根据js获得的日期-时间来确定，所以html中不写，在js中用另一种形式添加 -->
+        </div>
+    </div>
+</div>
+
+<!--时间弹框-->
+<div class="pop" id="popTime">
+    <div class="pop-bg"></div>
+    <div class="pop-con">
+        <div class="pop-title">分时配置 <a href="javascript:popClose()"></a></div>
+        <table>
+            <tr>
+                <td class="pop-time" width="25%">0:00</td>
+                <td class="pop-priority" width="75%"></td>
+            </tr>
+            <tr>
+                <td class="pop-time" width="25%">1:00</td>
+                <td class="pop-priority" width="75%"></td>
+            </tr>
+            <tr>
+                <td class="pop-time" width="25%">2:00</td>
+                <td class="pop-priority" width="75%"></td>
+            </tr>
+            <tr>
+                <td class="pop-time" width="25%">3:00</td>
+                <td class="pop-priority" width="75%"></td>
+            </tr>
+            <tr>
+                <td class="pop-time" width="25%">4:00</td>
+                <td class="pop-priority" width="75%"></td>
+            </tr>
+            <tr>
+                <td class="pop-time" width="25%">5:00</td>
+                <td class="pop-priority" width="75%"></td>
+            </tr>
+            <tr>
+                <td class="pop-time" width="25%">6:00</td>
+                <td class="pop-priority" width="75%"></td>
+            </tr>
+            <tr>
+                <td class="pop-time" width="25%">7:00</td>
+                <td class="pop-priority" width="75%"></td>
+            </tr>
+            <tr>
+                <td class="pop-time" width="25%">8:00</td>
+                <td class="pop-priority" width="75%"></td>
+            </tr>
+            <tr>
+                <td class="pop-time" width="25%">9:00</td>
+                <td class="pop-priority" width="75%"></td>
+            </tr>
+            <tr>
+                <td class="pop-time" width="25%">10:00</td>
+                <td class="pop-priority" width="75%"></td>
+            </tr>
+            <tr>
+                <td class="pop-time" width="25%">11:00</td>
+                <td class="pop-priority" width="75%"></td>
+            </tr>
+            <tr>
+                <td class="pop-time" width="25%">12:00</td>
+                <td class="pop-priority" width="75%"></td>
+            </tr>
+            <tr>
+                <td class="pop-time" width="25%">13:00</td>
+                <td class="pop-priority" width="75%"></td>
+            </tr>
+            <tr>
+                <td class="pop-time" width="25%">14:00</td>
+                <td class="pop-priority" width="75%"></td>
+            </tr>
+            <tr>
+                <td class="pop-time" width="25%">15:00</td>
+                <td class="pop-priority" width="75%"></td>
+            </tr>
+            <tr>
+                <td class="pop-time" width="25%">16:00</td>
+                <td class="pop-priority" width="75%"></td>
+            </tr>
+            <tr>
+                <td class="pop-time" width="25%">17:00</td>
+                <td class="pop-priority" width="75%"></td>
+            </tr>
+            <tr>
+                <td class="pop-time" width="25%">18:00</td>
+                <td class="pop-priority" width="75%"></td>
+            </tr>
+            <tr>
+                <td class="pop-time" width="25%">19:00</td>
+                <td class="pop-priority" width="75%"></td>
+            </tr>
+            <tr>
+                <td class="pop-time" width="25%">20:00</td>
+                <td class="pop-priority" width="75%"></td>
+            </tr>
+            <tr>
+                <td class="pop-time" width="25%">21:00</td>
+                <td class="pop-priority" width="75%"></td>
+            </tr>
+            <tr>
+                <td class="pop-time" width="25%">22:00</td>
+                <td class="pop-priority" width="75%"></td>
+            </tr>
+            <tr>
+                <td class="pop-time" width="25%">23:00</td>
+                <td class="pop-priority" width="75%"></td>
+            </tr>
+        </table>
+        <div class="pop-bot">
+            <a href="javascript:" onclick="empty()">清空</a>
+            <a href="javascript:" onclick="allocation()">确定</a>
+        </div>
+    </div>
+</div>
+
+<!--设置资方弹窗-->
+<div id="mymodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content radius">
+            <div class="modal-header">
+                <h3 class="modal-title">分时配置</h3>
+                <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void(0);">×</a>
+            </div>
+            <div class="modal-body">
+                <div class="dist">
+                    <div class="dist-opt">
+                        <div class="dist-fl">优先级：</div>
+                        <div class="dist-fr">
+                            <div class="dist-select">
+                                <div class="dis-sopt">
+                                    <select class="party">
+                                    </select>
+                                </div>
+                            </div>
+                            <a href="javascript:" onclick="addCapital();">新增</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" onclick="timeCapital()">确定</button>
+                <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="../../lib/jquery/1.9.1/jquery.min.js?rev=@@hash"></script>
+<script type="text/javascript" src="../../lib/layer/2.4/layer.js?rev=@@hash"></script>
+<script type="text/javascript" src="../../static/h-ui/js/H-ui.min.js?rev=@@hash"></script>
+<script type="text/javascript" src="../../static/h-ui.admin/js/H-ui.admin.js?rev=@@hash"></script>
+<script type="text/javascript" src="../../js/base/public.js?rev=@@hash"></script>
+<!--/_footer 作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="../../lib/My97DatePicker/4.8/WdatePicker.js?rev=@@hash"></script>
+<script type="text/javascript" src="../../lib/laypage/1.2/laypage.js?rev=@@hash"></script>
+<script src="../../js/common/jquery.tmpl.min.js?rev=@@hash"></script>
+<script src="../../js/common/kalendar.js?rev=@@hash"></script>
+<script type="text/javascript" src="../../js/page/route.js?rev=@@hash"></script>
+</body>
+
+</html>

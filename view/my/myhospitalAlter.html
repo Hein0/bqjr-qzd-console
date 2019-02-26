@@ -1,0 +1,551 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <title>医院修改</title>
+
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/skin/default/skin.css" id="skin" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="../../lib/Hui-iconfont/1.0.8/iconfont.css" />
+
+    <link rel="stylesheet" type="text/css" href="../../css/hospitalSpu.css?rev=@@hash">
+</head>
+
+<body>
+    <div class="Hui-article">
+        <article class="cl pd-20">
+        	
+            <div class="spu-cont">
+                <div id="form-step" class="form form-horizontal form-step active upload-pic-wrap" >
+
+                    <div class="row cl">
+                        <label class="form-label col-xs-2 col-sm-2">
+                            <span class="red">*</span>医院名称：</label>
+                        <div class="formControls col-xs-10 col-sm-10">
+                            <input id="hospitalspuName" class="input-text" placeholder="请输入医院名称" type="text" name="name">
+                            <span class="s-mark">医院名称不能为空，最长不能超过200个字符</span>
+                        </div>
+                    </div>
+                    
+                    <div class="row cl">
+                        <label class="form-label col-xs-2 col-sm-2">
+                            <span class="red">*</span>医院简称：</label>
+                        <div class="formControls col-xs-10 col-sm-10">
+                            <input id="anotherName" class="input-text" placeholder="请输入医院简称" type="text" name="anotherName" maxlength="8">
+                            <span class="s-mark">医院简称不能为空，最长不能超过8个字符</span>
+                        </div>
+                    </div>
+
+                    <div class="row cl">
+                        <label class="form-label col-xs-2 col-sm-2">
+                            <span class="red">*</span>城市：</label>
+                        <div class="formControls col-xs-10 col-sm-10">
+                            <span class="select-box inline">
+                                <select id="parent" class="select" name="parent">
+                                    <option value="" selected>省份</option>
+                                </select>
+                            </span>
+                            <span class="select-box inline">
+                                <select id="city" class="select" name="city">
+                                    <option value="" selected>城市</option>
+                                </select>
+                            </span>
+                            <input id="hospitalStreet" placeholder="街道地址" class="input-text" type="text" name="street">
+                        </div>
+                    </div>
+
+                    <div class="row cl">
+                        <label class="form-label col-xs-2 col-sm-2">
+                            <span class="red">*</span>资本类型：</label>
+                        <div class="formControls col-xs-10 col-sm-10">
+                            <span class="select-box inline">
+                                <select id="ziben_type" class="select" name="ziben_type">
+                                    <option value="" selected>请选择</option>
+                                    <option value="1">公立医院</option>
+                                    <option value="3">民营医院</option>
+                                </select>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="row cl">
+                        <label class="form-label col-xs-2 col-sm-2">
+                            <span class="red">*</span>医院类型：</label>
+                        <div class="formControls col-xs-10 col-sm-10">
+                            <span class="select-box inline">
+                                <select id="hospital_type" class="select" name="hospital_type">
+                                    <option value="" selected>请选择</option>
+                                    <option value="26">综合型整形医院</option>
+                                    <option value="27">整形外科专科医院</option>
+                                    <option value="28">齿科专科医院</option>
+                                    <option value="29">皮肤科专科医院</option>
+                                    <option value="30">医院整形外科</option>
+                                    <option value="147">眼科专科医院</option>
+                                    <option value="152">综合泌尿科</option>
+                                    <option value="153">妇科整形医院</option>
+                                    <option value="154">医疗美容诊所</option>
+                                    <option value="155">医疗美容地区医院</option>
+                                    <option value="156">医疗美容教学医院</option>
+                                    <option value="157">医疗美容区域医院</option>
+                                    <option value="158">医疗美容医学中心</option>
+                                    <option value="167">医疗美容医院</option>
+                                    <option value="168">医疗美容门诊部</option>
+                                    <option value="170">医疗美容诊所</option>
+                                    <option value="181">医疗美容机构</option>
+                                    <option value="124">其他</option>
+                                </select>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="row cl">
+                        <label class="form-label col-xs-2 col-sm-2">业务等级：</label>
+                        <div class="formControls col-xs-10 col-sm-10">
+                            <span class="select-box inline">
+                                <select id="service_grade" class="select" name="service_grade">
+                                    <option value="" selected>请选择</option>
+                                    <option value="1">一级业务</option>
+                                    <option value="2">二级业务</option>
+                                    <option value="3">三级业务</option>
+                                    <option value="4">四级业务</option>
+                                </select>
+                            </span>
+                            <span>选填</span>
+                        </div>
+                    </div>
+
+                    <div class="row cl">
+                        <label class="form-label col-xs-2 col-sm-2">
+                            <span class="red">*</span>擅长项目：</label>
+                        <div class="formControls col-xs-10 col-sm-10">
+                            <div class="check-box">
+                                <input type="checkbox" id="good_projects-1" name="good_projects" value="眼部整形">
+                                <label for="good_projects-1">眼部整形</label>
+                            </div>
+                            <div class="check-box">
+                                <input type="checkbox" id="good_projects-2" name="good_projects" value="鼻部整形">
+                                <label for="good_projects-2">鼻部整形</label>
+                            </div>
+                            <div class="check-box">
+                                <input type="checkbox" id="good_projects-3" name="good_projects" value="面部轮廓">
+                                <label for="good_projects-3">面部轮廓</label>
+                            </div>
+                            <div class="check-box">
+                                <input type="checkbox" id="good_projects-4" name="good_projects" value="唇部整形">
+                                <label for="good_projects-4">唇部整形</label>
+                            </div>
+                            <div class="check-box">
+                                <input type="checkbox" id="good_projects-5" name="good_projects" value="胸部整形">
+                                <label for="good_projects-5">胸部整形</label>
+                            </div>
+                            <div class="check-box">
+                                <input type="checkbox" id="good_projects-6" name="good_projects" value="美体塑形">
+                                <label for="good_projects-6">美体塑形</label>
+                            </div>
+                            <div class="check-box">
+                                <input type="checkbox" id="good_projects-7" name="good_projects" value="皮肤美容">
+                                <label for="good_projects-7">皮肤美容</label>
+                            </div>
+                            <div class="check-box">
+                                <input type="checkbox" id="good_projects-8" name="good_projects" value="抗衰抗初老">
+                                <label for="good_projects-8">抗衰抗初老</label>
+                            </div>
+                            <div class="check-box">
+                                <input type="checkbox" id="good_projects-9" name="good_projects" value="私密整形">
+                                <label for="good_projects-9">私密整形</label>
+                            </div>
+                            <div class="check-box">
+                                <input type="checkbox" id="good_projects-10" name="good_projects" value="牙齿美容">
+                                <label for="good_projects-10">牙齿美容</label>
+                            </div>
+                            <div class="check-box">
+                                <input type="checkbox" id="good_projects-11" name="good_projects" value="毛发种植">
+                                <label for="good_projects-11">毛发种植</label>
+                            </div>
+                            <div class="check-box">
+                                <input type="checkbox" id="good_projects-12" name="good_projects" value="耳部整形">
+                                <label for="good_projects-12">耳部整形</label>
+                            </div>
+                            <div class="check-box">
+                                <input type="checkbox" id="good_projects-13" name="good_projects" value="其他">
+                                <label for="good_projects-13">其他</label>
+                            </div>
+                            <div class="check-box">
+                                <input type="checkbox" id="good_projects-14" name="good_projects" value="自体脂肪">
+                                <label for="good_projects-14">自体脂肪</label>
+                            </div>
+                            <div class="check-box">
+                                <input type="checkbox" id="good_projects-15" name="good_projects" value="玻尿酸">
+                                <label for="good_projects-15">玻尿酸</label>
+                            </div>
+                            <div class="check-box">
+                                <input type="checkbox" id="good_projects-16" name="good_projects" value="肉毒素">
+                                <label for="good_projects-16">肉毒素</label>
+                            </div>
+                            <div class="check-box">
+                                <input type="checkbox" id="good_projects-17" name="good_projects" value="激光脱毛">
+                                <label for="good_projects-17">激光脱毛</label>
+                            </div>
+                            <div class="check-box">
+                                <input type="checkbox" id="good_projects-18" name="good_projects" value="半永久妆">
+                                <label for="good_projects-18">半永久妆</label>
+                            </div>
+                            <div class="check-box">
+                                <input type="checkbox" id="good_projects-19" name="good_projects" value="微整形">
+                                <label for="good_projects-19">微整形</label>
+                            </div>
+                            <div class="check-box">
+                                <input type="checkbox" id="good_projects-20" name="good_projects" value="激光美肤">
+                                <label for="good_projects-20">激光美肤</label>
+                            </div>
+                            <div class="check-box">
+                                <input type="checkbox" id="good_projects-21" name="good_projects" value="失败修复">
+                                <label for="good_projects-21">失败修复</label>
+                            </div>
+                            <span class="red">(最多选择三项)</span>
+                        </div>
+                    </div>
+
+                    <div class="row cl">
+                        <label class="form-label col-xs-2 col-sm-2">
+                            <span class="red">*</span>成立时间：</label>
+                        <div class="formControls col-xs-10 col-sm-10">
+                            <input type="text" onfocus="WdatePicker({ maxDate:'%y-%M-%d' })" id="build_date" class="input-text Wdate f-l" readonly name="build_date"
+                            />
+                        </div>
+                    </div>
+
+                    <div class="row cl">
+                        <label class="form-label col-xs-2 col-sm-2">
+                            <span class="red">*</span>医院介绍：</label>
+                        <div class="formControls col-xs-10 col-sm-10">
+                            <textarea id="introduce" class="textarea" type="text" name="introduce"></textarea>
+                        </div>
+                    </div>
+                    
+                    <!--<div class="pic-title">
+                        <b>请上传医院资质文件照片以便对医院的资质进行审核</b>
+                    </div>-->
+
+                    <div class="row cl">
+                        <label class="form-label col-xs-2 col-sm-2">
+                            <span class="red">*</span>营业执照or民办非企业单位证书：</label>
+                        <div class="upload-pic-content upload-pic-content2">
+                            <div class="loadpic">
+                                <input name="file" class="loadpic-input" accept="image/jpg,image/jpeg,image/png" type="file" id="business_license">
+                                <label class="loadpic-label">
+                                    <i class="Hui-iconfont">&#xe600;</i>
+                                </label>
+                            </div> 
+                        </div>    
+                        
+                    </div>
+
+                    <div class="row cl">
+                        <label class="form-label col-xs-2 col-sm-2">
+                            <span class="red">*</span>有效期：</label>
+                        <div class="formControls col-xs-5 col-sm-5">
+                            <input type="text" onfocus="WdatePicker({ minDate:'%y-%M-#{%d+1}' })" id="business_date" class="input-text Wdate f-l" readonly
+                                name="business_date" />
+                        </div>
+                    </div>
+
+                    <div class="row cl">
+                        <label class="form-label col-xs-2 col-sm-2">
+                            <span class="red">*</span>医疗机构职业许可证：</label>
+                        <div class="upload-pic-content upload-pic-content2">
+                            <div class="loadpic">
+                                <input name="file" class="loadpic-input" accept="image/jpg,image/jpeg,image/png" type="file" id="licence">
+                                <label class="loadpic-label">
+                                    <i class="Hui-iconfont">&#xe600;</i>
+                                </label>
+                            </div> 
+                        </div> 
+                    </div>
+
+                    <div class="row cl">
+                        <label class="form-label col-xs-2 col-sm-2">
+                            <span class="red">*</span>有效期：</label>
+                        <div class="formControls col-xs-5 col-sm-5">
+                            <input type="text" onfocus="WdatePicker({ minDate:'%y-%M-#{%d+1}' })" id="licence_date" class="input-text Wdate f-l" readonly
+                                name="licence_date" />
+                        </div>
+                    </div>
+
+                    <div class="row cl">
+                        <label class="form-label col-xs-2 col-sm-2">
+                            <span class="red">*</span>医疗广告审查证明：</label>
+                        <div class="upload-pic-content upload-pic-content2">
+                            <div class="loadpic">
+                                <input name="file" class="loadpic-input" accept="image/jpg,image/jpeg,image/png" type="file" id="examination">
+                                <label class="loadpic-label">
+                                    <i class="Hui-iconfont">&#xe600;</i>
+                                </label>
+                            </div> 
+                        </div> 
+                    </div>
+
+                    <div class="row cl">
+                        <label class="form-label col-xs-2 col-sm-2">
+                            <span class="red">*</span>有效期：</label>
+                        <div class="formControls col-xs-5 col-sm-5">
+                            <input type="text" onfocus="WdatePicker({ minDate:'%y-%M-#{%d+1}' })" id="examination_date" class="input-text Wdate f-l"
+                                readonly name="examination_date" />
+                        </div>
+                    </div>
+
+                    <div class="row cl">
+                        <div class="formControls col-xs-10 col-sm-10 col-xs-offset-2 col-sm-offset-2">
+                            <p>* 证件大小不超过300KB
+                                <br> * 证件需在有效期内
+                                <br> * 需盖有地方卫生部门公章
+                                <br> * 证件名称需与认证名称匹配
+                                <br> * 营业执照名称需与医疗机构执业许可证名称匹配
+                                <br> * 诊疗科目中需含有：医疗美容科、整形外科、美容皮肤科等医疗美容相关科目</p>
+                        </div>
+                    </div>
+                    
+                    <div class="row cl">
+                        <label class="form-label col-xs-2 col-sm-2">
+                            <span class="red"></span>荣誉奖项：
+                        </label>
+                        <div class="upload-pic-content">
+                            <div class="loadpic">
+                                <input name="honor" class="loadpic-input" accept="image/jpg,image/jpeg,image/png" type="file" id="honor1">
+                                <label class="loadpic-label">
+                                    <i class="Hui-iconfont">&#xe600;</i>
+                                </label>
+                            </div>
+                            <div class="loadpic">
+                                <input name="honor" class="loadpic-input" accept="image/jpg,image/jpeg,image/png" type="file" id="honor2">
+                                <label class="loadpic-label">
+                                    <i class="Hui-iconfont">&#xe600;</i>
+                                </label>
+                            </div>
+                            <div class="loadpic">
+                                <input name="honor" class="loadpic-input" accept="image/jpg,image/jpeg,image/png" type="file" id="honor3">
+                                <label class="loadpic-label">
+                                    <i class="Hui-iconfont">&#xe600;</i>
+                                </label>
+                            </div>
+                            <div class="loadpic">
+                                <input name="honor" class="loadpic-input" accept="image/jpg,image/jpeg,image/png" type="file" id="honor4">
+                                <label class="loadpic-label">
+                                    <i class="Hui-iconfont">&#xe600;</i>
+                                </label>
+                            </div>
+                            <div class="loadpic">
+                                <input name="honor" class="loadpic-input" accept="image/jpg,image/jpeg,image/png" type="file" id="honor5">
+                                <label class="loadpic-label">
+                                    <i class="Hui-iconfont">&#xe600;</i>
+                                </label>
+                            </div>
+                            <div class="loadpic">
+                                <input name="honor" class="loadpic-input" accept="image/jpg,image/jpeg,image/png" type="file" id="honor6">
+                                <label class="loadpic-label">
+                                    <i class="Hui-iconfont">&#xe600;</i>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+  					
+  					<div class="row cl">
+                        <label class="form-label col-xs-2 col-sm-2">
+                            <span class="red"></span>品牌认证：
+                        </label>
+                        <div class="upload-pic-content">
+                            <div class="loadpic">
+                                <input name="brand" class="loadpic-input" accept="image/jpg,image/jpeg,image/png" type="file" id="brand1">
+                                <label class="loadpic-label">
+                                    <i class="Hui-iconfont">&#xe600;</i>
+                                </label>
+                            </div>
+                            <div class="loadpic">
+                                <input name="brand" class="loadpic-input" accept="image/jpg,image/jpeg,image/png" type="file" id="brand2">
+                                <label class="loadpic-label">
+                                    <i class="Hui-iconfont">&#xe600;</i>
+                                </label>
+                            </div>
+                            <div class="loadpic">
+                                <input name="brand" class="loadpic-input" accept="image/jpg,image/jpeg,image/png" type="file" id="brand3">
+                                <label class="loadpic-label">
+                                    <i class="Hui-iconfont">&#xe600;</i>
+                                </label>
+                            </div>
+                            <div class="loadpic">
+                                <input name="brand" class="loadpic-input" accept="image/jpg,image/jpeg,image/png" type="file" id="brand4">
+                                <label class="loadpic-label">
+                                    <i class="Hui-iconfont">&#xe600;</i>
+                                </label>
+                            </div>
+                            <div class="loadpic">
+                                <input name="brand" class="loadpic-input" accept="image/jpg,image/jpeg,image/png" type="file" id="brand5">
+                                <label class="loadpic-label">
+                                    <i class="Hui-iconfont">&#xe600;</i>
+                                </label>
+                            </div>
+                            <div class="loadpic">
+                                <input name="brand" class="loadpic-input" accept="image/jpg,image/jpeg,image/png" type="file" id="brand6">
+                                <label class="loadpic-label">
+                                    <i class="Hui-iconfont">&#xe600;</i>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+  
+                    <div class="row cl">
+                        <label class="form-label col-xs-2 col-sm-2">
+                            <span class="red">*</span>座机：</label>
+                        <div class="formControls col-xs-10 col-sm-10">
+                            <input id="hospitalTelphone" class="input-text" type="text" name="telphone">
+                        </div>
+                    </div>
+
+                    <div class="row cl">
+                        <label class="form-label col-xs-2 col-sm-2">
+                            <span class="red">*</span>邮箱：</label>
+                        <div class="formControls col-xs-10 col-sm-10">
+                            <input id="hospitalEmail" class="input-text" type="text" name="email">
+                        </div>
+                    </div>
+
+                    <div class="row cl">
+                        <label class="form-label col-xs-2 col-sm-2">
+                            <span class="red">*</span>医院宣传语：</label>
+                        <div class="formControls col-xs-10 col-sm-10">
+                            <input id="hospitalPropaganda" class="input-text" type="text" name="propaganda">
+                        </div>
+                    </div>
+                    
+                    <div class="row cl">
+                        <label class="form-label col-xs-2 col-sm-2">
+                            <span class="red">*</span>医院法人姓名：</label>
+                        <div class="formControls col-xs-10 col-sm-10">
+                            <input id="legal_name" class="input-text" type="text" name="legal_name" maxlength="5">
+                        </div>
+                    </div>
+                    
+                    <div class="row cl">
+                        <label class="form-label col-xs-2 col-sm-2">
+                            <span class="red">*</span>医院法人身份证号：</label>
+                        <div class="formControls col-xs-10 col-sm-10">
+                            <input id="legal_id_card" class="input-text" type="tel" name="legal_id_card" maxlength="18">
+                        </div>
+                    </div>
+                    
+                    <div class="row cl">
+                        <label class="form-label col-xs-2 col-sm-2">医院法人手机号：</label>
+                        <div class="formControls col-xs-10 col-sm-10">
+                            <input id="legal_telphone" class="input-text" type="tel" name="legal_telphone" maxlength="11">
+                        </div>
+                    </div>
+
+                    <div class="row cl">
+                        <label class="form-label col-xs-2 col-sm-2">
+                            <span class="red">*</span>医院Logo：</label>
+                        <div class="upload-pic-content upload-pic-content2">
+                            <div class="loadpic">
+                                <input name="logo" class="loadpic-input" accept="image/jpg,image/jpeg,image/png" type="file" id="uploadlogo">
+                                <label class="loadpic-label">
+                                    <i class="Hui-iconfont">&#xe600;</i>
+                                </label>
+                            </div> 
+                        </div>
+                    </div>
+                    
+                    <div class="row cl">
+                        <label class="form-label col-xs-2 col-sm-2">
+                            <span class="red">*</span>医院照片：
+                        </label>
+                        <div class="upload-pic-content">
+                            <div class="pic-wrap">
+                            </div>
+                            <div class="loadpic">
+                                <input name="pic_urls" class="loadpic-input" accept="image/jpg,image/jpeg,image/png" type="file" id="hospitalPic_1">
+                                <label class="loadpic-label">
+                                    <i class="Hui-iconfont">&#xe600;</i>
+                                </label>
+                            </div>
+                            <div class="loadpic">
+                                <input name="pic_urls" class="loadpic-input" accept="image/jpg,image/jpeg,image/png" type="file" id="hospitalPic_2">
+                                <label class="loadpic-label">
+                                    <i class="Hui-iconfont">&#xe600;</i>
+                                </label>
+                            </div>
+                            <div class="loadpic">
+                                <input name="pic_urls" class="loadpic-input" accept="image/jpg,image/jpeg,image/png" type="file" id="hospitalPic_3">
+                                <label class="loadpic-label">
+                                    <i class="Hui-iconfont">&#xe600;</i>
+                                </label>
+                            </div>
+                            <div class="loadpic">
+                                <input name="pic_urls" class="loadpic-input" accept="image/jpg,image/jpeg,image/png" type="file" id="hospitalPic_4">
+                                <label class="loadpic-label">
+                                    <i class="Hui-iconfont">&#xe600;</i>
+                                </label>
+                            </div>
+                            <div class="loadpic">
+                                <input name="pic_urls" class="loadpic-input" accept="image/jpg,image/jpeg,image/png" type="file" id="hospitalPic_5">
+                                <label class="loadpic-label">
+                                    <i class="Hui-iconfont">&#xe600;</i>
+                                </label>
+                            </div>
+                            <div class="loadpic">
+                                <input name="pic_urls" class="loadpic-input" accept="image/jpg,image/jpeg,image/png" type="file" id="hospitalPic_6">
+                                <label class="loadpic-label">
+                                    <i class="Hui-iconfont">&#xe600;</i>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row cl">
+                        <div class="col-xs-10 col-sm-10 col-xs-offset-2 col-sm-offset-2">
+                            <input class="btn btn-primary submit-btn" value="提交" type="button">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </article>
+    </div>
+
+    <!--footer 作为公共模版分离出去-->
+    <script type="text/javascript" src="../../lib/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="../../lib/layer/2.4/layer.js"></script>
+    <script type="text/javascript" src="../../static/h-ui/js/H-ui.min.js"></script>
+    <script type="text/javascript" src="../../static/h-ui.admin/js/H-ui.admin.js"></script>
+    <!--footer 作为公共模版分离出去-->
+
+    <script type="text/javascript" src="../../lib/laypage/1.2/laypage.js"></script>
+    <script type="text/javascript" src="../../js/base/public.js?rev=@@hash"></script>
+    <script type="text/javascript" src="../../js/common/common.js?rev=@@hash"></script>
+    <script type="text/javascript" src="../../js/page/myhospitalAlter.js?rev=@@hash"></script>
+    <script type="text/javascript" src="../../lib/My97DatePicker/4.8/WdatePicker.js"></script>
+    <script type="text/javascript" src="../../lib/ueditor/1.4.3/ueditor.config.js"></script>
+    <script type="text/javascript" src="../../lib/ueditor/1.4.3/ueditor.all.min.js"></script>
+    <script type="text/javascript" src="../../lib/lrz.bundle.js"></script>
+    <script type="text/javascript">
+        function initDate(id) {
+            var date = new Date();
+            var year = date.getFullYear(),
+                month = date.getMonth() + 1,
+                myDate = date.getDate();
+            if (month < 10) {
+                month = "0" + month
+            }
+            var startTime = year + "-" + month + "-" + "01";
+            $(id).val(startTime);
+        }
+        initDate('#build_date');
+    </script>
+</body>
+
+</html>

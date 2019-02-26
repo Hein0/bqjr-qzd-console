@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+	    <meta http-equiv="Cache-Control" content="no-siteapp" />
+	    <title>电销统计列表</title>
+
+	    <link rel="stylesheet" type="text/css" href="../../static/h-ui/css/H-ui.min.css" />
+	    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/H-ui.admin.css" />
+	    <link rel="stylesheet" type="text/css" href="../../lib/Hui-iconfont/1.0.8/iconfont.css" />
+	    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/skin/default/skin.css" id="skin" />
+	    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/style.css" />
+	    <link rel="stylesheet" type="text/css" href="../../lib/laypage/1.2/skin/laypage.css">
+		<link rel="stylesheet" type="text/css" href="../../css/reset.css?rev=@@hash"/>
+	    <link rel="stylesheet" type="text/css" href="../../css/teleStatisticsList.css?rev=@@hash"/>
+	</head>
+	<body>
+		<nav class="breadcrumb">
+	        <i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 电销管理 <span class="c-gray en">&gt;</span> <span class="fileName">电销统计列表</span>
+	        <a class="btn btn-success r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a>
+	        <a id="getOut" class="btn btn-success r outs" style="line-height:1.6em;margin-top:3px;margin-right: 10px; background: #5a98de;border-color: #5a98de;" href="javascript:;">导出</a>
+    		<!--<input id="getOut" class="btn btn-primary f-r mr-10" style="margin-top: 3px;" type="button" value="导出">-->
+		</nav>
+
+	    <div class="page-container">
+	    	<!--电销管理状态选择按钮-->
+            <div class="btn-group mb-20">
+            	<span val="1" class="btn allbut btn-default btn-primary">电销统计总表(15天)</span>
+				<span val="0" class="btn btn-default">电销每日产出表(15天)</span>
+				<span val="2" class="btn btn-default">电销统计总表(累计)</span>
+            </div>
+	    	<!--查询条件板块-->
+	    	<div class="panel panel-default panelShow">
+	    		<form class="search-form">
+					<div class="panel-body pb-0 cl search">
+						<!--姓名-->
+		                <div class="f-l mr-15 mb-15">
+		                    <span class="text-c f-l">电销人员</span>
+		                    <input type="text" value="" class="input-text userName" name="currentOperationName" />
+		                </div>
+
+		                <!--统计时间-->
+		                <div class="f-l mr-15 mb-15 statistical" style="display: none;">
+		                    <span class="text-c f-l" >状态变更时间</span>
+		                    <input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}' })" id="datemin" class="input-text Wdate f-l" readonly name="startCountDate" />
+							<span class="f-l">至</span>
+							<input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'datemin\')}',maxDate:'%y-%M-%d' })" id="datemax" class="input-text Wdate f-l" readonly name="endCountDate" />
+		                </div>
+
+		                <!--分配时间-->
+		                <div class="f-l mr-15 mb-15 allocate">
+		                    <span class="text-c f-l" >分配时间</span>
+		                    <input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'endDistribute\')||\'%y-%M-%d\'}' })" id="startDistribute" class="input-text Wdate f-l" readonly name="startDistributeTime" />
+		                    <span class="f-l">至</span>
+		                    <input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'startDistribute\')}',maxDate:'%y-%M-%d' })" id="endDistribute" class="input-text Wdate f-l" readonly name="endDistributeTime" />
+		                </div>
+
+				        <div class="text-l m-t10 f-r">
+				            <button type="button" class="btn btn-primary mr-15" id="screeBtn" name=""><i class="Hui-iconfont">&#xe665;</i> 筛选</button>
+				            <button type="button" class="btn btn-primary" id="resetBtn" name=""><i class="Hui-iconfont">&#xe66b;</i> 重置</button>
+				        </div>
+
+			        </div>
+			    </form>
+			</div>
+	        <!--<div class="cl pd-5 bg-1 bk-gray mt-20"><span class="r">共有数据：<strong>88</strong> 条</span> </div>-->
+
+	        <!--电销每日产生表-->
+	        <div class="mt-20 table-con tableTwo" style="display: none;">
+	            <table class="table table-bg table-border table-bordered table-hover zhc-table">
+	                <thead>
+	                    <tr class="text-c">
+	                        <th width="120px">状态变更时间</th>
+					    	<th width="70px">工号</th>
+							<th width="70px">电销员</th>
+							<th width="70px">注册量</th>
+					    	<th width="70px">待审核</th>
+					    	<th width="100px">审核暂不通过</th>
+					    	<th width="70px">拒绝</th>
+					    	<th width="70px">通过</th>
+					    	<th width="80px">已提现</th>
+					    	<th width="100px">已提现金额</th>
+					    	<th width="70px">已消费</th>
+					    	<th width="80px">已消费金额</th>
+	                    </tr>
+	                </thead>
+	                <tbody id="tableTwoList">
+
+				  	</tbody>
+	            </table>
+	        </div>
+
+	        <!--数据表格-电销统计总表-->
+	        <div class="mt-20 table-con tableAll" style="display: none;">
+	            <table class="table table-bg table-border table-bordered table-hover zhc-table">
+	                <thead>
+	                    <tr class="text-c">
+							<th width="120px">分配时间</th>
+	                        <th width="70px">工号</th>
+							<th width="80px">电销员</th>
+					    	<th width="80px">分配量</th>
+					    	<th width="70px">空号</th>
+					    	<th width="70px">停机</th>
+					    	<th width="70px">关机</th>
+					    	<th width="90px">无人接听</th>
+					    	<th width="90px">拒绝接听</th>
+					    	<th width="90px">开场白挂</th>
+					    	<th width="90px">需要考虑</th>
+					    	<th width="90px">销售拒绝</th>
+					    	<th width="90px">答应办理</th>
+					    	<th width="80px">未注册</th>
+					    	<th width="80px">未申请</th>
+					    	<th width="80px">录入中</th>
+					    	<th width="80px">待审核</th>
+					    	<th width="100px">审核暂不通过</th>
+					    	<th width="80px">拒绝</th>
+					    	<th width="80px">通过</th>
+					    	<th width="80px">已提现</th>
+					    	<th width="100px">已提现金额</th>
+					    	<th width="70px">已消费</th>
+					    	<th width="100px">已消费金额</th>
+	                    </tr>
+	                </thead>
+	                <tbody id="tableAllList">
+
+				  	</tbody>
+	            </table>
+	        </div>
+
+	        <!--分页-->
+			<div class="pagination cl" id="pagination"></div>
+	    </div>
+
+		<!--导出-->
+		<div id="mymodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		    <div class="modal-dialog">
+		        <div class="modal-content radius">
+		            <div class="modal-header">
+		                <h3 class="modal-title">导出</h3>
+		                <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void(0);">×</a>
+		            </div>
+		            <div class="modal-body">
+		                <div class="export">
+		                    <label>文件名</label><input type="text" onfocus="javascript:$('.p').hide()" id="fileName" />
+		                    <p class="p">请输入文件名</p>
+		                </div>
+		                <p>提示：<br />1、导出的目标数据是根据搜索条件搜索后的数据；若需导出全部数据，请在导出之前清除搜索条件。<br />2、文件名命名可以自定义</p>
+		            </div>
+		            <div class="modal-footer">
+		                <button class="btn btn-primary" onclick="withdraw.export();">确定</button>
+		                <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+		            </div>
+		        </div>
+		    </div>
+		</div>
+
+
+		<!--loadings-->
+		<div class="loadings">
+			<img src="../../images/loading.gif" class="load-img" />
+		</div>
+
+		<!--组件-->
+		<script type="text/javascript" src="../../lib/jquery/1.9.1/jquery.min.js"></script>
+		<script type="text/javascript" src="../../lib/My97DatePicker/4.8/WdatePicker.js"></script>
+	    <script type="text/javascript" src="../../lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+	    <script type="text/javascript" src="../../lib/laypage/1.2/laypage.js"></script>
+	    <script type="text/javascript" src="../../js/common/jquery.tmpl.min.js"></script>
+	    <script type="text/javascript" src="../../lib/layer/2.4/layer.js"></script>
+	    <script type="text/javascript" src="../../static/h-ui/js/H-ui.min.js"></script>
+	    <script type="text/javascript" src="../../static/h-ui.admin/js/H-ui.admin.js"></script>
+
+	    <!--业务逻辑-->
+	    <script type="text/javascript" src="../../js/base/public.js?rev=@@hash"></script>
+		<script type="text/javascript" src="../../js/page/teleStatisticsList.js?rev=@@hash" charset="utf-8"></script>
+
+	    <!--电销每日产出表(15天)-->
+	    <script id="twoList" type="text/x-jquery-tmpl">
+	    	<tr class="text-c">
+		  		<td>${countDateFormat}</td>
+		  		<td>${currentOperationId}</td>
+				<td>${currentOperationName}</td>
+				<td>${register}</td>
+		  		<td>${uncheck}</td>
+		  		<td>${tempNoPass}</td>
+		  		<td>${refuse}</td>
+		  		<td>${pass}</td>
+		  		<td>${withdraw}</td>
+		  		<td>${withdrawAmount}</td>
+		  		<td>${consume}</td>
+		  		<td>${consumeAmount}</td>
+	  		</tr>
+		</script>
+
+	    <!--电销统计总表(15天)-->
+	    <script id="allList" type="text/x-jquery-tmpl">
+	    	<tr class="text-c">
+		  		<td>${distributeTimeFormat}</td>
+		  		<td>${currentOperationId}</td>
+				<td>${currentOperationName}</td>
+		  		<td>${fenpeiliang}</td>
+		  		<td>${honghao}</td>
+		  		<td>${tingji}</td>
+		  		<td>${guangji}</td>
+		  		<td>${wurenjieting}</td>
+		  		<td>${jujuejieting}</td>
+		  		<td>${kaichangbaigua}</td>
+		  		<td>${xuyaokaolv}</td>
+		  		<td>${xiaoshoujujue}</td>
+		  		<td>${dayingbanli}</td>
+		  		<td>${weizhuche}</td>
+		  		<td>${weishenqing}</td>
+		  		<td>${luruzhong}</td>
+		  		<td>${daishenhe}</td>
+		  		<td>${butongguo}</td>
+		  		<td>${jujue}</td>
+		  		<td>${tongguo}</td>
+		  		<td>${yitixian}</td>
+		  		<td>${tixianjine}</td>
+		  		<td>${yixiaofei}</td>
+		  		<td>${xiaofeijine}</td>
+	  		</tr>
+		</script>
+
+		<!--电销统计总表(累计)-->
+	    <script id="allListOther" type="text/x-jquery-tmpl">
+	    	<tr class="text-c">
+		  		<td>${distributeTimeFormat}</td>
+		  		<td>${currentOperationId}</td>
+				<td>${currentOperationName}</td>
+		  		<td>${distributeCount}</td>
+		  		<td>${deadNumber}</td>
+		  		<td>${closeDown}</td>
+		  		<td>${powerOff}</td>
+		  		<td>${noAnswer}</td>
+		  		<td>${refuseAnswer}</td>
+		  		<td>${openingRemarks}</td>
+		  		<td>${needConside}</td>
+		  		<td>${saleRefuse}</td>
+		  		<td>${agreeHandle}</td>
+		  		<td>${unregister}</td>
+		  		<td>${unapply}</td>
+		  		<td>${entering}</td>
+		  		<td>${waitCheck}</td>
+		  		<td>${noPass}</td>
+		  		<td>${refuse}</td>
+		  		<td>${pass}</td>
+		  		<td>${withdraw}</td>
+		  		<td>${withdrawAmount}</td>
+		  		<td>${consumeAmount}</td>
+		  		<td>${consume}</td>
+	  		</tr>
+	    </script>
+	</body>
+</html>

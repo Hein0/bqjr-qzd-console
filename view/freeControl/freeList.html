@@ -1,0 +1,247 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <title>添加免息</title>
+
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="../../lib/Hui-iconfont/1.0.8/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/skin/default/skin.css" id="skin" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/style.css" />
+
+    <link rel="stylesheet" type="text/css" href="../../lib/laypage/1.2/skin/laypage.css">
+    <link rel="stylesheet" type="text/css" href="../../lib/layer/2.4/skin/layer.css" />
+    <link rel="stylesheet" type="text/css" href="../../lib/My97DatePicker/4.8/skin/WdatePicker.css">
+    <link rel="stylesheet" type="text/css" href="../../css/shoppingOrder.css?rev=@@hash">
+    <link rel="stylesheet" type="text/css" href="../../css/goodsList.css?rev=@@hash">
+
+    <style type="text/css">
+        .list-ctl {
+            margin: 0 10px;
+            cursor: pointer;
+        }
+
+        .list-ctl:hover {
+            color: rgb(90, 152, 222);
+            text-decoration: underline;
+        }
+
+        #freeActList .gray td {
+            color: #999;
+        }
+
+        .act-line {
+            width: 700px;
+            margin: 10px auto;
+        }
+
+        .act-line .act-left,
+        .act-line .act-right {
+            float: left;
+        }
+
+        .act-line .act-left {
+            width: 150px;
+            text-align: right;
+        }
+
+        .act-line .act-right {
+            width: 530px;
+            margin-left: 20px;
+        }
+
+        .free-strategy span {
+            float: left;
+            width: 150px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <nav class="breadcrumb">
+        <i class="Hui-iconfont">&#xe67f;</i> 首页
+        <span class="c-gray en">&gt;</span> 免息活动
+        <span class="c-gray en">&gt;</span> 免息列表
+        <a class="btn btn-success radius r" style="line-height:1.6em;margin:3px 0 0 20px" href="javascript:location.replace(location.href);"
+            title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a>
+    </nav>
+
+    <div class="Hui-article">
+        <article class="cl pd-20">
+            <!--订单状态选择按钮-->
+            <div class="btn-group mb-20">
+                <a href="editFree.html" class="btn btn-default">添加免息</a>
+                <a href="#" class="btn btn-primary">免息列表</a>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+
+                    <!--筛选条件区域-->
+                    <div class="condition-wrap cl common-form-wrap" id="pageSearchForm">
+
+                        <div class="condition-parent cl">
+                            <span class="title">主题</span>
+                            <input class="s-name" type="text" value="" placeholder="输入关键字搜索">
+                        </div>
+
+                        <div class="condition-parent cl">
+                            <span class="title">类型</span>
+                            <select class="white-list s-type" value="">
+                                <option value="">全部</option>
+                                <option value="0">全场免息</option>
+                                <option value="1">固定商品免息</option>
+                            </select>
+                        </div>
+
+                        <div class="condition-parent cl">
+                            <span class="title">状态</span>
+                            <select class="white-list s-status" value="">
+                                <option value="">全部状态</option>
+                                <option value="1">未开始</option>
+                                <option value="2">进行中</option>
+                                <option value="3">已停用</option>
+                                <option value="4">已结束</option>
+                            </select>
+                        </div>
+
+                        <div class="condition-parent cl common-date-wrap">
+                            <span class="title">开始时间</span>
+                            <input type="text" class="Wdate" id="listStart" value="" onClick=" WdatePicker({maxDate:'#F{$dp.$D(\'listEnd\')}',dateFmt:'yyyy-M-d '})">
+                            <span class="add">至</span>
+                            <input type="text" class="Wdate" id="listEnd" value="" onClick="WdatePicker({minDate:'#F{$dp.$D(\'listStart\')}',dateFmt:'yyyy-M-d '})">
+                        </div>
+
+                        <div class="condition-parent cl common-date-wrap">
+                            <span class="title">结束时间</span>
+                            <input type="text" class="Wdate" id="overBeginTime" value="" onClick=" WdatePicker({maxDate:'#F{$dp.$D(\'overEndTime\')}',dateFmt:'yyyy-M-d '})">
+                            <span class="add">至</span>
+                            <input type="text" class="Wdate" id="overEndTime" value="" onClick="WdatePicker({minDate:'#F{$dp.$D(\'overBeginTime\')}',dateFmt:'yyyy-M-d '})">
+                        </div>
+
+                        <div class="button-wrap">
+                            <button type="button" class="btn btn-primary" id="freeListSearch"><i class="Hui-iconfont">&#xe665;</i> 筛选</button>
+                            <button type="button" class="btn btn-primary" id="freeListReset"><i class="Hui-iconfont">&#xe66b;</i> 重置</button>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <table class="table table-border table-bordered table-hover" style="margin-top:20px;">
+                <thead class="text-c">
+                    <tr>
+                        <th width="20%">主题</th>
+                        <th width="10%">类型</th>
+                        <th width="15%">开始时间</th>
+                        <th width="15%">结束时间</th>
+                        <th width="10%">状态</th>
+                        <th width="30%">操作</th>
+                    </tr>
+                </thead>
+                <tbody class="text-c" id="freeActList"></tbody>
+            </table>
+
+            <!-- 分页 -->
+            <div id="pagination" style="margin-top:20px;"></div>
+
+        </article>
+    </div>
+
+    <div id="seeFreeDetail" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" style="width:1000px;">
+            <div class="modal-content radius">
+                <div class="modal-header">
+                    <h3 class="modal-title">查看</h3>
+                    <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>
+                </div>
+                <div class="modal-body">
+                    <div class="table-wrap" style="overflow-y:auto;max-height:400px;margin-top:20px;">
+                        <table class="table table-border table-bordered table-hover">
+                            <thead class="text-c">
+                                <tr>
+                                    <th width="45%">商品名称</th>
+                                    <th width="25%">货号</th>
+                                    <th width="10%">市场价</th>
+                                    <th width="10%">活动价</th>
+                                    <th width="10%">免息价</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-c" id="freeListSeeWrap"></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="seeActivityDetail" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" style="width:800px;">
+            <div class="modal-content radius">
+                <div class="modal-header">
+                    <h3 class="modal-title">查看</h3>
+                    <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>
+                </div>
+                <div class="modal-body">
+                    <div class="act-line cl">
+                        <div class="act-left">类型</div>
+                        <div class="act-right empty" id="actType"></div>
+                    </div>
+
+                    <div class="act-line cl">
+                        <div class="act-left">主题</div>
+                        <div class="act-right empty" id="actTitle"></div>
+                    </div>
+
+                    <div class="act-line cl">
+                        <div class="act-left">活动时间</div>
+                        <div class="act-right empty" id="actTime"></div>
+                    </div>
+
+                    <div class="act-line cl">
+                        <div class="act-left">免息方案</div>
+                        <div class="act-right">
+                            <div class="free-strategy empty cl" id="actStrategy"></div>
+                        </div>
+                    </div>
+
+                    <div class="act-line cl">
+                        <div class="act-left">备注</div>
+                        <div class="act-right empty" id="actNotes"></div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--_footer 作为公共模版分离出去-->
+    <script type="text/javascript" src="../../lib/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="../../lib/layer/2.4/layer.js"></script>
+    <script type="text/javascript" src="../../static/h-ui/js/H-ui.min.js"></script>
+    <script type="text/javascript" src="../../static/h-ui.admin/js/H-ui.admin.js"></script>
+    <script type="text/javascript" src="../../js/base/public.js?rev=@@hash"></script>
+    <!--/_footer 作为公共模版分离出去-->
+
+    <script type="text/javascript" src="../../lib/laypage/1.2/laypage.js"></script>
+    <script type="text/javascript" src="../../lib/layer/2.4/layer.js"></script>
+    <script type="text/javascript" src="../../lib/My97DatePicker/4.8/WdatePicker.js"></script>
+    <script type="text/javascript" src="../../js/page/freeControl.js?rev=@@hash"></script>
+</body>
+
+</html>

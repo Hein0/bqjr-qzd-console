@@ -1,0 +1,479 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <title>编辑SPU</title>
+
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="../../lib/Hui-iconfont/1.0.8/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/skin/default/skin.css" id="skin" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/style.css" />
+
+    <link rel="stylesheet" type="text/css" href="../../css/spu.css?rev=@@hash">
+    <style>
+    .type-select-panel .top-part ul{
+        width: 30%;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="Hui-article">
+        <article class="cl pd-20">
+            <div class="spu-nav">
+                <ul>
+                    <li class="goods-step active">1.填写基本信息</li>
+                    <li>&nbsp;&nbsp;&nbsp;→&nbsp;&nbsp;&nbsp;</li>
+                    <li class="goods-step">2.设置商品价格</li>
+                    <li>&nbsp;&nbsp;&nbsp;→&nbsp;&nbsp;&nbsp;</li>
+                    <li class="goods-step">3.上传商品图册</li>
+                    <!--<li>&nbsp;&nbsp;&nbsp;→&nbsp;&nbsp;&nbsp;</li>
+                    <li class="goods-step">4.完善商品详情</li>-->
+                </ul>
+                <div class="hr-gray"></div>
+            </div>
+            <div class="spu-cont">
+                <form id="form-step-1" class="form form-horizontal form-step active" action="#" method="post" >
+                    <div class="row cl">
+                        <label class="form-label col-xs-2 col-sm-2">
+                        	<span class="red">*</span>项目类别：
+                        </label>
+                        <div class="formControls col-xs-10 col-sm-10">
+                            <div class="long-ipt">
+                                <span id="catid" class="value-wrap select-classify">请选择分类</span>
+                                <i class="Hui-iconfont">&#xe698;</i>
+                                <div class="type-select-panel condition-panel">
+                                    <div class="top-part cl">
+                                        <ul class="ul-1"></ul>
+                                        <ul class="ul-2"></ul>
+                                        <ul class="ul-3"></ul>
+                                    </div>
+                                    <div class="bottom-part cl">
+                                        <p class="result">您当前已选择的分类:<em></em></p>
+                                        <button type="button" class="btn btn-primary close-panel">关闭</button>
+                                        <button type="button" class="btn btn-primary get-result">确认选择</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="s-mark">选择商品所属分类</span>
+                        </div>
+                    </div>
+
+                    <!--产品品牌-->
+                    <div class="row cl">
+                        <label class="form-label col-xs-2 col-sm-2">
+                            <span class="red require">*</span>产品品牌：
+                        </label>
+                        <div class="formControls col-xs-10 col-sm-10">
+                            <div class="long-ipt">
+                                <span class="value-wrap select-brand-t">请选择产品品牌</span>
+                                <i class="Hui-iconfont">&#xe698;</i>
+
+                                <!--品牌列表-->
+                                <div class="name-select-panel" >
+                                    <ul id="brandNameList"></ul>
+                                </div>
+                            </div>
+                            <div class="long-ipt">
+                                <span class="value-wrap select-brand">请选择产品品牌</span>
+                                <i class="Hui-iconfont">&#xe698;</i>
+
+                                <!--品牌列表-->
+                                <div class="name-select-panel" >
+                                    <ul id="brandName"></ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--产品规格-->
+                    <div class="row cl">
+                        <label class="form-label col-xs-2 col-sm-2">
+                            <span class="red require">*</span>产品规格：
+                        </label>
+                        <div class="formControls col-xs-10 col-sm-10">
+                            <div class="long-ipt">
+                                <span class="value-wrap select-standard">请选择产品规格</span>
+                                <i class="Hui-iconfont">&#xe698;</i>
+
+                                <!--规格列表-->
+                                <div class="name-select-panel" >
+                                    <ul id="standardType">
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="long-ipt">
+                                <span class="value-wrap select-standard select-standard-detail">请选择产品规格</span>
+                                <i class="Hui-iconfont">&#xe698;</i>
+
+                                <!--规格列表-->
+                                <div class="name-select-panel" >
+                                    <ul id="standard">
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row cl">
+                        <label class="form-label col-xs-2 col-sm-2">
+                        	<span class="red">*</span>商品名称：
+                        </label>
+                        <div class="formControls col-xs-10 col-sm-10">
+                            <input id="spuName" class="input-text" placeholder="请输入商品标题名称 " type="text" maxlength="100">
+                            <span class="s-mark">商品标题名称不能为空，最长不能超过100个字符</span>
+                        </div>
+                    </div>
+                    
+                    <!--<div class="row cl">
+                        <label class="form-label col-xs-2 col-sm-2">
+                        	参与活动：
+                        </label>
+                        <div class="formControls col-xs-10 col-sm-10">
+                            <input id="discount" class="input-text" placeholder="请输入折扣" type="number">
+                            <span class="s-mark"></span>
+                        </div>
+                    </div>-->
+
+					<div class="row cl">
+                        <label class="form-label col-xs-2 col-sm-2">
+                            <span class="red">*</span>所在医院：
+                        </label>
+                        <div class="formControls col-xs-10 col-sm-10">
+                            <div class="input-text">
+                                <span class="value-wrap select-hospital col-xs-10 col-sm-10" style="margin: -4px 0 0 -4px;">请选择所在医院</span>
+                                <div class="name-select-panel hospital_id" style="width:39%;top: 30px;left: 15px;" >
+                                    <div class="search-bar">
+                                        <input type="text" value="" id="hospital_id" style="height: 28px;">
+                                    </div>
+                                    <ul></ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row cl">
+                        <label class="form-label col-xs-2 col-sm-2">
+                            <span class="red">*</span>操作人员：</label>
+                        <div class="formControls col-xs-10 col-sm-10">
+                           <div class="input-text">
+                                <span class="value-wrap select-doctor col-xs-10 col-sm-10" style="margin: -4px 0 0 -4px;">请选择主治医生</span>
+                                <div class="name-select-panel doctor_id" style="width:39%;left: 15px;">
+                                    <!--<div class="search-bar">-->
+                                        <!--<input type="text" value="" id="doctor_id">-->
+                                    <!--</div>-->
+                                    <ul></ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!--服务承诺-->
+
+                    <div class="row cl">
+                        <label class="form-label col-xs-2 col-sm-2">
+                            服务承诺：</label>
+                        <div class="formControls col-xs-10 col-sm-10">
+                            <input type="checkbox" checked disabled>无隐性消费
+                            <input type="checkbox" checked disabled>未使用随时退款
+                            <input type="checkbox" id="commitment">需要提前7天预约
+                        </div>
+                    </div>
+                    <div class="row cl">
+                        <div class="col-xs-10 col-sm-10 col-xs-offset-2 col-sm-offset-2">
+                            <input class="btn btn-primary next-btn" value="下一步" type="button">
+                        </div>
+                    </div>
+                </form>
+                <form id="form-step-2" class="form form-horizontal form-step" action="#" method="post" >
+                    <div class=" cl role-row active">
+	                    <div class="row cl">
+	                        <label class="form-label col-xs-2 col-sm-2">
+	                        	<span class="red">*</span>全价：
+	                        </label>
+	                        <div class="formControls col-xs-10 col-sm-10">
+	                            <input id="hos_price" class="input-text" placeholder="请输入医院价" type="number" min="1">
+	                            <span class="s-mark"></span>
+	                        </div>
+	                    </div>
+	                    <div class="row cl">
+	                        <label class="form-label col-xs-2 col-sm-2">
+	                        	<span class="red">*</span>平台价：
+	                        </label>
+	                        <div class="formControls col-xs-10 col-sm-10">
+	                            <input id="qzd_price" class="input-text" placeholder="请输入平台价" type="number" min="1">
+	                            <span class="s-mark">(只能输入整数)</span>
+	                        </div>
+	                    </div>
+	                    
+	                    <div class="row cl">
+	                        <label class="form-label col-xs-2 col-sm-2">
+	                        	<span class="red">*</span>预约金：
+	                        </label>
+	                        <div class="formControls col-xs-10 col-sm-10">
+	                            <input id="appo_price" disabled="disabled" class="input-text" placeholder="" type="number">
+	                            <span class="s-mark"></span>
+	                        </div>
+	                    </div>
+	                    
+						<div class="row cl">
+	                        <label class="form-label col-xs-2 col-sm-2">尾款：</label>
+	                        <div class="formControls col-xs-10 col-sm-10">
+	                            <input id="left_price" disabled="disabled" class="input-text" type="number">
+	                            <span class="s-mark"></span>
+	                        </div>
+	                    </div>
+                   </div>
+                    
+                    <div class="row cl next2">
+                        <div class="col-xs-10 col-sm-10">
+                            <input class="btn btn-default pre-btn" value="上一步" type="button">
+                            <input class="btn btn-primary next-btn" value="下一步" type="button">
+                        </div>
+                    </div>
+                </form>
+                <form id="form-step-3" class="form form-horizontal form-step" action="#" method="post" >
+                    <div class="form-title">商品最少上传一张图片，最多只能上传6张</div>    
+                    <div class=" cl role-row active">
+                        <div class="upload-pic-wrap default-pic-wrap">
+                            <div class="upload-pic-content">
+                                <div class="pic-wrap"></div>
+
+                                <!--上传视频-->
+                                <div class="loadpic-wrap">
+                                    <div class="loadpic">
+                                        <input name="file" class="loadpic-input" accept="video/*" type="file" id="uploadVideo">
+                                        <label class="loadpic-label">
+                                            <i class="Hui-iconfont">&#xe600;</i>
+                                            <span>视频</span>
+                                        </label>
+                                    </div>
+                                    <p>
+                                        <!--<span class="set-cover">设为封面</span>-->
+                                        <span class="del-img">删除</span>
+                                    </p>
+                                </div>
+                                <div class="loadpic-wrap">
+                                    <div class="loadpic">
+                                        <input name="file" class="loadpic-input" upload accept="image/*" type="file" id="uploadVideoCover">
+                                        <label class="loadpic-label">
+                                            <i class="Hui-iconfont">&#xe600;</i>
+                                            <span>视频封面</span>
+                                        </label>
+                                    </div>
+                                    <p>
+                                        
+                                        <span class="del-img">删除</span>
+                                    </p>    
+                                </div>
+
+                                <div class="loadpic-wrap">
+                                    <div class="loadpic">
+                                        <input name="file" class="loadpic-input" upload accept="image/jpg,image/jpeg,image/png" type="file" id="before_1">
+                                        <label class="loadpic-label">
+                                            <i class="Hui-iconfont">&#xe600;</i>
+                                        </label>
+                                    </div>
+                                    <p>
+                                        <span class="set-cover">设为封面</span>
+                                        <span class="del-img">删除</span>
+                                    </p>
+                                </div>
+
+                                <div class="loadpic-wrap">
+                                    <div class="loadpic">
+                                        <input name="file" class="loadpic-input" upload accept="image/jpg,image/jpeg,image/png" type="file" id="before_2">
+                                        <label class="loadpic-label">
+                                            <i class="Hui-iconfont">&#xe600;</i>
+                                        </label>
+                                    </div>
+                                    <p>
+                                        <span class="set-cover">设为封面</span>
+                                        <span class="del-img">删除</span>
+                                    </p>
+                                </div>
+                                <div class="loadpic-wrap">
+                                    <div class="loadpic">
+                                        <input name="file" class="loadpic-input" upload accept="image/jpg,image/jpeg,image/png" type="file" id="before_3">
+                                        <label class="loadpic-label">
+                                            <i class="Hui-iconfont">&#xe600;</i>
+                                        </label>
+                                    </div>
+                                    <p>
+                                        <span class="set-cover">设为封面</span>
+                                        <span class="del-img">删除</span>
+                                    </p>
+                                </div>
+                                <div class="loadpic-wrap">
+                                    <div class="loadpic">
+                                        <input name="file" class="loadpic-input" upload accept="image/jpg,image/jpeg,image/png" type="file" id="before_4">
+                                        <label class="loadpic-label">
+                                            <i class="Hui-iconfont">&#xe600;</i>
+                                        </label>
+                                    </div>
+                                    <p>
+                                        <span class="set-cover">设为封面</span>
+                                        <span class="del-img">删除</span>
+                                    </p>
+                                </div>
+                                <div class="loadpic-wrap">
+                                    <div class="loadpic">
+                                        <input name="file" class="loadpic-input" upload accept="image/jpg,image/jpeg,image/png" type="file" id="before_5">
+                                        <label class="loadpic-label">
+                                            <i class="Hui-iconfont">&#xe600;</i>
+                                        </label>
+                                    </div>
+                                    <p>
+                                        <span class="set-cover">设为封面</span>
+                                        <span class="del-img">删除</span>
+                                    </p>
+                                </div>
+                                <div class="loadpic-wrap">
+                                    <div class="loadpic">
+                                        <input name="file" class="loadpic-input" upload accept="image/jpg,image/jpeg,image/png" type="file" id="before_6">
+                                        <label class="loadpic-label">
+                                            <i class="Hui-iconfont">&#xe600;</i>
+                                        </label>
+                                    </div>
+                                    <p>
+                                        <span class="set-cover">设为封面</span>
+                                        <span class="del-img">删除</span>
+                                    </p>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div>
+                            图片或视频提示：<br>
+                            1. 至少上传一张图片。<br>
+
+                            2. 图片文件大小不能超过1M<br>
+
+                            3. 图片必须为正方形且图片尺寸必须大于或等于400*400（谨慎缩放，不然会导致图片模糊）<br>
+
+                            4. 支持JPG，PNG 格式<br>
+
+                            5. 点击右上角的X删除，单击换图<br>
+
+                            6. 拖拽图片即可实现图片的更换哦~<br>
+
+                            7. 请上传有版权且清晰品质高的美女头像、仪器设备或针剂产品图片<br>
+
+                            8. 新增在“封面视频”，视频非必传项。上传视频后将在封面图片上增加视频播放功能。视频大小不能超过10M,时长不能超过180秒，务必传正方形比例1:1，否则会按头图尺寸裁剪，分辨率不低于400*400。
+                        </div>
+                        <div class="spec-items"></div>
+                        <div class="sku-pic-wrap"></div>
+                    </div>
+                    <div class="form-title">商品详情页</div>    
+
+                    <!--编辑商品详情-->
+                    <div id="editor"></div>
+                    <div>
+                        
+
+                        商品详情提示：<br>
+
+                        1. 禁止留微信，电话，QQ等联系方式<br>
+
+                        2. 产品详情如含有价格应与提报价一致<br>
+
+                        3. 假体隆鼻或隆下巴隆胸等需放假体项目必须写明假体的品牌<br>
+
+                        4. 手术类项目必须写明提报价有无包含麻醉费用或其他隐性消费<br>
+
+                        5. 不能含有“最”字比如“最好”等字眼<br>
+
+                        6. 上传图片时尺寸宽度为706px<br>
+
+                        7. 不允许任何方式添加外链
+
+                    </div>
+                    <!--商品其他信息-->
+                    <div class="form-title">商品其他信息</div>
+                    <div class="row cl">
+                        <label class="form-label col-xs-2 col-sm-2">
+                            截止日期：
+                        </label>
+                        <div class="formControls col-xs-10 col-sm-10">
+                            <div class="long-ipt">
+                                <input type="text" onfocus="WdatePicker()" style="width:100%;height:100%;box-sizing:border-box;" id="validityTime" class="input-text Wdate f-l" readonly="" name="create_time_start">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row cl">
+                        <label class="form-label col-xs-2 col-sm-2">
+                        日记返现：
+                        </label>
+                        <div class="formControls col-xs-10 col-sm-10">
+                            <div class="long-ipt">
+                                <input type="text" class="input-text" style="width: 90%;border: none;height: 100%   " placeholder="日记返现" id="rebate">
+                                元
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row cl">
+                        <label class="form-label col-xs-2 col-sm-2">
+                            返现结束时间：
+                        </label>
+                        <div class="formControls col-xs-10 col-sm-10">
+                            <div class="long-ipt">
+                                <input type="text" onfocus="WdatePicker()" style="width:100%;height:100%;box-sizing:border-box;" id="rebate_endTime" class="input-text Wdate f-l" readonly="" name="create_time_start">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row cl next2">
+                        <div class="col-xs-10 col-sm-10">
+                            <input class="btn btn-default pre-btn" value="上一步" type="button">
+                            <input class="btn btn-primary submit-btn" value="提交" type="button">
+                        </div>
+                    </div>
+                </form>
+                <!--<form id="form-step-4" class="form form-horizontal form-step" action="#" method="post">
+                    <textarea id="specEditor" name="specEditor" ></textarea>
+                    <div class="row cl">
+                        <div class="col-xs-10 col-sm-10">
+                            <input class="btn btn-default pre-btn" value="上一步" type="button">
+                            <input class="btn btn-primary submit-btn" value="提交" type="button">
+                        </div>
+                    </div>
+                </form>-->
+            </div>
+        </article>
+    </div>
+
+
+    <!--footer 作为公共模版分离出去-->
+    <script type="text/javascript" src="../../lib/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="../../lib/layer/2.4/layer.js"></script>
+    <script type="text/javascript" src="../../static/h-ui/js/H-ui.min.js"></script>
+    <script type="text/javascript" src="../../static/h-ui.admin/js/H-ui.admin.js"></script>
+    <!--footer 作为公共模版分离出去-->
+    <script src="../../lib/My97DatePicker/4.8/WdatePicker.js"></script>
+    <script type="text/javascript" src="../../lib/laypage/1.2/laypage.js"></script>
+    <script type="text/javascript" src="../../js/base/public.js?rev=@@hash"></script>
+    <script type="text/javascript" src="../../js/common/common.js?rev=@@hash"></script>
+    <script type="text/javascript" src="../../js/page/spu.js?rev=@@hash"></script>
+    <script src="https://unpkg.com/wangeditor@3.1.1/release/wangEditor.min.js"></script>
+    <script src="../../js/common/wangEditor.config.js"></script>
+    <script type="text/javascript" src="../../lib/lrz.bundle.js"></script>
+    <script type="text/javascript">      
+        $(function(){        	
+        	$('.select-hospital').on('click', function () {
+                var $self = $(this),
+                    $target = $self.siblings('.name-select-panel');
+					$target.toggle();
+            });
+        })
+
+    </script>
+</body>
+
+</html>

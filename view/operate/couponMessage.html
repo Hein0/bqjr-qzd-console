@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+	    <meta http-equiv="Cache-Control" content="no-siteapp" />
+	    <title>优惠券管理</title>
+
+	    <link rel="stylesheet" type="text/css" href="../../static/h-ui/css/H-ui.min.css" />
+	    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/H-ui.admin.css" />
+	    <link rel="stylesheet" type="text/css" href="../../lib/Hui-iconfont/1.0.8/iconfont.css" />
+	    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/skin/default/skin.css" id="skin" />
+	    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/style.css" />
+	    <link rel="stylesheet" type="text/css" href="../../lib/laypage/1.2/skin/laypage.css">
+	    	<link rel="stylesheet" type="text/css" href="../../css/reset.css"/>
+	    <link rel="stylesheet" type="text/css" href="../../css/withdraw.css?rev=@@hash"/>
+	</head>
+	<body>
+		<nav class="breadcrumb">
+	        <i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 运营管理 <span class="c-gray en">&gt;</span> <span class="fileName">优惠券管理</span>
+	        <a id="newCoupon" class="btn btn-success r" style="line-height:1.6em;margin-top:3px" href="javascript:;">新建优惠券</a>
+	    </nav>
+
+	    <div class="page-container">
+
+	    	<!--查询条件板块-->
+	    	<div class="panel panel-default">
+	    		<form class="search-form">
+					<div class="panel-body pb-0 cl search">
+				        <div class="f-l mr-15 mb-15">
+		                    <span class="text-c f-l">优惠券编号</span>
+		                    <input type="text" value="" class="input-text withdrawNo" name="orderNo" />
+		                </div>
+		                <div class="f-l mr-15 mb-15">
+		                    <span class="text-c f-l">优惠券名称</span>
+		                    <input type="text" value="" class="input-text userName" name="userName" />
+		                </div>
+
+		                <div class="f-l mr-15 mb-15">
+		                    <span class="text-c f-l">发行状态</span>
+		                    <select class="select terminal" name="terminal">
+		                        <option value="0" selected>全部</option>
+		                    </select>
+		                </div>
+
+		                <div class="f-l mr-15 mb-15">
+		                    <span class="text-c f-l">类型</span>
+		                    <select class="select wdType" name="wdType">
+		                        <option value="0" selected>全部</option>
+		                    </select>
+		                </div>
+
+				        <div class="f-l mr-15 mb-15">
+		                    <span class="text-c f-l" >发行时间</span>
+		                    <input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}' })" id="datemin" class="input-text Wdate f-l" readonly name="datemin" />
+		                    <span class="f-l">至</span>
+		                    <input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'datemin\')}',maxDate:'%y-%M-%d' })" id="datemax" class="input-text Wdate f-l" readonly name="datemax" />
+		                </div>
+
+				        <div class="text-l m-t10 f-r">
+				            <button type="button" class="btn btn-primary mr-15" id="screeBtn" name=""><i class="Hui-iconfont">&#xe665;</i> 筛选</button>
+				            <button type="button" class="btn btn-primary" id="resetBtn" name=""><i class="Hui-iconfont">&#xe66b;</i> 重置</button>
+				        </div>
+
+			        </div>
+			    </form>
+			</div>
+	        <div class="cl pd-5 bg-1 bk-gray mt-20"><span class="r">共有数据：<strong>88</strong> 条</span> </div>
+
+	        <!--数据表格-->
+	        <div class="mt-20">
+	            <table class="table table-border table-bordered table-hover table-bg table-sort">
+	                <thead>
+	                    <tr class="text-c">
+	                        <!--<th width="25"><input type="checkbox" name="" value=""></th>-->
+	                        <th width="">优惠券编号</th>
+					    	<th>优惠券名称</th>
+					    	<th>类型</th>
+					    	<th>发行起始时间</th>
+					    	<th>发行结束时间</th>
+					    	<th>发行数量</th>
+					    	<th>已领取</th>
+					    	<th>已使用</th>
+					    	<th>发行状态</th>
+					    	<th>操作</th>
+	                    </tr>
+	                </thead>
+	                <tbody id="tableList">
+	                	<!--<tr class="text-c">
+					  		<td><a href="withdrawDetail.html">123456789</a></td>
+					  		<td>李四</td>
+					  		<td>18666666666</td>
+					  		<td>ios</td>
+					  		<td>广东省</td>
+					  		<td>深圳市</td>
+					  		<td>2000</td>
+					  		<td>2017-04-22 17:25:30</td>
+					  		<td>短期借款</td>
+					  		<td><a href="withdrawDetail.html">详情</a></td>
+				  		</tr>-->
+				  	</tbody>
+
+	            </table>
+	        </div>
+	    </div>
+
+		<!--分页-->
+		<div class="pagination" id="pagination"></div>
+
+		<!--组件-->
+		<script type="text/javascript" src="../../lib/jquery/1.9.1/jquery.min.js"></script>
+		<script type="text/javascript" src="../../lib/My97DatePicker/4.8/WdatePicker.js"></script>
+	    <script type="text/javascript" src="../../lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+	    <script type="text/javascript" src="../../lib/laypage/1.2/laypage.js"></script>
+	    <script src="../../js/common/jquery.tmpl.min.js" type="text/javascript"></script>
+	    <script type="text/javascript" src="../../lib/layer/2.4/layer.js"></script>
+	    <script type="text/javascript" src="../../static/h-ui/js/H-ui.min.js"></script>
+	    <script type="text/javascript" src="../../static/h-ui.admin/js/H-ui.admin.js"></script>
+
+	    <!--业务逻辑-->
+	    <script type="text/javascript" src="../../js/base/public.js"></script>
+	    <script src="../../js/page/couponMessage.js" type="text/javascript" charset="utf-8"></script>
+	    <script id="withdrawList" type="text/x-jquery-tmpl">
+	    		<tr class="text-c">
+			  		<td><a href="withdrawDetail.html?orderId=${orderId}" target="_blank">${orderId}</a></td>
+			  		<td>${realName}</td>
+			  		<td>${mobile}</td>
+			  		<td>${originStr}</td>
+			  		<td>广东</td>
+			  		<td>深圳</td>
+			  		<td>${money}</td>
+			  		<td>${createTime}</td>
+			  		<td>${loanCodeStr}</td>
+			  		<td>${statusStr}</td>
+			  		<td>${contractId}</td>
+			  		<td>待签署</td>
+			  		<td><a style="color: dodgerblue;" href="withdrawDetail.html?orderId=${orderId}" target="_blank">详情</a></td>
+			  	</tr>
+	    </script>
+	</body>
+</html>

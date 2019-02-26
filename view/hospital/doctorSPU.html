@@ -1,0 +1,586 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <title>编辑SPU</title>
+
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/skin/default/skin.css" id="skin" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="../../lib/Hui-iconfont/1.0.8/iconfont.css" />
+
+    <link rel="stylesheet" type="text/css" href="../../css/doctorSpu.css?rev=@@hash">
+</head>
+
+<body>
+    <div class="Hui-article">
+        <article class="cl pd-20">
+            <div class="spu-nav">
+                <ul>
+                    <li class="goods-step active">1.填写医生姓名</li>
+                    <li>&nbsp;&nbsp;&nbsp;→&nbsp;&nbsp;&nbsp;</li>
+                    <li class="goods-step">2.填写医生基本信息</li>
+                    <li>&nbsp;&nbsp;&nbsp;→&nbsp;&nbsp;&nbsp;</li>
+                    <li class="goods-step">3.上传医生资质</li>
+                </ul>
+                <div class="hr-gray"></div>
+            </div>
+            <div class="spu-cont">
+                <form id="form-step-1" class="form form-horizontal form-step active" action="#" method="post">
+
+                    <div class="row cl">
+                        <label class="form-label col-xs-2 col-sm-2">
+                            <span class="red">*</span>医生姓名：</label>
+                        <div class="formControls col-xs-10 col-sm-10">
+                            <input id="doctorspuName" class="input-text" placeholder="请输入医生姓名" type="text" name="name">
+                            <span class="s-mark">医生姓名不能为空</span>
+                        </div>
+                    </div>
+
+                    <div class="row cl">
+                        <div class="col-xs-10 col-sm-10 col-xs-offset-2 col-sm-offset-2">
+                            <input class="btn btn-primary next-btn" value="下一步" type="button">
+                        </div>
+                    </div>
+
+                </form>
+                <form id="form-step-2" class="form form-horizontal form-step" action="#" method="post">
+
+                    <div class="row cl">
+                        <label class="text-r col-xs-2 col-sm-2">医生姓名：</label>
+                        <div class="col-xs-10 col-sm-10">
+                            <span id="doctorspuNameShow"></span>
+                        </div>
+                    </div>
+
+                    <div class="row cl">
+                        <label class="form-label col-xs-2 col-sm-2">
+                            <span class="red">*</span>性别：</label>
+                        <div class="formControls col-xs-10 col-sm-10">
+                            <input type="radio" name="sex" id="man" value="1" checked="checked">
+                            <label for="man">男</label>
+                            <input type="radio" name="sex" value="2" id="woman">
+                            <label for="woman">女</label>
+                        </div>
+                    </div>
+
+                    <div class="row cl">
+                        <label class="form-label col-xs-2 col-sm-2">
+                            <span class="red">*</span>医院所在城市：</label>
+                        <div class="formControls col-xs-10 col-sm-10">
+                            <span class="select-box inline">
+                                <select id="parent" class="select" name="parent">
+                                    <option value="" selected>省份</option>
+                                    <option value="1">北京市</option>
+                                </select>
+                            </span>
+                            <span class="select-box inline">
+                                <select id="city" class="select" name="city">
+                                    <option value="" selected>城市</option>
+                                    <option value="1">北京</option>
+                                </select>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="row cl">
+                        <label class="form-label col-xs-2 col-sm-2">
+                            <span class="red">*</span>所在医院：</label>
+                        <div class="formControls col-xs-10 col-sm-10">
+                            <div class="input-text">
+                                <span class="value-wrap select-hospital col-xs-10 col-sm-10">请选择所在医院</span>
+                                <div class="name-select-panel hospitalId" id="Idhospital" style="width:40%;">
+                                    <div class="search-bar">
+                                        <input type="text" value="" id="hospital_id">
+                                    </div>
+                                    <ul></ul>
+                                </div>
+                            </div>
+                            <!-- <input id="hospital_id" class="input-text" placeholder="请输入所在医院编号" type="text" name="hospital_id"> -->
+                        </div>
+                    </div>
+
+                    <div class="row cl">
+                        <label class="form-label col-xs-2 col-sm-2">
+                            <span class="red">*</span>当前职务：</label>
+                        <div class="formControls col-xs-10 col-sm-10">
+                            <span class="select-box inline">
+                                <select id="position" class="select" name="position">
+                                    <option value="" selected>请选择</option>
+                                    <option value="15">院长</option>
+                                    <option value="16">代表院长</option>
+                                    <option value="17">执行院长</option>
+                                    <option value="74">院长</option>
+                                    <option value="75">副院长</option>
+                                    <option value="76">主任医师</option>
+                                    <option value="77">副主任医师</option>
+                                    <option value="78">医生</option>
+                                    <option value="79">实习医生</option>
+                                    <option value="86">外聘教授</option>
+                                    <option value="142">中心主任</option>
+                                    <option value="143">主诊医生</option>
+                                    <option value="144">研究员</option>
+                                    <option value="145">副研究员</option>
+                                    <option value="80">院长</option>
+                                    <option value="81">整形外科医师</option>
+                                    <option value="82">外科医师</option>
+                                    <option value="83">医师</option>
+                                </select>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="row cl">
+                        <label class="form-label col-xs-2 col-sm-2">
+                            <span class="red">*</span>医生资质：</label>
+                        <div class="formControls col-xs-10 col-sm-10">
+                            <div class="check-box">
+                                <input type="checkbox" id="zizhi-1" name="zizhi" value="3,整形外科专家">
+                                <label for="zizhi-1">整形外科专家</label>
+                            </div>
+                            <div class="check-box">
+                                <input type="checkbox" id="zizhi-2" name="zizhi" value="4,整形外科医生">
+                                <label for="zizhi-2">整形外科医生</label>
+                            </div>
+                            <div class="check-box">
+                                <input type="checkbox" id="zizhi-3" name="zizhi" value="6,齿科专家">
+                                <label for="zizhi-3">齿科专家</label>
+                            </div>
+                            <div class="check-box">
+                                <input type="checkbox" id="zizhi-4" name="zizhi" value="8,齿科医生">
+                                <label for="zizhi-4">齿科医生</label>
+                            </div>
+                            <div class="check-box">
+                                <input type="checkbox" id="zizhi-5" name="zizhi" value="10,皮肤科专家">
+                                <label for="zizhi-5">皮肤科专家</label>
+                            </div>
+                            <div class="check-box">
+                                <input type="checkbox" id="zizhi-6" name="zizhi" value="12,皮肤科医生">
+                                <label for="zizhi-6">皮肤科医生</label>
+                            </div>
+                            <div class="check-box">
+                                <input type="checkbox" id="zizhi-7" name="zizhi" value="25,麻醉科专家">
+                                <label for="zizhi-7">麻醉科专家</label>
+                            </div>
+                            <div class="check-box">
+                                <input type="checkbox" id="zizhi-8" name="zizhi" value="55,麻醉科医生">
+                                <label for="zizhi-8">麻醉科医生</label>
+                            </div>
+                            <div class="check-box">
+                                <input type="checkbox" id="zizhi-9" name="zizhi" value="84,外科医师">
+                                <label for="zizhi-9">外科医师</label>
+                            </div>
+                            <div class="check-box">
+                                <input type="checkbox" id="zizhi-10" name="zizhi" value="88,肥胖症专科医师">
+                                <label for="zizhi-10">肥胖症专科医师</label>
+                            </div>
+                            <div class="check-box">
+                                <input type="checkbox" id="zizhi-11" name="zizhi" value="90,颜面神经微整型医师">
+                                <label for="zizhi-11">颜面神经微整型医师</label>
+                            </div>
+                            <div class="check-box">
+                                <input type="checkbox" id="zizhi-12" name="zizhi" value="91,专科医生">
+                                <label for="zizhi-12">专科医生</label>
+                            </div>
+                            <div class="check-box">
+                                <input type="checkbox" id="zizhi-13" name="zizhi" value="92,美容医学专科医生">
+                                <label for="zizhi-13">美容医学专科医生</label>
+                            </div>
+                            <div class="check-box">
+                                <input type="checkbox" id="zizhi-14" name="zizhi" value="93,妇产专科医生">
+                                <label for="zizhi-14">妇产专科医生</label>
+                            </div>
+                            <div class="check-box">
+                                <input type="checkbox" id="zizhi-15" name="zizhi" value="94,神经医学专科医生">
+                                <label for="zizhi-15">神经医学专科医生</label>
+                            </div>
+                            <div class="check-box">
+                                <input type="checkbox" id="zizhi-16" name="zizhi" value="126,助理执业医师">
+                                <label for="zizhi-16">助理执业医师</label>
+                            </div>
+                            <div class="check-box">
+                                <input type="checkbox" id="zizhi-17" name="zizhi" value="127,助理执业中医师">
+                                <label for="zizhi-17">助理执业中医师</label>
+                            </div>
+                            <div class="check-box">
+                                <input type="checkbox" id="zizhi-18" name="zizhi" value="128,执业医师">
+                                <label for="zizhi-18">执业医师</label>
+                            </div>
+                            <div class="check-box">
+                                <input type="checkbox" id="zizhi-19" name="zizhi" value="129,执业中医师">
+                                <label for="zizhi-19">执业中医师</label>
+                            </div>
+                            <div class="check-box">
+                                <input type="checkbox" id="zizhi-20" name="zizhi" value="130,主治医师">
+                                <label for="zizhi-20">主治医师</label>
+                            </div>
+                            <div class="check-box">
+                                <input type="checkbox" id="zizhi-21" name="zizhi" value="131,主治中医师">
+                                <label for="zizhi-21">主治中医师</label>
+                            </div>
+                            <div class="check-box">
+                                <input type="checkbox" id="zizhi-22" name="zizhi" value="132,副主任医师">
+                                <label for="zizhi-22">副主任医师</label>
+                            </div>
+                            <div class="check-box">
+                                <input type="checkbox" id="zizhi-23" name="zizhi" value="133,副主任中医师">
+                                <label for="zizhi-23">副主任中医师</label>
+                            </div>
+                            <div class="check-box">
+                                <input type="checkbox" id="zizhi-24" name="zizhi" value="134,主任医师">
+                                <label for="zizhi-24">主任医师</label>
+                            </div>
+                            <div class="check-box">
+                                <input type="checkbox" id="zizhi-25" name="zizhi" value="135,主任中医师">
+                                <label for="zizhi-25">主任中医师</label>
+                            </div>
+                            <div class="check-box">
+                                <input type="checkbox" id="zizhi-26" name="zizhi" value="136,助教">
+                                <label for="zizhi-26">助教</label>
+                            </div>
+                            <div class="check-box">
+                                <input type="checkbox" id="zizhi-27" name="zizhi" value="137,讲师">
+                                <label for="zizhi-27">讲师</label>
+                            </div>
+                            <div class="check-box">
+                                <input type="checkbox" id="zizhi-28" name="zizhi" value="138,副教授">
+                                <label for="zizhi-28">副教授</label>
+                            </div>
+                            <div class="check-box">
+                                <input type="checkbox" id="zizhi-29" name="zizhi" value="139,教授">
+                                <label for="zizhi-29">教授</label>
+                            </div>
+                            <div class="check-box">
+                                <input type="checkbox" id="zizhi-30" name="zizhi" value="140,硕士研究生导师">
+                                <label for="zizhi-30">硕士研究生导师</label>
+                            </div>
+                            <div class="check-box">
+                                <input type="checkbox" id="zizhi-31" name="zizhi" value="141,博士研究生导师">
+                                <label for="zizhi-31">博士研究生导师</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row cl">
+                        <label class="form-label col-xs-2 col-sm-2">
+                            <span class="red">*</span>从医时间：</label>
+                        <div class="formControls col-xs-10 col-sm-10">
+                            <input type="text" onfocus="WdatePicker({ maxDate:'%y-%M-%d' })" id="work_date" class="input-text Wdate f-l" readonly name="work_date"
+                            />
+                        </div>
+                    </div>
+
+                    <div class="row cl">
+                        <label class="form-label col-xs-2 col-sm-2">
+                            <span class="red">*</span>最高学历：</label>
+                        <div class="formControls col-xs-10 col-sm-10">
+                            <span class="select-box inline">
+                                <select id="highest_degree" class="select" name="highest_degree">
+                                    <option value="" selected>请选择</option>
+                                    <option value="5"> 博士后</option>
+                                    <option value="7">双博士</option>
+                                    <option value="9">博士</option>
+                                    <option value="11">双硕士</option>
+                                    <option value="13">硕士</option>
+                                    <option value="14">本科</option>
+                                    <option value="116">进修</option>
+                                    <option value="125">专科</option>
+                                </select>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="row cl">
+                        <label class="form-label col-xs-2 col-sm-2">
+                            <span class="red">*</span>擅长项目：</label>
+                        <div class="formControls col-xs-10 col-sm-10">
+                            <div class="check-box">
+                                <input type="checkbox" id="good_projects-1" name="good_projects" value="眼部整形">
+                                <label for="good_projects-1">眼部整形</label>
+                            </div>
+                            <div class="check-box">
+                                <input type="checkbox" id="good_projects-2" name="good_projects" value="鼻部整形">
+                                <label for="good_projects-2">鼻部整形</label>
+                            </div>
+                            <div class="check-box">
+                                <input type="checkbox" id="good_projects-3" name="good_projects" value="面部轮廓">
+                                <label for="good_projects-3">面部轮廓</label>
+                            </div>
+                            <div class="check-box">
+                                <input type="checkbox" id="good_projects-4" name="good_projects" value="唇部整形">
+                                <label for="good_projects-4">唇部整形</label>
+                            </div>
+                            <div class="check-box">
+                                <input type="checkbox" id="good_projects-5" name="good_projects" value="胸部整形">
+                                <label for="good_projects-5">胸部整形</label>
+                            </div>
+                            <div class="check-box">
+                                <input type="checkbox" id="good_projects-6" name="good_projects" value="美体塑形">
+                                <label for="good_projects-6">美体塑形</label>
+                            </div>
+                            <div class="check-box">
+                                <input type="checkbox" id="good_projects-7" name="good_projects" value="皮肤美容">
+                                <label for="good_projects-7">皮肤美容</label>
+                            </div>
+                            <div class="check-box">
+                                <input type="checkbox" id="good_projects-8" name="good_projects" value="抗衰抗初老">
+                                <label for="good_projects-8">抗衰抗初老</label>
+                            </div>
+                            <div class="check-box">
+                                <input type="checkbox" id="good_projects-9" name="good_projects" value="私密整形">
+                                <label for="good_projects-9">私密整形</label>
+                            </div>
+                            <div class="check-box">
+                                <input type="checkbox" id="good_projects-10" name="good_projects" value="牙齿美容">
+                                <label for="good_projects-10">牙齿美容</label>
+                            </div>
+                            <div class="check-box">
+                                <input type="checkbox" id="good_projects-11" name="good_projects" value="毛发种植">
+                                <label for="good_projects-11">毛发种植</label>
+                            </div>
+                            <div class="check-box">
+                                <input type="checkbox" id="good_projects-12" name="good_projects" value="耳部整形">
+                                <label for="good_projects-12">耳部整形</label>
+                            </div>
+                            <div class="check-box">
+                                <input type="checkbox" id="good_projects-13" name="good_projects" value="其他">
+                                <label for="good_projects-13">其他</label>
+                            </div>
+                            <div class="check-box">
+                                <input type="checkbox" id="good_projects-14" name="good_projects" value="自体脂肪">
+                                <label for="good_projects-14">自体脂肪</label>
+                            </div>
+                            <div class="check-box">
+                                <input type="checkbox" id="good_projects-15" name="good_projects" value="玻尿酸">
+                                <label for="good_projects-15">玻尿酸</label>
+                            </div>
+                            <div class="check-box">
+                                <input type="checkbox" id="good_projects-16" name="good_projects" value="肉毒素">
+                                <label for="good_projects-16">肉毒素</label>
+                            </div>
+                            <div class="check-box">
+                                <input type="checkbox" id="good_projects-17" name="good_projects" value="激光脱毛">
+                                <label for="good_projects-17">激光脱毛</label>
+                            </div>
+                            <div class="check-box">
+                                <input type="checkbox" id="good_projects-18" name="good_projects" value="半永久妆">
+                                <label for="good_projects-18">半永久妆</label>
+                            </div>
+                            <div class="check-box">
+                                <input type="checkbox" id="good_projects-19" name="good_projects" value="微整形">
+                                <label for="good_projects-19">微整形</label>
+                            </div>
+                            <div class="check-box">
+                                <input type="checkbox" id="good_projects-20" name="good_projects" value="激光美肤">
+                                <label for="good_projects-20">激光美肤</label>
+                            </div>
+                            <div class="check-box">
+                                <input type="checkbox" id="good_projects-21" name="good_projects" value="失败修复">
+                                <label for="good_projects-21">失败修复</label>
+                            </div>
+                            <span class="red">最多选择三项</span>
+                        </div>
+                    </div>
+
+                    <div class="row cl">
+                        <label class="form-label col-xs-2 col-sm-2">
+                            <span class="red">*</span>医生介绍：</label>
+                        <div class="formControls col-xs-10 col-sm-10">
+                            <textarea id="introduce" class="textarea" type="text" name="introduce"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- <div class="row cl">
+                        <label class="form-label col-xs-2 col-sm-2">学习经历：</label>
+                        <div class="formControls col-xs-10 col-sm-10">
+                            <textarea id="learn_exp" class="textarea" type="text" name="learn_exp"></textarea>
+                        </div>
+                    </div> -->
+
+                    <!-- <div class="row cl">
+                        <label class="form-label col-xs-2 col-sm-2">职业经历：</label>
+                        <div class="formControls col-xs-10 col-sm-10">
+                            <textarea id="work_exp" class="textarea" type="text" name="work_exp"></textarea>
+                        </div>
+                    </div> -->
+
+                    <!-- <div class="row cl">
+                        <label class="form-label col-xs-2 col-sm-2">专业协会：</label>
+                        <div class="formControls col-xs-10 col-sm-10">
+                            <textarea id="zhuanye_xiehui" class="textarea" type="text" name="zhuanye_xiehui"></textarea>
+                        </div>
+                    </div> -->
+
+                    <div class="row cl">
+                        <div class="col-xs-10 col-sm-10 col-xs-offset-2 col-sm-offset-2">
+                            <input class="btn btn-default pre-btn" value="上一步" type="button">
+                            <input class="btn btn-primary next-btn" value="下一步" type="button">
+                        </div>
+                    </div>
+                </form>
+
+                <form id="form-step-3" class="form form-horizontal form-step" action="#" method="post">
+                    <div class="upload-pic-wrap default-pic-wrap">
+                        <div class="pic-title">
+                            <b>请上传医生资质文件照片以便对医生的资质进行审核</b>
+                        </div>
+
+                        <div class="row cl">
+                            <label class="form-label col-xs-2 col-sm-2">
+                                <span class="red">*</span>医生头像：</label>
+                            <div class="formControls col-xs-10 col-sm-10">
+                                <span class="btn-upload form-group">
+                                    <a href="javascript:void();" class="btn btn-primary" style="color:white;">
+                                        <i class="Hui-iconfont">&#xe642;</i> 上传文件</a>
+                                    <input name="file" id="logo" class="input-file" accept="image/jpg,image/jpeg,image/png" type="file">
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="row cl">
+                            <label class="form-label col-xs-2 col-sm-2">
+                                <span class="red">*</span>医师资格证书首页与详细信息页：</label>
+                            <div class="formControls col-xs-10 col-sm-10">
+                                <span class="btn-upload form-group">
+                                    <a href="javascript:void();" class="btn btn-primary" style="color:white;">
+                                        <i class="Hui-iconfont">&#xe642;</i> 上传文件</a>
+                                    <input name="file" id="zige" class="input-file" accept="image/jpg,image/jpeg,image/png" type="file">
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="row cl">
+                            <label class="form-label col-xs-2 col-sm-2">
+                                <span class="red">*</span>医师执业证书首页与详细信息页：</label>
+                            <div class="formControls col-xs-10 col-sm-10">
+                                <span class="btn-upload form-group">
+                                    <a href="javascript:void();" class="btn btn-primary" style="color:white;">
+                                        <i class="Hui-iconfont">&#xe642;</i> 上传文件</a>
+                                    <input id="congye" name="file" class="input-file" accept="image/jpg,image/jpeg,image/png" type="file">
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="row cl">
+                            <label class="form-label col-xs-2 col-sm-2">
+                                <span class="red">*</span>医疗美容主诊医生资格证书详细信息页：</label>
+                            <div class="formControls col-xs-10 col-sm-10">
+                                <span class="btn-upload form-group">
+                                    <a href="javascript:void();" class="btn btn-primary" style="color:white;">
+                                        <i class="Hui-iconfont">&#xe642;</i> 上传文件</a>
+                                    <input id="zhuzhen" name="file" class="input-file" accept="image/jpg,image/jpeg,image/png" type="file">
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="row cl">
+                            <label class="form-label col-xs-2 col-sm-2">
+                                <span class="red">*</span>医生照片：</label>
+                                <div class="upload-pic-content">
+                                    <div class="pic-wrap">
+                                    </div>
+                                    <div class="loadpic">
+                                        <input name="doctorfile" class="loadpic-input" accept="image/jpg,image/jpeg,image/png" type="file" id="doctorPic1">
+                                        <label class="loadpic-label">
+                                            <i class="Hui-iconfont">&#xe600;</i>
+                                        </label>
+                                    </div>
+                                    <div class="loadpic">
+                                        <input name="doctorfile" class="loadpic-input" accept="image/jpg,image/jpeg,image/png" type="file" id="doctorPic2">
+                                        <label class="loadpic-label">
+                                            <i class="Hui-iconfont">&#xe600;</i>
+                                        </label>
+                                    </div>
+                                    <div class="loadpic">
+                                        <input name="doctorfile" class="loadpic-input" accept="image/jpg,image/jpeg,image/png" type="file" id="doctorPic3">
+                                        <label class="loadpic-label">
+                                            <i class="Hui-iconfont">&#xe600;</i>
+                                        </label>
+                                    </div>
+                                    <div class="loadpic">
+                                        <input name="doctorfile" class="loadpic-input" accept="image/jpg,image/jpeg,image/png" type="file" id="doctorPic4">
+                                        <label class="loadpic-label">
+                                            <i class="Hui-iconfont">&#xe600;</i>
+                                        </label>
+                                    </div>
+                                    <div class="loadpic">
+                                        <input name="doctorfile" class="loadpic-input" accept="image/jpg,image/jpeg,image/png" type="file" id="doctorPic5">
+                                        <label class="loadpic-label">
+                                            <i class="Hui-iconfont">&#xe600;</i>
+                                        </label>
+                                    </div>
+                                    <div class="loadpic">
+                                        <input name="doctorfile" class="loadpic-input" accept="image/jpg,image/jpeg,image/png" type="file" id="doctorPic6">
+                                        <label class="loadpic-label">
+                                            <i class="Hui-iconfont">&#xe600;</i>
+                                        </label>
+                                    </div>
+                            </div>
+                            <div class="spec-items">
+                            </div>
+                            <div class="sku-pic-wrap"></div>
+                        </div>
+
+                        <div class="row cl">
+                            <div class="formControls col-xs-10 col-sm-10 col-xs-offset-2 col-sm-offset-2">
+                                <p>* 请上传扫描件或照片，法人名称、注册资本等敏感信息可打马赛克</p>
+                                <p>* 请至少上传1张医生照片，最多6张</p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row cl">
+                        <div class="col-xs-10 col-sm-10 col-xs-offset-2 col-sm-offset-2">
+                            <input class="btn btn-default pre-btn" value="上一步" type="button">
+                            <input class="btn btn-primary submit-btn" value="提交" type="button">
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </article>
+    </div>
+
+    <!--footer 作为公共模版分离出去-->
+    <script type="text/javascript" src="../../lib/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="../../lib/layer/2.4/layer.js"></script>
+    <script type="text/javascript" src="../../static/h-ui/js/H-ui.min.js"></script>
+    <script type="text/javascript" src="../../static/h-ui.admin/js/H-ui.admin.js"></script>
+    <!--footer 作为公共模版分离出去-->
+
+    <script type="text/javascript" src="../../lib/laypage/1.2/laypage.js"></script>
+    <script type="text/javascript" src="../../js/base/public.js?rev=@@hash"></script>
+    <script type="text/javascript" src="../../js/common/common.js?rev=@@hash"></script>
+    <script type="text/javascript" src="../../js/doctorList.js?rev=@@hash"></script>
+    <script type="text/javascript" src="../../js/page/doctorSpu.js?rev=@@hash"></script>
+    <script type="text/javascript" src="../../lib/My97DatePicker/4.8/WdatePicker.js"></script>
+    <script type="text/javascript" src="../../lib/ueditor/1.4.3/ueditor.config.js"></script>
+    <script type="text/javascript" src="../../lib/ueditor/1.4.3/ueditor.all.min.js"></script>
+    <script type="text/javascript" src="../../lib/lrz.bundle.js"></script>
+    <script type="text/javascript">
+        function initDate(id) {
+            var date = new Date();
+            var year = date.getFullYear(),
+                month = date.getMonth() + 1,
+                myDate = date.getDate();
+            if (month < 10) {
+                month = "0" + month
+            }
+            var startTime = year + "-" + month + "-" + "01";
+            $(id).val(startTime);
+        }
+        initDate('#build_date');
+        // initDate('#business_date');
+        // initDate('#licence_date');
+        // initDate('#examination_date');
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>售后服务详情</title>
+		<link rel="stylesheet" type="text/css" href="../../static/h-ui/css/H-ui.min.css" />
+	    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/H-ui.admin.css" />
+	    <link rel="stylesheet" type="text/css" href="../../lib/Hui-iconfont/1.0.8/iconfont.css" />
+	    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/skin/default/skin.css" id="skin" />
+	    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/style.css" />
+	    <link rel="stylesheet" type="text/css" href="../../lib/laypage/1.2/skin/laypage.css">
+	    <link rel="stylesheet" type="text/css" href="../../css/reset.css?rev=@@hash"/>
+	    <link rel="stylesheet" type="text/css" href="../../css/afterSale.css?rev=@@hash"/>
+	</head>
+	<body>
+		<nav class="breadcrumb">
+	        <i class="Hui-iconfont">&#xe67f;</i> 订单管理 <span class="c-gray en">&gt;</span> 售后管理 <span class="c-gray en">&gt;</span> 售后管理 
+	        <!--<a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a>-->
+		</nav>
+		<div class="panel panel-default">
+			<div class="panel-header">服务单(<span class="detailType"></span>)
+				<a class="statusBtn f-r" href="javascript:;"></a>
+				<a class="cancelBtn f-r mr-20" href="javascript:;"></a>
+			</div>
+			<div class="panel-body">
+				<p><span>服务单号：</span><span id="assId" class="dtWithdrawNo inlineBlock"></span><span>当前状态：</span><span class="currStatus"></span></p>
+				<p><span>申请时间：</span><span class="applyTime inlineBlock"></span><span>结束时间：</span><span class="updataTime"></span></p>
+				<p><span>关闭原因：</span><span class="remark applyTime"></span></p>
+				<div class="infoWrap">
+					<span class="infoTitle">问题描述：</span>
+					<span id="problem" class="infoBox inlineBlock"></span>
+				</div>
+				<div class="imgWrap">
+					<span class="f-l "><span class="imgTitle">附</span><span>件：</span></span>
+					<div class="imgList">
+						<img src="../../images/goods.png"/>
+					</div>
+				</div>
+				
+			</div>
+			
+			<div class="panel-header marginLeft10">相关订单</div>
+			<div class="panel-body marginLeft10">
+				<p><span>订 单 号 ：</span><span class="inlineBlock contractNo"></span></p>
+				<p><span>客户姓名：</span><span id="customName" class="inlineBlock contractStatus"></span><span>联系方式:</span><span id="mobile" class="timePay"></span></p>
+				<div class="infoWrap">
+					<span class="infoTitle">商品信息：</span>
+					<span id="goodsInfo" class="infoBox inlineBlock"></span>
+				</div>
+				<p><span>商品单价：</span><span class="goodsPrice">2222</span><span>商品数量：</span><span class="goodsQty"></span><span>总价:</span><span class="goodsAmount"></span></p>
+				<p><span>订单优惠：</span><span id="orderCoupon" class="inlineBlock contractStatus"></span><span>应付金额:</span><span id="payAmount" class="timePay"></span></p>
+				<p><span>京东运费：</span><span id="platic" class="inlineBlock contractStatus"></span></span></p>
+				<p><span>用户运费：</span><span id="userPlatic" class="inlineBlock contractStatus"></span></span></p>
+			</div>
+			
+			<div class="panel-header marginLeft10">处理结果</div>
+			<div class="panel-body marginLeft10">
+				<p><span>客服姓名：</span><span class="accontName">账号名</span><span>处理结果：</span><span class="dealRes"></span><span>处理时间:</span><span class="dealTime"></span></p>
+				<div class="infoWrap">
+					<span class="infoTitle">答复内容：</span>
+					<span id="resInfo" class="infoBox inlineBlock"></span>
+				</div>
+			</div>
+			
+			<div class="panel-header marginLeft10">售后收货</div>
+			<div class="panel-body marginLeft10">
+				<p><span>是否收货：</span><span id="isGetGoods" class="inlineBlock contractStatus"></span><span>原因:</span><span id="resion" class="timePay"></span></p>
+			</div>
+			
+		</div>
+		
+		<div class="panel-header expressBg mt-20">客户物流信息</div>
+		<div class="panel-body">
+			<p class="custom-hava-info border-b"><span class="customExpressName"></span><span class="customExpressNo"></span></p>
+			<p class="custom-hava-info border-b"><span class="expressTime">时间</span><span class="expressStatus">状态</span></p>
+			<p class="no-express custom-no-info">暂无物流信息，请添加</p>
+			<ul id="customExpress" class="expressList">
+				<!--<li>
+					<p><span class="expressTime">2017-04-22 17:25:30</span><span class="expListStatus">快递小哥送快递掉河里了等一下 就到</span></p>
+				</li>-->
+			</ul>
+		</div>
+		
+		<div class="panel-header expressBg">渠道物流信息</div>
+		<div class="panel-body mb-50">
+			<p class="custom-hava-info border-b"><span class="channelExpressName"></span><span class="channelExpressNo"></span></p>
+			<p class="supply-hava-info border-b"><span class="expressTime">时间</span><span class="expressStatus">状态</span></p>
+			<p class="no-express supply-no-info">暂无物流信息，请添加</p>
+			<ul id="channelExpress" class="expressList">
+				<!--<li>
+					<p><span class="expressTime">2017-04-22 17:25:30</span><span class="expListStatus">快递小哥送快递掉河里了等一下 就到</span></p>
+				</li>-->
+			</ul>
+		</div>
+		
+		<!--弹窗-->
+		<div id="modal-demo" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content radius">
+					<div class="modal-header">
+						<h3 class="modal-title">退/换货</h3>
+						<a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>
+					</div>
+					<div class="modal-body">
+						
+						<!--确定提示弹窗-->
+						<div class="pop-submit-wrap">
+							<p>审核用户退货时，请通知客户该单全部商品数量都退货，目前仅支持整单退货</p>
+						</div>
+						
+						<!--退换货审核弹窗-->
+						<div class="pop-check">
+							<div class="pop-check-tips-wrap ml-50 mb-20">
+								<p class="pop-check-tips">提醒：审核用户退货时，请通知客户该单全部商品数量都退货</p>
+								<p class="pop-check-tips ml-40">目前仅支持整单退货</p>
+							</div>
+
+							<p class="pop_radio_wrap">
+								<input id="pop_apply_agree" name="choose" type="radio" value="1" /><label class="ml-5 mr-50" for="pop_apply_agree">同意</label>
+								<input id="pop_apply_refuse" name="choose" type="radio" value="0" /><label class="ml-5" for="pop_apply_refuse">拒绝</label>
+							</p>
+							<div class="pop_check_refuse_wrap">
+								<div class="pop_info_detail ml-50 mt-20">
+									<label for="info_txt" class="pop_info_title f-l">原因： </label>
+									<textarea class="ml-20" id="pop-reason-info" placeholder="内容会推送给用户，建议输入100字以内" name="" rows="" cols=""></textarea>
+								</div>
+							</div>
+							<p class="back-wrap">退至：<span class="backTo"></span></p>
+						</div>
+						<!--退/换货确认收货弹窗-->
+						<div class="pop-changeGoods">
+							<p class="pop_radio_wrap mb-30">
+								<a class="goods_comfirm_wrap" href="javascript:;"><input id="pop_goods_comfirm" name="choose" type="radio" value="1"/><label class="ml-5 mr-50" for="pop_goods_comfirm">确认收货</label></a>
+								<a class="goods_refuse_wrap" href="javascript:;"><input id="pop_goods_refuse" name="choose" type="radio" value="2" /><label class="ml-5" for="pop_goods_refuse">拒绝收货</label></a>
+							</p>
+							<!--确认收货-->
+							<div class="pop-tips-wrap">
+								<p class="pop_comfirm_tips">已收到商品并确认商品无问题</p>
+								<!--拒绝收货-->
+								<div class="pop_refuse_wrap ml-50">
+									<div class="pop_supply_wrap ml-50">
+										<label for="pop_refuse_select" class="">拒绝原因</label>
+										<select class="ml-15" id="pop_refuse_select" name="supply">
+											<option value="1">无理由退换货，商品被损坏</option>
+											<option value="2">无理由退换货，包装被损坏</option>
+											<option value="3">质量问题退货，经检测无质量问题</option>
+										</select>
+									</div>
+									<div class="pop_info_detail ml-50 mt-20">
+										<label for="pop-refuse-reason" class="pop_info_title f-l">推送内容 </label>
+										<textarea class="ml-20" id="pop-refuse-reason" placeholder="如：您好，您寄回的iphone手机包装已损坏，商城不予受理。" name="" ></textarea>
+										<p class="pop_refuse_tips">内容会推送给用户，建议输入50字以内</p>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!--退/换货确认收货弹窗end-->
+						<!--填写物流-->
+						<div class="pop_express_wrap">
+							<div class="pop_supply_wrap ml-50 mt-30">
+								<label for="pop_express_select" class="">物流公司</label>
+								<select class="ml-20" id="pop_express_select" name="supply">
+									<!--<option value="1" expressCode="11">冠荣</option>
+									<option value="2" expressCode="22">恒耀泰</option>
+									<option value="3" expressCode="33">京东</option>-->
+								</select>
+							</div>
+							<div class="pop_info_detail ml-50 mt-20">
+								<label for="pop_exp_num" class="pop_info_title f-l">物流单号 </label>
+								<input class="ml-20" type="text" id="pop_exp_num" value="" />
+							</div>
+						</div>
+						<!--填写物流end-->
+						<!--退款审核弹窗-->
+						<div class="pop-refund-wrap">
+							<div class="pop-check-tips-wrap ml-50 mb-20">
+								<p class="pop-check-tips">提醒：审核退款时，请先线下确认客户该单全部商品数量已退货至商家</p>
+							</div>
+							
+							<p class="pop-orderNo-wrap">买买提订单号：<span class="pop-orderNo">2313123123213</span></p>
+							<p class="pop-assServiceId-wrap">服务单号：<span class="pop-assServiceId">231323123</span></p>
+							<p class="pop-amount-wrap">订单总金额：<span class="pop-amount">4418.00</span>(现金已支付：<span class="pop-cash">180.00</span>，额度已支：<span class="pop-loan">4000.00</span>)</p>
+							<p class="pop-cash-wrap"><span style="color: red;">*</span>实际退还现金：<input class="pop-most-inp" type="text" /><span class="pop-most-tips">(最多可退<span class="pop-most">180.00</span>)</span></p>
+							<p><span style="color: red;">*</span>原因/差额备注：</p>
+							<div class="pop-reason-wrap">
+								<p><input type="radio" name="reason" id="normalRefund" class="noOthers" value="正常退款，无差额" /><label for="normalRefund">正常退款，无差额</label></p>
+								<p><input type="radio" name="reason" id="goodsBad" class="noOthers" value="商品配件损坏/缺失" /><label for="goodsBad">商品配件损坏/缺失</label></p>
+								<p><input type="radio" name="reason" id="notWant" class="noOthers" value="非质量退货，扣除物流费用" /><label for="notWant">非质量退货，扣除物流费用</label></p>
+								<p><input type="radio" name="reason" id="others" value="" /><label for="others">其他</label><input type="text" id="otherReason" value="" placeholder="不超过100字" disabled="disabled"/></p>
+							</div>
+						</div>
+						
+						<!--取消订单-->
+						<div class="cancel">
+							<div class="pop-left">
+								<span style="color: red;">*</span><span>备注</span>
+							</div>
+							<textarea class="cancelRemark" name="" rows="" cols=""></textarea>
+						</div>
+						
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-primary pop_sure">确定</button>
+						<button class="btn add_link_btn pop_close" data-dismiss="modal" aria-hidden="true">关闭</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<script type="text/javascript" src="../../lib/jquery/1.9.1/jquery.min.js"></script>
+	    <script type="text/javascript" src="../../lib/layer/2.4/layer.js"></script>
+	    <script type="text/javascript" src="../../static/h-ui/js/H-ui.min.js"></script>
+	    <script type="text/javascript" src="../../static/h-ui.admin/js/H-ui.admin.js"></script>
+	    <script type="text/javascript" src="../../js/base/public.js?rev=@@hash"></script>
+	    <script type="text/javascript" src="../../js/page/afterSaleDetail.js?rev=@@hash"></script>
+	</body>
+</html>

@@ -1,0 +1,376 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <title>关键词科普资料</title>
+
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui/css/H-ui.min.css?rev=@@hash"/>
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/H-ui.admin.css?rev=@@hash"/>
+    <link rel="stylesheet" type="text/css" href="../../lib/Hui-iconfont/1.0.8/iconfont.css?rev=@@hash"/>
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/skin/default/skin.css?rev=@@hash" id="skin"/>
+    <link rel="stylesheet" type="text/css" href="../../lib/laypage/1.2/skin/laypage.css?rev=@@hash">
+    <link rel="stylesheet" type="text/css" href="../../lib/laypage/1.2/skin/laypage.css?rev=@@hash">
+    <link rel="stylesheet" type="text/css" href="../../css/reset.css?rev=@@hash"/>
+    <link rel="stylesheet" type="text/css" href="../../css/categorySpu.css?rev=@@hash">
+</head>
+
+<body>
+	<div class="Hui-article">
+        <article class="cl pd-20">
+            <div class="spu-nav">
+                <ul>
+                    <li class="goods-step active">项目概览</li>
+                    <li class="goods-step">项目档案</li>
+                    <li class="goods-step">操作档案</li>
+                    <!--<li class="goods-step">相关药品</li>-->
+                    <li class="goods-step">常见问题</li>
+                    <li class="goods-step">术前必读</li>
+                    <li class="goods-step">术后护理</li>
+                </ul>
+                <div class="hr-gray"></div>
+            </div>
+            
+            <div class="spu-cont" id="spu-cont">
+                
+                
+            </div>
+        </article>
+    </div>
+
+
+<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="../../lib/jquery/1.9.1/jquery.min.js?rev=@@hash"></script>
+<script type="text/javascript" src="../../lib/layer/2.4/layer.js?rev=@@hash"></script>
+<script type="text/javascript" src="../../static/h-ui/js/H-ui.min.js?rev=@@hash"></script>
+<script type="text/javascript" src="../../static/h-ui.admin/js/H-ui.admin.js?rev=@@hash"></script>
+<script type="text/javascript" src="../../js/base/public.js?rev=@@hash"></script>
+<script type="text/javascript" src="../../js/common/common.js?rev=@@hash"></script>
+<!--/_footer 作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="../../lib/My97DatePicker/4.8/WdatePicker.js?rev=@@hash"></script>
+<script type="text/javascript" src="../../lib/laypage/1.2/laypage.js?rev=@@hash"></script>
+<script type="text/javascript" src="../../js/common/jquery.tmpl.min.js?rev=@@hash"></script>
+<script type="text/javascript" src="../../lib/arttemplate/template-web.js"></script>
+<script type="text/javascript" src="../../js/page/categorySpu.js?rev=@@hash"></script>
+<script type="text/javascript" src="../../lib/lrz.bundle.js"></script>
+</body>
+
+<!--模板-->
+<script id="contacts" type="text/html">
+    <div class="contactsAll">
+    	<input type="hidden" id="commodityId" value="{{id}}" />
+        <div id="form-step-1" class="form form-horizontal form-step active" >
+            <div class=" cl role-row active content-all">
+            	<div class="row cl">
+                    <label class="form-label col-xs-2 col-sm-2">
+                        <span class="red">*</span>项目名称：</label>
+                    <div class="formControls col-xs-10 col-sm-10">
+                        <input id="name" name="name" class="input-text" placeholder="请输入项目名称 " type="text" maxlength="100" value="{{name || ''}}">
+                    </div>
+                </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-2 col-sm-2">
+                        <span class="red">*</span>项目简介：</label>
+                    <div class="formControls col-xs-10 col-sm-10">
+                        <textarea id="introduction"  class="textarea" type="text" name="introduction" placeholder="请输入项目简介 " maxlength="120" >{{introduction || ''}}</textarea>
+                    </div>
+                </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-2 col-sm-2">
+                        <span class="red">*</span>项目特色：</label>
+                    <div class="formControls col-xs-10 col-sm-10">
+                        <input id="feature" name="feature" class="input-text" placeholder="请输入项目特色 " type="text" maxlength="100" value="{{feature || ''}}">
+                    </div>
+                </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-2 col-sm-2">
+                        <span class="red">*</span>项目别名：</label>
+                    <div class="formControls col-xs-10 col-sm-10">
+                        <input id="alias" class="input-text" placeholder="请输入项目别名 " type="text" maxlength="100" value="{{alias || ''}}">
+                    </div>
+                </div>
+                <!--<div class="row cl">
+                    <label class="form-label col-xs-2 col-sm-2">
+                        <span class="red">*</span>相似项目：</label>
+                    <div class="formControls col-xs-10 col-sm-10">
+                        <div class="check-box">
+                            <input type="checkbox" id="zizhi-1" name="zizhi" value="3,整形外科专家">
+                            <label for="zizhi-1">整形外科专家</label>
+                        </div>
+                        <div class="check-box">
+                            <input type="checkbox" id="zizhi-2" name="zizhi" value="4,整形外科医生">
+                            <label for="zizhi-2">整形外科医生</label>
+                        </div>
+                        <div class="check-box">
+                            <input type="checkbox" id="zizhi-3" name="zizhi" value="6,齿科专家">
+                            <label for="zizhi-3">齿科专家</label>
+                        </div>
+                        <div class="check-box">
+                            <input type="checkbox" id="zizhi-4" name="zizhi" value="8,齿科医生">
+                            <label for="zizhi-4">齿科医生</label>
+                        </div>
+                    </div>
+                </div>-->
+                <div class="row cl">
+                    <label class="form-label col-xs-2 col-sm-2">
+                        <span class="red">*</span>参考价格：</label>
+                    <div class="formControls col-xs-10 col-sm-10">
+                        <input id="reference_price" name="reference_price" class="input-text" placeholder="请输入参考价格 " type="text" maxlength="100" value="{{reference_price || ''}}">
+                    </div>
+                </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-2 col-sm-2">
+                        <span class="red">*</span>项目介绍图片：</label>
+                    <div class="formControls col-xs-10 col-sm-10">
+                        <div class="row cl">
+		                    <div class="upload-pic-wrap default-pic-wrap">
+		                        <div class="upload-pic-content">
+		                            <div class="pic-wrap"></div>
+		                            <div class="loadpic">
+		                                <input name="file" class="loadpic-input" id="before_logo" data-src="{{logo}}" accept="image/jpg,image/jpeg,image/png" type="file" onchange="category.getImgEvent($(this))">
+		                                <label class="loadpic-label">
+		                                	{{if logo}}
+		                                	<img style="display: inline-block;width: 100px;height: 100px;" src="{{imgPath+logo}}">
+		                                    {{/if}}
+		                                    <i class="Hui-iconfont">&#xe600;</i>
+		                                </label>
+		                            </div>
+		                        </div>
+		                    </div>
+		                    <div class="spec-items"></div>
+		                </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row cl">
+                <div class="col-xs-10 col-sm-10 col-xs-offset-2 col-sm-offset-2" onclick="category.submitBtn1(1)">
+                    <input class="btn btn-primary submitBtn1" value="提交" type="button">
+                </div>
+            </div>
+        </div>
+        
+        <div id="form-step-2" class="form form-horizontal form-step" >
+            <div class=" cl role-row active">
+                <div class="row cl">
+                    <label class="form-label col-xs-2 col-sm-2">
+                    	<span class="red">*</span>适合人群：
+                    </label>
+                    <div class="formControls col-xs-10 col-sm-10">
+                        <textarea id="suit_crowds" name="suit_crowds" class="textarea" type="text" placeholder="适合人群描述 " >{{suit_crowds || ''}}</textarea>
+                    </div>
+                </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-2 col-sm-2">
+                    	<span class="red">*</span>禁忌人群：
+                    </label>
+                    <div class="formControls col-xs-10 col-sm-10">
+                        <textarea id="aboo_crowd" name="aboo_crowd" class="textarea" type="text" placeholder="禁忌人群描述 ">{{aboo_crowd || ''}}</textarea>
+                    </div>
+                </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-2 col-sm-2">
+                    	<span class="red">*</span>优点：
+                    </label>
+                    <div class="formControls col-xs-10 col-sm-10">
+                        <textarea id="merits" name="merits" class="textarea" type="text" placeholder="优点描述 ">{{merits || ''}}</textarea>
+                    </div>
+                </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-2 col-sm-2">
+                    	<span class="red">*</span>缺点：
+                    </label>
+                    <div class="formControls col-xs-10 col-sm-10">
+                        <textarea id="demerits" name="demerits" class="textarea" type="text"  placeholder="缺点描述 ">{{demerits || ''}}</textarea>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row cl">
+                <div class="col-xs-10 col-sm-10 col-xs-offset-2 col-sm-offset-2" onclick="category.submitBtn1(2)">
+                    <input class="btn btn-primary submitBtn2" value="提交" type="button">
+                </div>
+            </div>
+        </div>
+        
+        <div id="form-step-3" class="form form-horizontal form-step" >
+            <div class=" cl role-row active">
+                <div class="row cl">
+                    <label class="form-label col-xs-2 col-sm-2">
+                    	<span class="red">*</span>治疗时长：
+                    </label>
+                    <div class="formControls col-xs-10 col-sm-10">
+                        <input id="treatment_day" name="treatment_day" class="input-text" placeholder="请输入治疗时长" type="text" value="{{treatment_day || ''}}">
+                        <span class="s-mark"></span>
+                    </div>
+                </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-2 col-sm-2">
+                    	<span class="red">*</span>效果持续：
+                    </label>
+                    <div class="formControls col-xs-10 col-sm-10">
+                        <input id="duration_day" name="duration_day" class="input-text" placeholder="请输入效果持续" type="text" value="{{duration_day || ''}}">
+                        <span class="s-mark"></span>
+                    </div>
+                </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-2 col-sm-2">
+                    	<span class="red">*</span>麻醉方式：
+                    </label>
+                    <div class="formControls col-xs-10 col-sm-10">
+                        <input id="anaesthesia_type" name="anaesthesia_type" class="input-text" placeholder="请输入麻醉方式" type="text" value="{{anaesthesia_type || ''}}">
+                        <span class="s-mark"></span>
+                    </div>
+                </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-2 col-sm-2">
+                    	<span class="red">*</span>恢复时间：
+                    </label>
+                    <div class="formControls col-xs-10 col-sm-10">
+                        <input id="recovery_day" name="recovery_day" class="input-text" placeholder="请输入恢复时间" type="text" value="{{recovery_day || ''}}">
+                        <span class="s-mark"></span>
+                    </div>
+                </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-2 col-sm-2">
+                    	<span class="red">*</span>治疗周期：
+                    </label>
+                    <div class="formControls col-xs-10 col-sm-10">
+                        <input id="treatment_cycle" name="treatment_cycle" class="input-text" placeholder="请输入治疗周期" type="text" value="{{treatment_cycle || ''}}">
+                        <span class="s-mark"></span>
+                    </div>
+                </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-2 col-sm-2">
+                    	<span class="red">*</span>操作人员资质：
+                    </label>
+                    <div class="formControls col-xs-10 col-sm-10">
+                        <input id="operator_qualification" name="operator_qualification" class="input-text" placeholder="请输入操作人员资质" type="text" value="{{operator_qualification || ''}}">
+                        <span class="s-mark"></span>
+                    </div>
+                </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-2 col-sm-2">
+                    	<span class="red">*</span>操作方式：
+                    </label>
+                    <div class="formControls col-xs-10 col-sm-10">
+                        <input id="operation_mode" name="operation_mode" class="input-text" placeholder="请输入操作方式" type="text" value="{{operation_mode || ''}}">
+                        <span class="s-mark"></span>
+                    </div>
+                </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-2 col-sm-2">
+                    	<span class="red">*</span>疼痛感：
+                    </label>
+                    <div class="formControls col-xs-10 col-sm-10">
+                        <input id="pain_perception" name="pain_perception" class="input-text" placeholder="请输入疼痛感" type="text" value="{{pain_perception || ''}}">
+                        <span class="s-mark"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row cl">
+                <div class="col-xs-10 col-sm-10 col-xs-offset-2 col-sm-offset-2" onclick="category.submitBtn1(3)">
+                    <input class="btn btn-primary submitBtn3" value="提交" type="button">
+                </div>
+            </div>
+        </div>
+        
+        <div id="form-step-4" class="form form-horizontal form-step">
+        	<div class=" cl newStle">
+                <input class="btn btn-primary newsBtu1" value="新增问题" type="button" onclick="category.addIssue()">
+            </div>
+            <div class="cl" id="issueListAll">
+            	{{if problems}}
+            		{{each problems item i}}
+		            	<div class="issueList" data-id="{{item.id}}">
+			                <div class="issueTxt">
+			                	<div class="issueTile">
+			                		<input id="appo_price" class="input-text appo_price" placeholder="请输入问题" type="text" maxlength="60" disabled="disabled" value="{{item.question}}">
+			                	</div>
+			                    <textarea id="introduce" class="textarea introduce" type="text" name="introduce" placeholder="请输入答案" disabled="disabled" maxlength="300">{{item.answer}}</textarea>
+			                </div>
+			                <div class="issueEvent">
+			                	<span class="compileSpan">
+			                		<input class="btn btn-primary compile" value="编辑" type="button" onclick="category.issueSave(this)">
+			                	</span>
+			                	<span class="deletesSpan">
+			                		<input class="btn  deletes" value="删除" type="button" onclick="category.issueDele(this)">
+			                	</span>
+			                </div>
+		                </div>
+	                {{/each}}
+	            {{/if}}    
+            </div>
+
+        </div>
+        
+        <div id="form-step-5" class="form form-horizontal form-step">
+            <div class="formControls">
+                <textarea id="pre_reade" class="textarea" type="text" placeholder="术前必读" name="pre_reade">{{pre_reade || ''}}</textarea>
+            </div>
+            
+            <div class="row cl">
+                <div class="col-xs-10 col-sm-10 col-xs-offset-2 col-sm-offset-2" onclick="category.submitBtn1(5)">
+                    <input class="btn btn-primary submitBtn5" value="提交" type="button">
+                </div>
+            </div>
+        </div>
+        
+        <div id="form-step-6" class="form form-horizontal form-step">
+        	<div class="cl newStle">
+                <input class="btn btn-primary newsBtu2" value="新增" type="button" onclick="category.addNurse()">
+            </div>
+            <div class="cl " id="nurseAll">
+            	{{if cases}}
+            		{{each cases item i}}
+		            	<div class="nurseList" data-id="{{item.id}}">
+		            		<div class=" cl nurseTxt">
+			                    <label class="form-label col-xs-2 col-sm-2">
+			                        <span class="red">*</span>时间段/标题：
+			                    </label>
+		                        <div class="nurseTile formControls col-xs-10 col-sm-10">
+		                			<input  class="inputNumber start_day readonly"  type="number" min="0" value="{{item.start_day}}" readonly>天~
+				            		<input  class="inputNumber end_day readonly"  type="number" min="0" value="{{item.end_day}}" readonly>天
+				            		<input  class="input-text remark readonly" placeholder=" " type="text" maxlength="100" value="{{item.remark}}" readonly>
+		                		</div>
+			                </div>
+			                <div class="cl nurseTxt">
+			                	<label class="form-label col-xs-2 col-sm-2">
+			                        <span class="red">*</span>恢复提示：
+			                    </label>
+			                    <div class="nurseArea formControls col-xs-10 col-sm-10">
+			                    	<textarea class="textarea recovery_tips readonly" type="text" placeholder="恢复提示描述" readonly>{{item.recovery_tips}}</textarea>
+			                    </div>	
+			                </div>
+			                <div class="cl nurseTxt">
+			                	<label class="form-label col-xs-2 col-sm-2">
+			                        <span class="red">*</span>护理方法：
+			                    </label>
+			                    <div class="nurseArea formControls col-xs-10 col-sm-10">
+			                    	<textarea class="textarea case_method readonly" type="text" placeholder="护理方法描述" readonly>{{item.case_method}}</textarea>
+			                    </div>
+			                </div>    
+			                <div class="nurseEvent">
+			                	<span class="compileSpan">
+			                		<input class="btn btn-primary compile" value="编辑" type="button" onclick="category.nurseSave(this)">
+			                	</span>
+			                	<span class="deletesSpan">
+			                		<input class="btn  deletes" value="删除" type="button" onclick="category.nurseDele(this)">
+			                	</span>
+			                </div>
+		                </div>
+            		{{/each}}
+            	{{/if}}
+            </div>
+            
+        </div>
+    </div>
+</script>
+</html>

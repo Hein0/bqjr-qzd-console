@@ -1,0 +1,33 @@
+<!-- 会话列表每一个会话
+class="rong-conversation"会话列表中的每一个会话
+此类名不能被修改
+-->
+{%for(var index in this.list){%}
+<div class="rong-conversation" _name="{%this.list[index].userName%}" _logo="{%this.list[index].userLogo%}" _cid="{%this.list[index].imUserId%}" _mcount="{%this.list[index].msgCount%}" onclick="RCS.startConversation(event)">
+	<div class="rongcloud-ext">
+		<!--<p class="rongcloud-attr">
+			{%if(this.list[index].msgCount){%}<span class="rongcloud-badge">{%this.list[index].msgCount%}</span>{%}%}
+			<i class="rongcloud-sprite rongcloud-no-remind"></i>
+		</p>-->
+		<p class="LastTiem">{%this.list[index].lastMsg.sentTime && this.list[index].lastMsg.sentTime.length>10 ? this.list[index].lastMsg.sentTime.substring(0,10): this.list[index].lastMsg.sentTime%}</p>
+	</div>
+	<div class="rongcloud-photo">
+		<img class="rongcloud-img" src="{%this.list[index].userLogo%}" alt="">
+		{%if(this.list[index].msgCount){%}<span class="rongcloud-badgeNub">{%this.list[index].msgCount%}</span>{%}%}
+	</div>
+    <div class="rongcloud-info">
+    	<h3 class="rongcloud-nickname">
+    		<span class="rongcloud-nickname_text">{%this.list[index].userName%}</span>
+    	</h3>
+    	<p class="infoText">{%this.list[index].lastMsg.sentTime && this.list[index].lastMsg.content.content ? this.list[index].lastMsg.content.content: this.list[index].lastMsg.messageType=="ImageMessage" ? "[图片]" : ""%}</p>
+    </div>
+</div>{%}%}
+{%if(this.list.length>0){%}
+<div class="upMore">
+	{%if(this.isMore){%}
+		<div class="upMoreBut" onclick="RCS.moreDataList(event)">点击查看更多</div>
+	{%}else{%}
+		<div class="noMore" >没有更多数据啦。。</div>
+	{%}%}
+</div>
+{%}%}

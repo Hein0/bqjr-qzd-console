@@ -1,0 +1,707 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <title>发货</title>
+
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="../../lib/Hui-iconfont/1.0.8/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/skin/default/skin.css" id="skin" />
+    <link rel="stylesheet" type="text/css" href="../../lib/laypage/1.2/skin/laypage.css">
+    <link rel="stylesheet" type="text/css" href="../../lib/laypage/1.2/skin/laypage.css">
+    <link rel="stylesheet" type="text/css" href="../../css/reset.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/goods.css" />
+    <style type="text/css">
+        .se_style {
+            content: '';
+            overflow: hidden;
+            display: block;
+            clear: both;
+        }
+
+        .table th,
+        .table td {
+            border: 1px solid #DEDEDE;
+        }
+
+        .shadebox {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            top: 0;
+            display: none;
+            z-index: 200;
+        }
+
+        .shadeboxcon1,
+        .shadeboxcon {
+            position: fixed;
+            width: 40%;
+            min-height: 300px;
+            background: white;
+            z-index: 100;
+            left: 30%;
+            top: 100px;
+            border: 1px solid #DEDEDE;
+            box-shadow: 0 0 4px #000000;
+            padding-bottom: 50px;
+            display: none;
+            z-index: 900;
+        }
+
+        .title {
+            height: 60px;
+            border-bottom: 1px solid #DEDEDE;
+        }
+
+        .title span:nth-child(1) {
+            line-height: 50px;
+            margin-left: 20px;
+            font-size: 18px;
+        }
+
+        .title img {
+            float: right;
+            margin: 10px 20px 0 0;
+        }
+
+        .conlist {
+            max-height: 350px;
+            overflow: auto;
+        }
+
+        .conlisttab {
+            width: 90%;
+            margin: 0 auto;
+            margin-top: 20px;
+        }
+
+        .conlisttab th,
+        .conlisttab td {
+            border: 1px solid #DEDEDE;
+            text-align: center;
+            line-height: 30px;
+        }
+
+        .statusbar {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .statusbar button {
+            width: 80px;
+            height: 30px;
+            margin: 0 20px;
+        }
+
+        .Logistics {
+            line-height: 50px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .Logistics span {
+            display: inline-block;
+            width: 90px;
+            margin-right: 30px;
+            text-align: right;
+        }
+
+        .Logistics select {
+            width: 200px;
+            height: 30px;
+        }
+
+        .Logistics input {
+            border: 1px solid #DEDEDE;
+            width: 200px;
+            line-height: 30px;
+        }
+
+        .tradeId:hover {
+            text-decoration: underline;
+            color: skyblue;
+        }
+
+        #oldPrice {
+            display: inline-block;
+            width: 200px;
+            text-align: left;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="breadcrumb">
+        <i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 商品管理 <span class="c-gray en">&gt;</span> 单个采购
+        <a class="btn btn-success r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a>
+        <button type="button" class="btn btn-primary r" style="line-height:1.6em;margin-top:3px;margin-right: 20px;" id="increateExcel"><i class="Hui-iconfont"></i> 导入发货信息</button>
+        <button type="button" class="btn btn-primary r" style="line-height:1.6em;margin-top:3px;margin-right: 20px;" id="outcreateExcel"><i class="Hui-iconfont"></i> 导出采购单</button>
+    </nav>
+
+    <div class="Hui-article">
+        <article class="cl pd-20">
+            <div class="btn-group mb-20">
+                <a href="procurement.html"><span val="0" class="btn btn-default">待采购（批量采购）</span></a>
+                <a href="procurementSingle.html"><span val="10" class="btn btn-default">待采购（单个采购）</span></a>
+                <span val="20" class="btn btn-primary">待发货</span>
+            </div>
+
+            <div class="panel panel-default">
+                <form class="search-form">
+                    <div class="panel-body pb-0 cl search">
+                        <div class="se_style">
+                            <div class="f-l mr-15 mb-15">
+                                <span class="text-c f-l">订单号</span>
+                                <input type="text" placeholder="订单号" style="width: 180px;" class="input-text" name="ordernum" />
+                            </div>
+                            <div class="f-l mr-15 mb-15">
+                                <span class="text-c f-l">下单姓名</span>
+                                <input type="text" placeholder="输入下单姓名" style="width: 180px;" class="input-text" name="ordername" />
+                            </div>
+                            <div class="f-l mr-15 mb-15">
+                                <span class="text-c f-l">下单手机</span>
+                                <input type="text" placeholder="输入下单手机" style="width: 180px;" class="input-text" name="orderphone" />
+                            </div>
+                            <div class="f-l mr-15 mb-15">
+                                <span class="text-c f-l">采购渠道</span>
+                                <select class="select user-status" id="purchasing" name="">
+			                <option value="">全部</option>
+			            </select>
+                            </div>
+                            <div class="f-l mr-15 mb-15">
+                                <span class="text-c f-l">用户下单时间</span>
+                                <input id="passOneTime" onfocus="WdatePicker({ maxDate: '#F{$dp.$D(\'passTwoTime\')||\'%y-%M-%d\'}' })" class="input-text Wdate" name="passOneTime" type="text"> 至
+                                <input id="passTwoTime" onfocus="WdatePicker({ minDate: '#F{$dp.$D(\'passOneTime\')}', maxDate: '%y-%M-%d' })" class="input-text Wdate" name="passTwoTime" type="text">
+                            </div>
+                        </div>
+                        <div class="se_style" style="margin-top: 20px;">
+                            <div class="f-l mr-15 mb-15">
+                                <span class="text-c f-l">搜索</span>
+                                <input type="text" placeholder="输入商品名称/货号" style="width: 180px;" class="input-text" name="searchname" />
+                            </div>
+                            <div class="f-l mr-15 mb-15">
+                                <span class="text-c f-l">收货人省份</span>
+                                <select class="select user-status" id="province" name="">
+			               <option value="">全部</option>
+			            </select>
+                                <select class="select user-status" id="city" name="status">
+			                <option value="">全部</option>
+			            </select>
+                                <select class="select user-status" id="street" name="status">
+			               <option value="">全部</option>
+			            </select>
+                            </div>
+                            <div class="text-l m-t10 f-r">
+                                <button type="button" class="btn btn-primary mr-10 mb-15" id="screeBtn" onclick="Queryorder()"><i class="Hui-iconfont">&#xe665;</i> 筛选</button>
+                                <button type="button" class="btn btn-primary mb-15" id="resetBtn" onclick="util.reset()"><i class="Hui-iconfont">&#xe66b;</i> 重置</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="mt-20 table-con" id="content">
+                <table class="table table-border table-hover table-bg table-sort">
+                    <thead>
+                        <tr class="text-c">
+                            <th>订单号</th>
+                            <th>商品信息</th>
+                            <th>商品货号</th>
+                            <th>商品单价</th>
+                            <th>商品数量</th>
+                            <th>订单金额</th>
+                            <th>订单优惠</th>
+                            <th>应付金额</th>
+                            <th>采购渠道</th>
+                            <th>用户下单时间</th>
+                            <th>下单姓名</th>
+                            <th>下单手机</th>
+                            <th>收货姓名</th>
+                            <th>收货手机</th>
+                            <th>收货人省市区</th>
+                            <th>收货详细地址</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id="list"></tbody>
+                </table>
+            </div>
+
+            <!--分页-->
+            <div class="pagination mt-20" id="pagination"></div>
+        </article>
+    </div>
+    <div class="shadebox"></div>
+    <div class="shadeboxcon">
+        <div class="title">
+            <span>发货</span>
+            <span><img src='../../images/guanbi.png'/></span>
+        </div>
+        <div class="Logistics">
+            <span>物流公司：</span>
+            <select name="" id="Logistics">
+			<!--<option value="">京东物流</option>-->
+		</select>
+        </div>
+        <div class="Logistics">
+            <span>其他物流：</span>
+            <input type="text" name="otherExpress" id="otherExpress" value="" disabled="disabled"/>
+        </div>
+        <div class="Logistics">
+            <span>物流单号：</span>
+            <input type="text" name="trackingnumber" id="" value="" />
+        </div>
+        <div class="Logistics">
+            <span>渠道价格：</span>
+            <em id="oldPrice"></em>
+        </div>
+        <div class="Logistics">
+            <span>渠道价格(新)</span>
+            <input type="text" id="purchaseAmount" value="" />
+        </div>
+        <div class="statusbar">
+
+            <button class="submit-btn1">确认</button>
+            <button class="submit-btn3">取消</button>
+        </div>
+    </div>
+    <div class="shadeboxcon1" style="border-radius: 10px;">
+        <div class="title">
+            <span>导入发货信息</span>
+            <span><img src='../../images/guanbi.png'/></span>
+        </div>
+        <div class="Logistics" style="width: 80%;margin-top: 30px;">
+            <span style="margin-right: 0;">引入文件：</span>
+            <input type="file" name="trackingnumber" id="fileElem" value="上传" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" style="border: none;" />
+        </div>
+        <div class="statusbar">
+            <button class="submit-btn2">确认</button>
+            <button class="submit-btn3">取消</button>
+        </div>
+    </div>
+    <!--_footer 作为公共模版分离出去-->
+    <script type="text/javascript" src="../../lib/jquery/1.9.1/jquery.min.js?rev=@@hash"></script>
+    <script type="text/javascript" src="../../lib/layer/2.4/layer.js?rev=@@hash"></script>
+    <script type="text/javascript" src="../../static/h-ui/js/H-ui.min.js?rev=@@hash"></script>
+    <script type="text/javascript" src="../../static/h-ui.admin/js/H-ui.admin.js?rev=@@hash"></script>
+    <script type="text/javascript" src="../../js/base/public.js?rev=@@hash"></script>
+    <!--/_footer 作为公共模版分离出去-->
+
+    <!--请在下方写此页面业务相关的脚本-->
+    <script type="text/javascript" src="../../lib/My97DatePicker/4.8/WdatePicker.js?rev=@@hash"></script>
+    <script type="text/javascript" src="../../lib/laypage/1.2/laypage.js?rev=@@hash"></script>
+    <script src="../../js/common/jquery.tmpl.min.js?rev=@@hash"></script>
+    <script type="text/javascript" src="../../js/common/imgPlugin.js?rev=@@hash"></script>
+
+    <script type="text/javascript">
+        //采购渠道
+        $('#content').scrollTop($('#content')[0].scrollHeight);
+        $.post(base + 'company/common', {
+            type: 2
+        }, function(res) {
+            if (res.status == '0' && res.data) {
+                for (var i = 0; i < res.data.length; i++) {
+                    var Option = $("<option value=" + res.data[i].id + ">" + res.data[i].companyName + "</option>")
+                    $('#purchasing').append(Option)
+                }
+            } else if (res.status == '9999') {
+                // 未登录
+                window.top.location.href = '../../login.html';
+            } else {
+                console.log(789)
+            }
+        })
+
+        function selectAll() {
+            var checklist = document.getElementsByName("selected");
+            if (document.getElementById("controlAll").checked) {
+                for (var i = 0; i < checklist.length; i++) {
+                    checklist[i].checked = 1;
+                }
+            } else {
+                for (var j = 0; j < checklist.length; j++) {
+                    checklist[j].checked = 0;
+                }
+            }
+        }
+
+        //发货
+        function distribution(self) {
+            var $self = $(self);
+            $('.submit-btn1').attr('data-id', $('.tradeId').eq(+$self.attr('data-index')).text());
+            $('.submit-btn1').attr('data-purId', $self.attr('data-id'));
+            $('#oldPrice').text($self.attr('data-price') || '');
+            $('#purchaseAmount').val($self.attr('data-price') || '');
+            $('.shadeboxcon').show();
+            $('.shadebox').show();
+            //获取物流列表
+            $.post(base + 'trade/getCreditExpressInfoList.do', function(res) {
+                //console.log(res.data)
+                if (res.status == '0' && res.data) {
+					var Option = ''
+					Option += '<option>请选择物流公司</option>';
+                    for (var i = 0; i < res.data.length; i++) {
+                        Option += '<option expressId=' + res.data[i].expressId + ' value=" '+ res.data[i].expressCode +' ">' + res.data[i].expressName + '</option>'
+                        
+                    }
+                    Option += '<option value="">其他</option>'
+                    $('#Logistics').empty().append($(Option))
+                } else if (res.status == '9999') {
+                    // 未登录
+                    window.top.location.href = '../../login.html';
+                } else {
+                    console.log(789)
+                }
+            })
+        }
+
+        //关闭
+        $('.title').find('img').on("click", function() {
+            $('.shadeboxcon').hide();
+            $('.shadebox').hide();
+            $('.shadeboxcon1').hide();
+            $('.shadebox').hide();
+        })
+
+        //取消
+        $('.submit-btn3').on("click", function() {
+            $('.shadeboxcon').hide();
+            $('.shadebox').hide();
+            $('.shadeboxcon1').hide();
+            $('.shadebox').hide();
+        })
+		
+		$("#Logistics").on('change',function () {
+			var expressName = $("#Logistics").find('option:checked').text()
+			if (expressName == '其他') {
+				$('#otherExpress').attr('disabled',false)
+			} else {
+				$('#otherExpress').attr('disabled',true)
+				$('#otherExpress').val('')
+			}
+		})
+		
+        //物流确定
+        $('.submit-btn1').on("click", function() {
+            var purchaseId = $(this).attr('data-purId');
+            var tradeId = $(this).attr('data-id');
+            var expressCode = $("#Logistics").find("option:checked").attr("value");
+            var expressId = $("#Logistics").find("option:checked").attr("expressId");
+            var expressName = $("#Logistics").find("option:checked").text();
+            var logisticsNo = $("input[name=trackingnumber]").val();
+            var purchaseAmount = $('#purchaseAmount').val();
+            var otherExpress = $('#otherExpress').val();
+			
+			//选择其他，另取物流公司
+			if (expressName == '请选择物流公司') {
+				$.Huimodalalert('请选择物流公司', 2000);
+                return false;
+			} else if (expressName == '其他') {
+				if (!otherExpress) {
+					$.Huimodalalert('请填写物流公司', 2000);
+                	return false;
+				} else{
+					expressName = otherExpress
+				}
+			}
+			
+            if (!logisticsNo) {
+                $.Huimodalalert('请填写物流单号', 2000);
+                return false;
+            }
+
+            if (!purchaseAmount) {
+                $.Huimodalalert('请填写渠道价格', 2000);
+                return false;
+            }
+            $.post(base + 'purchase/send.do', {
+                purchaseId: purchaseId,
+                tradeId: tradeId,
+                expressCode: expressCode,
+                expressId: expressId,
+                expressName: expressName,
+                logisticsNo: logisticsNo,
+                purchaseAmount: purchaseAmount
+            }, function(res) {
+                if (res.status == '0') {
+                    $.Huimodalalert(res.message, 1000);
+                    setTimeout(function() {
+                        location.reload();
+                    }, 1000)
+                    $('.shadeboxcon').hide();
+                    $('.shadebox').hide();
+                } else if (res.status == '9999') {
+                    // 未登录
+                    window.top.location.href = '../../login.html';
+                } else {
+                    $.Huimodalalert(res.message, 2000);
+                }
+            })
+
+        })
+
+        //导入确定
+        $('.submit-btn2').on("click", function() {
+            // 判断文件类型
+            var uploadFile = document.getElementById('fileElem').files[0],
+                formDa = new FormData();
+            formDa.append("fileElem", uploadFile);
+            if ($('input[type=file]').val()) {
+                $.ajax({
+                    url: base + "purchase/importSend.do",
+                    type: "POST",
+                    processData: false,
+                    contentType: false,
+                    data: formDa,
+                    dataType: "JSON",
+                    success: function(res) {
+                        $.Huimodalalert(res.message, 1000);
+                        setTimeout(function() {
+                            location.reload();
+                        }, 1000)
+                        $('.shadeboxcon1').hide();
+                        $('.shadebox').hide();
+                    }
+                });
+            } else {
+                $.Huimodalalert('请选择文件', 2000);
+            }
+        });
+
+        Queryorder();
+
+        function Queryorder(obj) {
+            var tradeId = $('input[name=ordernum]').val();
+            var name = $('input[name=ordername]').val();
+            var mobile = $('input[name=orderphone]').val();
+            var startCreateTime = $('input[name=passOneTime]').val();
+            var endCreateTime = $('input[name=passTwoTime]').val();
+            var skuKeyword = $('input[name=searchname]').val();
+            var channelId = $('#purchasing').find('option:checked').attr('value');
+            var channelName = $('#purchasing').find('option:checked').text() == "全部" ? "" : $('#purchasing').find('option:checked').text();
+            var province = $('#province').find('option:checked').attr('value');
+            var city = $('#city').find('option:checked').attr('value');
+            var street = $('#street').find('option:checked').attr('value');
+            var arrObj = $("#user-form").find("input,select").serializeObject();
+            pageNum = (obj && obj.curr) || 1; // 默认第1页
+            pageRows = (obj && obj.pageSize) || 20; // 默认一页20条数据
+            arrObj['pageNum'] = pageNum;
+            arrObj['pageRows'] = pageRows;
+            $.post(base + 'purchase/staySend.do', {
+                pageNum: pageNum,
+                pageSize: pageRows,
+                tradeId: tradeId,
+                name: name,
+                mobile: mobile,
+                startCreateTime: startCreateTime,
+                endCreateTime: endCreateTime,
+                province: province,
+                skuKeyword: skuKeyword,
+                channelId: channelId,
+                channelName: channelName,
+                city: city,
+                district: street
+            }, function(res) {
+                $('#list').children().remove();
+                if (res.status == '0' && res.data) {
+                    for (var i = 0; i < res.data.length; i++) {
+                        var Tr = $("<tr class='text-c'></tr>")
+                        var Td1 = $("<td style='cursor: pointer;' class='tradeId' onclick='gotoordermes(" + res.data[i].tradeId + ")'>" + res.data[i].tradeId + "</td>")
+                        var Td2 = $("<td>" + res.data[i].skuName + "</td>")
+                        var Td3 = $("<td>" + res.data[i].sn + "</td>")
+                        var Td4 = $("<td>" + res.data[i].unitPrice + "</td>")
+                        var Td5 = $("<td>" + res.data[i].tradeCount + "</td>")
+                        var Td6 = $("<td>" + res.data[i].amount + "</td>")
+                        var Td16 = $("<td>" + res.data[i].totalTradeDiscountAmount + "</td>")
+                        var Td17 = $("<td>" + res.data[i].shoudleAmount + "</td>")
+                        var Td7 = $("<td>" + res.data[i].channelName + "</td>")
+                        var Td8 = $("<td>" + res.data[i].createTime + "</td>")
+                        var Td9 = $("<td>" + res.data[i].name + "</td>")
+                        var Td10 = $("<td>" + res.data[i].mobile + "</td>")
+                        var Td11 = $("<td>" + res.data[i].receiveName + "</td>")
+                        var Td12 = $("<td>" + res.data[i].receiveMobile + "</td>")
+                        var Td13 = $("<td>" + res.data[i].provinceName + '/' + res.data[i].cityName + '/' + res.data[i].districtName + "</td>")
+                        var Td14 = $("<td>" + res.data[i].userReceiverAddress + "</td>")
+                        if (res.data[i].channelName.indexOf('接口') > -1) {
+                            var Td15 = $("<td width='80px'></td>")
+                        } else {
+                            var Td15 = $("<td width='80px'><a id='Operation' class='tab-A' data-index='" + i + "' data-price='" + res.data[i].purchaseAmount + "' data-id='" + res.data[i].purchaseId + "' onclick='distribution(this)'>发货</a></td>")
+                        }
+                        Tr.append(Td1)
+                        Tr.append(Td2)
+                        Tr.append(Td3)
+                        Tr.append(Td4)
+                        Tr.append(Td5)
+                        Tr.append(Td6)
+                        Tr.append(Td16)
+                        Tr.append(Td17)
+                        Tr.append(Td7)
+                        Tr.append(Td8)
+                        Tr.append(Td9)
+                        Tr.append(Td10)
+                        Tr.append(Td11)
+                        Tr.append(Td12)
+                        Tr.append(Td13)
+                        Tr.append(Td14)
+                        Tr.append(Td15)
+                        $('#list').append(Tr)
+                        if (res.data[i].channelName == '京东') {
+                            $('#Operation').remove();
+                        }
+                    }
+
+                } else if (res.status == '9999') {
+                    // 未登录
+                    window.top.location.href = '../../login.html';
+                } else {
+                    $('#list').append("<tr><td colspan='17' style='text-align:center; color:#ddd;'>暂无相关数据！</td></tr>")
+                }
+                setPagination({
+                    elem: $('#pagination'),
+                    totalCount: res.dataCount,
+                    curr: arrObj['pageNum'],
+                    pageSize: arrObj['pageRows'],
+                    callback: function(obj) {
+                        Queryorder(obj);
+                    }
+                });
+            })
+
+        }
+
+        //跳转到单个订单页面
+
+        function gotoordermes(tradeId) {
+            var $self = $(this);
+            $self.attr('data-href', 'view/order/shoppingOrderDetail.html?tradeId=' + tradeId)
+            $self.attr('data-title', '购物订单详情');
+            Hui_admin_tab($self.get());
+        }
+
+        //导出
+
+        $('#outcreateExcel').on('click', function() {
+            if ($('#list').children().length == 0) {
+                $.Huimodalalert('导出订单不能为空', 2000);
+            } else {
+                var tradeId = $('input[name=ordernum]').val();
+                var name = $('input[name=ordername]').val();
+                var mobile = $('input[name=orderphone]').val();
+                var startCreateTime = $('input[name=passOneTime]').val();
+                var endCreateTime = $('input[name=passTwoTime]').val();
+                var skuKeyword = $('input[name=searchname]').val();
+                var channelId = $('#purchasing').find('option:checked').attr('value');
+                var channelName = $('#purchasing').find('option:checked').text() != "全部" ? $('#purchasing').find('option:checked').text() : '';
+                var province = $('#province').find('option:checked').attr('value');
+                var city = $('#city').find('option:checked').attr('value');
+                var street = $('#street').find('option:checked').attr('value');
+                console.log(channelName)
+                location.href = base + 'purchase/exportPurchase.do?tradeId=' + tradeId + '&&name=' + name + '&&mobile=' + mobile +
+                    '&&startCreateTime=' + startCreateTime + '&&endCreateTime=' + endCreateTime + '&&skuKeyword=' + skuKeyword +
+                    '&&channelId=' + channelId + '&&channelName=' + channelName
+            }
+
+
+        })
+
+        //导入
+        $('#increateExcel').on('click', function() {
+            $('.shadeboxcon1').show();
+            $('.shadebox').show();
+        })
+
+        //获取省市区
+        getArea(1)
+
+        //区
+        $("#city").on("change", function() {
+            getstreet()
+        })
+
+        function getstreet() {
+            var code1 = $('#city').find('option:checked').attr('value');
+            if (code1) {
+                $.post(base + 'purchase/getArea.do', {
+                    parentid: code1,
+                }, function(res) {
+                    if (res.status == '0' && res.data) {
+                        $('#street').children().remove();
+                        $('#street').append('<option>全部</option>')
+                        for (var i = 0; i < res.data.length; i++) {
+                            $('#street').append('<option value=' + res.data[i].code + '>' + res.data[i].name + '</option>')
+                        }
+                    } else if (res.status == '9999') {
+                        // 未登录
+                        window.top.location.href = '../../login.html';
+                    } else {
+                        console.log(789)
+                    }
+                })
+            } else {
+                $('#street').children().remove();
+                $('#street').append('<option>全部</option>')
+            }
+
+        }
+        //市
+        $('#province').on('change', function() {
+            var code = $('#province').find('option:checked').attr('value');
+            if (code) {
+                $.post(base + 'purchase/getArea.do', {
+                    parentid: code,
+                }, function(res) {
+                    if (res.status == '0' && res.data) {
+                        console.log(123)
+                        $('#city').children().remove();
+                        $('#city').append('<option>全部</option>')
+                        for (var i = 0; i < res.data.length; i++) {
+                            $('#city').append('<option value=' + res.data[i].code + '>' + res.data[i].name + '</option>')
+                        }
+                        getstreet();
+                    } else if (res.status == '9999') {
+                        // 未登录
+                        window.top.location.href = '../../login.html';
+                    } else {
+                        console.log(789)
+                    }
+                })
+            } else {
+                $('#city').children().remove();
+                $('#street').children().remove();
+                $('#city').append('<option>全部</option>')
+                $('#street').append('<option>全部</option>')
+            }
+
+        })
+
+        //省
+        function getArea(level) {
+            $.post(base + 'purchase/getArea.do', {
+                level: level,
+            }, function(res) {
+
+                if (res.status == '0' && res.data) {
+                    for (var i = 0; i < res.data.length; i++) {
+                        $('#province').append('<option value=' + res.data[i].code + '>' + res.data[i].name + '</option>')
+                    }
+                } else if (res.status == '9999') {
+                    // 未登录
+                    window.top.location.href = '../../login.html';
+                } else {
+                    console.log(789)
+                }
+            })
+        }
+    </script>
+</body>
+
+</html>

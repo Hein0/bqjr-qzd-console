@@ -1,0 +1,283 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <title>商品列表管理</title>
+
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="../../lib/Hui-iconfont/1.0.8/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/skin/default/skin.css" id="skin" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/style.css" />
+
+    <!--分页样式表，需要分页的页面加入-->
+    <link rel="stylesheet" type="text/css" href="../../lib/laypage/1.2/skin/laypage.css">
+    <link rel="stylesheet" type="text/css" href="../../css/logOrder.css?rev=@@hash">
+    <link rel="stylesheet" type="text/css" href="../../css/logList.css?rev=@@hash">
+    <style>
+        .type-select-panel {
+            height: initial;
+        }
+
+        .select-classify+i+.type-select-panel {
+            width: 200%;
+            height: initial;
+        }
+
+        .type-select-panel .top-part ul {
+            width: 30%;
+        }
+
+        .select-city+i+.type-select-panel .top-part ul {
+            width: 46%;
+        }
+
+        .type-select-panel .bottom-part .result {
+            float: none;
+        }
+        .Delete{margin:0 5px;}
+        .deleteWrap{padding:20px;}
+        .submitIput{text-align: center;margin: 20px auto 0;}
+    </style>
+</head>
+
+<body>
+<nav class="breadcrumb">
+    <i class="Hui-iconfont">&#xe67f;</i> 首页
+    <span class="c-gray en">&gt;</span> APP配置
+    <span class="c-gray en">&gt;</span> 浏览量配置
+    <a class="btn btn-success radius r" style="line-height:1.6em;margin:3px 0 0 20px" href="javascript:location.replace(location.href);"
+       title="刷新">
+        <i class="Hui-iconfont">&#xe68f;</i>刷新
+    </a>
+</nav>
+
+<div class="Hui-article">
+    <article class="cl pd-20">
+
+        <div class="panel panel-default search-bar-width">
+            <div class="panel-body">
+                <!--筛选条件区域-->
+                <div class="condition-wrap cl common-form-wrap" id="pageSearchForm">
+
+                    <div class="condition-parent cl">
+                        <span class="title">审核进度</span>
+                        <select class="white-list s-status" id="progress">
+                            <option value="">全部</option>
+                            <option value="1">初审中</option>
+                            <option value="2">初审失败</option>
+                            <option value="3">复审中</option>
+                            <option value="4">复审失败</option>
+                            <option value="5">审核成功</option>
+                        </select>
+                    </div>
+                    <div class="condition-parent cl">
+                        <span class="title">分类</span>
+                        <div class="long-ipt">
+                            <span class="value-wrap select-classify"></span>
+                            <i class="Hui-iconfont">&#xe698;</i>
+                            <div class="type-select-panel condition-panel classify">
+                                <div class="top-part cl">
+                                    <ul class="ul-1"></ul>
+                                    <ul class="ul-2"></ul>
+                                    <ul class="ul-3"></ul>
+                                </div>
+                                <div class="bottom-part cl">
+                                    <p class="result">您当前已选择的项目:
+                                        <em></em>
+                                    </p>
+                                    <button type="button" class="btn btn-primary close-panel">关闭</button>
+                                    <button type="button" class="btn btn-primary get-result">确认选择</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="condition-parent cl">
+                        <span class="title">所在城市</span>
+                        <div class="long-ipt">
+                            <span class="value-wrap select-city">请选择城市</span>
+                            <i class="Hui-iconfont">&#xe698;</i>
+                            <div class="type-select-panel condition-panel city" style="width:460px;">
+                                <div class="top-part cl">
+                                    <ul class="ul-1"></ul>
+                                    <ul class="ul-2"></ul>
+                                </div>
+                                <div class="bottom-part cl">
+                                    <p class="result">您当前已选择的城市:
+                                        <em></em>
+                                    </p>
+                                    <button type="button" class="btn btn-primary close-panel">关闭</button>
+                                    <button type="button" class="btn btn-primary get-result">确认选择</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="condition-parent cl">
+                        <span class="title">医院</span>
+                        <div class="long-ipt">
+                            <span class="value-wrap select-hospital">请选择医院</span>
+                            <i class="Hui-iconfont">&#xe698;</i>
+                            <div class="name-select-panel hospital">
+                                <div class="search-bar">
+                                    <input type="text" value="" id="hospital_id">
+                                    <i class="Hui-iconfont">&#xe709;</i>
+                                </div>
+                                <ul></ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="condition-parent cl">
+                        <span class="title">评级</span>
+                        <select class="white-list s-status" name="grade" id="grade">
+                            <option value="">请选择</option>
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="C">C</option>
+                            <option value="D">D</option>
+                            <option value="E">E</option>
+                        </select>
+                    </div>
+                    <div class="condition-parent cl">
+                        <span class="title">案例ID</span>
+                        <input class="long-ipt" type="text" name="caseId"  value="" id="caseId">
+                    </div>
+                    <div class="button-wrap">
+                        <button type="button" class="btn btn-primary" id="screeBtn">
+                            <i class="Hui-iconfont">&#xe665;</i> 筛选</button>
+                        <button type="button" class="btn btn-primary" id="resetBtn">
+                            <i class="Hui-iconfont">&#xe66b;</i> 重置</button>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <!--<div class="control-panel">-->
+            <!--<button id="addBtn" type="button" class="btn btn-primary">-->
+                <!--<i class="Hui-iconfont">&#xe600;</i> 添加</button>-->
+        <!--</div>-->
+
+        <div class="goods-list">
+            <table class="table table-border table-bordered table-hover table-bg">
+                <thead>
+                <tr class="text-c">
+                    <th width="60">案例ID</th>
+                    <th width="60">分类</th>
+                    <th width="60">所在医院</th>
+                    <th width="60">主治医生</th>
+                    <th width="60">商品名称</th>
+                    <th width="60">地区</th>
+                    <th width="60">术前照片</th>
+                    <th width="60">术后照片</th>
+                    <th width="60">提交时间</th>
+                    <th width="60">状态</th>
+                    <th width="60">相关联系人</th>
+                    <th width="60">审核进度</th>
+                    <th width="60">案例评级</th>
+                    <th width="60">浏览量</th>
+                    <th width="60">点赞量</th>
+                    <th width="60">评论量</th>
+                    <th width="70">操作</th>
+                </tr>
+                </thead>
+                <tbody id="listCtnWrap">
+                </tbody>
+            </table>
+        </div>
+        <div class="pagination cl" id="pagination"></div>
+    </article>
+</div>
+
+<!--浏览量配置-->
+<div id="browerConf" style="display: none">
+    <div class="brower-conf from form form-horizontal form-step active">
+        <form action="">
+            <input type="hidden" name="caseId">
+            <div class="row cl">
+                <label class="form-label col-xs-2 col-sm-2">案例评级：</label>
+                <div class="formControls col-xs-10 col-sm-10">
+                    <select class="white-list s-status input-text" name="grade">
+                        <option value="">请选择</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                        <option value="E">E</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-2 col-sm-2">浏览量：</label>
+                <div class="formControls col-xs-10 col-sm-10">
+                    <input type="text" class="input-text" name="scanNum">
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-2 col-sm-2">点赞量：</label>
+                <div class="formControls col-xs-10 col-sm-10">
+                    <input type="text" class="input-text" name="voteNum">
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-2 col-sm-2">评论量：</label>
+                <div class="formControls col-xs-10 col-sm-10">
+                    <input type="text" class="input-text" name="evaluateNum">
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+
+<!--footer 作为公共模版分离出去-->
+<script type="text/javascript" src="../../lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="../../lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="../../static/h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="../../static/h-ui.admin/js/H-ui.admin.js"></script>
+<script type="text/javascript" src="../../lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<!--footer 作为公共模版分离出去-->
+
+<script type="text/javascript" src="../../lib/ueditor/1.4.3/ueditor.config.js"></script>
+<script type="text/javascript" src="../../lib/ueditor/1.4.3/ueditor.all.min.js"></script>
+<script type="text/javascript" src="../../lib/arttemplate/template-web.js"></script>
+<script type="text/javascript" src="../../lib/laypage/1.2/laypage.js"></script>
+<script type="text/javascript" src="../../js/base/public.js?rev=@@hash"></script>
+<script type="text/javascript" src="../../js/browserVolumConf.js?rev=@@hash"></script>
+<script id="contact" type="text/html">
+    <div class="goods-list">
+        <table class="table table-border table-bordered table-hover table-bg">
+            <thead>
+            <tr class="text-c">
+                <th width="20%">审核状态</th>
+                <th width="20%">审核结果</th>
+                <th width="20%">审核拒绝原因</th>
+                <th width="20%">审核人姓名</th>
+                <th width="20%">审核人联系方式</th>
+            </tr>
+            </thead>
+            <tbody id="contactList">
+            {{each data item i}}
+            <tr class="text-c list-line">
+                <td>{{item.status=="1"?"初审":(item.status=="3"?"复审":"")}}</td>
+                <td>{{item.result=="1"?"通过":(item.result=="2"?"拒绝":"")}}</td>
+                <td>{{item.msg||""}}</td>
+                <td>{{item.name||""}}</td>
+                <td>{{item.telphone||""}}</td>
+            </tr>
+            {{/each}}
+            </tbody>
+        </table>
+    </div>
+</script>
+
+</body>
+</html>

@@ -1,0 +1,12 @@
+afterSale  售后服务
+bill：账单管理，财务管理
+operate：运营管理，内容管理
+order： 订单管理
+visa：面签管理
+user：用户管理
+wallet：钱包管理
+
+commonTemplate 页面基本架构，所有页面可以复制该页面，在此基础上添加新的内容
+
+
+

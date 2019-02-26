@@ -1,0 +1,179 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <title>钱包列表</title>
+
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui/css/H-ui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/H-ui.admin.css"/>
+    <link rel="stylesheet" type="text/css" href="../../lib/Hui-iconfont/1.0.8/iconfont.css"/>
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/skin/default/skin.css" id="skin"/>
+    <link rel="stylesheet" type="text/css" href="../../lib/laypage/1.2/skin/laypage.css">
+    <link rel="stylesheet" type="text/css" href="../../lib/laypage/1.2/skin/laypage.css">
+    <link rel="stylesheet" type="text/css" href="../../css/reset.css"/>
+</head>
+
+<body>
+
+<nav class="breadcrumb">
+    <i class="Hui-iconfont">&#xe67f;</i>
+    首页 <span class="c-gray en">&gt;</span>
+    钱包管理 <span class="c-gray en">&gt;</span>
+    钱包列表
+    <a class="btn btn-success r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a>
+    <input class="btn btn-primary f-r mr-10"  onclick="wallet.openExport()" style="margin-top: 3px;" type="button" value="导出">
+</nav>
+
+<div class="page-container">
+    <div class="panel panel-default">
+        <form class="search-form">
+            <div class="panel-body pb-0 cl search">
+                <div class="f-l mr-15 mb-15">
+                    <span class="text-c f-l">用户姓名</span>
+                    <input type="text" value="" class="input-text" name="name" />
+                </div>
+                <div class="f-l mr-15 mb-15">
+                    <span class="text-c f-l">用户手机</span>
+                    <input type="text" value="" class="input-text" name="mobile" />
+                </div>
+                <div class="f-l mr-15 mb-15">
+                    <span class="text-c f-l">用户身份证</span>
+                    <input type="text" value="" class="input-text" style="width: 170px;" name="certId" />
+                </div>
+                <div class="f-l mr-15 mb-15">
+                    <span class="text-c f-l">消费总额度</span>
+                    <input type="text" value="" class="input-text f-l" name="shopOneAmount" />
+                    <span class="text-c f-l">至</span>
+                    <input type="text" value="" class="input-text f-l" name="shopTwoAmount" />
+                </div>
+                <div class="f-l mr-15 mb-15">
+                    <span class="text-c f-l">闪电借总额度</span>
+                    <input type="text" value="" class="input-text f-l" name="payOneAmount" />
+                    <span class="text-c f-l">至</span>
+                    <input type="text" value="" class="input-text f-l" name="payTwoAmount" />
+                </div>
+                <div class="f-l mr-15 mb-15">
+                    <span class="text-c f-l">随心花总额度</span>
+                    <input type="text" value="" class="input-text f-l" name="loanOneAmount" />
+                    <span class="text-c f-l">至</span>
+                    <input type="text" value="" class="input-text f-l" name="loanTwoAmount" />
+                </div>
+                <!--<div class="f-l mr-15 mb-15">
+                    <span class="text-c f-l">提现总额度</span>
+                    <input type="text" value="" class="input-text f-l" name="loanOneAmount" />
+                    <span class="text-c f-l">至</span>
+                    <input type="text" value="" class="input-text f-l" name="loanTwoAmount" />
+                </div>-->
+                <div class="f-l mr-15 mb-15">
+                    <span class="text-c f-l">钱包状态</span>
+                    <select name="status" class="status">
+                        <option value="">全部</option>
+                    </select>
+                </div>
+                <div class="f-l mr-15 mb-15">
+                    <span class="text-c f-l">用户学历</span>
+                    <select name="education" class="education">
+                        <option value="">全部</option>
+                    </select>
+                </div>
+                <div class="text-l m-t10 f-r">
+                    <button type="button" class="btn btn-primary mr-10 mb-15" id="screeBtn" onclick="wallet.search()"><i class="Hui-iconfont">&#xe665;</i> 筛选</button>
+                    <button type="button" class="btn btn-primary mb-15" id="resetBtn" onclick="util.reset()"><i class="Hui-iconfont">&#xe66b;</i> 重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="mt-20 table-con">
+        <table class="table table-border table-bordered table-hover table-bg table-sort" style="width: 1700px;">
+            <thead>
+                <tr class="text-c">
+                    <th width="120px">用户姓名</th>
+                    <th width="200px">用户手机</th>
+                    <th width="200px">用户身份证</th>
+                    <th width="120px">用户学历</th>
+                    <th width="150px">可用消费额度</th>
+                    <th width="130px">消费总额度</th>
+                    <th width="170px">可用闪电借额度</th>
+                    <th width="120px">闪电借总额度</th>
+                    <th width="120px">可用随心花额度</th>
+                    <th width="120px">随心花总额度</th>
+                    <th width="120px">钱包状态</th>
+                    <th width="120px">操作</th>
+                </tr>
+            </thead>
+            <tbody id="list">
+
+            </tbody>
+        </table>
+    </div>
+
+    <!--分页-->
+    <div class="pagination mt-20" id="pagination"></div>
+</div>
+
+<!--导出-->
+<div id="mymodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content radius">
+            <div class="modal-header">
+                <h3 class="modal-title">导出</h3>
+                <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void(0);">×</a>
+            </div>
+            <div class="modal-body">
+                <div class="export">
+                    <label>文件名</label><input type="text" onfocus="javascript:$('.p').hide()" id="fileName" />
+                    <p class="p">请输入文件名</p>
+                </div>
+                <p>提示：<br />1、导出的目标数据是根据搜索条件搜索后的数据；若需导出全部数据，请在导出之前清除搜索条件。<br />2、文件名命名可以自定义</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" onclick="wallet.export();">确定</button>
+                <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="../../lib/jquery/1.9.1/jquery.min.js?rev=@@hash"></script>
+<script type="text/javascript" src="../../lib/layer/2.4/layer.js?rev=@@hash"></script>
+<script type="text/javascript" src="../../static/h-ui/js/H-ui.min.js?rev=@@hash"></script>
+<script type="text/javascript" src="../../static/h-ui.admin/js/H-ui.admin.js?rev=@@hash"></script>
+<script type="text/javascript" src="../../js/base/public.js?rev=@@hash"></script>
+<!--/_footer 作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="../../lib/My97DatePicker/4.8/WdatePicker.js?rev=@@hash"></script>
+<script type="text/javascript" src="../../lib/laypage/1.2/laypage.js?rev=@@hash"></script>
+<script src="../../js/common/jquery.tmpl.min.js?rev=@@hash"></script>
+<script type="text/javascript" src="../../js/page/wallet.js?rev=@@hash"></script>
+<script type="text/html" id="walletList">
+    {{each(i,item) data}}
+    <tr class="text-c">
+        <td>${item.name}</td>
+        <td>${item.mobile}</td>
+        <td>${item.certId}</td>
+        <td>${item.strEducation}</td>
+        <td>${item.mayShopAmount}</td>
+        <td>${item.shopTotalAmount}</td>
+        <td>${item.fastPaySurplusMoney}</td>
+        <td>${item.fastPayTotalMoney}</td>
+        <td>${item.payLoanMoney}</td>
+        <td>${item.payTotalMoney}</td>
+        <td>${item.strStatus}</td>
+        <td class="td-manage">
+            <a href="javascript:" style="color: dodgerblue; text-decoration: underline;" onclick="wallet.jump(${accountId},this)">详情</a>
+        </td>
+    </tr>
+    {{/each}}
+</script>
+</body>
+
+</html>

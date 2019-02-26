@@ -1,0 +1,69 @@
+.ellipses {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+}
+
+.modal {
+    z-index: 99;
+}
+
+em {
+    font-style: normal;
+}
+
+.condition-wrap {
+    overflow: visible;
+}
+
+.condition-parent .long-ipt {
+    position: relative;
+    float: left;
+    width: 200px;
+    height: 28px;
+    border: 1px solid #e6e6e6;
+}
+
+.condition-parent div .value-wrap {
+    overflow: hidden;
+    display: block;
+    width: 180px;
+    height: 28px;
+    line-height: 28px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-wrap: break-word;
+    cursor: pointer;
+}
+
+.condition-parent .Hui-iconfont {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 18px;
+}
+
+.control-panel {
+    margin-top: 20px;
+}
+
+.control-panel button {
+    margin-right: 15px;
+}
+
+/* 商品列表区域 */
+
+.search-bar-width {
+    width: 100%;overflow: auto;
+}
+
+.goods-list {
+    width: 100%;
+    margin-top: 20px;
+    border: 1px solid #ddd;
+    border-bottom: none;
+    text-align: center;
+    overflow: auto;
+}
+

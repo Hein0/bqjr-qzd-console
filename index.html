@@ -1,0 +1,844 @@
+﻿<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <title>仟姿在线管理系统</title>
+    <link rel="stylesheet" type="text/css" href="static/h-ui/css/H-ui.min.css?rev=@@hash" />
+    <link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/H-ui.admin.css?rev=@@hash" />
+    <link rel="stylesheet" type="text/css" href="lib/Hui-iconfont/1.0.8/iconfont.css?rev=@@hash" />
+    <link rel="stylesheet" type="text/css" href="static/h-ui.admin/skin/default/skin.css?rev=@@hash" id="skin" />
+    <link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/style.css?rev=@@hash" />
+	<style>
+		.layui-layer-content .row {padding: 5px 40px;}
+		.layui-layer-content .row .formControls input {width: 100%;border-radius: 4px;font-size: 16px;}
+		.layui-layer-content .sub_btn {margin-top:15px;padding: 20px 0;text-align: center;}
+		.hyn{width:60px;display: inline-block;}
+		.btn { width: 80px;box-sizing: border-box;font-size: 12px;height: 28px; line-height: 28px; padding: 4px;}
+		.form .row {margin-left: 0px; margin-right: 0px;}
+		audio{position:absolute;z-index: -100;bottom: 0;left: 0;}
+		.navbar .logo{color: #FFFFFF;} 
+		.navbar .logos{position:relative;background:url(images/logo1.png) no-repeat center;background-size:60% 65%;width:75px;height:45px;}   
+		.navbar .logos:after{content: '';width:1px;height:30px;position: absolute;right:0;top:7.5px;bottom:0;background:#FFFFFF;display: block;}
+		.navbar-slogan{font-size:16px !important;}
+	</style>
+</head>
+
+<body>
+    <header class="navbar-wrapper">
+        <div class="navbar navbar-fixed-top">
+            <div class="container-fluid cl">
+                <a class="logo navbar-logo logos f-l mr-10 hidden-xs" href="#"></a>
+                <a class="logo navbar-logo-m f-l mr-10 visible-xs" href="#"></a>
+                <span class="logo navbar-slogan f-l mr-10 hidden-xs">在线运营管理系统</span>
+                <a aria-hidden="false" class="nav-toggle Hui-iconfont visible-xs" href="javascript:;">&#xe667;</a>
+                <nav id="Hui-userbar" class="nav navbar-nav navbar-userbar hidden-xs">
+                    <ul class="cl">
+                        <li class="dropDown dropDown_hover">
+                        	<span class="hyn">欢迎您 </span>
+                            <a href="#" class="dropDown_A ">
+                                <span class="adminName"></span>
+                                <i class="Hui-iconfont">&#xe6d5;</i>
+                            </a>
+                            <ul class="dropDown-menu menu radius box-shadow">
+                                <li><a id="ModifyPswo" href="javascript:;">修改密码</a></li>
+                                <!--<li><a href="#">切换账户</a></li>-->
+                                <li>
+                                    <a id="logout" href="javascript:;">退出</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!--<li id="Hui-skin" class="dropDown right dropDown_hover">
+                            <a href="javascript:;" class="dropDown_A" title="换肤">
+                                <i class="Hui-iconfont" style="font-size:18px">&#xe62a;</i>
+                            </a>
+                            <ul class="dropDown-menu menu radius box-shadow">
+                                <li>
+                                    <a href="javascript:;" data-val="default" title="默认（黑色）">默认（黑色）</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;" data-val="blue" title="蓝色">蓝色</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;" data-val="green" title="绿色">绿色</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;" data-val="red" title="红色">红色</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;" data-val="yellow" title="黄色">黄色</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;" data-val="orange" title="橙色">橙色</a>
+                                </li>
+                            </ul>
+                        </li>-->
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+    <aside class="Hui-aside">
+        <div class="menu_dropdown bk_2 menu_dropdownOne">
+            <!-- <dl id="menu-article">
+                <dt>
+                    <i class="Hui-iconfont">&#xe60d;</i> 用户管理
+                    <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
+                </dt>
+                <dd>
+                    <ul>
+                        <li>
+                            <a data-href="view/user/userList.html" data-title="用户列表" href="javascript:void(0);">用户列表</a>
+                        </li>
+                    </ul>
+                </dd>
+            </dl> -->
+            <!-- <dl id="menu-picture">
+                <dt>
+                    <i class="Hui-iconfont">&#xe6b7;</i> 钱包管理
+                    <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
+                </dt>
+                <dd>
+                    <ul>
+                        <li>
+                            <a data-href="view/wallet/walletList.html" data-title="钱包列表" href="javascript:void(0)">钱包列表</a>
+                        </li>
+                    </ul>
+                </dd>
+            </dl> -->
+            <!-- <dl id="menu-product">
+                <dt>
+                    <i class="Hui-iconfont">&#xe687;</i> 订单管理
+                    <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
+                </dt>
+                <dd>
+                    <ul>
+                        <li><a data-href="view/order/shoppingOrder.html" data-title="购物订单列表" href="javascript:void(0)">购物订单列表</a></li>
+                        <li>
+                            <a data-href="view/order/withdraw.html" data-title="提现订单列表" href="javascript:void(0)">提现订单列表</a>
+                        </li>
+                    </ul>
+                </dd>
+            </dl> -->
+            <!-- <dl id="menu-comments">
+                <dt>
+                    <i class="Hui-iconfont">&#xe622;</i> 内容管理
+                    <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
+                </dt>
+                <dd>
+                    <ul>
+                        <li>
+                            <a data-href="view/operate/messageManagement.html" data-title="消息管理" href="javascript:;">消息管理</a>
+                        </li>
+                        <li><a data-href="view/operate/electricManagement.html" data-title="电销管理" href="javascript:;">电销管理</a></li>
+                    </ul>
+                </dd>
+            </dl> -->
+            <!-- <dl id="menu-goods">
+                <dt>
+                    <i class="Hui-iconfont">&#xe620;</i> 商城管理
+                    <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
+                </dt>
+                <dd>
+                    <ul>
+                        <li class="goodsclassify">
+                            <a data-href="view/goods/category.html" data-title="商品分类" href="javascript:;">商品分类</a>
+                        </li> -->
+<!--                         <li> -->
+<!--                             <a data-href="view/goods/brand.html" data-title="商品品牌" href="javascript:;">商品品牌</a> -->
+<!--                         </li> -->
+                        <!-- <li class="goodsList">
+                            <a data-href="view/goods/goodsList.html" data-title="商品列表" href="javascript:;">商品列表</a>
+                        </li> -->
+<!--                         <li> -->
+<!--                             <a data-href="view/goods/classifyShow.html" data-title="分类展示" href="javascript:;">分类展示</a> -->
+<!--                         </li> -->
+<!--                         <li> -->
+<!--                             <a data-href="view/goods/pageMenange.html" data-title="页面管理" href="javascript:;">页面管理</a> -->
+<!--                         </li> -->
+<!--                         <li> -->
+<!--                             <a data-href="view/goods/pageNew.html" data-title="页面管理" href="javascript:;">页面管理(新版)</a> -->
+<!--                         </li> -->
+<!--                         <li> -->
+<!--                             <a data-href="view/goods/hotWord.html" data-title="热搜词管理" href="javascript:;">热搜词管理</a> -->
+<!--                         </li> -->
+<!--                         <li> -->
+<!--                             <a data-href="view/order/setPostage.html" data-title="运费包邮配置" href="javascript:;">运费包邮配置</a> -->
+<!--                         </li> -->
+                        <!-- <li>
+                            <a data-href="view/order/shoppingOrder.html" data-title="商品订单" href="javascript:void(0)">商品订单</a>
+                        </li> -->
+<!--                         <li> -->
+<!--                             <a data-href="view/goods/procurement.html" data-title="采购发货" href="javascript:;">采购发货</a> -->
+<!--                         </li> -->
+<!--                         <li> -->
+<!--                             <a data-href="view/afterSale/afterSale.html" data-title="售后管理" href="javascript:;">售后管理 -->
+<!--                                 <span style="color: red;"> ( -->
+<!--                                     <span id="afterSale"></span>)</span> -->
+<!--                             </a> -->
+<!--                         </li> -->
+<!--                         <li> -->
+<!--                             <a data-href="view/afterSale/refundList.html" data-title="售后退款查询" href="javascript:;">售后退款查询</a> -->
+<!--                         </li> -->
+<!--                         <li> -->
+<!--                             <a data-href="view/supply/supply.html" data-title="供应商管理" href="javascript:;">供应商管理</a> -->
+<!--                         </li> -->
+<!--                         <li> -->
+<!--                             <a data-href="view/order/JDAccountDetail.html" data-title="京东（接口）账户明细" href="javascript:;">京东（接口）账户明细</a> -->
+<!--                         </li> -->
+<!--                         <li> -->
+<!--                             <a data-href="view/order/stageSuccess.html" data-title="用户下单记录表" href="javascript:void(0)">用户下单记录表</a> -->
+<!--                         </li> -->
+<!--                         <li> -->
+<!--                             <a data-href="view/finance/finance.html" data-title="收支明细表" href="javascript:;">收支明细表</a> -->
+<!--                         </li> -->
+<!--                         <li> -->
+<!--                             <a data-href="view/freeControl/editFree.html" data-title="免息活动" href="javascript:;">免息活动</a> -->
+<!--                         </li> -->
+<!--                         <li> -->
+<!--                             <a data-href="view/seckillControl/seckill.html" data-title="秒杀活动" href="javascript:;">秒杀活动</a> -->
+<!--                         </li> -->
+                    <!-- </ul>
+                </dd>
+            </dl> -->
+            <!--<dl id="menu-comments">
+                <dt><i class="Hui-iconfont">&#xe622;</i> 售后管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+                <dd>
+                    <ul>
+                        <li><a data-href="view/afterSale/afterSale.html" data-title="售后管理" href="javascript:;">售后管理</a></li>
+                        <li><a data-href="view/afterSale/refundList.html" data-title="售后退款查询" href="javascript:;">售后退款查询</a></li>
+                    </ul>
+                </dd>
+            </dl>
+            <dl id="menu-comments">
+                <dt><i class="Hui-iconfont">&#xe622;</i> 供应商地址管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+                <dd>
+                    <ul>
+                        <li><a data-href="view/supply/supplyAddress.html" data-title="供应商地址管理" href="javascript:;">供应商地址管理</a></li>
+                    </ul>
+                </dd>
+            </dl>
+            <dl id="menu-procurement">
+                <dt><i class="Hui-iconfont">&#xe622;</i> 采购发货<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+                <dd>
+                    <ul>
+                        <li><a data-href="view/goods/procurement.html" data-title="采购发货" href="javascript:;">采购发货</a></li>
+                    </ul>
+                </dd>
+            </dl>-->
+            <!--<dl id="menu-admin">
+                <dt><i class="Hui-iconfont">&#xe62d;</i>面签管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+                <dd>
+                    <ul>
+                        <li><a data-href="origin/admin-role.html" data-title="角色管理" href="javascript:void(0)">角色管理</a></li>
+                        <li><a data-href="origin/admin-permission.html" data-title="权限管理" href="javascript:void(0)">权限管理</a></li>
+                        <li><a data-href="origin/admin-list.html" data-title="管理员列表" href="javascript:void(0)">管理员列表</a></li>
+                    </ul>
+                </dd>
+            </dl>
+            <dl id="menu-tongji">
+                <dt><i class="Hui-iconfont">&#xe61a;</i> 账单管理（二期）<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+                <dd>
+                    <ul>
+                        <li><a data-href="origin/charts-1.html" data-title="折线图" href="javascript:void(0)">折线图</a></li>
+                        <li><a data-href="origin/charts-2.html" data-title="时间轴折线图" href="javascript:void(0)">时间轴折线图</a></li>
+                        <li><a data-href="origin/charts-3.html" data-title="区域图" href="javascript:void(0)">区域图</a></li>
+                        <li><a data-href="origin/charts-4.html" data-title="柱状图" href="javascript:void(0)">柱状图</a></li>
+                        <li><a data-href="origin/charts-5.html" data-title="饼状图" href="javascript:void(0)">饼状图</a></li>
+                        <li><a data-href="origin/charts-6.html" data-title="3D柱状图" href="javascript:void(0)">3D柱状图</a></li>
+                        <li><a data-href="origin/charts-7.html" data-title="3D饼状图" href="javascript:void(0)">3D饼状图</a></li>
+                    </ul>
+                </dd>
+            </dl>
+            <dl id="menu-system">
+                <dt><i class="Hui-iconfont">&#xe62e;</i> 财务管理（二期）<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+                <dd>
+                    <ul>
+                        <li><a data-href="origin/system-base.html" data-title="系统设置" href="javascript:void(0)">系统设置</a></li>
+                        <li><a data-href="origin/system-category.html" data-title="栏目管理" href="javascript:void(0)">栏目管理</a></li>
+                        <li><a data-href="origin/system-data.html" data-title="数据字典" href="javascript:void(0)">数据字典</a></li>
+                        <li><a data-href="origin/system-shielding.html" data-title="屏蔽词" href="javascript:void(0)">屏蔽词</a></li>
+                        <li><a data-href="origin/system-log.html" data-title="系统日志" href="javascript:void(0)">系统日志</a></li>
+                    </ul>
+                </dd>
+            </dl>-->
+            <!-- <dl id="menu-marketing" class="menu-marketing">
+                <dt>
+                    <i class="Hui-iconfont">&#xe622;</i> 电销管理
+                    <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
+                </dt>
+                <dd>
+                    <ul>
+                        <li>
+                            <a data-href="view/emarketing/telemarketing.html" data-title="电销管理列表" href="javascript:;">电销管理列表</a>
+                        </li>
+                        <li>
+                            <a data-href="view/emarketing/teleStatisticsList.html" data-title="电销统计列表" href="javascript:;">电销统计列表</a>
+                        </li>
+                        <li>
+                            <a data-href="view/emarketing/teleConversionList.html" data-title="电销转化列表" href="javascript:;">电销转化列表</a>
+                        </li>
+                    </ul>
+                </dd>
+            </dl> -->
+
+            <!-- <dl id="capital-allocation" class="menu-marketing">
+                <dt>
+                    <i class="Hui-iconfont">&#xe622;</i> 资金分配
+                    <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
+                </dt>
+                <dd>
+                    <ul>
+                        <li>
+                            <a data-href="view/cash/route.html" data-title="现金分期通道路由" href="javascript:;">现金分期通道路由</a>
+                        </li>
+                        <li>
+                            <a data-href="view/cash/distribution.html" data-title="资金分配引擎" href="javascript:;">资金分配引擎</a>
+                        </li>
+                        <li>
+                            <a data-href="view/cash/holidays.html" data-title="节假日配置" href="javascript:;">节假日配置</a>
+                        </li>
+                    </ul>
+                </dd>
+            </dl> -->
+
+            <!-- <dl id="case-management" class="menu-marketing">
+                <dt>
+                    <i class="Hui-iconfont">&#xe616;</i> 案例管理
+                    <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
+                </dt>
+                <dd>
+                    <ul>
+                        <li>
+                            <a data-href="view/hospital/hospital.html" data-title="医院管理" href="javascript:;">医院管理</a>
+                            <a data-href="view/hospital/doctor.html" data-title="医生管理" href="javascript:;">医生管理</a>
+                            <a data-href="view/log/log.html" data-title="案例管理" href="javascript:;">案例管理</a>
+                        </li>
+                    </ul>
+                </dd>
+            </dl>
+            <dl id="manage-hospital" class="menu-marketing">
+                <dt>
+                    <i class="Hui-iconfont">&#xe616;</i> 医院订单管理
+                    <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
+                </dt>
+                <dd>
+                    <ul>
+                        <li>
+                            <a data-href="view/hospitalOrder/orderList.html" data-title="医院订单确认" href="javascript:;">医院订单确认</a>
+                        </li>
+                    </ul>
+                </dd>
+            </dl>
+            <dl id="system-manage" class="menu-marketing">
+                <dt>
+                    <i class="Hui-iconfont">&#xe616;</i> 系统管理
+                    <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
+                </dt>
+                <dd>
+                    <ul>
+                        <li>
+                            <a data-href="view/system/resource.html" data-title="资源管理" href="javascript:;">资源管理</a>
+                            <a data-href="view/system/role.html" data-title="角色管理" href="javascript:;">角色管理</a>
+                            <a data-href="view/system/users.html" data-title="用户管理" href="javascript:;">用户管理</a>
+                        </li>
+                    </ul>
+                </dd>
+            </dl> -->
+            
+        </div>
+
+        <!--电销主管和电销人员只能看到的单独模块-->
+        <!-- <div class="menu_dropdown bk_2 menu_dropdownTwo">
+            <dl id="menu-marketing">
+                <dt>
+                    <i class="Hui-iconfont">&#xe622;</i> 电销管理
+                    <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
+                </dt>
+                <dd>
+                    <ul>
+                        <li>
+                            <a data-href="view/emarketing/telemarketing.html" data-title="电销管理列表" href="javascript:;">电销管理列表</a>
+                        </li>
+                    </ul>
+                </dd>
+            </dl>
+        </div> -->
+    </aside>
+    <div class="dislpayArrow hidden-xs">
+        <a class="pngfix" href="javascript:void(0);" onClick="displaynavbar(this)"></a>
+    </div>
+    <section class="Hui-article-box">
+        <div id="Hui-tabNav" class="Hui-tabNav hidden-xs Hui-tabNavOne">
+            <div class="Hui-tabNav-wp">
+                <ul id="min_title_list" class="acrossTab cl">
+                    <li class="active">
+                        <span title="菜单" data-href=""></span>
+                        <em></em>
+                    </li>
+                </ul>
+            </div>
+            <div class="Hui-tabNav-more btn-group">
+                <a id="js-tabNav-prev" class="btn radius btn-default size-S" href="javascript:;">
+                    <i class="Hui-iconfont">&#xe6d4;</i>
+                </a>
+                <a id="js-tabNav-next" class="btn radius btn-default size-S" href="javascript:;">
+                    <i class="Hui-iconfont">&#xe6d7;</i>
+                </a>
+            </div>
+        </div>
+
+        <div id="iframe_box" class="Hui-article">
+            <div class="show_iframe show_iframeOne">
+                <div style="display:none" class="loading"></div>
+                <iframe name="shopping" id="shopping" scrolling="yes" frameborder="0" src="welcomes.html"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <div class="contextMenu" id="Huiadminmenu">
+        <ul>
+            <li id="closethis">关闭当前 </li>
+            <li id="closeall">关闭全部 </li>
+        </ul>
+    </div>
+
+    <!--_footer 作为公共模版分离出去-->
+    <script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js?rev=@@hash"></script>
+    <script type="text/javascript" src="lib/layer/2.4/layer.js?rev=@@hash"></script>
+    <script type="text/javascript" src="static/h-ui/js/H-ui.min.js?rev=@@hash"></script>
+    <script type="text/javascript" src="static/h-ui.admin/js/H-ui.admin.js?rev=@@hash"></script>
+    <script type="text/javascript" src="lib/arttemplate/template-web.js"></script>
+    <!--/_footer 作为公共模版分离出去-->
+
+    <!--请在下方写此页面业务相关的脚本-->
+    <script src="js/common/md5.js?rev=@@hash" type="text/javascript"></script>
+    <script type="text/javascript" src="js/base/public.js?rev=@@hash"></script>
+    <script type="text/javascript" src="lib/jquery.contextmenu/jquery.contextmenu.r2.js?rev=@@hash"></script>
+    <!--融云im通讯-->
+    <script type="text/javascript" src="view/private/libs/utils.js"></script>
+    <script type="text/javascript" src="js/common/rongyunIm/RongIMLib-2.3.0.js?rev=@@hash"></script>
+    <script type="text/javascript">
+    	var utils = RCS.utils;
+        var ajax = $.ajax; 
+        var terminal;
+        var supportNot = false;//页面是否支持notification
+        var audioEle;//音频
+        $.ajax = function(s) { 
+            var old = s.success; 
+            s.success = function(data, textStatus, jqXHR) { 
+                var result = typeof data;
+                if (result == "string") {
+                    data = JSON.parse(data);
+                }
+                if (data.status == "999") {
+                    window.location.href='./login.html'
+                } else{
+                    old(data, textStatus, jqXHR); 
+                }
+            } 
+            ajax(s); 
+        } 
+        $(function () {
+        	var config ={};
+        	/*本地存储im数据*/
+        	$.get(base + 'im/getUserToken', {}, function (res) {
+		        if (res.status == '0') {
+		        	var objs = JSON.stringify(res.data);
+		           	localStorage.setItem("imData", objs); 
+		           	config = {
+        				appKey : JSON.parse(localStorage.getItem("imData")).appKey,
+        				token : JSON.parse(localStorage.getItem("imData")).token,
+    				};
+        			rongY_init(config);
+        			addListeners(config);
+		        }
+		    });
+        	
+            $.get(base+'account/getUserResource',{},function(data){
+                if(data.status=='0'){
+                    var html=template('menuTemplate',data);
+                    $('.menu_dropdownOne').html(html);
+                    /*左侧菜单*/
+                    $.Huifold(".menu_dropdown dl dt",".menu_dropdown dl dd","fast",1,"click");
+                    //设置默认显示那一页
+                    if(data.data.menu.length>0){
+//                      $('.acrossTab .active').find('span').attr('title',data.data.menu[0].resourceList[0].name).attr('data-href',data.data.menu[0].resourceList[0].url).text(data.data.menu[0].resourceList[0].name);
+//                      $('#iframe_box .show_iframe').find('iframe').attr('src',data.data.menu[0].resourceList[0].url);
+                    }
+                    $(".adminName").text(data.data.name).attr("data-name",data.data.account);
+                    
+                }else if(data.status=='999'){
+                    window.location.href='./login.html'
+                }
+            })
+            /*$("#min_title_list li").contextMenu('Huiadminmenu', {
+            	bindings: {
+            		'closethis': function(t) {
+            			console.log(t);
+            			if(t.find("i")){
+            				t.find("i").trigger("click");
+            			}
+            		},
+            		'closeall': function(t) {
+            			alert('Trigger was '+t.id+'\nAction was Email');
+            		},
+            	}
+            });*/
+            // var aouType = JSON.parse(localStorage.getItem('storData'));
+            // if(aouType){
+            //     $(".adminName").text(aouType.fullName ? aouType.fullName : "admin");
+            // if (aouType && aouType.accountType == 1 ) {//医院
+            //     $('#menu-goods').show();
+            //     $('.menu-marketing').show();
+            //     $('#case-management').show();
+            //     $('.goodsclassify').hide();
+            //     // $(".Hui-tabNavOne").find("ul li.active span").text("医院订单确认").attr({ "title": "医院订单确认", "data-href": "view/hospitalOrder/orderList.html" });
+            //     // $(".show_iframeOne").find("iframe").attr("src", "view/hospitalOrder/orderList.html");
+            //     // $(".menu_dropdownOne").hide();
+            //     // $(".menu_dropdownTwo").show();
+            //     // $(".Hui-tabNavOne").find("ul li.active span")
+            //     // $(".Hui-tabNavOne").find("ul li.active span").text("电销管理").attr({ "title": "电销管理", "data-href": "view/emarketing/telemarketing.html" });
+            //     // $(".show_iframeOne").find("iframe").attr("src", "view/emarketing/telemarketing.html");
+            // } else if ( aouType.accountType == 2) {//销售
+            //     // $(".menu-marketing").hide();
+            //     $('#menu-goods').show();
+            //     $('.menu-marketing').show();
+            //     $('#case-management').show();
+            // } else {//管理员
+            //     $('#menu-goods').show();
+            //     $('.menu-marketing').show();
+            //     $('#case-management').show();
+            //     // $(".menu_dropdownOne").show();
+            //     // $(".Hui-tabNavOne").show();
+            //     // $(".show_iframeOne").show();
+            //     // $(".menu_dropdownTwo").hide();
+            // }
+            // }else{
+            //     window.location.href='./login.html'
+            // }
+        });
+       
+		//退出登录
+        $('#logout').click(function(){
+            // localStorage.removeItem('storData')
+            $.get(base+'/account/logout',{},function(){
+                window.location.href='./login.html'
+            });
+        })
+        //修改密码
+        $('#ModifyPswo').click(function(){
+        	var html = template("admin_modifyPswo", {name:$(".adminName").attr("data-name")});
+        	var regExp = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,21}$/;
+        	layer.open({
+                type: 1,
+	            area: ['800px', '400px'],
+	            fix: false, //不固定
+	            maxmin: false,
+	            shade: 0.4,
+	            anim: 2,
+	            title: "修改密码",
+                content: html,
+                success: function (layero, index) {
+
+                    $("#pswoSave").on("click", function () {
+				        var account = $("#account").val(),
+			        		password = $("#password").val(),
+			        		newPassword = $("#newPassword").val(),
+			        		newPassword1 = $("#newPassword1").val();
+//									
+				        if(!password){
+				        	layer.msg("原始密码不能为空!");
+				        	return false
+				        }else if(!newPassword){
+				        	layer.msg("请输入新密码!");
+				        	return false
+				        }else if(newPassword && !regExp.test($('#newPassword').val())){
+				        	layer.msg("密码必须大于6位并且由英文和数字组合!");
+				        	return false
+				        }else if(!newPassword1){
+				        	layer.msg("请再次输入新密码!");
+				        	return false
+				        }else if(newPassword != newPassword1){
+				        	layer.msg("两次密码输入不一致!");
+				        	return false
+				        }else{
+				        	var params = { account: account, password: hex_md5(password), newPassword: hex_md5(newPassword)};
+				        	$.ajax({
+					            type: 'post',
+					            url: base + "sys/updatePassword",
+					            data: JSON.stringify(params),
+						    	contentType:'application/json;charset=utf-8',
+					            success: function (data) {
+					            	if (data.status == '0') {
+					            		$.Huimodalalert(data.message, 1500);
+						                layer.close(index);
+						            }else{
+						            	layer.msg("原密码错误！");
+//						            	$.Huimodalalert(data.message, 1500);
+						            }
+					            }
+					        });
+				        }
+					        
+                    })
+                }
+            })
+        });
+        /*融云通讯初始化监听消息*/
+        function rongY_init(config){
+        	RongIMLib.RongIMClient.init(config.appKey);
+        	var instance = RongIMClient.getInstance();
+        	
+			// 连接状态监听器
+			RongIMClient.setConnectionStatusListener({
+				onChanged: function (status) {
+					console.log(status);
+				    switch (status) {
+				        case RongIMLib.ConnectionStatus.CONNECTED:
+				        	console.log('连接成功');
+				            break;
+				        case RongIMLib.ConnectionStatus.CONNECTING:
+			                console.log('正在链接');
+			                break;
+			            case RongIMLib.ConnectionStatus.DISCONNECTED:
+			                console.log('断开连接');
+			                break;
+			            case RongIMLib.ConnectionStatus.KICKED_OFFLINE_BY_OTHER_CLIENT:
+			                console.log('其他设备登录');
+			                break;
+		              	case RongIMLib.ConnectionStatus.DOMAIN_INCORRECT:
+			                console.log('域名不正确');
+			                break;
+			            case RongIMLib.ConnectionStatus.NETWORK_UNAVAILABLE:
+			              	console.log('网络不可用');
+			                break;
+				        case RongIMLib.ConnectionStatus.DISCONNECTED:
+		                	console.log('断开连接');
+			                break;
+		                case 4:
+		                	console.log('token无效');
+			                break;
+		                default:
+		                	console.log('未知错误');
+			                break;
+				        }
+				}
+			});
+			//监听消息
+			RongIMClient.setOnReceiveMessageListener({
+				// 接收到的消息
+				onReceived: function (message) {
+				    // 判断消息类型
+				    console.log("新消息: " + message.targetId);
+				    if (message.offLineMessage) {
+				    	return;
+				    }
+		            console.log(message);
+		            if (message.conversationType == RongIMLib.ConversationType.PRIVATE) {
+            			//正在输入中的状态不提示
+            			if (message.messageType != 'TypingStatusMessage') {
+							hintMessage(message);//提示新消息
+						}
+		            }
+				}
+			});
+			//开始链接
+			RongIMClient.connect(config.token, {
+				onSuccess: function(userId) {
+					console.log("链接成功，用户id：" );
+				},
+				onTokenIncorrect: function() {
+					console.log('token无效');
+				},
+				onError:function(errorCode){
+					console.log("=============================================");
+					console.log(errorCode);
+				}
+			});
+        }
+		//web IM 提示新消息
+		var hintMessage = function(msg){
+			var audios = document.getElementById('audios');
+			var audioEle ;
+			var title = '消息提醒';
+			var options = {
+		        body: "您有一条新消息，请及时回复!",
+		        data:"view/private/privateList.html",
+		        icon: (msg.content.user&&msg.content.user.icon) ? msg.content.user.icon : "./images/kefu.png",
+		    };
+		    var notification = new Notification(title,options);
+			if(!audios){
+	    		/*添加音频*/
+			    audioEle = document.createElement('embed');
+		    	audioEle.setAttribute('src', 'js/common/rongyunIm/msg.mp3');
+		    	audioEle.setAttribute('id', 'audios');//id
+		    	document.body.appendChild(audioEle);
+	    	}else{
+	    		audioEle.remove();
+	    	}
+		    notification.onclick = function(event) {
+		        window.focus();
+//					window.location.href = notification.data;
+		        notification.close();
+		    }
+		    notification.onshow = function() { 
+	            setTimeout(function() {
+	            	audioEle.remove();
+	                notification.close();
+	            }, 4000);  
+	        };
+
+		}
+		//添加监听
+		var addListeners = function(config){
+			var callback = function(phoneOrPc){
+				terminal = phoneOrPc;
+			}
+			utils.browserRedirect(callback);//检查是什么设备
+			if (terminal == 'pc') {
+				document.body.onclick = function(){
+//					hideEmoji();
+				}
+				if (Notification.permission === "granted") {
+				    supportNot = true;
+				}
+				// Otherwise, we need to ask the user for permission
+				else if (Notification.permission !== "denied") {
+				    Notification.requestPermission(function (permission) {
+				        // If the user accepts, let's create a notification
+				        if (permission === "granted") {
+				            supportNot = true;
+				        }
+				    });
+				}
+			} else {
+				document.body.ontouchstart = function(event){
+					if (event.target.className.indexOf('emojiItem') < 0 && event.target.className.indexOf('rong-emoji-content') < 0 && event.target.className.indexOf('rongcloud-expressionContent') < 0 ) {
+						hideEmoji();
+					}
+					if (event.target.className.indexOf('rongcloud-rong-btn') < 0 && event.target.className.indexOf('rongcloud-text') < 0) {
+						var inputMsg = $(".rongcloud-text")[0];
+						if (inputMsg) {
+							inputMsg.blur();
+						}
+					}
+				}
+			}
+		}
+		
+        /*个人信息*/
+        function myselfinfo() {
+            layer.open({
+                type: 1,
+                area: ['300px', '200px'],
+                fix: false, //不固定
+                maxmin: true,
+                shade: 0.4,
+                title: '查看信息',
+                content: '<div>管理员信息</div>'
+            });
+        }
+
+        /*资讯-添加*/
+        function article_add(title, url) {
+            var index = layer.open({
+                type: 2,
+                title: title,
+                content: url
+            });
+            layer.full(index);
+        }
+        /*图片-添加*/
+        function picture_add(title, url) {
+            var index = layer.open({
+                type: 2,
+                title: title,
+                content: url
+            });
+            layer.full(index);
+        }
+        /*产品-添加*/
+        function product_add(title, url) {
+            var index = layer.open({
+                type: 2,
+                title: title,
+                content: url
+            });
+            layer.full(index);
+        }
+        /*用户-添加*/
+        function member_add(title, url, w, h) {
+            layer_show(title, url, w, h);
+        }
+        //刷新商品订单页
+        function initShopping() {
+            console.log("刷新订单页")
+            window.frames['shopping'].pageMethod.searchResult();
+            window.frames['shopping'].pageMethod.getJDearlycount();
+        }
+    </script>
+
+</body>
+<script id="menuTemplate" type="text/html">
+    {{each data.menu item i}}
+    <dl id="menu-{{item.id}}"  class="menu-marketing">
+        <dt>
+            <i class="Hui-iconfont">{{item.icon}}</i> {{item.name}}
+            <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
+        </dt>
+        <dd>
+            <ul>
+            	{{each item.resourceList childItem j}}
+                <li>
+                    <a data-href="{{childItem.url}}" data-title="{{childItem.name}}" href="javascript:void(0);" id="menu-{{childItem.id}}">{{childItem.name}}</a>
+                </li>
+                {{/each}}
+            </ul>
+        </dd>
+    </dl>
+    {{/each}}
+</script>
+<!--修改密码-->
+<script id="admin_modifyPswo" type="text/html">
+	<div id="form-admin_modifyPswo" class="form form-horizontal form-step">
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2 col-offset-1">用户名:</label>
+            <div class="formControls col-xs-5 col-sm-6">
+                <input type="text" class="input-text" value="{{name}}" id="account" disabled="disabled">
+            </div>
+            <span class="Validform_checktip col-xs-2 col-sm-2 red"></span>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2 col-offset-1">原密码:</label>
+            <div class="formControls col-xs-5 col-sm-6">
+                <input type="password" class="input-text" value="" placeholder="" id="password">
+            </div>
+            <span class="Validform_checktip col-xs-2 col-sm-2 red"></span>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2 col-offset-1">密码:</label>
+            <div class="formControls col-xs-5 col-sm-6">
+                <input type="password" class="input-text"value="" placeholder="" id="newPassword">
+            </div>
+            <span class="Validform_checktip col-xs-2 col-sm-2 red"></span>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2 col-offset-1">请重复密码:</label>
+            <div class="formControls col-xs-5 col-sm-6">
+                <input type="password" class="input-text" value="" placeholder="" id="newPassword1">
+            </div>
+            <span class="Validform_checktip col-xs-2 col-sm-2 red"></span>
+        </div>
+        
+        <div class="sub_btn">
+            <button type="submit" class="btn btn-primary radius" id="pswoSave" data-id="">保存</button>
+        </div>
+        
+    </div>
+</script>
+</html>

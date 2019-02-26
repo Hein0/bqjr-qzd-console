@@ -1,0 +1,111 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <title>节假日配置</title>
+
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui/css/H-ui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/H-ui.admin.css"/>
+    <link rel="stylesheet" type="text/css" href="../../lib/Hui-iconfont/1.0.8/iconfont.css"/>
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/skin/default/skin.css" id="skin"/>
+    <link rel="stylesheet" type="text/css" href="../../lib/laypage/1.2/skin/laypage.css">
+    <link rel="stylesheet" type="text/css" href="../../lib/laypage/1.2/skin/laypage.css">
+    <link rel="stylesheet" type="text/css" href="../../css/reset.css"/>
+</head>
+
+<body>
+
+<nav class="breadcrumb">
+    <i class="Hui-iconfont">&#xe67f;</i>
+    首页 <span class="c-gray en">&gt;</span>
+    现金分期 <span class="c-gray en">&gt;</span>
+    资金分配引擎
+    <a class="btn btn-success r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a>
+</nav>
+
+<div class="page-container">
+    <div class="cl pd-5 bg-1 bk-gray mb-20">友情提示：系统默认周一到周五是工作日，周六周日是节假日。所以遇到国家规定的节假日跟系统默认规则不同时需要进行节假日设置。</div>
+    <div class="panel panel-default">
+        <div class="panel-body pb-0 cl search">
+            <form class="search-form">
+                <div class="f-l mr-15 mb-15 market-day">
+                    <span class="text-c f-l">日期</span>
+                    <input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'endDay\')}' })" id="startDay" class="input-text Wdate f-l" readonly name="startDay" />
+                    <span class="f-l">至</span>
+                    <input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'startDay\')}'})" id="endDay" class="input-text Wdate f-l" readonly name="endDay" />
+                </div>
+                <div class="f-l mr-15 mb-15">
+                    <span class="text-c f-l">资方</span>
+                    <select name="capitals" class="capitals">
+                    </select>
+                </div>
+                <div class="f-l mr-15 mb-15">
+                    <span class="text-c f-l">设为</span>
+                    <select name="type" class="type">
+                    </select>
+                </div>
+            </form>
+            <div class="text-l m-t10 f-r">
+                <button type="button" class="btn btn-primary mr-10 mb-15" id="screeBtn" onclick="holiday.add()"><i class="Hui-iconfont">&#xe716;</i> 确定添加</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-20">
+        <table class="table table-border table-bordered table-hover table-bg table-sort">
+            <thead>
+                <tr class="text-c">
+                    <th width="14%">开始日期</th>
+                    <th width="14%">结束日期</th>
+                    <th width="14%">资方</th>
+                    <th width="14%">设为</th>
+                    <th width="14%">操作人</th>
+                    <th width="16%">创建时间</th>
+                    <th width="14%">操作</th>
+                </tr>
+            </thead>
+            <tbody id="list">
+
+            </tbody>
+        </table>
+    </div>
+
+    <!--分页-->
+    <div class="pagination mt-20" id="pagination"></div>
+</div>
+
+<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="../../lib/jquery/1.9.1/jquery.min.js?rev=@@hash"></script>
+<script type="text/javascript" src="../../lib/layer/2.4/layer.js?rev=@@hash"></script>
+<script type="text/javascript" src="../../static/h-ui/js/H-ui.min.js?rev=@@hash"></script>
+<script type="text/javascript" src="../../static/h-ui.admin/js/H-ui.admin.js?rev=@@hash"></script>
+<script type="text/javascript" src="../../js/base/public.js?rev=@@hash"></script>
+<!--/_footer 作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="../../lib/My97DatePicker/4.8/WdatePicker.js?rev=@@hash"></script>
+<script type="text/javascript" src="../../lib/laypage/1.2/laypage.js?rev=@@hash"></script>
+<script src="../../js/common/jquery.tmpl.min.js?rev=@@hash"></script>
+<script type="text/javascript" src="../../js/page/holidays.js?rev=@@hash"></script>
+<script type="text/html" id="distList">
+    {{each(i,item) data}}
+    <tr class="text-c">
+        <td>${item.startDayStr}</td>
+        <td>${item.endDayStr}</td>
+        <td>${item.capitalsStr}</td>
+        <td>${item.type==1?"工作日":"节假日"}</td>
+        <td>${item.operator}</td>
+        <td>${item.createTime}</td>
+        <td><a href="javascript:" style="color: dodgerblue; text-decoration: underline;" onclick="holiday.delete('${item.id}')">删除</a></td>
+    </tr>
+    {{/each}}
+</script>
+</body>
+
+</html>

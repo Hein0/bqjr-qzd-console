@@ -1,0 +1,477 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <title>用户管理-用户详情</title>
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="../../lib/Hui-iconfont/1.0.8/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/skin/default/skin.css" id="skin" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="../../lib/My97DatePicker/4.8/skin/WdatePicker.css">
+    <link rel="stylesheet" href="../../css/styles.css" type="text/css" />
+    <style type="text/css">
+        /*.table-bordered th, .table-bordered td {
+            border-right: 0;
+            border-left: 0;
+        }*/
+        .table { width: 100%; border: solid 1px #ddd; }
+        .table thead th { border-bottom: solid 1px #ddd; }
+        .tab-list tr > th { width: 8% !important; }
+        .tab-list tr > td, .tab-list tr > th { border: 0 !important; }
+        .table th, .table td { padding-left: 20px; }
+        .table .user-list tr > th { width: 12%; font-weight: 500; }
+        .table .user-list tr > td { width: 40%; }
+        .table .user-list tr > td a { color: blue; text-decoration: underline; }
+        .clearfix:after { content: "\20"; display: block; height: 0; clear: both; visibility: hidden; }
+        .clearfix { zoom: 1; }
+        .tab-bar { border-bottom: none; }
+        .tab-bar span { position: relative; top: 1px; border: solid 1px #ddd; background-color: #ddd; cursor: pointer; display: inline-block; float: left; height: 30px; line-height: 30px; padding: 0 20px; font-size: 12px; margin-top: 1px; border-top-left-radius: 4px; border-top-right-radius: 4px; margin-right: 12px; }
+        .tab-bar span.current { background-color: #fff; color: #000; border-bottom: solid 1px #fff !important; }
+        .tab-con { display: none; border: solid 1px #ddd; padding: 20px 0; margin-bottom: 25px; }
+        .tab-con > table { border: none 0 !important; }
+        .edit-this { margin-left: 20px; color: #00f; text-decoration: underline; cursor: pointer; }
+        .modal .wrap { display: block; width: 500px; margin: 0 auto 10px; }
+        .modal .wrap .tit { display: inline-block; width: 60px; }
+
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button{
+            -webkit-appearance: none !important;
+            margin: 0;
+        }
+
+        input[type="number"]{-moz-appearance:textfield;}
+    </style>
+</head>
+<body>
+    <nav class="breadcrumb">
+        <i class="Hui-iconfont">&#xe67f;</i> <a href="userList.html"> 首页</a> <span class="c-gray en">&gt;</span><a href="userList.html">用户管理</a><span class="c-gray en">&gt;</span><a href="userList.html"> 用户列表</a> <span class="c-gray en">&gt;</span> 用户详情<a class="btn btn-success radius r" style="margin-top:4px;" href="javascript:location.replace(location.href);" title="刷新">
+            <i class="Hui-iconfont"></i>
+        </a>
+    </nav>
+    <div class="page-container">
+        <div id="userDetailContent" style="margin-top:-10px;">
+
+        </div>
+    </div>
+    <div id="msgshadeDiv" class="shade_bg" style="height:953px; display: none;"></div>
+
+    <!-- 修改用户姓名 -->
+    <div id="editName" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content radius">
+                <div class="modal-header">
+                    <h3 id="myModalLabel">编辑用户姓名</h3>
+                    <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>
+                </div>
+                <div class="modal-body">
+                    <div class="wrap"><span class="tit">编辑前</span><span class="old-value"></span></div>
+                    <div class="wrap"><span class="tit">编辑后</span><input type="text" class="input-text" id="editNameIpt" style="width:150px;"></div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" id="sbtName">确定</button>
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 修改手机号码 -->
+    <div id="editMobile" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content radius">
+                <div class="modal-header">
+                    <h3 id="myModalLabel">编辑手机号码</h3>
+                    <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>
+                </div>
+                <div class="modal-body">
+                    <div class="wrap"><span class="tit">编辑前</span><span class="old-value"></span></div>
+                    <div class="wrap"><span class="tit">编辑后</span><input type="number" class="input-text" id="editMobileIpt" style="width:200px;"></div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" id="sbtMobile">确定</button>
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 修改身份证号码 -->
+    <div id="editNumber" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content radius">
+                <div class="modal-header">
+                    <h3 id="myModalLabel">编辑身份证号码</h3>
+                    <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>
+                </div>
+                <div class="modal-body">
+                    <div class="wrap"><span class="tit">编辑前</span><span class="old-value"></span></div>
+                    <div class="wrap"><span class="tit">编辑后</span><input type="number" class="input-text" id="editNumberIpt" style="width:200px;"></div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" id="sbtNumber">确定</button>
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 修改身份证有效期 -->
+    <div id="editTime" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content radius">
+                <div class="modal-header">
+                    <h3 id="myModalLabel">编辑身份证有效期</h3>
+                    <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>
+                </div>
+                <div class="modal-body">
+                    <div class="wrap"><span class="tit">编辑前</span><span class="old-value"></span></div>
+                    <div class="wrap"><span class="tit">编辑后</span><input type="text" class="input-text Wdate" id="editTimeOne" style="width: 150px;" onfocus="WdatePicker({ maxDate: '#F{$dp.$D(\'editTimeTwo\')||\'%y-%M-%d\'}' })"> 至 <input type="text" class="input-text Wdate" id="editTimeTwo" style="width:150px;" onfocus="WdatePicker({ minDate: '#F{$dp.$D(\'editTimeOne\')}'})"><label style="display:inline-block;margin-left:20px;"><input type="checkbox" id="isLong"> 长期</label></div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" id="sbtTime">确定</button>
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--_footer 作为公共模版分离出去-->
+    <script type="text/javascript" src="../../lib/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="../../lib/layer/2.4/layer.js"></script>
+    <script type="text/javascript" src="../../static/h-ui/js/H-ui.min.js"></script>
+    <script type="text/javascript" src="../../static/h-ui.admin/js/H-ui.admin.js"></script>
+    <!--/_footer 作为公共模版分离出去-->
+
+    <!--请在下方写此页面业务相关的脚本-->
+    <script type="text/javascript" src="../../lib/My97DatePicker/4.8/WdatePicker.js"></script>
+    <script type="text/javascript" src="../../lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="../../lib/laypage/1.2/laypage.js"></script>
+    <script src="../../js/common/jquery.tmpl.min.js" type="text/javascript"></script>
+    <script src="../../js/base/public.js" type="text/javascript"></script>
+    <script src="../../js/page/userDetail.js" type="text/javascript"></script>
+
+    <script type="text/html" id="tmplUserDetail">
+        <table class="table table-bg mt-10">
+            <thead>
+                <tr>
+                    <th colspan="4" scope="col">用户数据</th>
+                </tr>
+            </thead>
+            <tbody class="user-list">
+                <tr>
+                    <th>姓名：</th>
+                    <td>
+                        {{if typeof(userInfoExtend)!='undefined'}}
+                        <span id="lbServerName">{{= userInfoExtend.name}}</span>
+                        {{/if}}
+                        {{if userInfoExtend.status < 25}}
+                        <span class="edit-this" data-type="editName">编辑</span>
+                        {{/if}}
+                    </td>
+                    <th>钱包状态：</th>
+                    <td><span id="">{{= userInfoExtend.strStatus}}</span></td>
+                </tr>
+                <tr>
+                    <th>手机号：</th>
+                    <td>
+                        <span id="userMobile">{{= userInfoExtend.mobile}}</span>
+                        <!-- {{if userInfoExtend.status < 25}}
+                        <span class="edit-this" data-type="editMobile">编辑</span>
+                        {{/if}} -->
+                    </td>
+                    <th> 审核申请时间：</th>
+                    <td><span id="">{{= userInfoExtend.checkApplyTime}}</span></td>
+                </tr>
+                <tr>
+                    <th>身份证：</th>
+                    <td>
+                        <span id="userCardNum"> {{= userInfoExtend.certId}}</span>
+                        {{if userInfoExtend.status < 25}}
+                        <span class="edit-this" data-type="editNumber">编辑</span>
+                        {{/if}}
+                    </td>
+                    <th>审核通过时间：</th>
+                    <td><span id="">{{= userInfoExtend.checkPassTime}}</span></td>
+                </tr>
+                <tr>
+                    <th>有效期：</th>
+                    <td>
+                        <span id="userCardTime"> {{= userInfoExtend.certStartDate}} 至 {{= userInfoExtend.certEndDate}}</span>
+                        {{if userInfoExtend.status < 25}}
+                        <span class="edit-this" data-type="editTime">编辑</span>
+                        {{/if}}
+                    </td>
+                    <th></th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>使用APP版本：</th>
+                    <td><span id="app">{{= creditBehaviorInfo.itemId}}</span></td>
+                    <th></th>
+                    <td><span ></span></td>
+                </tr>
+                <tr>
+                    <th scope="col">身份信息</th>
+                    <td colspan="3">
+                        <a href="javascript:" style="padding-right:10px;" onclick="userDetail.showPhotos(1,'{{= userInfoExtend.certImage1Url}}');">查看身份证正面照</a>
+                        <a href="javascript:" onclick="userDetail.showPhotos(2,'{{= userInfoExtend.certImage2Url}}');">查看身份证反面照</a>
+                        <div class="show-img" id="tab1">
+                            <span class="photo-close Hui-iconfont">&#xe6dd;</span>
+                            <img src="{{= userInfoExtend.certImage1Url}}" isload="false" />
+                        </div>
+                        <div class="show-img" id="tab2">
+                            <span class="photo-close Hui-iconfont">&#xe6dd;</span>
+                            <img src="{{= userInfoExtend.certImage2Url}}" isload="false" />
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="col">人脸识别</th>
+                    <td colspan="3">
+                        <a href="javascript:" style="padding-right:10px;" onclick="userDetail.showPhotos(3,'{{= userInfoExtend.faceEyesImageUrl}}');">人脸识别眨眼</a>
+                        <a href="javascript:" onclick="userDetail.showPhotos(4,'{{= userInfoExtend.faceNotEyesImageUrl}}');">人脸识别不眨眼</a>
+                        <div class="show-img" id="tab3">
+                            <span class="photo-close Hui-iconfont">&#xe6dd;</span>
+                            <img src="{{= userInfoExtend.faceEyesImageUrl}}" isload="false" />
+                        </div>
+                        <div class="show-img" id="tab4">
+                            <span class="photo-close Hui-iconfont">&#xe6dd;</span>
+                            <img src="{{= userInfoExtend.faceNotEyesImageUrl}}" isload="false" />
+                        </div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <!--table-border table-bordered-->
+        <table class="table table-bg mt-10">
+            <thead>
+                <tr>
+                    <th colspan="4" scope="col">储蓄卡</th>
+                </tr>
+            </thead>
+            <tbody class="user-list">
+                <tr>
+                    <th>持卡人：</th>
+                    <td>{{= userInfoExtend.name}}</td>
+                    <th>开户行：</th>
+                    <td>{{= creditBankInfo.branchName}}</td>
+                </tr>
+                <tr>
+                    <th>储蓄卡号：</th>
+                    <td>{{= creditBankInfo.bankcard}}</td>
+                    <th>预留手机号：</th>
+                    <td><span>{{= creditBankInfo.mobPhone}}</span></td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table  table-bg mt-10">
+            <thead>
+            <tr>
+                <th colspan="4" scope="col">详细资料</th>
+            </tr>
+            </thead>
+            <tbody class="user-list">
+            <tr>
+                <th>学历：</th>
+                <td>{{= userInfoExtend.strEducation}}</td>
+                <th>联系人关系：</th>
+                <td>{{= creditFamilyInfoExtend.strDependentType}}</td>
+            </tr>
+            <tr>
+                <th>公司名称：</th>
+                <td>{{= creditJobInfoExtend.company}}</td>
+                <th>联系人姓名：</th>
+                <td><span>{{= creditFamilyInfoExtend.dependentName}}</span></td>
+            </tr>
+            <tr>
+                <th>公司座机：</th>
+                <td>{{= creditJobInfoExtend.workPhone}}</td>
+                <th>联系人电话：</th>
+                <td><span>{{= creditFamilyInfoExtend.dependentPhone}}</span></td>
+            </tr>
+            <tr>
+                <th>所在城市：</th>
+                <td>{{= creditJobInfoExtend.workProv}} {{= creditJobInfoExtend.workCity}}</td>
+                <th></th>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
+        <!--<div id="tab_demo" class="HuiTab mt-10" role="tablist">
+            <div class="tab-bar clearfix">
+                <span role="tab" class="current">家庭信息</span><span role="tab">工作信息</span><span role="tab">其它信息</span><span role="tab">运营商认证</span>
+            </div>
+            <div class="tab-con bk_gray" role="tabpanel" style="display: none;">
+                <table class="table tab-border table-bg">
+                    <tbody class="user-list tab-list">
+                        {{if creditFamilyInfoExtend!=''}}
+                        <tr>
+                            <th>家庭地址：</th>
+                            <td>
+                                {{=
+                                creditFamilyInfoExtend.homeProv+creditFamilyInfoExtend.homeCity+creditFamilyInfoExtend.homeDistrict+creditFamilyInfoExtend.homeStreet}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>详细地址：</th>
+                            <td>{{= creditFamilyInfoExtend.homeAddr}}</td>
+                        </tr>
+                        <tr>
+                            <th>婚姻状况：</th>
+                            <td>{{= creditFamilyInfoExtend.strMarry}}</td>
+                        </tr>
+                        <tr>
+                            <th>紧急联系人关系：</th>
+                            <td>{{= creditFamilyInfoExtend.strDependentType}}</td>
+                        </tr>
+                        <tr>
+                            <th>联系人姓名：</th>
+                            <td>{{= creditFamilyInfoExtend.dependentName}}</td>
+                        </tr>
+                        <tr>
+                            <th>联系人手机：</th>
+                            <td>{{= creditFamilyInfoExtend.dependentPhone}}</td>
+                        </tr>
+                        {{else}}
+                        <tr>
+                            <td colspan="2">没有相关的数据！</td>
+                        </tr>
+                        {{/if}}
+                    </tbody>
+                </table>
+            </div>
+            <div class="tab-con bk_gray" role="tabpanel" style="display: block;">
+                <table class="table tab-border table-bg">
+                    <tbody class="user-list tab-list">
+                        {{if creditJobInfoExtend!=''}}
+                        <tr>
+                            <th>工作单位：</th>
+                            <td>{{= creditJobInfoExtend.company}}</td>
+                        </tr>
+                        <tr>
+                            <th>单位性质：</th>
+                            <td>{{= creditJobInfoExtend.strUnitproperty}}</td>
+                        </tr>
+                        <tr>
+                            <th>单位行业：</th>
+                            <td>{{= creditJobInfoExtend.strIndustry}}</td>
+                        </tr>
+                        <tr>
+                            <th>单位地址：</th>
+                            <td>
+                                {{=
+                                creditJobInfoExtend.workCity+creditJobInfoExtend.workDistrict+creditJobInfoExtend.workStreet}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>详细地址：</th>
+                            <td> {{= creditJobInfoExtend.workAddr}}</td>
+                        </tr>
+                        <tr>
+                            <th>任职部门：</th>
+                            <td>{{= creditJobInfoExtend.department}}</td>
+                        </tr>
+                        <tr>
+                            <th>职位：</th>
+                            <td>{{= creditJobInfoExtend.strPosition}}</td>
+                        </tr>
+                        <tr>
+                            <th>工作年限：</th>
+                            <td>{{= creditJobInfoExtend.strWorkYears}}</td>
+                        </tr>
+                        <tr>
+                            <th>月收入：</th>
+                            <td>{{= creditJobInfoExtend.strIncome}}</td>
+                        </tr>
+                        <tr>
+                            <th>单位电话：</th>
+                            <td>{{= creditJobInfoExtend.workPhone}}</td>
+                        </tr>
+                        <tr>
+                            <th>单位邮箱：</th>
+                            <td>{{= creditJobInfoExtend.workEmail}}</td>
+                        </tr>
+                        <tr>
+                            <th>同事姓名：</th>
+                            <td>{{= creditJobInfoExtend.colleagueName}}</td>
+                        </tr>
+                        <tr>
+                            <th>同事电话：</th>
+                            <td>{{= creditJobInfoExtend.colleaguePhone}}</td>
+                        </tr>
+                        {{else}}
+                        <tr>
+                            <td colspan="2">没有相关的数据！</td>
+                        </tr>
+                        {{/if}}
+                    </tbody>
+                </table>
+            </div>
+            <div class="tab-con bk_gray" role="tabpanel" style="display: none;">
+                <table class="table tab-border table-bg">
+                    <tbody class="user-list tab-list">
+                        {{if userInfoExtend!=''}}
+                        <tr>
+                            <th>毕业院校：</th>
+                            <td>{{= userInfoExtend.school}}</td>
+                        </tr>
+                        <tr>
+                            <th>最高学历：</th>
+                            <td>{{= userInfoExtend.strEducation}}</td>
+                        </tr>
+                        <tr>
+                            <th>微信号：</th>
+                            <td>{{= userInfoExtend.wxId}}</td>
+                        </tr>
+                        <tr>
+                            <th>qq号：</th>
+                            <td>{{= userInfoExtend.qqId}}</td>
+                        </tr>
+                        <tr>
+                            <th>本人邮箱：</th>
+                            <td>{{= userInfoExtend.email}}</td>
+                        </tr>
+                        {{else}}
+                        <tr>
+                            <td colspan="2">没有相关的数据！</td>
+                        </tr>
+                        {{/if}}
+                    </tbody>
+                </table>
+            </div>
+            <div class="tab-con bk_gray" role="tabpanel" style="display: none;">
+                <table class="table tab-border table-bg">
+                    <tbody class="user-list tab-list">
+                        {{if creditMobileOperatorApply!=''}}
+                        <tr>
+                            <th>手机号：</th>
+                            <td>{{= creditMobileOperatorApply.mobile}}</td>
+                        </tr>
+                        <tr>
+                            <th>所属运营商：</th>
+                            <td>{{= creditMobileOperatorApply.operators}}</td>
+                        </tr>
+                        <tr>
+                            <th>运营商服务密码：</th>
+                            <td>{{= creditMobileOperatorApply.password}}</td>
+                        </tr>
+                        {{else}}
+                        <tr>
+                            <td colspan="2">没有相关的数据！</td>
+                        </tr>
+                        {{/if}}
+                    </tbody>
+                </table>
+            </div>
+        </div>-->
+    </script>
+</body>
+</html>

@@ -1,0 +1,223 @@
+.table_panel{width: 100%;margin-bottom: 20px;}
+.table_panel p{text-align: center;font-size: 14px;height: 50px;line-height: 50px;}
+.title{margin-bottom: 20px;}
+.table_head{border: 1px solid lightgray;overflow: hidden;margin-top: 10px;}
+.table_head .hot_word{width: 20%;border-right: 1px solid lightgray;}
+.table_head .actions{width: 79.8%;}
+.table_list .hot_word_box{width: 20%;border-right: 1px solid lightgray;}
+.table_list .actions_box{width: 79.8%;background: white;}
+.table_list .actions_box a{margin-right: 80px;color: dodgerblue;}
+.table_list .hot_word_change{
+	width: auto;
+	height: 40px;
+	/*background:#eaadea;*/
+	border: none;
+	text-align: center;
+}
+.table_list li {border: 1px solid lightgray;overflow: hidden;border-top: none;}
+.mark_pop{
+	width: 100%;
+	height: 100%;
+	background: rgba(0,0,0,0.4);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#66000000,endColorstr=#66000000);
+	position: fixed;
+	z-index: 7;
+	top: 0;
+	left: 0;
+	display: none;
+}
+/*添加链接弹窗*/
+#modal-demo{margin-top: 200px;}
+#modal-demo input:hover{
+	border: solid 1px #3bb4f2;
+}
+#modal-demo input{
+	width: 300px;
+	height: 30px;
+	border: solid 1px gainsboro;
+	text-indent: 1em;
+	margin-left: 10px;
+}
+.modal-body{text-align: center;}
+/*添加链接end*/
+
+/*关联商品弹窗*/
+.pop_goods{
+	width: 1286px;
+	position: absolute;
+	top: 50px;
+    left: 20px;
+    z-index: 999;
+    /*-webkit-transform: translate(-50%,0);  
+    -ms-transform: translate(-50%,0);  
+    transform: translate(-50%,0);  */
+	background: #efefef;
+	display: none;
+}
+.pop_goods_head{
+	height: 80px;
+	background: antiquewhite;
+}
+.pop_goods_head p{
+	line-height: 80px;
+	font-size: 30px;
+	margin-left: 50px;
+}
+.left_side{width: 244px;height: 500px;border: 1px solid darkgray;margin: 0 10px 0 10px;overflow-y: auto;}
+
+.check_box input{margin-left:10px ;margin-right: 3px;}
+.goods_title{height: 50px;margin-left: 20px;}
+.condition .margin_t_10{margin: 10px 0 0 50px;}
+.condition label{
+	font-weight: normal;
+}
+.condition span{
+	display: inline-block;
+	line-height: 30px;
+	width: 80px;
+	height: 30px;
+	background-color: #e6e6e6;
+	text-align: center;
+}
+.condition input[type='text']{
+	width: 150px;
+	height: 30px;
+	border: 1px solid #e6e6e6;
+	margin-left: -5px;
+	text-indent: 1em;
+}
+.condition select{
+	width: 100px;
+	height: 30px;
+	border: 1px solid #e6e6e6;
+	margin-left: -5px;
+}
+.condition button{
+	width: 80px;
+	height: 30px;
+}
+
+.list_head{
+	width: 998px;
+	height: 40px;
+	line-height: 40px;
+	background: ghostwhite;
+}
+.list_head span, .link_goods span{
+	display: inline-block;
+	text-align: center;
+}
+#all{margin: 0 10px 0 10px ;}
+.right_body{border: 1px solid darkgray;}
+.link_goods li{
+	width: 988px;
+	height: 150px;
+	background: #efefef;
+	padding: 10px 0 0 10px;
+}
+.link_goods .li_color{background: white;}
+.link_goods span,.link_goods input,.link_goods img{float: left;}
+.link_goods span{margin-top: 50px;}
+.link_goods input{margin-top: 60px;}
+.link_goods li img{margin-left: 10px; margin-top: 20px;width: 90px; height: 90px;}
+.link_goods li .link_name{width: 140px;height: 90px;margin-left: 10px;margin-top: 30px;display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 4;overflow: hidden;}
+.link_goods li .link_price{width: 100px;height: 40px;margin-left: 70px;}
+.link_goods li .link_kind{width: 100px;height: 40px;margin-left: 55px;}
+.link_goods li .link_status{width: 100px;height: 40px;margin-left: 50px;}
+.link_goods li .link_role{width: 30px;height: 40px;margin-left: 45px;}
+.link_goods li .link_time{width: 100px;height: 40px;margin-left: 40px;}
+.pagination{overflow: hidden;margin-left: 50px;}
+.pop_goods .btnLi{margin: 20px 0 20px 300px;overflow: hidden}
+.pop_goods .btnLi li{
+	width: 150px;
+	height: 40px;
+	font-size: 14px;
+	line-height: 40px;
+	text-align: center;
+	color: white;
+	background: #5a98de;
+	float: left;
+	margin: 20px 50px 50px 0;
+	border-radius: 5px;
+}
+.dis_none{width: 20px;height: 20px;display: inline-block;background: transparent;}
+/*添加商品end*/
+/*查看商品弹窗*/
+.check_goods{
+	width: 1366px;
+    min-height: 350px;
+    position: absolute;
+    top: 200px;
+    left: 20px;
+    z-index: 999;
+    /*-webkit-transform: translate(-50%,-50%);  
+    -ms-transform: translate(-50%,-50%);  
+    transform: translate(-50%,-50%);  */
+    background: #efefef;
+    display: none;
+    text-align: center;
+    border: 1px solid lightgray;
+}
+.check_goods .right_body{border: none;}
+.check_goods .pop_goods_head{
+	height: 80px;
+    background: antiquewhite;
+}
+.check_goods li {
+	width: 1356px;
+    height: 150px;
+    background: #efefef;
+    padding: 10px 0 0 10px;
+}
+.check_link_goods span,.check_link_goods input,.check_link_goods img{float: left;}
+.check_link_goods li img{margin-left: 10px; margin-top: 20px;width: 90px; height: 90px;}
+.check_link_goods li .check_link_name{width: 180px;height: 40px;margin-left: 10px;}
+.check_link_goods li .check_link_price{width: 100px;height: 40px;margin-left: 120px;}
+.check_link_goods li .check_link_kind{width: 100px;height: 40px;margin-left: 120px;}
+.check_link_goods li .check_link_status{width: 100px;height: 40px;margin-left: 120px;}
+.check_link_goods li .check_link_role{width: 30px;height: 40px;margin-left: 85px;}
+.check_link_goods li .check_link_time{width: 100px;height: 40px;margin-left: 100px;}
+.check_list_head{
+	width: 1366px;
+	height: 40px;
+	line-height: 40px;
+	background: ghostwhite;
+}
+.check_list_head span, .check_list_head span{
+	display: inline-block;
+	text-align: center;
+}
+.check_link_goods span{margin-top: 50px;}
+.check_goods .check_sure{
+	width: 150px;
+    height: 40px;
+    font-size: 14px;
+    line-height: 40px;
+    text-align: center;
+    color: white;
+    background: #5a98de;
+    margin: 20px 50px 0 0;
+    border-radius: 5px;
+    border: none;
+}
+.close_btn{float: right;margin-right: 30px;color: darkgray;}
+/*查看商品弹窗end*/
+
+
+
+/*树形列表*/
+.menuTree{ margin-left:0px;}
+.menuTree div{ padding-left:1px;}
+.menuTree div ul{ overflow:hidden; display:none; height:auto; margin:0;}
+.menuTree span{ display:inline-block;width: 99%; height:25px; line-height:25px; margin:1px 0; cursor:pointer; border-bottom:1px solid #CCC;}
+.menuTree .tree_span2{margin-left: 20px;}
+.menuTree .tree_span3{margin-left: 40px;}
+.menuTree .tree_span4{margin-left: 60px;}
+.menuTree span:hover{ background-color:#e6e6e6; color:#cf0404;}
+.menuTree a{ color:#333; text-decoration:none;}
+.menuTree a:hover{ color:#06F;}
+/*.menuTree span{height: 50px;}*/
+.choose{border: 1px solid #ffe696;
+    background: #fffaea;}
+.menuTree b{display: inline-block;}
+/*树形列表end*/

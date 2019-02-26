@@ -1,0 +1,190 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <title>用户管理</title>
+
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui/css/H-ui.min.css?rev=@@hash" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/H-ui.admin.css?rev=@@hash" />
+    <link rel="stylesheet" type="text/css" href="../../lib/Hui-iconfont/1.0.8/iconfont.css?rev=@@hash" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/skin/default/skin.css?rev=@@hash" id="skin" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/style.css?rev=@@hash" />
+
+    <!--分页样式表，需要分页的页面加入-->
+    <link rel="stylesheet" type="text/css" href="../../lib/laypage/1.2/skin/laypage.css?rev=@@hash">
+    <link rel="stylesheet" type="text/css" href="../../lib/zTree/v3/css/zTreeStyle/zTreeStyle.css?rev=@@hash">
+    <link rel="stylesheet" type="text/css" href="../../css/hospitalOrder.css?rev=@@hash">
+    <link rel="stylesheet" type="text/css" href="../../css/resource.css?rev=@@hash">
+    <style type="text/css">
+        .table-bordered th, .table-bordered td {border-left:none !important;}
+        .form .row{    margin-left: 0px;margin-right: 0px;}
+        .grant_butt{margin: 0 auto;text-align: center;}
+        .checkAll{width:400px;padding:3px;margin:0 auto; }
+    </style>
+
+</head>
+
+<body>
+<nav class="breadcrumb">
+    <i class="Hui-iconfont">&#xe67f;</i> 首页
+    <span class="c-gray en">&gt;</span> 系统管理
+    <span class="c-gray en">&gt;</span> APP用户管理
+    <a class="btn btn-success radius r" style="line-height:1.6em;margin:3px 0 0 20px" href="javascript:location.replace(location.href);"
+       title="刷新">
+        <i class="Hui-iconfont">&#xe68f;</i>刷新
+    </a>
+</nav>
+
+<div class="Hui-article">
+    <article class="cl pd-20">
+
+        <div class="panel panel-default search-bar-width">
+            <div class="panel-body">
+                <form id="searchForm">
+                    <!--筛选条件区域-->
+                    <div class="condition-wrap cl common-form-wrap" id="pageSearchForm">
+
+                        <div class="condition-parent cl">
+                            <span class="title">手机号查询</span>
+                            <input class="long-ipt" type="text" name="telphone" id="telphone" value="" placeholder="输入手机号">
+                        </div>
+
+                        <div class="condition-parent cl">
+                            <span class="title">昵称查询</span>
+                            <input class="long-ipt" type="text" name="nick_name" id="nick_name" value="" placeholder="输入昵称">
+                        </div>
+
+                        <div class="button-wrap">
+                            <button type="button" class="btn btn-primary" id="screeBtn" onclick="search()">
+                                <i class="Hui-iconfont">&#xe665;</i> 筛选</button>
+                            <!--<button type="button" class="btn btn-primary" id="resetBtn" onclick="resetBtns()">-->
+                                <!--<i class="Hui-iconfont">&#xe66b;</i> 重置</button>-->
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="goods-list">
+            <table class="table table-border table-bordered table-hover table-bg">
+                <thead>
+                <tr class="text-c">
+                    <th width="60">手机号</th>
+                    <th width="60">昵称</th>
+                    <th width="60">姓名</th>
+                    <th width="60">身份证</th>
+                    <th width="60">性别</th>
+                    <th width="70">常用设备</th>
+                    <th width="70">注册时间</th>
+                    <th width="70">登陆时间</th>
+                    <th width="70">登出时间</th>
+                    <th width="70">操作</th>
+                </tr>
+                </thead>
+                <tbody id="tbodys">
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="pagination cl" id="pagination"></div>
+
+    </article>
+</div>
+
+
+
+<!--footer 作为公共模版分离出去-->
+<script type="text/javascript" src="../../lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="../../lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="../../static/h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="../../static/h-ui.admin/js/H-ui.admin.js"></script>
+<script type="text/javascript" src="../../lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<!--footer 作为公共模版分离出去-->
+<script type="text/javascript" src="../../lib/laypage/1.2/laypage.js"></script>
+<script type="text/javascript" src="../../lib/arttemplate/template-web.js"></script>
+<script type="text/javascript" src="../../js/base/public.js?rev=@@hash"></script>
+<!--渲染列表-->
+<script id="artTemp" type="text/html">
+    {{each data item i}}
+    <tr class="text-c">
+        <td>{{item.telphone}}</td>
+        <td>{{item.nick_name}}</td>
+        <td>{{item.realname}}</td>
+        <td>{{item.idCard}}</td>
+        <td>{{item.sex}}</td>
+        <td>{{item.device}}</td>
+        <td>{{item.create_time}}</td>
+        <td>{{item.loginTime}}</td>
+        <td>{{item.signOutTime}}</td>
+        <td class="f-14">
+            <a class="authorise" data-id="{{item.user_id}}" title="重置密码" href="javascript:;" onclick="assignRoles($(this))" style="text-decoration:none;">重置</a>
+        </td>
+    </tr>
+    {{/each}}
+</script>
+
+<script type="text/javascript">
+
+    // 获取用户列表
+    function search () {
+        var params = $("#searchForm").serializeObject();
+        console.log(params)
+        if(params.telphone || params.nick_name){
+            $.ajax({
+                type: 'GET',
+                url: base + 'sys/getAppUser',
+                data: params,
+                contentType:'application/json;charset=utf-8',
+                success: function (res) {
+                    if (res.status == '0'&& res.data.length>0) {
+                        var html = template("artTemp", res)
+                        $('#tbodys').html(html);
+                    }else if (res.status == '9999') {
+                        // 未登录
+                        window.top.location.href = '../../login.html';
+                    } else {
+                        $('#tbodys').html('');
+                        $.Huimodalalert("查询无数据!", 2000);
+                    }
+                }
+
+            });
+        }else{
+            $.Huimodalalert("必须输入一个查询条件!", 2000);
+        }
+
+
+    }
+
+    // 重置密码
+    function assignRoles(obj) {
+
+        layer.confirm('是否确定重置密码？', function(){
+            
+            var id = obj.attr("data-id");
+
+            $.ajax({
+                url: base + "sys/resetPassword?user_id=" + id,
+                type: 'get',
+                dataType: 'json',
+            }).done(function (res) {
+                layer.alert(res.message)
+            })
+        })
+     }
+
+
+
+
+</script>
+
+</body>
+
+</html>

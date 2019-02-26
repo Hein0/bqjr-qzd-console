@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+	    <meta http-equiv="Cache-Control" content="no-siteapp" />
+	    <title>电销管理</title>
+
+	    <link rel="stylesheet" type="text/css" href="../../static/h-ui/css/H-ui.min.css" />
+	    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/H-ui.admin.css" />
+	    <link rel="stylesheet" type="text/css" href="../../lib/Hui-iconfont/1.0.8/iconfont.css" />
+	    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/skin/default/skin.css" id="skin" />
+	    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/style.css" />
+	    <link rel="stylesheet" type="text/css" href="../../lib/laypage/1.2/skin/laypage.css">
+		<link rel="stylesheet" type="text/css" href="../../css/reset.css?rev=@@hash"/>
+	    <link rel="stylesheet" type="text/css" href="../../css/telemarketing.css?rev=@@hash"/>
+	</head>
+	<body>
+		<nav class="breadcrumb">
+	        <i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 电销管理 <span class="c-gray en">&gt;</span> <span class="fileName">电销管理列表</span>
+	        <a class="btn btn-success r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a>
+	        <a id="getOut" class="btn btn-success r outs" style="line-height:1.6em;margin-top:3px;margin-right: 10px; background: #5a98de;border-color: #5a98de;" href="javascript:;">导出</a>
+    		<!--<input id="getOut" class="btn btn-primary f-r mr-10" style="margin-top: 3px;" type="button" value="导出">-->
+		</nav>
+
+	    <div class="Hui-article">
+			<article class="cl pd-20">
+				<!--电销管理状态选择按钮-->
+				<div class="btn-group mb-20">
+					<span val="1" class="btn todaybut btn-primary">今日应拨</span>
+					<span val="2" class="btn btn-default">二次联系</span>
+					<span val="4" class="btn btn-default">销售拒绝</span>
+					<span val="5" class="btn btn-default">销售成功</span>
+					<span val="" class="btn allbut btn-default">全部</span>
+					<span class="todayText">今日新增共<em class="adds"></em>个，剩余<em class="residue"></em>个未拨</span>
+				</div>
+				<!--查询条件板块-->
+				<div class="panel panel-default panelShow">
+					<form class="search-form">
+						<div class="panel-body pb-0 cl search">
+							<!--姓名-->
+							<div class="f-l mr-15 mb-15">
+								<span class="text-c f-l">姓名</span>
+								<input type="text" value="" class="input-text userName" name="userName" />
+							</div>
+
+							<!--手机-->
+							<div class="f-l mr-15 mb-15">
+								<span class="text-c f-l">手机</span>
+								<input type="text" value="" class="input-text mobile" name="mobile" />
+							</div>
+
+							<!--身份证-->
+							<div class="f-l mr-15 mb-15">
+								<span class="text-c f-l">身份证</span>
+								<input type="text" value="" class="input-text certId" name="certIdMd5" />
+							</div>
+
+							<!--申请时间-->
+							<div class="f-l mr-15 mb-15">
+								<span class="text-c f-l">申请时间</span>
+								<input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}' })" id="applyTime" class="input-text Wdate f-l" readonly name="applyCreateTime" />
+							</div>
+
+							<!--开通状态-->
+							<!--<div class=" mr-15 mb-15">
+								<span class="text-c f-l">开通状态</span>
+								<select class="select wdType appSta" name="applyStatus">
+									<option value="" selected>请选择</option>
+								</select>
+							</div> -->
+
+							<!--T+N-->
+							<!--<div class="f-l mr-15 mb-15">
+								<span class="text-c f-l">T+N</span>
+								<select class="select terminal" name="currentDay">
+									<option value="" selected>请选择</option>
+								</select>
+							</div>-->
+
+							<!--当前状态-->
+							<div class="f-l mr-15 mb-15">
+								<span class="text-c f-l">用户状态</span>
+								<select class="select wdType wdTypeDibled" name="userStatus">
+									<option value="" selected>请选择</option>
+								</select>
+							</div>
+
+							<!--最近一级结束码-->
+							<div class="f-l mr-15 mb-15">
+								<span class="text-c f-l">最近一级结束码</span>
+								<select class="select white whites" name="currentFirstEndCode">
+									<option value="" selected>请选择</option>
+								</select>
+							</div>
+
+							<!--钱包使用状态-->
+							<!--<div class=" mr-15 mb-15">
+								<span class="text-c f-l">钱包使用状态</span>
+								<select class="select walletType" name="useStatus">
+									<option value="" selected>请选择</option>
+								</select>
+							</div>-->
+							<!--批次-->
+							<div class="f-l mr-15 mb-15">
+								<span class="text-c f-l">批次</span>
+								<input type="text" value="" class="input-text batchNo" name="batchNo" />
+							</div>
+
+							<!--批次时间-->
+							<div class="f-l mr-15 mb-15">
+								<span class="text-c f-l" >批次时间</span>
+								<input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}' })" id="datemin" class="input-text Wdate f-l" readonly name="startCreateTime" />
+								<span class="f-l">至</span>
+								<input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'datemin\')}' })" id="datemax" class="input-text Wdate f-l" readonly name="endCreateTime" />
+							</div>
+
+							<!--批次剩余时间-->
+							<div class="f-l mr-15 mb-15">
+								<span class="text-c f-l">批次剩余时间</span>
+								<select class="select lessTime" name="lessTime">
+									<option value="" selected>请选择</option>
+								</select>
+							</div>
+
+							<div class="text-l m-t10 f-r">
+								<button type="button" class="btn btn-primary mr-15" id="screeBtn" name=""><i class="Hui-iconfont">&#xe665;</i> 筛选</button>
+								<button type="button" class="btn btn-primary" id="resetBtn" name=""><i class="Hui-iconfont">&#xe66b;</i> 重置</button>
+							</div>
+
+						</div>
+					</form>
+				</div>
+				<!--<div class="cl pd-5 bg-1 bk-gray mt-20"><span class="r">共有数据：<strong>88</strong> 条</span> </div>-->
+
+				<!--数据表格-今日应拨-->
+				<div class="mt-20 table-con tableOne" >
+					<table style="min-width:1050px " class="table table-bg table-border table-bordered table-hover zhc-table">
+						<thead>
+							<tr class="text-c">
+								<th width="90px">批次号</th>
+								<th width="90px">营销到期时间</th>
+								<th width="60px">姓名</th>
+								<th width="40px">性别</th>
+								<th width="150px">身份证号</th>
+								<th width="100px">手机号</th>
+								<th width="85px">末次推送时间</th>
+								<th width="100px">末次推送内容</th>
+								<th width="100px">末次推送活动ID</th>
+								<th width="90px">初始状态</th>
+								<th width="100px">操作</th>
+							</tr>
+						</thead>
+						<tbody id="tableOneList">
+
+						</tbody>
+					</table>
+				</div>
+
+				<!--数据表格-二次联系、应拨未拨、销售拒绝、销售成功-->
+				<div class="mt-20 table-con tableTwo" style="display: none;">
+					<table style="min-width:1410px;" class="table table-bg table-border table-bordered table-hover zhc-table">
+						<thead>
+							<tr class="text-c">
+								<th width="90px">批次号</th>
+								<th width="70px">营销到期时间</th>
+								<th width="60px">姓名</th>
+								<th width="40px">性别</th>
+								<th width="150px">身份证号</th>
+								<th width="100px">手机号</th>
+								<th width="90px">初始状态</th>
+								<th width="100px">当前状态</th>
+								<th width="100px">最近一级结束码</th>
+								<th width="60px">操作人</th>
+								<th width="100px">操作</th>
+							</tr>
+						</thead>
+						<tbody id="tableTwoList">
+
+						</tbody>
+					</table>
+				</div>
+
+				<!--数据表格-全部-->
+				<div class="mt-20 table-con tableAll" style="display: none;">
+					<table style="min-width: 2380px;" class="table table-bg table-border table-bordered table-hover zhc-table">
+						<thead>
+							<tr class="text-c">
+								<th width="90px">批次号</th>
+								<th width="70px">营销到期时间</th>
+								<th width="70px">名单归属</th>
+								<th width="60px">姓名</th>
+								<th width="40px">性别</th>
+								<th width="150px">身份证号</th>
+								<th width="100px">手机号</th>
+								<th width="90px">初始状态</th>
+								<th width="80px" class="bgclor">当前状态</th>
+								<th width="60px" class="bgclor">操作人</th>
+								<th width="70px" class="bgclor">一级结束码</th>
+								<th width="70px">操作</th>
+							</tr>
+						</thead>
+						<tbody id="tableAllList">
+
+						</tbody>
+					</table>
+				</div>
+
+				<!--分页-->
+				<div class="pagination cl" id="pagination"></div>
+			</article>
+	    </div>
+
+
+
+		<!--导出-->
+		<div id="mymodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		    <div class="modal-dialog">
+		        <div class="modal-content radius">
+		            <div class="modal-header">
+		                <h3 class="modal-title">导出</h3>
+		                <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void(0);">×</a>
+		            </div>
+		            <div class="modal-body">
+		                <div class="export">
+		                    <label>文件名</label><input type="text" onfocus="javascript:$('.p').hide()" id="fileName" />
+		                    <p class="p">请输入文件名</p>
+		                </div>
+		                <p>提示：<br />1、导出的目标数据是根据搜索条件搜索后的数据；若需导出全部数据，请在导出之前清除搜索条件。<br />2、文件名命名可以自定义</p>
+		            </div>
+		            <div class="modal-footer">
+		                <button class="btn btn-primary" onclick="withdraw.export();">确定</button>
+		                <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+		            </div>
+		        </div>
+		    </div>
+		</div>
+
+		<!--反馈弹窗-->
+		<div id="modal-feedback" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content radius">
+					<div class="modal-body modalData">
+						<div class="wrap-one">
+							<div class="wrap-one-tent1L">
+								<div class="tent1L-1">
+									<span class="tent1L-title">姓名</span>
+									<span class="tent1L-text feeName"></span>
+								</div>
+								<div class="tent1L-2">
+									<span class="tent1L-title">初始状态</span>
+									<span class="tent1L-text feeStatu"></span>
+								</div>
+							</div>
+							<div class="wrap-one-tent1R">
+								<button class="msgButs" onclick="withdraw.msgButs()">发送短信</button>
+							</div>
+							<input type="hidden" class="ids" data-id="" data-nameBel="" data-name="" data-sex="" data-tel="" data-statu="" data-opeType=""/>
+						</div>
+						<div class="wrap-two">
+							<div class="wrap-two-title">本次反馈</div>
+							<div class="wrap-two-1">
+								<span class="two-1-text2">操作人：<span class="operator"></span></span>
+							</div>
+							<div class="wrap-two-2">
+								<span class="two-2-title">一级结束码</span>
+								<span class="two-2-text1">
+									<select class="select white">
+		                        		<option value="" selected>请选择</option>
+		                    		</select>
+								</span>
+								<span class="two-2-text2 twoSele">
+									<select class="select twoType">
+		                        		<option value="" selected>请选择</option>
+		                    		</select>
+								</span>
+							</div>
+							<div class="wrap-two-3">
+								<span class="two-3-title fl-r">备注</span>
+								<span class="two-3-text1">
+									<textarea class="memoText"></textarea>
+								</span>
+
+							</div>
+						</div>
+						<!--反馈列表数据展示-->
+						<div class="wrap-list" id="backLists">
+
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-primary sendBack" onclick="withdraw.sendBack()">提交</button>
+						<button class="btn" onclick="withdraw.clearData()" >取消</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--短信弹窗-->
+		<div id="modal-demo" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content radius">
+					<div class="modal-body">
+						<div class="con-tent">
+							<span class="left-title">姓名</span>
+							<span class="right-text msgName"></span>
+						</div>
+						<div class="con-tent">
+							<span class="left-title">手机号</span>
+							<span class="right-text magTel"></span>
+						</div>
+						<div class="con-tent">
+							<span class="left-title">初始状态</span>
+							<span class="right-text msgInit"></span>
+						</div>
+						<div class="con-tent">
+							<span class="left-title">短信模板</span>
+							<span class="right-text">
+								<select class="select smsSele">
+
+		                    	</select>
+		                    	<input type="hidden" class="hideInpuVal" value="" />
+							</span>
+						</div>
+						<div class="con-tent">
+							<span class="left-title fl-r">短信内容</span>
+							<span class="right-text textar">
+								<div class="textarea smsCtent" disabled="disabled"></div>
+							</span>
+						</div>
+
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-primary " onclick="withdraw.sendBtns()">发送</button>
+						<button class="btn" onclick="withdraw.SmsClearData()">取消</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--查看反馈弹窗-->
+		<div id="look-feedback" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content radius">
+					<div class="modal-body">
+						<div class="wrap-look-one">
+							<div class="wrap-look-one-tent1L">
+								<div class="tent1L-1">
+									<span class="tent1L-title">姓名</span>
+									<span class="tent1L-text lookName"></span>
+								</div>
+							</div>
+							<div class="wrap-look-one-tent1R">
+								<div class="tent1L-2">
+									<span class="tent1L-title">初始状态</span>
+									<span class="tent1L-text lookStatu"></span>
+								</div>
+							</div>
+						</div>
+						<!--查看反馈列表数据-->
+						<div class="wrapLook-list" id="lookLists">
+
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button class="btn" data-dismiss="modal" aria-hidden="true">返回</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--loadings-->
+		<div class="loadings">
+			<img src="../../images/loading.gif" class="load-img" />
+		</div>
+
+		<!--组件-->
+		<script type="text/javascript" src="../../lib/jquery/1.9.1/jquery.min.js"></script>
+		<script type="text/javascript" src="../../lib/My97DatePicker/4.8/WdatePicker.js"></script>
+	    <script type="text/javascript" src="../../lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+	    <script type="text/javascript" src="../../lib/laypage/1.2/laypage.js"></script>
+	    <script src="../../js/common/jquery.tmpl.min.js" type="text/javascript"></script>
+	    <script type="text/javascript" src="../../lib/layer/2.4/layer.js"></script>
+	    <script type="text/javascript" src="../../static/h-ui/js/H-ui.min.js"></script>
+	    <script type="text/javascript" src="../../static/h-ui.admin/js/H-ui.admin.js"></script>
+
+	    <!--业务逻辑-->
+	    <script type="text/javascript" src="../../js/base/public.js?rev=@@hash"></script>
+	    <script src="../../js/page/telemarketing.js?rev=@@hash" type="text/javascript" charset="utf-8"></script>
+	    <!--今日应拨模板-->
+	    <script id="oneList" type="text/x-jquery-tmpl">
+	    	<tr class="text-c">
+		  		<td>${batchNo}</td>
+				<td>${endTimeFormat}</td>
+		  		<td>${userName}</td>
+		  		<td>${sex}</td>
+		  		<td>${certIdMd5}</td>
+		  		<td>${mobile}</td>
+		  		<td>${lastPushTime}</td>
+		  		<td title="${lastPushContent.substring(lastPushContent.indexOf(":")+1)}" class="clor1">${lastPushContent.substring(0,lastPushContent.indexOf(":"))}</td>
+		  		<td title="${lastPushActivity.substring(lastPushActivity.indexOf(":")+1)}" class="clor1">${lastPushActivity.substring(0,lastPushActivity.indexOf(":"))}</td>
+		  		<td>${initStatusStr}</td>
+		  		<td>
+		  			{{if status !=5}}
+		  			<span class="feedbackBut clor1"  onclick="withdraw.backButFun('${id}','${nameBelong}','${operatorType}','${userName}','${sex}','${mobile}','${initStatusStr}','1')">反馈</span>&nbsp;&nbsp;&nbsp;&nbsp;
+		  			<span class="msgBut clor1"  onclick="withdraw.msgButFun('${id}','${nameBelong}','${operatorType}','${userName}','${initStatusStr}','${mobile}')">短信</span>
+		  			{{/if}}
+		  		</td>
+	  		</tr>
+	    </script>
+	    <!--二次联系模板-->
+	    <script id="twoList" type="text/x-jquery-tmpl">
+	    	<tr class="text-c">
+		  		<td>${batchNo}</td>
+				<td>${endTimeFormat}</td>
+		  		<td>${userName}</td>
+		  		<td>${sex}</td>
+		  		<td>${certIdMd5}</td>
+		  		<td>${mobile}</td>
+		  		<td>${initStatusStr}</td>
+		  		<td>${userStatusStr}</td>
+		  		<td>${currentFirstEndCodeStr}</td>
+		  		<td>${currentOperationName}</td>
+		  		<td class="control-list-wrap">
+					{{if status > 1 && status != 3}}
+					<span class="clor1" onclick="withdraw.seeUserDetail('${id}',this)">用户详情</span>
+					{{/if}}
+		  			{{if status !=5}}
+		  			<span class="feedbackBut clor1" onclick="withdraw.backButFun('${id}','${nameBelong}','${operatorType}','${userName}','${sex}','${mobile}','${initStatusStr}','1')">反馈</span>
+		  			<span class="msgBut clor1" onclick="withdraw.msgButFun('${id}','${nameBelong}','${operatorType}','${userName}','${initStatusStr}','${mobile}')">短信</span>
+		  		    {{/if}}
+		  		</td>
+	  		</tr>
+	    </script>
+	    <!--全部列表模板-->
+	    <script id="allList" type="text/x-jquery-tmpl">
+	    	<tr class="text-c">
+		  		<td>${batchNo}</td>
+				<td>${endTimeFormat}</td>
+		  		<td>${nameBelong}</td>
+		  		<td>${userName}</td>
+		  		<td>${sex}</td>
+		  		<td>${certIdMd5}</td>
+		  		<td>${mobile}</td>
+		  		<td>${initStatusStr}</td>
+		  		<td class="bgclor">${userStatusStr}</td>
+		  		<td class="bgclor">${currentOperationName}</td>
+		  		<td class="bgclor">${currentFirstEndCodeStr}</td>
+		  		<td class="control-list-wrap">
+					<span class="clor1" onclick="withdraw.seeUserDetail('${id}',this)">用户详情</span>
+		  			<span class="lookBackBut clor1" onclick="withdraw.lookBackButFun('${id}','${userName}','${sex}','${mobile}','${initStatusStr}','2')">查看反馈</span>
+		  		</td>
+	  		</tr>
+	    </script>
+	    <!--反馈列表模板-->
+	    <script id="back-List" type="text/x-jquery-tmpl">
+	    	<div class="wrap-three">
+				<div class="wrap-three-title">反馈（${createTime}）</div>
+				<div class="wrap-three-1">
+					<span class="three-1-title">是否接通</span>
+					<span class="three-1-text1">${isCallOn==0 ? "否" : "是"}</span>
+					<span class="three-1-text2">操作人：<span class="operatorName">${operationUserName}</span></span>
+				</div>
+				<div class="wrap-three-2">
+					<span class="three-2-title">一级结束码</span>
+					<span class="three-2-text1">${firstEndCodeStr}</span>
+					<span class="three-2-text2">${secondEndCodeStr}</span>
+				</div>
+				<div class="wrap-three-3">
+					<span class="three-3-title">备注</span>
+					<span class="three-3-text1">${memo}</span>
+				</div>
+			</div>
+	    </script>
+	    <!--查看反馈列表模板-->
+	    <script id="look-List" type="text/x-jquery-tmpl">
+	    	<div class="wrapLook-three">
+				<div class="wrapLook-three-tit">反馈（${createTime}）</div>
+				<div class="wrapLook-three-1">
+					<span class="three-1-tit">是否接通</span>
+					<span class="three-1-text1">${isCallOn==0 ? "否" : "是"}</span>
+					<span class="three-1-text2">操作人：<span class="operatorName">${operationUserName}</span></span>
+				</div>
+				<div class="wrapLook-three-2">
+					<span class="three-2-tit">一级结束码</span>
+					<span class="three-2-text1">${firstEndCodeStr}</span>
+					<span class="three-2-text2">${secondEndCodeStr}</span>
+				</div>
+				<div class="wrapLook-three-3">
+					<span class="three-3-tit">备注</span>
+					<span class="three-3-text1">${memo}</span>
+				</div>
+			</div>
+	    </script>
+	</body>
+</html>

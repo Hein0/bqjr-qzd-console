@@ -1,0 +1,349 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <title>添加免息</title>
+
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="../../lib/Hui-iconfont/1.0.8/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/skin/default/skin.css" id="skin" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/style.css" />
+
+    <link rel="stylesheet" type="text/css" href="../../lib/laypage/1.2/skin/laypage.css">
+    <link rel="stylesheet" type="text/css" href="../../lib/layer/2.4/skin/layer.css" />
+    <link rel="stylesheet" type="text/css" href="../../lib/My97DatePicker/4.8/skin/WdatePicker.css">
+    <link rel="stylesheet" type="text/css" href="../../css/shoppingOrder.css?rev=@@hash">
+    <link rel="stylesheet" type="text/css" href="../../css/goodsList.css?rev=@@hash">
+	<link rel="stylesheet" type="text/css" href="../../css/hotWord.css?rev=@@hash"/>
+    <style type="text/css">
+        .red-tip {color: red;}                    
+        .input-string,.input-time,.discount-num{box-sizing: border-box;display: inline-block;height: 31px; line-height: 1.42857;padding: 4px;border: solid 1px #ddd;font-size: 14px;     }                                                                        
+        .input-string {width: 300px;}
+        .input-time {width: 200px;}
+        .discount-num {width: 40px;margin: 0 10px;text-align: center}
+        .count-wrap {display: inline-block;width: 150px;}
+        .name-area,.ctn-area {float: left;width: 1000px;}
+        .name-area {width: 150px;}
+        .pointer {cursor: pointer;}
+        .add-free-goods {display: none;}
+        .shadeboxseckill{width: 100%;height: 100%;background: black;position: absolute;background: black;opacity: 0.5;z-index: 300;filter: alpha("opacity=50");display: none;}    
+        .a_title{position: relative;}
+        .a_mes_nav{width: 3px;height: 26px;display: inline-block;background: #3277DE;position: absolute;left: 0;}
+        .a_mes_text{width: 96%;margin:0 auto;line-height: 26px;border-bottom: 1px solid #7F7F7F;}
+        .a_mes_text .a_tips{font-size: 12px;color: #707070;}
+        #se_shopList{width: 1150px;position: relative;padding-bottom: 100px;}
+        #se_table{width: 100%;padding: 0 30px;position: relative;}
+        .operation{position: absolute;height: 50px;width: 100%;top: 40px;}
+        .operation span{float: right;display: inline-block;padding: 8px 20px;background: #3399FF;color: white;margin: 0 20px;cursor: pointer;}
+        .table_list{border: none;}
+        .table_list tr img{width: 80px;height: 80px;}
+        .table_list tr{border: 1px solid #DDDDDD;}
+        .table_list th{text-align: center;padding: 5px;border: 1px solid #ddd;}
+        .table_list td{text-align: center;padding: 10px;border: none;}
+        .table_list td input{width: 70px;height: 20px;text-align: center;border: 1px solid #D0D0D0;margin-right: 5px;}
+        .addBtn{text-align: center;margin-top: 50px;}
+        .addBtn span{display: inline-block;padding: 10px 20px;background: #3399FF;color: white;font-size: 14px;border-radius: 30px;cursor: pointer;}
+        .addBtn >div span{margin: 0 20px;border-radius: 10px;}
+        .se_delete{color: #0000FF;cursor: pointer;}
+        .isattend{float: left;line-height: 30px;margin-left: 50px;}
+        .isattend input{width: 20px;height: 20px;}
+        #link_goods li:nth-child(2n){background: ghostwhite;}
+       	.main{width: 100%; display: -webkit-box; /* 老版本语法: Safari, iOS, Android browser, older WebKit browsers. */
+            display: -moz-box; /* 老版本语法: Firefox (buggy) */
+            display: -ms-flexbox; /* 混合版本语法: IE 10 */
+            display: -webkit-flex; /* 新版本语法: Chrome 21+ */
+            display: flex; /* 新版本语法: Opera 12.1, Firefox 22+ */}
+       	.right_body{-webkit-box-flex: 1;      /* OLD - iOS 6-, Safari 3.1-6 */
+                -moz-box-flex: 1;         /* OLD - Firefox 19- */
+                -webkit-flex: 1;          /* Chrome */
+                -ms-flex: 1;              /* IE 10 */
+                flex: 1; 
+            	margin-right: 10px;
+            }
+        .btnLi li{cursor: pointer;}
+        .fix_tips{position: fixed;width: 300px;background: white;z-index: 2000;left: 50%;top: 50%;margin-left: -400px;margin-top: -200px;box-shadow: 0 0 10px #5A98DE;padding:0 20px 20px 20px;display: none;}
+    	.fix_tips_close{font-size: 30px;cursor: pointer;text-align: right;}
+    	.fix_tips_btn{text-align: center;margin-top: 20px;}
+    	.fix_tips_btn span{display: inline-block;margin: 0 20px;padding: 5px 8px;border: 1px solid #707070;border-radius: 10px;cursor: pointer;}
+    	.cross{display: none;}
+    	#cross{display: none;}
+    </style>
+</head>
+
+<body>
+	<div class="shadeboxseckill"></div>
+    <nav class="breadcrumb">
+        <i class="Hui-iconfont">&#xe67f;</i> 首页
+        <span class="c-gray en">&gt;</span> 秒杀活动
+        <span class="c-gray en">&gt;</span> 添加活动
+        <a class="btn btn-success radius r" style="line-height:1.6em;margin:3px 0 0 20px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a>
+    </nav>
+
+    <div class="Hui-article" style="padding-bottom:35px;" >
+
+        <article class="cl pd-20">
+
+            <!--订单状态选择按钮-->
+            <div class="btn-group mb-50">
+                <a href="#" class="btn btn-primary">添加活动</a>
+                <a href="seckillList.html" class="btn btn-default">活动列表</a>
+            </div>
+
+            <form class="form form-horizontal" style="width:1150px;"> 
+            	<div class="a_title">
+            		<span class="a_mes_nav"></span> 
+            		<p class="a_mes_text">
+            			<span>活动信息</span>
+            			<img style="margin-left: 30px;" src="../../images/a_tips.png"/>
+            			<span class="a_tips">在特定的时间段内，用户可以低价购买，可通过秒杀引导用户在商城浏览促进销售转化。</span>
+            		</p>
+            	</div>
+                <div class="row cl">
+                    <label class="form-label name-area"><b class="red-tip">*</b>活动标题：</label>
+                    <div class="formControls ctn-area">
+						<input type="text" class="input-string" id="actTitle" autocomplete="off" placeholder="请输入活动主题">
+						<span style="margin-left:20px;color:#999"> <span class="red-tip">*</span> 必填项	 活动标题不能超过30个字符</span>
+                    </div>
+                </div>
+
+                <div class="row cl" style="margin-bottom: 20px;">
+                    <label class="form-label name-area"><b class="red-tip">*</b>活动时间：</label>
+                    <div class="formControls ctn-area">
+                        <input type="text" class="input-time Wdate" id="freeStart" name="" value="" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'freeEnd\')}',dateFmt:'yyyy-M-d H:mm:ss'})">
+                        <span style="margin:0 10px;">到</span>
+                        <input type="text" class="input-time Wdate" id="freeEnd" name="" value="" onfocus="WdatePicker({minDate:'#F{$dp.$D(\'freeStart\')}',dateFmt:'yyyy-M-d H:mm:ss'})">
+						<span class="red-tip">*</span> 必填项
+					</div>
+                </div>
+				<div class="a_title">
+            		<span class="a_mes_nav"></span> 
+            		<p class="a_mes_text">
+            			<span>活动规则</span>
+            		</p>
+            	</div>
+                <div class="row cl">
+                    <label class="form-label name-area"><b class="red-tip">*</b>免息方案：</label>
+                    <div class="formControls ctn-area" id="freeCountWrap">
+                        <p>
+                            <label class="count-wrap">&nbsp;&nbsp;<span>1</span>期<input class="discount-num" type="text" data-type="1" value="10">折</label>
+                            <label class="count-wrap">&nbsp;&nbsp;<span>2</span>期<input class="discount-num" type="text" data-type="2" value="10">折</label>
+                            <label class="count-wrap">&nbsp;&nbsp;<span>3</span>期<input class="discount-num" type="text" data-type="3" value="10">折</label>
+                        </p>
+                        <p>
+                            <label class="count-wrap">&nbsp;&nbsp;<span>6</span>期<input class="discount-num" type="text" data-type="6" value="10">折</label>
+                            <label class="count-wrap">&nbsp;&nbsp;<span>9</span>期<input class="discount-num" type="text" data-type="9" value="10">折</label>
+                            <label class="count-wrap"><span>12</span>期<input class="discount-num" type="text" data-type="12" value="10">折</label>
+                        </p>
+                        <p>
+                            <label class="count-wrap"><span>15</span>期<input class="discount-num" type="text" data-type="15" value="10">折</label>
+                            <label class="count-wrap"><span>18</span>期<input class="discount-num" type="text" data-type="18" value="10">折</label>
+                            <label class="count-wrap"><span>24</span>期<input class="discount-num" type="text" data-type="24" value="10">折</label>
+                        </p>
+                        <p style="color:#999;">折扣输入大于等于0 至 小于等于10，<span class="red-tip">0折代表利息全免</span></p>
+                    </div>
+                </div>
+                <div class="row cl">
+                    <label class="form-label name-area" style="width: 280px;"><span style="color: red;">* </span> 确认订单页面展示的免息标签：</label>
+                    <div class="formControls ctn-area" style="width: 800px;">
+                        <p>
+                            <input type="text" class="input-string" id="extendInfo" autocomplete="off" maxlength="12" style="width: 200px;">
+                            <span style="margin-left:10px;color:#999;"><span style="color: red;"> * </span> 若选用免息方案此处为必填项，限12个字符</span>
+                        </p>                     
+                    </div>
+                </div>               
+            </form>
+        </article>
+        
+        <div id="se_shopList">
+        	<div class="a_title" style="width: 100%;">
+	    		<p class="a_mes_text">
+	    			<span>参与商品</span>	    			
+	    		</p>
+    		</div> 	
+    		<div class="operation" style="display: none;">
+    			<span class="addgoodsbtn">继续添加</span>
+    			<span class="batchdelete" style="background: white;border: 1px solid #707070;color: #000000;">批量删除</span>
+    		</div>
+    		<div id="se_table" style="margin-top: 80px;">
+    			
+    			<table class="table_list addcheckgoods" id='GOODSLIST' border="" cellspacing="" cellpadding="">
+    				<tr>
+    					<th width="5%"><input class="attendtips checkall" type="checkbox" name="" id="" value="" />全选</th>
+    					<th width="10%">商品图片</th>
+    					<th width="10%">商品名称</th>
+    					<th width="8%">渠道价</th>
+    					<th width="8%">市场价</th>
+    					<th width="12%">活动价</th>
+    					<th width="12%">秒杀价</th>
+    					<th width="10%">每人限秒数量</th>
+    					<th width="10%">投入数量</th>
+    					<th width="10%">已售比例人工设置(可选项)</th>
+    					<th width="10%">操作</th>
+    				</tr>
+    				<!--<tr>
+    					<td><input class="attendtips" type="checkbox" name="" id="" value="" /></td>
+    					<td><img src="../../images/goods.png"/></td>
+    					<td>奥巴马奥巴马奥巴马奥巴马奥巴马奥</td>
+    					<td>¥2000.00</td>
+    					<td>¥2000.00</td>
+    					<td style="color: #0000FF;" class="activeprice">¥<input style="color:#0000FF" type="text" name="" id="" value="2000.00" />元</td>
+    					<td>¥<input type="text" />元</td>
+    					<td><input type="text" style="width: 50px;"/>件</td>
+    					<td><input type="text" style="width: 50px;"/>件</td>
+    					<td><input type="text" />%</td>
+    					<td class="se_delete">删除</td>
+    				</tr>  -->			
+    			</table>
+    			<div class="addBtn">
+    				<span class="addgoodsbtn">添加商品</span>
+    				<div style="display: none;">
+    					<span class="keepBtn">保存</span>
+    					<span class="cancelBtn" style="background: white;color: #000;border:1px solid #ddd;">取消</span>
+    				</div>
+    			</div>   			
+    		</div>
+       </div>    
+    </div>
+<!--弹窗-->
+		<div class="pop_goods" id="pop_goods">
+			<div class="pop_goods_head">
+				<p>选择需要添加的商品<a class="close_btn" href="javasctipt:;">X</a></p>
+			</div>
+			
+			<div class="condition pt-20 mb-20" id="pageSearchForm">
+			        <div class="f-l ml-20">
+			        	<span class="span_box">商品查询：</span>
+			       		<input type="text" name="" id="keyword" style="width:180px" value="" placeholder="输入商品名称/价格/货号"/>
+			        </div>
+			        
+			        <div class="f-l ml-20">
+			        	<span>状态</span>
+			        	<select id="popstatus" name="">
+			        		<option value="">全部</option>
+			        		<option value="1">已上架</option>
+			        		<option value="0">已下架</option>
+			        	</select>
+			        </div>
+			        
+			        <div class="isattend">
+			        	<input type="radio" name="attend"  checked="checked" value="" />未参与其他活动商品
+			        </div>
+					<div class="isattend" style="margin-right: 50px;">
+			        	<input type="radio" name="attend"  value="" />正参与其他活动商品
+			        </div>
+
+					<button class="ml-20 pop_check">查询</button>
+				</div>
+			
+			<div class="main">
+				
+				<div class="left_side f-l">
+					<div id="menuTree" class="menuTree"></div>
+				</div>
+				<div class="right_body f-l">
+					<!--未参加活动列表-->
+					<table class="table_list" id="nocross" border="" cellspacing="" cellpadding="">
+						<tr>
+							<th width="8%"><input class="attendtips checkall" type="checkbox" name=""  value="" />全选</th>
+							<th width="10%">商品货号</th>
+							<th width="15%">商品图片</th>
+							<th width="15%">商品名称</th>
+							<th width="10%">价格</th>
+							<th width="10%">所属分类</th>							
+							<th width="10%">状态</th>
+							<th width="14%">创建时间</th>
+							<th width="10" style="color: #000077;">库存</th>						
+						</tr>
+						<!--<tr>
+	    					<td><input class="attendtips" type="checkbox" name=""  value="" /></td>
+	    					<td><img src="../../images/goods.png"/></td>
+	    					<td>奥巴马奥巴马奥巴马奥巴马奥巴马奥</td>
+	    					<td>¥2000.00</td>
+	    					<td>裤装</td>	    					
+	    					<td>已下架</td>
+	    					<td>2016-12-30</td>
+	    					<td>1000</td>	    					
+	    				</tr>-->
+					</table>
+					<!--参加活动列表-->
+					<table class="table_list" id="cross"  border="" cellspacing="" cellpadding="">
+						<tr>
+							<th width="5%"><input class='attendtips' type="checkbox" name=""  value="" style="display: none;"/>全选</th>
+							<th width="10%">商品货号</th>
+							<th width="10%">商品图片</th>
+							<th width="15%">商品名称</th>
+							<th width="10%">价格</th>
+							<th width="10%">所属分类</th>
+							<th width="14%">已参加活动</th>
+							<th width="8%">状态</th>
+							<th width="10%">创建时间</th>
+							<th width="8" style="color: #000077;">库存</th>						
+						</tr>
+						<!--<tr>
+	    					<td><input class="attendtips" type="checkbox" name=""  value="" /></td>
+	    					<td><img src="../../images/goods.png"/></td>
+	    					<td>奥巴马奥巴马奥巴马奥巴马奥巴马奥</td>
+	    					<td>¥2000.00</td>
+	    					<td>裤装</td>
+	    					<td>
+	    						<p style="margin: 0;">七夕免息活动</p>
+	    						<p style="margin: 0;">七夕免息活动</p>
+	    					</td>
+	    					<td>已下架</td>
+	    					<td>2016-12-30</td>
+	    					<td>1000</td>
+	    				</tr>-->
+					</table>
+				
+				<!--分页-->
+			    	<div class="pagination mt-20" id="pop_pagination"></div>
+			    
+				    <ul class="btnLi">
+				    	<li class="pop_cancel">取消</li>
+				    	<li class="pop_goods_submit">确认</li>
+				    </ul>
+				</div>
+			</div>
+			
+		</div>
+		
+		<div class="fix_tips">
+			<div>
+				<p class="fix_tips_close"><a href="javascript:;">X</a></p>
+				<div class="fix_tips_content">
+					<p class="nocross"></p>
+					<div class="cross">
+						<p>该商品在交叉时间内参加以下活动</p>
+						<div>
+
+						</div>					
+						<p>是否还参加秒杀活动？</p>
+					</div>
+				</div>
+				<div class="fix_tips_btn">
+					<span>取消</span>
+					<span>确定</span>
+				</div>
+			</div>
+		</div>
+    <!--_footer 作为公共模版分离出去-->
+    <script type="text/javascript" src="../../lib/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="../../lib/layer/2.4/layer.js"></script>
+    <script type="text/javascript" src="../../static/h-ui/js/H-ui.min.js"></script>
+    <script type="text/javascript" src="../../static/h-ui.admin/js/H-ui.admin.js"></script>
+    <script type="text/javascript" src="../../js/base/public.js?rev=@@hash"></script>
+    <!--/_footer 作为公共模版分离出去-->
+    <script type="text/javascript" src="../../lib/laypage/1.2/laypage.js"></script>
+    <script type="text/javascript" src="../../lib/layer/2.4/layer.js"></script>
+    <script type="text/javascript" src="../../lib/My97DatePicker/4.8/WdatePicker.js"></script>
+    <script type="text/javascript" src="../../js/page/seckill.js?rev=@@hash"></script>
+    
+</body>
+
+</html>

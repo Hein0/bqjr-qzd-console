@@ -1,0 +1,341 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <title>填入页面标题</title>
+
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="../../lib/Hui-iconfont/1.0.8/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/skin/default/skin.css" id="skin" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/style.css" />
+
+    <!--分页样式表，需要分页的页面加入-->
+    <link rel="stylesheet" type="text/css" href="../../lib/laypage/1.2/skin/laypage.css">
+    <link rel="stylesheet" type="text/css" href="../../lib/My97DatePicker/4.8/skin/WdatePicker.css">
+    <link rel="stylesheet" type="text/css" href="../../css/shoppingOrderDetail.css?rev=@@hash">
+
+</head>
+
+<body>
+    <nav class="breadcrumb">
+        <i class="Hui-iconfont">&#xe67f;</i> 首页
+        <span class="c-gray en">&gt;</span> 订单管理
+        <span class="c-gray en">&gt;</span> 订单详情
+
+        <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);"
+            title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a>
+    	<a id="cancel" class="btn btn-primary radius r" style="margin:3px 20px 0 0" href="javascript:;">取消订单</a>
+    	<a id="backout" class="btn btn-primary radius r" style="margin:3px 20px 0 0" href="javascript:;">销单</a>
+    	<a id="checkOut" class="btn btn-primary radius r" style="margin:3px 20px 0 0" href="javascript:;">已排查</a>
+    </nav>
+
+    <div class="Hui-article">
+        <article class="cl pd-20 order-info-detail">
+
+            <div class="row">
+                <div class="col-sm-7 col-md-7 col-lg-7">
+
+                    <div class="panel panel-default">
+                        <div class="panel-header">订单信息</div>
+                        <div class="panel-body" id="orderInfo"></div>
+                    </div>
+
+                </div>
+
+                <div class="col-sm-5 col-md-5 col-lg-5" id="otherInfo"></div>
+            </div>
+
+        </article>
+    </div>
+
+	<!--取消订单弹窗-->
+	<div id="modal-demo" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content radius">
+				<div class="modal-header">
+					<h3 class="modal-title">取消订单</h3>
+					<a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>
+				</div>
+				<div class="modal-body">
+					<!--取消订单-->
+					<div class="cancel-pop">
+						<p class="company-wrap">采购渠道:<span class="company"></span></p>
+						<div class="pop-left">
+							<span style="color: red;">*</span><span>备注</span>
+						</div>
+						<textarea class="cancelRemark" name="" rows="" cols=""></textarea>
+						<p class="cancel-tips">提示：接口采购，请先核实到账情况，再执行取消订单</p>
+					</div>
+					<!--撤单-->
+					<div class="backout-pop">
+						<p>用户的钱款将会退回给用户，订单状态变为"已销单"</p>
+						<p>销单前请先跟京东核实是否已退款到账？</p>
+					</div>
+					<!--取消预警-->
+					<div class="checkout-pop">
+						<p>确认取消该订单预警吗？</p>
+					</div>
+					
+					<!--退款审核弹窗-->
+					<div class="pop-refund-wrap">
+						<!--<div class="pop-check-tips-wrap ml-50 mb-20">
+							<p class="pop-check-tips">提醒：审核退款时，请先线下确认客户该单全部商品数量已退货至商家</p>
+						</div>-->
+						
+						<p class="pop-orderNo-wrap">买买提订单号：<span class="pop-orderNo"></span></p>
+						<p class="pop-assServiceId-wrap">京东订单号：<span class="pop-assServiceId"></span></p>
+						<p class="pop-amount-wrap">订单总金额：<span class="pop-amount"></span>(现金已支付：<span class="pop-cash"></span>，额度已支：<span class="pop-loan"></span>)</p>
+						<p class="pop-cash-wrap"><span style="color: red;">*</span>实际退还现金：<input class="pop-most-inp" type="text" /><span class="pop-most-tips">(最多可退<span class="pop-most"></span>)</span></p>
+						<p><span style="color: red;">*</span>原因/差额备注：</p>
+						<div class="pop-reason-wrap">
+							<p><input type="radio" name="reason" id="normalRefund" class="noOthers" value="正常退款，无差额" /><label for="normalRefund">正常退款，无差额</label></p>
+							<p><input type="radio" name="reason" id="goodsBad" class="noOthers" value="商品配件损坏/缺失" /><label for="goodsBad">商品配件损坏/缺失</label></p>
+							<p><input type="radio" name="reason" id="notWant" class="noOthers" value="非质量退货，扣除物流费用" /><label for="notWant">非质量退货，扣除物流费用</label></p>
+							<p><input type="radio" name="reason" id="others" value="" /><label for="others">其他</label><input type="text" id="otherReason" value="" placeholder="不超过100字" disabled="disabled"/></p>
+						</div>
+					</div>
+					
+				</div>
+				<div class="modal-footer">
+					<button id="popSure" class="btn btn-primary">确定</button>
+					<button class="btn close-pop" data-dismiss="modal" aria-hidden="true">关闭</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+    <!--footer 作为公共模版分离出去-->
+    <script type="text/javascript" src="../../lib/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="../../lib/layer/2.4/layer.js"></script>
+    <script type="text/javascript" src="../../static/h-ui/js/H-ui.min.js"></script>
+    <script type="text/javascript" src="../../static/h-ui.admin/js/H-ui.admin.js"></script>
+    <!--footer 作为公共模版分离出去-->
+
+    <script type="text/javascript" src="../../lib/doT/doT.min.js"></script>
+    <script type="text/javascript" src="../../js/base/public.js?rev=@@hash"></script>
+    <script type="text/javascript" src="../../js/shoppingOrderDetail.js?rev=@@hash"></script>
+
+    <script id="orderInfoTmp" type="text/x-dot-template">
+        <div class="detail-info-wrap cl">
+            <div class="detail-info-line cl">
+                <span class="tit">购物订单号</span>
+                <span class="ctn">{{=it.tradeId || ''}}</span>
+            </div>
+            <div class="detail-info-line cl">
+                <span class="tit">当前状态</span>
+                <span class="ctn">{{=it.tradeStatusStr || ''}}　{{?it.strCloseReseon}}（{{=it.strCloseReseon || ''}}）{{?}}</span>
+                {{?it.remark}}<p style="padding-left:100px;">{{=it.remark || ''}}</p>{{?}}
+            </div>
+             <div class="detail-info-line cl">
+                <span class="tit">京东订单号</span>
+                <span class="ctn">{{=it.channelOrderId || ''}}</span>
+            </div>
+            <div class="detail-info-line cl">
+                <span class="tit">用户下单时间</span>
+                <span class="ctn">{{=it.createTime || ''}}</span>
+            </div>
+            <div class="detail-info-line cl">
+                <span class="tit">状态更新时间</span>
+                <span class="ctn">{{=it.updateTime || ''}}</span>
+            </div>
+        </div>
+        <!--订单信息->商品信息-->
+        <div class="panel panel-default mt-20">
+            <div class="panel-header">商品信息</div>
+            <div class="panel-body">
+                <p class="goods-info">
+                    <a href="{{=it.goodsUrl || '#'}}" target="_blank"><span>{{=it.goodsName || ''}}</span></a>
+                </p>
+                <p class="goods-info">
+                	<span class="ml-50">单价：</span><span>￥{{=it.unitPrice || ''}}</span>
+                	<span class="ml-50">数量：</span><span>{{=it.tradeCount || ''}}</span>
+                    <span class="ml-50">总价：</span><span>￥{{=(it.unitPrice*it.tradeCount).toFixed(2) || ''}}</span>
+                </p>
+                <p>{{=it.goodsParams || ''}}</p>
+            </div>
+        </div>
+        <!--订单信息->支付方案-->
+        <div class="panel panel-default mt-20">
+            <div class="panel-header">支付方案</div>
+            <div class="panel-body">
+                <div class="pay-method cl">
+                    <div class="left">
+                        <p class="pay-one cl">
+                            <span class="tit">支付流水号</span>
+                            <span class="ctn">{{=it.payRequestNo || ''}}</span>
+                        </p>
+                        <p class="pay-one cl">
+                            <span class="tit">订单金额</span>
+                            <span class="ctn">{{=it.amount || ''}}</span>
+                        </p>
+                        <p class="pay-one cl">
+                            <span class="tit">订单优惠</span>
+                            <span class="ctn">{{=it.totalTradeDiscountAmount}}</span>
+                        </p>
+                        <p class="pay-one cl">
+                            <span class="tit">应付金额</span>
+                            <span class="ctn">{{=it.shoudleAmount}}</span>
+                        </p>
+                        <p class="pay-one cl">
+                            <span class="tit">现金支付</span>
+                            <span class="ctn">{{=it.payAmount || ''}}</span>
+                        </p>
+                        <p class="pay-one cl">
+                            <span class="tit">额度支付</span>
+                            <span class="ctn">{{=it.loadAmount || ''}}</span>
+                        </p>
+                        <p class="pay-one cl">
+                            <span class="tit">京东运费</span>
+                            <span class="ctn">{{=it.postage || '包邮'}}</span>
+                        </p>
+                        <p class="pay-one cl">
+                            <span class="tit">用户运费</span>
+                            <span class="ctn">{{=it.userPostage || '包邮'}}</span>
+                        </p>
+                    </div>
+                    <div class="right">
+                        <p class="pay-one cl">
+                            <span class="tit">合同号</span>
+                            <span class="ctn">{{=it.contractId || ''}}</span>
+                        </p>
+                        <p class="pay-one cl">
+                            <span class="tit">合同状态</span>
+                            <span class="ctn">{{=it.contractStatusStr || ''}}</span>
+                        </p>
+                        <p class="pay-one cl">
+                            <span class="tit">分期数</span>
+                            <span class="ctn">{{=it.periods || ''}}</span>
+                        </p>
+                        <p class="pay-one cl">
+                            <span class="tit">每期还款</span>
+                            <span class="ctn">{{=it.monthPay || ''}}{{?it.orderCouponList}}<br>{{=it.orderCouponList}}{{?}}</span>
+                        </p>
+                        <p class="pay-one cl">
+                            <span class="tit idt">含利息</span>
+                            <span class="ctn">{{=it.interest || ''}}</span>
+                        </p>
+                        <p class="pay-one cl">
+                            <span class="tit idt">含手续费</span>
+                            <span class="ctn">{{=it.srvFee || ''}}</span>
+                        </p>
+                        <p class="pay-one cl">
+                            <span class="tit idt">服务费优惠</span>
+                            <span class="ctn">{{=it.totalOrderDiscountAmount}}</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--订单信息->用户信息-->
+        <div class="panel panel-default mt-20">
+            <div class="panel-header">用户信息</div>
+            <div class="panel-body">
+                <div class="pay-method cl">
+                    <div class="left">
+                        <p class="pay-one cl">
+                            <span class="tit">下单姓名</span>
+                            <span class="ctn">{{=it.name || ''}}</span>
+                        </p>
+                        <p class="pay-one cl">
+                            <span class="tit">下单手机</span>
+                            <span class="ctn">{{=it.mobile || ''}}</span>
+                        </p>
+                    </div>
+                    <div class="right">
+                        <p class="pay-one cl">
+                            <span class="tit">收货姓名</span>
+                            <span class="ctn">{{=it.receiveName || ''}}</span>
+                        </p>
+                        <p class="pay-one cl">
+                            <span class="tit">收货手机</span>
+                            <span class="ctn">{{=it.receiveMobile || ''}}</span>
+                        </p>
+                        <p class="pay-one cl">
+                            <span class="tit">收货地址</span>
+                            <span class="ctn">{{=it.receiviedAdress || ''}}</span>
+                        </p>
+                        <p class="pay-one cl">
+                            <span class="tit">详细地址</span>
+                            <span class="ctn">{{=it.userReceiverAddress || ''}}</span>
+                        </p>
+                        <p class="pay-one cl">
+                            <span class="tit">订单备注</span>
+                            <span class="ctn">{{=it.buyerMessage || ''}}</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
+
+    <script id="otherInfoTmp" type="text/x-dot-template">
+        <div class="panel panel-default">
+            <div class="panel-header">采购渠道信息</div>
+            <div class="panel-body">
+                <div class="common-list">
+                    <p class="list-one cl">
+                        <span class="tit">采购渠道</span>
+                        <span class="ctn goodsChannel">{{=it.goodsChannel || ''}}</span>
+                    </p>
+                    <p class="list-one cl">
+                        <span class="tit">渠道订单号</span>
+                        <span class="ctn">{{=it.channelOrderId || ''}}</span>
+                    </p>
+                    <p class="list-one cl">
+                        <span class="tit">渠道价格</span>
+                        <span class="ctn">￥{{=it.purchaseAmount || ''}}</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default mt-20">
+            <div class="panel-header">物流进度</div>
+            <div class="panel-body">
+                <div class="common-list">
+                	<p class="list-one cl border-b">
+                        <span class="expressTime blue">{{=it.expressName || ''}}</span>
+                        <span class="expListStatus blue">{{=it.logisticsNo || ''}}</span>
+                    </p>
+                	{{? it.serveProgressList.length}}
+                	<p class="order-hava-info"><span class="expressTime">时间</span><span class="expressStatus">状态</span></p>
+					<ul id="orderExpress" class="expressList">
+						{{~ it.serveProgressList:progressList}}
+							<li><p class="expressWrap"><span class="expressTime">{{=progressList.progressTime}}</span><span class="expListStatus">{{=progressList.progress}}</span></p></li>
+						{{~}}
+					</ul>
+                    {{??}}
+                    <p class="no-express order-no-info">暂无物流信息，请添加</p>
+                    {{?}}
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default mt-20 hide">
+            <div class="panel-header">售后信息</div>
+            <p class="no-express order-no-info">暂无售后信息</p>
+            <!--<div class="panel-body">暂无售后信息</div>-->
+        </div>
+        {{? it.creditTradeCancelWarning}}
+        <div class="panel panel-default mt-20">
+        	<div class="panel-header">取消预警信息</div>
+        	<div class="panel-body">
+	             <p class="list-one cl">
+	                <span class="tit">取消预警角色</span>
+	                <span class="ctn cancelRole ml-50">{{=it.creditTradeCancelWarning.operationName || ''}}</span>
+	            </p>
+	             <p class="list-one cl">
+	                <span class="tit">取消预警时间</span>
+	                <span class="ctn cancelTime ml-50">{{=it.creditTradeCancelWarning.createTime || ''}}</span>
+	            </p>
+	        </div>
+        </div>
+        {{?}}
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,306 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <title>医院管理</title>
+
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="../../lib/Hui-iconfont/1.0.8/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/skin/default/skin.css" id="skin" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/style.css" />
+
+    <!--分页样式表，需要分页的页面加入-->
+    <link rel="stylesheet" type="text/css" href="../../lib/laypage/1.2/skin/laypage.css">
+    <link rel="stylesheet" type="text/css" href="../../css/hospitalOrder.css?rev=@@hash">
+    <link rel="stylesheet" type="text/css" href="../../css/hospitalList.css?rev=@@hash">
+
+</head>
+
+<body>
+    <nav class="breadcrumb">
+        <i class="Hui-iconfont">&#xe67f;</i> 首页
+        <span class="c-gray en">&gt;</span> 医院管理
+        <span class="c-gray en">&gt;</span> 医院信息
+        <a class="btn btn-success radius r" style="line-height:1.6em;margin:3px 0 0 20px" href="javascript:location.replace(location.href);"
+            title="刷新">
+            <i class="Hui-iconfont">&#xe68f;</i>刷新
+        </a>
+    </nav>
+
+    <div class="Hui-article">
+        <article class="cl pd-20">
+
+            <div class="panel panel-default search-bar-width">
+                <div class="panel-body">
+
+                    <!--筛选条件区域-->
+                    <div class="condition-wrap cl common-form-wrap" id="pageSearchForm">
+                    	
+						<div class="condition-parent cl">
+                            <span class="title">审核进度</span>
+                            <select class="white-list" name="status" id="status">
+                                <option value="">全部</option>
+                                <option value="1">初审中</option>
+                                <option value="2">初审失败</option>
+                                <option value="3">复审中</option>
+                                <option value="4">复审失败</option>
+                                <option value="5">风控审核中</option>
+                                <option value="6">风控审核失败</option>
+                                <option value="7">终审中</option>
+                                <option value="8">终审失败</option>
+                                <option value="9">审核成功</option>
+                            </select>
+
+                        </div> 
+                        
+                        <div class="condition-parent cl">
+                            <span class="title">按城市</span>
+                            <div class="long-ipt">
+                                <span class="value-wrap select-classify">请选择城市</span>
+                                <i class="Hui-iconfont">&#xe698;</i>
+                                <div class="type-select-panel condition-panel">
+                                    <div class="top-part cl">
+                                        <ul class="ul-1"></ul>
+                                        <ul class="ul-2"></ul>
+                                    </div>
+                                    <div class="bottom-part cl">
+                                        <p class="result">您当前已选择的城市:
+                                            <em></em>
+                                        </p>
+                                        <button type="button" class="btn btn-primary close-panel">关闭</button>
+                                        <button type="button" class="btn btn-primary get-result">确认选择</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="condition-parent cl">
+                            <span class="title">按擅长项目</span>
+                            <div class="long-ipt">
+                                <span class="value-wrap select-brand">请选择擅长项目</span>
+                                <i class="Hui-iconfont">&#xe698;</i>
+                                <div class="name-select-panel">
+                                    <div class="search-bar">
+                                        <input type="text" value="" id="good_projects">
+                                        <i class="Hui-iconfont">&#xe709;</i>
+                                    </div>
+                                    <ul></ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="condition-parent cl">
+                            <span class="title">医院名称</span>
+                            <input class="long-ipt" type="text" name="searchName" id="searchName" value="" placeholder="输入医院名称">
+                        </div>
+                        
+                        <div class="condition-parent cl">
+                            <span class="title">医院ID</span>
+                            <input class="long-ipt" type="text" name="hospid" id="hospid" value="" placeholder="输入医院ID">
+                        </div>
+
+                        <div class="button-wrap">
+                            <button type="button" class="btn btn-primary" id="screeBtn">
+                                <i class="Hui-iconfont">&#xe665;</i> 筛选</button>
+                            <button type="button" class="btn btn-primary" id="resetBtn">
+                                <i class="Hui-iconfont">&#xe66b;</i> 重置</button>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="goods-list">
+            	<table class="table table-border table-bordered table-hover table-bg">
+	                <thead>
+			            <tr class="text-c">
+			            	<th width="60">医院ID</th>
+			                <th width="60">医院名称</th>
+			                <th width="60">医院简称</th>
+			                <th width="60">所在城市</th>
+			                <th width="60">医院电话</th>
+			                <th width="60">擅长项目</th>
+			                <th width="60">成立时间</th>
+			                <th width="60">状态</th>
+			                <th width="60">相关联系人</th>
+			                <th width="60">审核进度</th>
+			                <th width="60">医院账号</th>
+			                <th width="70">操作</th>
+			            </tr>
+		            </thead>
+		            <tbody id="listCtnWrap">
+		            	
+		            </tbody>
+		        </table>    
+            </div>
+
+            <div class="pagination cl" id="pagination"></div>
+
+        </article>
+    </div>
+
+    <!--footer 作为公共模版分离出去-->
+    <script type="text/javascript" src="../../lib/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="../../lib/layer/2.4/layer.js"></script>
+    <script type="text/javascript" src="../../static/h-ui/js/H-ui.min.js"></script>
+    <script type="text/javascript" src="../../static/h-ui.admin/js/H-ui.admin.js"></script>
+    <!--footer 作为公共模版分离出去-->
+    <script type="text/javascript" src="../../lib/ueditor/1.4.3/ueditor.config.js"></script>
+    <script type="text/javascript" src="../../lib/ueditor/1.4.3/ueditor.all.min.js"></script>
+    <script type="text/javascript" src="../../lib/arttemplate/template-web.js"></script>
+    <script type="text/javascript" src="../../lib/laypage/1.2/laypage.js"></script>
+    <script type="text/javascript" src="../../js/base/public.js?rev=@@hash"></script>
+    <script type="text/javascript" src="../../js/common/common.js"></script>
+    <script type="text/javascript" src="../../js/hospitalList.js?rev=@@hash"></script>
+
+
+</body>
+<!--审核页面-->
+<script id="checks" type="text/html">
+    <div class="containers pd-10" style="width: 100%;">
+        <div class=" cl">
+            <table class="table table-border table-striped">
+                <div class="header">
+                    <h3 style="text-align:center;">医院详情</h3>
+                </div>
+                <tbody>
+                	<tr>
+			            <th width="20%">医院名称</th>
+			            <td>{{name || ''}}</td>
+			        </tr>
+			        <tr>
+			            <th>医院地址</th>
+			            <td>{{cityName + street || ''}}</td>
+			        </tr>
+			        <tr>
+			            <th>医院座机</th>
+			            <td>{{telphone || ''}}</td>
+			        </tr>
+			        <tr>
+			            <th>医院邮箱</th>
+			            <td>{{email || ''}}</td>
+			        </tr>
+			        <tr>
+			            <th>医院Logo</th>
+			            <td>
+			                <img src="{{imgPath + logo }}" class="img-responsive" width="50%" alt="医院Logo">
+			            </td>
+			        </tr>
+			        <tr>
+			            <th>医院宣传语</th>
+			            <td>{{propaganda || ''}}</td>
+			        </tr>
+			        <tr>
+			            <th>资本类型</th>
+			            <td>{{ziben_type || ''}}</td>
+			        </tr>
+			        <tr>
+			            <th>医院类型</th>
+			            <td>{{hospital_type || ''}}</td>
+			        </tr>
+			        <tr>
+			            <th>业务等级</th>
+			            <td>{{service_grade || ''}}</td>
+			        </tr>
+			        <tr>
+			            <th>擅长项目</th>
+			            <td>{{good_projects || ''}}</td>
+			        </tr>
+			        <tr>
+			            <th>成立时间</th>
+			            <td>{{build_date || ''}}</td>
+			        </tr>
+			        <tr>
+			            <th>医院介绍</th>
+			            <td>{{introduce || ''}}</td>
+			        </tr>
+			        <tr>
+			            <th>营业执照or民办非企业单位证书</th>
+			            <td>
+			                <img src="{{imgPath + business_license }}" class="img-responsive" width="50%" alt="营业执照or民办非企业单位证书">
+			            </td>
+			        </tr>
+			        <tr>
+			            <th>营业执照or民办非企业单位证书有效期</th>
+			            <td>{{business_date || ''}}</td>
+			        </tr>
+			        <tr>
+			            <th>医疗机构职业许可证</th>
+			            <td>
+			                <img src="{{imgPath + licence }}" class="img-responsive" width="50%" alt="医疗机构职业许可证">
+			            </td>
+			        </tr>
+			        <tr>
+			            <th>医疗机构职业许可证有效期</th>
+			            <td>{{licence_date || ''}}</td>
+			        </tr>
+			        <tr>
+			            <th>医疗广告审查证明</th>
+			            <td>
+			                <img src="{{imgPath+ examination }}" class="img-responsive" width="50%" alt="医疗广告审查证明">
+			            </td>
+			        </tr>
+			        <tr>
+			            <th>医疗广告审查证明有效期</th>
+			            <td>{{examination_date || ''}}</td>
+			        </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="checkFooter" style="display: -webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;height:55px;justify-content: space-around;width:100%;margin-top:15px;">
+            <button class="btn btn-primary size-XL" style="width:20%;" id="pass">通过</button>
+            <button class="btn btn-primary size-XL" style="width:20%;" id="refuse">拒绝</button>
+        </div>
+    </div>
+</script>
+<script id="contacts" type="text/html">
+    <div class="goods-list">
+        <table class="table table-border table-bordered table-hover table-bg">
+            <thead>
+                <tr class="text-c">
+                    <th width="20%">审核状态</th>
+                    <th width="20%">审核结果</th>
+                    <th width="20%">审核拒绝原因</th>
+                    <th width="20%">审核人姓名</th>
+                    <th width="20%">审核人联系方式</th>
+                </tr>
+            </thead>
+            <tbody id="contactList">
+                {{each data item i}}
+	                <tr class="text-c list-line">
+	                    <td>{{item.status=="1" ? "初审" : item.status=="3" ? "复审" : item.status=="5" ? "风控审核" : item.status=="7" ? "终审" : item.status=="9" ? "审核成功" : ""}}</td>
+	                    <td>{{item.result=="1"?"通过":(item.result=="2"?"拒绝":"")}}</td>
+	                    <td>{{item.msg||""}}</td>
+	                    <td>{{item.name||""}}</td>
+	                    <td>{{item.telphone||""}}</td>
+	                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</script>
+<!--删除-->
+<script id="delete" type="text/html">
+    <div class="deleteWrap" data-id="{{id}}" data-hisid="{{hisid}}" data-status="{{status}}">
+        <div class=" cl">
+            <label class="form-label col-xs-2 col-sm-2">
+                <span class="red">*</span>删除原因：</label>
+            <div class="formControls col-xs-10 col-sm-10">
+                <textarea id="delete_msg" class="textarea" type="text" name="delete_msg" placeholder="请输入删除原因" maxlength="350"></textarea>
+            </div>
+        </div>
+        <div class="row cl">
+            <div class="submitIput">
+                <input class="btn btn-primary submitDelete" value="提交" type="button">
+            </div>
+        </div>
+    </div>
+</script>
+</html>

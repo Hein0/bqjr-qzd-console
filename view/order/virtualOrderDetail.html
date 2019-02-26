@@ -1,0 +1,234 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <title>填入页面标题</title>
+
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="../../lib/Hui-iconfont/1.0.8/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/skin/default/skin.css" id="skin" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/style.css" />
+
+    <!--分页样式表，需要分页的页面加入-->
+    <link rel="stylesheet" type="text/css" href="../../lib/laypage/1.2/skin/laypage.css">
+    <link rel="stylesheet" type="text/css" href="../../lib/My97DatePicker/4.8/skin/WdatePicker.css">
+    <link rel="stylesheet" type="text/css" href="../../css/shoppingOrderDetail.css?rev=@@hash">
+
+</head>
+
+<body>
+    <nav class="breadcrumb">
+        <i class="Hui-iconfont">&#xe67f;</i> 首页
+        <span class="c-gray en">&gt;</span> 订单管理
+        <span class="c-gray en">&gt;</span> 订单详情
+
+        <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);"
+            title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a>
+    	<a id="cancel" class="btn btn-primary radius r" style="margin:3px 20px 0 0" href="javascript:;">取消订单</a>
+    </nav>
+
+    <div class="Hui-article">
+        <article class="cl pd-20 order-info-detail">
+
+            <div class="row">
+                <div class="col-sm-7 col-md-7 col-lg-7">
+
+                    <div class="panel panel-default">
+                        <div class="panel-header">订单信息</div>
+                        <div class="panel-body" id="orderInfo"></div>
+                    </div>
+
+                </div>
+
+                <div class="col-sm-5 col-md-5 col-lg-5" id="otherInfo"></div>
+            </div>
+
+        </article>
+    </div>
+
+	<!--取消订单弹窗-->
+	<div id="modal-demo" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content radius">
+				<div class="modal-header">
+					<h3 class="modal-title">取消订单</h3>
+					<a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>
+				</div>
+				<div class="modal-body">
+					<p style="text-align: center;">确认取消该订单</p>
+				</div>
+				<div class="modal-footer">
+					<button id="popSure" class="btn btn-primary">确定</button>
+					<button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+    <!--footer 作为公共模版分离出去-->
+    <script type="text/javascript" src="../../lib/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="../../lib/layer/2.4/layer.js"></script>
+    <script type="text/javascript" src="../../static/h-ui/js/H-ui.min.js"></script>
+    <script type="text/javascript" src="../../static/h-ui.admin/js/H-ui.admin.js"></script>
+    <!--footer 作为公共模版分离出去-->
+
+    <script type="text/javascript" src="../../lib/doT/doT.min.js"></script>
+    <script type="text/javascript" src="../../js/base/public.js?rev=@@hash"></script>
+    <script type="text/javascript" src="../../js/virtualOrderDetail.js?rev=@@hash"></script>
+
+    <script id="orderInfoTmp" type="text/x-dot-template">
+        <div class="detail-info-wrap cl">
+            <div class="detail-info-line cl">
+                <span class="tit">订单号</span>
+                <span class="ctn">{{=it.tradeId || ''}}</span>
+            </div>
+            <div class="detail-info-line cl">
+                <span class="tit">当前状态</span>
+                <span class="ctn">{{=it.rechargeStatusAdminStr || it.statusStr || ''}}</span>
+            </div>
+            <div class="detail-info-line cl">
+                <span class="tit">用户下单时间</span>
+                <span class="ctn">{{=it.createTime || ''}}</span>
+            </div>
+            <!--<div class="detail-info-line cl">
+                <span class="tit">状态更新时间</span>
+                <span class="ctn">{{=it.updateTime || ''}}</span>
+            </div>-->
+        </div>
+        <!--订单信息->商品信息-->
+        <div class="panel panel-default mt-20">
+            <div class="panel-header">充值信息</div>
+            <div class="panel-body">
+                <div class="goods-info cl">
+                	<p class="pay-one cl">
+	                    <span class="tit">充值信息</span>
+	                    <span class="ctn">{{=it.goodName || ''}}</span>
+	                </p>
+	                <p class="pay-one cl">
+	                    <span class="tit">充值金额</span>
+	                    <span class="ctn">{{=it.shopPrice || ''}}</span>
+	                </p>
+	                <p class="pay-one cl">
+	                	{{? it.goodsType == 4}}
+	                    <span class="tit">兑换卡号</span>
+	                    {{??}}
+	                    <span class="tit">充值账号</span>
+	                    {{?}}
+	                    <span class="ctn">{{=it.rechargeAccount || ''}}</span>
+	                </p>
+	                <p class="pay-one cl">
+	                    <span class="tit">返回渠道成本</span>
+	                    <span class="ctn">{{=it.channelCostPrice || ''}}
+	                    	{{? it.channelCostPrice > it.amount}}
+			            	<span class="warning">预警</span>
+			            	{{?}}
+	                    </span>
+	                </p>
+	                <p class="pay-one cl">
+	                    <span class="tit">充值类型</span>
+	                    <span class="ctn">{{=it.goodsTypeStr || ''}}</span>
+	                </p>
+	                <p class="pay-one cl">
+	                    <span class="tit">充值时间</span>
+	                    <span class="ctn">{{=it.createTime || ''}}</span>
+	                </p>
+	                <p class="pay-one cl">
+	                    <span class="tit">处理时间</span>
+	                    <span class="ctn">{{=it.orderTime || ''}}</span>
+	                </p>
+                </div>
+            </div>
+        </div>
+        <!--订单信息->支付方案-->
+        <div class="panel panel-default mt-20">
+            <div class="panel-header">支付方案</div>
+            <div class="panel-body">
+                <div class="pay-method cl">
+                    <div class="left">
+                        <p class="pay-one cl">
+                            <span class="tit">支付流水号</span>
+                            <span class="ctn">{{=it.payRequestNo || ''}}</span>
+                        </p>
+                        <p class="pay-one cl">
+                            <span class="tit">订单金额</span>
+                            <span class="ctn">{{=it.amount || ''}}</span>
+                        </p>
+                        <p class="pay-one cl">
+                            <span class="tit">订单优惠</span>
+                            <span class="ctn">{{=it.tradeCouponAmount}}</span>
+                        </p>
+                        <p class="pay-one cl">
+                            <span class="tit">应付金额</span>
+                            <span class="ctn">{{=it.payAmount}}</span>
+                        </p>
+                        <p class="pay-one cl">
+                            <span class="tit">现金支付</span>
+                            <span class="ctn">{{=it.cashAmount || ''}}</span>
+                        </p>
+                        <p class="pay-one cl">
+                            <span class="tit">额度支付</span>
+                            <span class="ctn">{{=it.loadAmount || ''}}</span>
+                        </p>
+                    </div>
+                    <div class="right">
+                        <p class="pay-one cl">
+                            <span class="tit">合同号</span>
+                            <span class="ctn">{{=it.orderId || ''}}</span>
+                        </p>
+                        <!--<p class="pay-one cl">
+                            <span class="tit">合同状态</span>
+                            <span class="ctn">{{=it.contractStatusStr || ''}}</span>
+                        </p>-->
+                        <p class="pay-one cl">
+                            <span class="tit">分期数</span>
+                            <span class="ctn">{{=it.periods || ''}}</span>
+                        </p>
+                        <p class="pay-one cl">
+                            <span class="tit">每期还款</span>
+                            <span class="ctn">{{=it.monthAmount || ''}}{{?it.orderCouponList}}<br>{{=it.orderCouponList}}{{?}}</span>
+                        </p>
+                        <p class="pay-one cl">
+                            <span class="tit idt">含利息</span>
+                            <span class="ctn">{{=it.interest || ''}}</span>
+                        </p>
+                        <p class="pay-one cl">
+                            <span class="tit idt">含手续费</span>
+                            <span class="ctn">{{=it.srvFee || ''}}</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--订单信息->用户信息-->
+        <div class="panel panel-default mt-20">
+            <div class="panel-header">用户信息</div>
+            <div class="panel-body">
+                <div class="pay-method cl">
+                    <div class="left">
+                        <p class="pay-one cl">
+                            <span class="tit">下单姓名</span>
+                            <span class="ctn">{{=it.userName || ''}}</span>
+                        </p>
+                        <p class="pay-one cl">
+                            <span class="tit">下单手机</span>
+                            <span class="ctn">{{=it.userMobile || ''}}</span>
+                        </p>
+                        <p class="pay-one cl">
+                            <span class="tit mr-20">下单人省份城市</span>
+                            <span class="ctn">{{=it.provinceName || ''}}{{=it.cityName || ''}}</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
+
+</body>
+
+</html>

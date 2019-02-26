@@ -1,0 +1,209 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <title>历史聊天记录</title>
+
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="../../lib/Hui-iconfont/1.0.8/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="../../lib/My97DatePicker/4.8/skin/WdatePicker.css"/>
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/skin/default/skin.css" id="skin" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/style.css" />
+
+    <!--分页样式表，需要分页的页面加入-->
+    <link rel="stylesheet" type="text/css" href="../../lib/laypage/1.2/skin/laypage.css">
+    <link rel="stylesheet" type="text/css" href="../../css/logOrder.css?rev=@@hash">
+    <link rel="stylesheet" type="text/css" href="../../css/logList.css?rev=@@hash">
+    <style>
+        .type-select-panel {height: initial;}
+        .select-classify+i+.type-select-panel {width: 200%;height: initial;}
+        .type-select-panel .top-part ul {width: 30%;}
+        .select-city+i+.type-select-panel .top-part ul {width: 46%;}
+        .type-select-panel .bottom-part .result {float: none;}
+		
+		.condition-parent .long-ipt {position: relative;float: left;width: 240px;height: 28px;border: 1px solid #e6e6e6;}
+		.layui-layer-content{padding:8px;}
+		/*会话详情*/
+		.chatDetal{width: 100%;height:100%;}
+		.cloud-clearfix:after {display: table;line-height: 0;content: "";clear: both;}
+		.cloud-Messages-history{text-align: center;padding: 10px 20px;margin-bottom: 30px; height: 10px;}
+		.cloud-Messages-history b {font-size: 9pt;font-weight: normal;color: #8e969f;background-color: #f9fbfd;display: inline-block;padding: 0 20px;cursor: pointer;}
+		.cloud-Message {position: relative;padding-left: 3pc;word-wrap: break-word; word-break: break-all; border-spacing: 1px;margin-bottom: 20px;}
+		.cloud-Message-header {margin-top: 15px;}
+		.cloud-Message img {max-width: 230px; max-height: 250px;}
+		.cloud-img {display: block;width: 32px;height: 32px;border-radius: 50%;-moz-border-radius: 50%; -webkit-border-radius: 50%;}
+		.cloud-Message-author {display: inline-block;position: relative; padding-right: 30px;}
+		.cloud-Message-avatar { position: absolute;margin-left: -3pc;width: 34px; height: 34px;}
+		.cloud-Message-author > .cloud-author {color: #8e969f;text-decoration: none !important; cursor: default;}
+		.cloud-Message-author .cloud-author, .cloud-Message-author .cloud-time {display: block;float: left;line-height: 1pc;}
+		.cloud-Messages-date {text-align: center;padding: 10px 20px;height: 10px;}
+		.cloud-Messages-date b {font-size: 9pt;font-weight: normal;color: #8e969f;background-color: #f9fbfd;display: inline-block;padding: 0 20px;cursor: default;}
+		.cloud-Message-body {position: relative;/* margin-right: 70px; */font-size: 14px;line-height: 18px;color: #444;}
+		.cloud-Message-text, .cloud-file-text {position: relative;display: inline-block;max-width: 100%;}
+		.cloud-Message-text pre {font-size: 14px;line-height: 18px;color: rgb(68, 68, 68);word-break: break-all;word-wrap: break-word;white-space: pre-wrap;background-color: transparent;
+    		border: none;border-radius: 0; font-family: "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;}
+		/*右边样式*/
+		.Message-send.cloud-Message { padding-left: 0; padding-right: 3pc;}
+		.Message-send .cloud-Message-header {display: table;width: 100%;}
+		.Message-send .cloud-Message-avatar {position: absolute;right: 0;}
+		.Message-send .cloud-Message-author {float: right; padding-right: 0px;}
+		.Message-send .cloud-Message-body {float: right;}
+		
+		
+		
+		
+		
+    </style>
+</head>
+
+<body>
+    <nav class="breadcrumb">
+        <i class="Hui-iconfont">&#xe67f;</i> 首页
+        <span class="c-gray en">&gt;</span> 私信管理
+        <span class="c-gray en">&gt;</span> 历史聊天记录
+        <a class="btn btn-success radius r" style="line-height:1.6em;margin:3px 0 0 20px" href="javascript:location.replace(location.href);"
+            title="刷新">
+            <i class="Hui-iconfont">&#xe68f;</i>刷新
+        </a>
+    </nav>
+
+    <div class="Hui-article">
+        <article class="cl pd-20">
+
+            <div class="panel panel-default search-bar-width">
+                <div class="panel-body">
+
+                    <!--筛选条件区域-->
+                    <div class="condition-wrap cl common-form-wrap" id="pageSearchForm">
+						<div class="condition-parent cl">
+                            <span class="title">医院名称</span>
+                            <input class="long-ipt" type="text" name="hospitalName" id="hospitalName" value="" placeholder="输入医院名称">
+                        </div>
+                        
+                        <div class="condition-parent cl">
+                            <span class="title">聊天时间</span>
+                            <div class="long-ipt" >
+                                <input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'endTime\')||\'%y-%M-%d\'}', minDate:'#F{$dp.$D(\'endTime\',{M:-1});}'})" style="width:110px;height:18px;display: -webkit-box;" id="beginTime"
+                                    class="input-text Wdate f-l" readonly name="beginTime" />
+                                <input type="text" onfocus="WdatePicker({minDate:'#F{$dp.$D(\'beginTime\')}',maxDate:'#F{$dp.$D(\'beginTime\',{M:1})||\'%y-%M-%d\'}'})" style="width:110px;height:18px;display: -webkit-box;" id="endTime"
+                                    class="input-text Wdate f-l" readonly name="endTime" />
+                                        
+                            </div>
+                        </div>
+                        <div class="condition-parent cl">
+                            <span class="title">内容</span>
+                            <input class="long-ipt" type="text" name="content" id="content" value="" placeholder="输入内容">
+                        </div>
+
+                        <div class="button-wrap">
+                            <button type="button" class="btn btn-primary" id="screeBtn">
+                                <i class="Hui-iconfont">&#xe665;</i> 筛选</button>
+                            <button type="button" class="btn btn-primary" id="resetBtn">
+                                <i class="Hui-iconfont">&#xe66b;</i> 重置</button>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="goods-list">
+                <table class="table table-border table-bordered table-hover table-bg">
+                    <thead>
+                        <tr class="text-c">
+                        	<th width="60">发送人</th>
+                        	<th width="60">接收人</th>
+                            <th width="60">聊天内容</th>
+                            <th width="60">聊天时间</th>
+                            <!--<th width="40">操作</th>-->
+                        </tr>
+                    </thead>
+                    <tbody id="listCtnWrap">
+
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="pagination cl" id="pagination"></div>
+            
+        </article>
+    </div>
+	<!--大图预览 sta-->
+	<div id="outerdiv" style="position:fixed;top:0;left:0;background:rgba(0,0,0,0.7);z-index:2;width:100%;height:100%;display:none;">
+	    <div id="innerdiv" style="position:absolute;">
+	        <img id="bigimg" style="border:5px solid #fff;" src="" />
+	    </div>
+	</div>
+	<!--大图预览 end-->
+
+    <!--footer 作为公共模版分离出去-->
+    <script type="text/javascript" src="../../lib/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="../../lib/layer/2.4/layer.js"></script>
+    <script type="text/javascript" src="../../static/h-ui/js/H-ui.min.js"></script>
+    <script type="text/javascript" src="../../static/h-ui.admin/js/H-ui.admin.js"></script>
+    <script type="text/javascript" src="../../lib/My97DatePicker/4.8/WdatePicker.js"></script>
+    <script type="text/javascript" src="../../js/common/common.js?rev=@@hash"></script>
+    	
+    <!--footer 作为公共模版分离出去-->
+
+    <script type="text/javascript" src="../../lib/ueditor/1.4.3/ueditor.config.js"></script>
+    <script type="text/javascript" src="../../lib/ueditor/1.4.3/ueditor.all.min.js"></script>
+    <script type="text/javascript" src="../../lib/arttemplate/template-web.js"></script>
+    <script type="text/javascript" src="../../lib/laypage/1.2/laypage.js"></script>
+    <script type="text/javascript" src="../../js/base/public.js?rev=@@hash"></script>
+    <script type="text/javascript" src="../../js/page/chatHistory.js?rev=@@hash"></script>
+
+</body>
+<script id="contact" type="text/html">
+    <div class="chatDetal">
+       	<div class="message-list">
+       		{{if data.isHis==true}}
+       		<div class="cloud-Messages-history" style="display: block;">
+       			<b onclick="pageUtil.loadHisMessages()">查看历史消息</b>
+       		</div>
+       		{{/if}}
+       		<div class="textWrap">
+       			{{if data.rows.length>0}}
+       			{{each data.rows item i}}
+       			<div class="textWrapList">
+       				<div class="cloud-Messages-date">        
+		       			<b>{{item.createTime}}</b>    
+		       		</div>
+		       		<div class="cloud-Message cloud-clearfix {{item.messageDirection !=1 ? "Message-send" : ""}}" id="rcs-templte-message-text">
+		       			<div>            
+		       				<div class="cloud-Message-header">
+		       					<img class="cloud-img cloud-Message-avatar cloud-avatar" src="{{item.fromLogoUrl}}" alt="">
+		       					<div class="cloud-Message-author cloud-clearfix">
+		       						<a class="cloud-author"> {{item.fromUserName}} </a>
+		       					</div>            
+		       				</div>        
+		       			</div>        
+		       			<div class="cloud-Message-body">
+		       				<div class="cloud-Message-text">
+		       					{{if item.msgType ==1}}
+		       					<pre class="cloud-Message-entry">{{item.content}}</pre>
+		       					{{else}}
+		       					<img src="{{item.imageUrl}}" class="imgVew" />
+		       					{{/if}}
+		       				</div>
+		       			</div>
+		       		</div>
+       			</div>
+       			{{/each}}
+       			{{/if}}
+       		</div>
+       		{{if data.isMero==true}}
+       		<div class="cloud-Messages-history" style="display: block;">
+       			<b onclick="pageUtil.loadMeroMessages()">查看更多消息</b>
+       		</div>
+       		{{/if}}
+       	</div> 	
+    </div>
+</script>
+</html>

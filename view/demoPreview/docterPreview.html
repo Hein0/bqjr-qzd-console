@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta content="yes" name="apple-touch-fullscreen">
+		<meta content="telephone=no,email=no" name="format-detection">
+		<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1,maximum-scale=1, user-scalable=no">
+		<meta name="format-detection" content="telephone=no">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="x5-fullscreen" content="true">
+		<meta name="full-screen" content="yes">
+		<meta name="renderer" content="webkit">
+		<meta content="telephone=no" name="format-detection" />
+		<meta http-equiv="Cache-Control" content="no-cache" />
+		<meta http-equiv="x-rim-auto-match" content="none">
+		<link rel="stylesheet" type="text/css"  href="docterPreview.css" />
+		<title>医生信息</title>
+		<style>
+			
+		</style>
+	</head>
+
+	<body scoll=no style="height:100%;">
+		<div id="app">
+			<div id="doctorInfo">
+				
+			</div>
+		</div>
+		
+		
+		<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+		<script type="text/javascript" src="../../lib/arttemplate/template-web.js"></script>
+	    <script type="text/javascript" src="../../js/base/public.js?rev=@@hash"></script>
+	</body>
+	<script>
+	    /**
+	 * 设置html-动态font-size rem
+	 */
+	    (function (win, lib) {
+	        var doc = win.document;
+	        var docEl = doc.documentElement;
+	        var metaEl = doc.querySelector('meta[name="viewport"]');
+	        var flexibleEl = doc.querySelector('meta[name="flexible"]');
+	        var dpr = 0;
+	        var scale = 0;
+	        var tid;
+	        var flexible = lib.flexible || (lib.flexible = {});
+	
+	        if (metaEl) {
+	            console.warn('将根据已有的meta标签来设置缩放比例');
+	            var match = metaEl.getAttribute('content').match(/initial\-scale=([\d\.]+)/);
+	            if (match) {
+	                scale = parseFloat(match[1]);
+	                dpr = parseInt(1 / scale);
+	            }
+	        } else if (flexibleEl) {
+	            var content = flexibleEl.getAttribute('content');
+	            if (content) {
+	                var initialDpr = content.match(/initial\-dpr=([\d\.]+)/);
+	                var maximumDpr = content.match(/maximum\-dpr=([\d\.]+)/);
+	                if (initialDpr) {
+	                    dpr = parseFloat(initialDpr[1]);
+	                    scale = parseFloat((1 / dpr).toFixed(2));
+	                }
+	                if (maximumDpr) {
+	                    dpr = parseFloat(maximumDpr[1]);
+	                    scale = parseFloat((1 / dpr).toFixed(2));
+	                }
+	            }
+	        }
+	
+	        if (!dpr && !scale) {
+	            var isAndroid = win.navigator.appVersion.match(/android/gi);
+	            var isIPhone = win.navigator.appVersion.match(/iphone/gi);
+	            var devicePixelRatio = win.devicePixelRatio;
+	            if (isIPhone) {
+	                // iOS下，对于2和3的屏，用2倍的方案，其余的用1倍方案
+	                if (devicePixelRatio >= 3 && (!dpr || dpr >= 3)) {
+	                    dpr = 3;
+	                } else if (devicePixelRatio >= 2 && (!dpr || dpr >= 2)) {
+	                    dpr = 2;
+	                } else {
+	                    dpr = 1;
+	                }
+	            } else {
+	                // 其他设备下，仍旧使用1倍的方案
+	                dpr = 1;
+	            }
+	            scale = 1 / dpr;
+	        }
+	
+	        docEl.setAttribute('data-dpr', dpr);
+	        if (!metaEl) {
+	            metaEl = doc.createElement('meta');
+	            metaEl.setAttribute('name', 'viewport');
+	            metaEl.setAttribute('content', 'initial-scale=' + scale + ', maximum-scale=' + scale + ', minimum-scale=' + scale + ', user-scalable=no');
+	            if (docEl.firstElementChild) {
+	                docEl.firstElementChild.appendChild(metaEl);
+	            } else {
+	                var wrap = doc.createElement('div');
+	                wrap.appendChild(metaEl);
+	                doc.write(wrap.innerHTML);
+	            }
+	        }
+	
+	        function refreshRem() {
+	            var width = docEl.getBoundingClientRect().width;
+	            // if (width / dpr > 540) {
+	            //     width = 540 * dpr;
+	            // }
+	            var rem = width / 10;
+	            docEl.style.fontSize = rem + 'px';
+	            flexible.rem = win.rem = rem;
+	        }
+	
+	        win.addEventListener('resize', function () {
+	            clearTimeout(tid);
+	            tid = setTimeout(refreshRem, 300);
+	        }, false);
+	        win.addEventListener('pageshow', function (e) {
+	            if (e.persisted) {
+	                clearTimeout(tid);
+	                tid = setTimeout(refreshRem, 300);
+	            }
+	        }, false);
+	
+	        if (doc.readyState === 'complete') {
+	            doc.body.style.fontSize = 12 * dpr + 'px';
+	        } else {
+	            doc.addEventListener('DOMContentLoaded', function (e) {
+	                doc.body.style.fontSize = 12 * dpr + 'px';
+	            }, false);
+	        }
+	
+	
+	        refreshRem();
+	
+	        flexible.dpr = win.dpr = dpr;
+	        flexible.refreshRem = refreshRem;
+	        flexible.rem2px = function (d) {
+	            var val = parseFloat(d) * this.rem;
+	            if (typeof d === 'string' && d.match(/rem$/)) {
+	                val += 'px';
+	            }
+	            return val;
+	        }
+	        flexible.px2rem = function (d) {
+	            var val = parseFloat(d) / this.rem;
+	            if (typeof d === 'string' && d.match(/px$/)) {
+	                val += 'rem';
+	            }
+	            return val;
+	        }
+	
+	    })(window, window['lib'] || (window['lib'] = {}));
+	
+	
+	    /**
+	     * ios阻止缩放 
+	    */
+	    window.onload = function () {
+	        document.addEventListener('gesturestart', function (e) {
+	            e.preventDefault();
+	        });
+	        document.addEventListener('dblclick', function (e) {
+	            e.preventDefault();
+	        });
+	        document.addEventListener('touchstart', function (event) {
+	            if (event.touches.length > 1) {
+	                event.preventDefault();
+	            }
+	        });
+	        var lastTouchEnd = 0;
+	        document.addEventListener('touchend', function (event) {
+	            var now = (new Date()).getTime();
+	            if (now - lastTouchEnd <= 300) {
+	                event.preventDefault();
+	            }
+	            lastTouchEnd = now;
+	        }, false);
+	    };
+	    document.documentElement.addEventListener('touchstart', function (event) {
+	        if (event.touches.length > 1) {
+	            event.preventDefault();
+	        }
+	    }, false);
+	    var lastTouchEnd = 0;
+	    document.documentElement.addEventListener('touchend', function (event) {
+	        var now = Date.now();
+	        if (now - lastTouchEnd <= 300) {
+	            event.preventDefault();
+	        }
+	        lastTouchEnd = now;
+	    }, false);
+	
+	</script>
+	<script>
+	    var detailUtil = {
+	            'cache': {},
+	            //初始化
+	            'init': function () {
+	                var path = location.href;
+	                if (path.indexOf('?') >= 0) {
+	                    var params = path.substring(path.indexOf('?')+1, path.length).split('&'),
+	                        id = '',
+	                        his_id = '',
+	                        status = '';
+	                    for (var i = 0; i < params.length; i++) {
+	                        if (params[i].indexOf('id')!=-1) {
+	                            id = params[i].split('=')[1];
+	                        }else if (params[i].indexOf("hisId")!=-1) {
+	                            his_id = params[i].split("=")[1];
+	                        }else if (params[i].indexOf("status")!=-1) {
+	                            status = params[i].split("=")[1];
+	                        }
+	                    }
+	                    if(status){
+	                        detailUtil.status=status;
+	                    }
+	                    if(status=="10"||status=="11"){
+	                        if (id) {
+	                            detailUtil.id=id;
+	                            detailUtil.getGoodInfo(id,true);
+	                        }
+	                    }else{
+	                        if(his_id){
+	                            detailUtil.his_id=his_id;
+	                            detailUtil.getGoodInfo(his_id,false);
+	                        }
+	                    }
+	                }
+	            },
+	            'getGoodInfo': function (id,boolean) {
+	                var url= base,
+	                    data={};
+	                if(boolean){
+	                    url+='case/getDoctorInfoById';
+	                    data.id=id;
+	                }else{
+	                    url+='hospital/getDoctorByHisId';
+	                    data.his_id=id;
+	                }     
+	                $.get(url, data, function (res) {
+	                    if (res.message) {
+	                        $('#doctorInfo').html('');
+	                        $.Huimodalalert(res.message, 2000);
+	                    } else if (!res.message) {
+	                        detailUtil.cache.details = res.data;
+	                        detailUtil.renderGoodDetails(res.data);
+	                    } else {
+	                        $('#doctorInfo').html('');
+	                    }
+	                })
+	            },
+	            // 渲染详情
+	            'renderGoodDetails': function (data) {
+	                data.imgPath=imgPath;
+	                switch (data.position) {
+			            case '15':
+			                data.position = '院长';
+			                break;
+			            case '16':
+			                data.position = '代表院长';
+			                break;
+			            case '17':
+			                data.position = '执行院长';
+			                break;
+			            case '74':
+			                data.position = '院长';
+			                break;
+			            case '75':
+			                data.position = '副院长';
+			                break;
+			            case '76':
+			                data.position = '主任医师';
+			                break;
+			            case '77':
+			                data.position = '副主任医师';
+			                break;
+			            case '78':
+			                data.position = '医生';
+			                break;
+			            case '79':
+			                data.position = '实习医生';
+			                break;
+			            case '86':
+			                data.position = '外聘教授';
+			                break;
+			            case '142':
+			                data.position = '中心主任';
+			                break;
+			            case '143':
+			                data.position = '主诊医生';
+			                break;
+			            case '144':
+			                data.position = '研究员';
+			                break;
+			            case '145':
+			                data.position = '副研究员';
+			                break;
+			            case '80':
+			                data.position = '院长';
+			                break;
+			            case '81':
+			                data.position = '整形外科医师';
+			                break;
+			            case '82':
+			                data.position = '外科医师';
+			                break;
+			            case '83':
+			                data.position = '医师';
+			                break;
+			            default:
+			                break;
+			        };
+	                var html = template("goodInfo", data);
+	                $('#doctorInfo').html(html);
+	            }
+	        }
+	    $(function(){
+	        detailUtil.init();
+	    })
+	</script>
+	<script id="goodInfo" type="text/html">
+	    <div class="container">
+	        <div class="container">
+				<ul class="base">
+					<li>
+						<span id="title">基本资料</span>
+					</li>
+					<li>
+						<span>姓名</span>
+						<span>{{name}}</span>
+					</li>
+					<li>
+						<span>担任职务</span>
+						<span>{{position}}</span>
+					</li>
+					<li>
+						<span>擅长项目</span>
+						<span>{{good_projects}}</span>
+					</li>
+				</ul>
+				<div class="introduce">
+					<h4 id="title">医师简介</h4>
+					<p>{{introduce}}</p>
+				</div>
+				<div class="Photo">
+					<h4 id="titles">医师照片</h4>
+					<ul class="photoList">
+						{{each doctor_pics item i}}
+							<li>
+								<img src="{{imgPath+item}}" alt="医师照片" srcset="">
+							</li>
+						{{/each}}
+					</ul>
+				</div>
+			</div>
+	</script>
+</html>

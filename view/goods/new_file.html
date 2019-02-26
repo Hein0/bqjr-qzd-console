@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+	    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+		<script src="../../js/common/jquery.aCollapTable.min.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<table class="table table-hover" id="demo-1">
+    <thead>
+        <tr>
+            <th>Food</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr data-id="1" data-parent="">
+            
+            <td>Meat</td>
+        </tr>
+        <tr data-id="2" data-parent="1">
+            
+            <td>Beef</td>
+        </tr>
+        <tr data-id="3" data-parent="1">
+            
+            <td>Pork</td>
+        </tr>
+        <tr data-id="3" data-parent="1">
+            
+            <td>Turkey</td>
+        </tr>
+        <tr data-id="4" data-parent="">
+            
+            <td>Fruits</td>
+        </tr>
+        <tr data-id="5" data-parent="4">
+            
+            <td>Apple</td>
+        </tr>
+        <tr data-id="6" data-parent="4">
+            
+            <td>Orange</td>
+        </tr>
+        <tr data-id="7" data-parent="4">
+            
+            <td>Pear</td>
+        </tr>
+    </tbody>
+</table>
+
+<script type="text/javascript">
+	$(function () {
+		$('#demo-1').aCollapTable({
+    startCollapsed: true,
+    addColumn: false,
+    plusButton: '<i class="glyphicon glyphicon-plus"></i> ', 
+    minusButton: '<i class="glyphicon glyphicon-minus"></i> ' 
+});
+	})
+</script>
+	</body>
+</html>

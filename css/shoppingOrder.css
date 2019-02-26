@@ -1,0 +1,166 @@
+/*
+author zhcyy
+time 2017-04-24
+*/
+
+/*
+清除 input number 默认样式
+*/
+input[type=number] {
+    -moz-appearance:textfield;
+}
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.condition-wrap {
+    overflow: hidden;
+    margin-bottom: -15px;
+}
+
+.condition-parent,
+.condition-wrap .button {
+    float: left;
+    margin: 0 15px 15px 0;
+}
+
+.condition-parent .title,
+.condition-parent .add,
+.condition-parent input,
+.condition-parent select,
+.condition-wrap .button {
+    float: left;
+    height: 28px;
+    line-height: 28px;
+    font-size: 14px;
+    box-sizing: content-box;
+}
+
+.condition-parent .title,
+.condition-parent .add,
+.condition-parent input,
+.condition-parent select {
+    border: 1px solid #e6e6e6;
+}
+
+.condition-wrap .button {
+    padding: 0 10px;
+    border-width: 1px;
+    border-style: solid;
+    cursor: pointer;
+}
+
+.condition-wrap .button-wrap {
+    float: right;
+    margin-bottom: 15px;
+}
+
+.condition-wrap button {
+    height: 30px;
+}
+
+.condition-wrap button:first-child {
+    margin-right: 15px;
+}
+
+.condition-parent .title,
+.condition-parent .add {
+    padding: 0 8px;
+    background: #e6e6e6;
+}
+
+.condition-parent input,
+.condition-parent select {
+    width: 150px;
+}
+
+.zhc-table {
+    table-layout: fixed;
+    margin-top: 20px;
+}
+
+.zhc-table th,
+.zhc-table td {
+    font-size: 14px;
+}
+
+.zhc-table .operate span {
+    margin: 0 5px;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.zhc-table .operate span:hover {
+    color: #0a6999;
+}
+
+.zhc-table .order-detail:hover {
+    text-decoration: underline;
+    cursor: pointer;
+    color: #0a6999;
+}
+
+.modal-form-wrap {
+    overflow: hidden;
+    display: inline-block;
+    margin-bottom: -15px;
+}
+
+.modal-form-line {
+    margin: 0 15px 15px 0;
+}
+
+.modal-form-line .title,
+.modal-form-line input,
+.modal-form-line select {
+    float: left;
+    height: 28px;
+    line-height: 28px;
+    border: 1px solid #e6e6e6;
+    font-size: 14px;
+    box-sizing: content-box;
+}
+
+.modal-form-line .title {
+    width: 80px;
+    background: #e6e6e6;
+}
+
+.modal-form-line input,
+.modal-form-line select {
+    width: 200px;
+}
+
+
+/*分页*/
+
+.pagination {
+    width: 100%;
+    margin-top: 20px;
+}
+
+/*虚拟商品*/
+.is-real-wrap{
+	height: 50px;
+	border-bottom: 1px solid #ddd;
+}
+.change-btn{
+	width: 100px;
+	height: 50px;
+	line-height: 50px;
+	text-align: center;
+	display: inline-block;
+}
+.warning{color: red;float: right;}
+
+/*京东拒收*/
+.jd-refuse{position: relative;}
+.jd-refuse span{width: 20px;height: 20px;border-radius: 50%;display: inline-block;background: red;color: white;position: absolute;top:-5px;right: -5px;z-index: 100;}
+.red{color: red;}
+/*京东预警*/
+.jd-earlywarning {position: relative;}
+.jd-earlywarning span{width: 20px;height: 20px;border-radius: 50%;display: inline-block;background: red;color: white;position: absolute;top:-5px;right: -5px;z-index: 100;}
+/*运费预警*/
+.postage_warn{display: inline-block; border: 1px solid red;color: red;font-size: 12px;}

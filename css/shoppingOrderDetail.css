@@ -1,0 +1,105 @@
+/*
+author zhcyy
+time 2017-04-26
+*/
+
+.order-info-detail {
+    min-width: 1200px;
+}
+
+.detail-info-wrap {
+    font-size: 14px;
+}
+
+.detail-info-wrap .detail-info-line {
+    float: left;
+    min-width: 50%;
+    padding: 5px 0;
+}
+
+.detail-info-line .tit,
+.detail-info-line .ctn {
+    line-height: 28px;
+}
+
+.detail-info-line .tit {
+    float: left;
+    width: 100px;
+}
+
+.pay-method .left,
+.pay-method .right {
+    float: left;
+    min-width: 50%;
+}
+
+.common-list .list-one {
+    width: 100%;
+}
+
+.pay-method .pay-one .tit,
+.pay-method .pay-one .ctn,
+.common-list .list-one .tit,
+.common-list .list-one .ctn {
+    float: left;
+}
+
+.pay-method .pay-one .tit,
+.common-list .list-one .tit,
+.goods-info .tit {
+    width: 100px;
+    display: inline-block;
+}
+
+.pay-method .pay-one .idt {
+    text-indent: 1em;
+}
+.goods-info span:first-child {
+    margin-left: 0;
+}
+.no-express{height: 5rem;line-height: 5rem;text-align: center;}
+.expListStatus {width: 50%;display: inline-block;}
+.expressTime{width: 200px;display: inline-block;float: left;}
+.blue{color: blue;}
+.border-b{border-bottom: 1px solid #ddd;}
+
+.warning{color: red;background: #fcf8e3;}
+
+/*取消订单*/
+.pop-left{
+	display: inline-block;
+	width: 4rem;
+	float: left;
+	margin-left: 3rem;
+}
+.cancelRemark{
+	width: 25rem;
+	height: 5rem;
+	/*text-indent: .3em;*/
+	padding: .2rem .2rem;
+}
+.company-wrap{margin-left: 3rem;}
+.company-wrap span{margin-left: 1rem;}
+.cancel-tips{color: red;margin-left: 3rem;}
+/*取消订单end*/
+/*销单*/
+.backout-pop p{text-align: center;}
+/*退款审核*/
+.pop-refund-wrap{padding-left: 2rem;display: none;}
+.pop-refund-wrap p{margin-top: .5rem;}
+.pop-orderNo-wrap{text-indent: 1em;}
+.pop-assServiceId-wrap{text-indent: 3em;}
+.pop-amount-wrap{text-indent: 2em;}
+.pop-cash-wrap, #pop_exp_num{text-indent: .5em;}
+.pop-reason-wrap{margin-left: 3rem;}
+.pop-reason-wrap input[type='radio']{margin-right: .5rem;}
+.pop-most-inp, #otherReason {
+	margin:0 .5rem 0 .5rem;
+	width: 15rem;
+	height: 2rem;
+	border: 1px solid #999;
+	text-indent: .5em;
+}
+/*销单*/
+/*已排查*/
+.checkout-pop p{text-align: center;}

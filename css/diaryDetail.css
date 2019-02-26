@@ -1,0 +1,124 @@
+.diaryDetail-contain{
+    padding: 20px;
+    /*position: relative;*/
+    /*width: 100%;*/
+    /*float: left;*/
+    width:900px;
+    margin:0 auto;
+}
+.diary-info{
+    width: 100%;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+.head-pic{
+    width: 100px;
+    margin-top: 18px;
+    float: left;
+    text-align: center;
+}
+.head-pic img{
+    display: inline-block;
+    font-size: 14px;
+    color: #2CC7C5;
+    margin-bottom: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /*position: relative;*/
+    width: 95px;
+    border-radius: 50%;
+    height: 100px;
+}
+.head-pic p{
+    display: block;
+    font-size: 14px;
+    color: #2CC7C5;
+    margin-bottom: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    position: relative;
+}
+.diary-info h2{
+    color: #333;
+    font-size: 18px;
+}
+.info-box{
+    float: left;
+}
+.info-box>ul li{
+    padding-top:10px ;
+    padding-bottom: 10px;
+    padding-left: 20px;
+}
+.info-box>ul li >span:last-child{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.info-box>ul li:last-child img{
+    display: inline-block;
+    width:169px;
+    margin-right: 5px;
+}
+.diary-list{
+
+}
+.diary-list .diary-item{
+    display: block;
+    border-top: 1px solid #f0f0f0;
+    padding: 20px 115px;
+}
+.diary-item>span{
+    display: inline-block;
+    font-size: 16px;
+    color: #fff;
+    background-color: #FF8EA3;
+    padding: 7px 12px;
+    border-radius: 30px;
+    margin-bottom: 10px;
+}
+.tp{
+    display: inline-block;
+    width:169px;
+    margin-right: 5px;
+}
+.pic-list{
+    display: inline-block;
+}
+.other-thing{
+    padding: 20px 0;
+    color: #777;
+    font-size: 15px;
+}
+.other-thing div{
+    display: inline-block;
+}
+.other-thing .time{
+    width:30%;
+}.other-thing .data-look{
+    width:68%;
+    text-align: right;
+}
+.data-look>span{
+    width:15px;
+    height:10px;
+    margin-right:20px;
+    color: #777;
+    font-size: 15px;
+}
+.backtrack{
+    cursor:pointer;
+    box-sizing: border-box;
+    text-align: center;
+    font-weight: 400;
+    color: #fff;
+    background-color: #5a98de;
+    border-color: #5a98de;
+    width: 75px;
+    height: 30px;
+    line-height: 30px;
+    margin: 20px 30px;
+}

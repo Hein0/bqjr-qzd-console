@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <title>电销管理</title>
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="../../lib/Hui-iconfont/1.0.8/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/skin/default/skin.css" id="skin" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/styles.css?rev=@@hash" />
+    <link rel="stylesheet" type="text/css" href="../../lib/laypage/1.2/skin/laypage.css">
+    <link rel="stylesheet" type="text/css" href="../../css/messageManagement.css?rev=@@hash">
+</head>
+
+<body>
+    <nav class="breadcrumb">
+        <i class="Hui-iconfont">&#xe67f;</i>
+        <a href="electricManagement.html">
+            首页
+        </a> <span class="c-gray en">&gt;</span>
+        <a href="electricManagement.html">
+            内容管理
+        </a><span class="c-gray en">&gt;</span>
+        <a href="electricManagement.html">
+            电销管理
+        </a><a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px"
+               href="javascript:location.replace(location.href);" title="刷新">
+            <i class="Hui-iconfont">&#xe68f;</i>
+        </a>
+    </nav>
+
+    <div class="page-container">
+        <div class="panel panel-default">
+            <form class="search-form">
+                <div class="panel-body pb-0 cl search">
+                    <div class="f-l mr-15 mb-15">
+                        <span class="text-c f-l">姓名</span>
+                        <input type="text" placeholder="输入电销员姓名" value="" class="input-text mobile" name="name" id="name" />
+                    </div>
+                    <div class="f-l mr-15 mb-15">
+                        <span class="text-c f-l">工号</span>
+                        <input type="text" placeholder="输入电销员工号" value="" class="input-text mobile" name="number" id="number" />
+                    </div>
+                    <div class="f-l mr-15 mb-15">
+                        <span class="text-c f-l">时间</span>
+                        <input type="text" onfocus="WdatePicker({ maxDate: '#F{$dp.$D(\'timeEnd\')||\'%y-%M-%d\'}' })" id="timeStart" class="input-text Wdate f-l" readonly name="timeStart" />
+                        <span class="f-l">至</span>
+                        <input type="text" onfocus="WdatePicker({ minDate: '#F{$dp.$D(\'timeStart\')}', maxDate: '%y-%M-%d' })" id="timeEnd" class="input-text Wdate f-l" readonly name="timeEnd" />
+                    </div>
+                    <div class="f-l mr-15 mb-15">
+                        <span class="text-c f-l">用户状态</span>
+                        <select class="select msg-leixin" name="orderStatus" id="orderStatus">
+                            <option value="" selected>全部</option>
+                            <!-- <option value="0">内部</option>
+                            <option value="1">外部</option>-->
+                        </select>
+                    </div>
+                    <!--<div class="f-l mr-15 mb-15">
+                        <span class="text-c f-l" style="width: 110px;">推送时间</span>
+                        <input type="text" onfocus="WdatePicker({ maxDate: '#F{$dp.$D(\'pushTimeEnd\')||\'%y-%M-%d\'}' })" id="pushTimeStart" class="input-text Wdate f-l" readonly name="pushTimeStart" />
+                        <span class="f-l">至</span>
+                        <input type="text" onfocus="WdatePicker({ minDate: '#F{$dp.$D(\'pushTimeStart\')}', maxDate: '%y-%M-%d' })" id="pushTimeEnd" class="input-text Wdate f-l" readonly name="pushTimeEnd" />
+                    </div>
+                    <div class="f-l mr-15 mb-15">
+                        <span class="text-c f-l">推送状态</span>
+                        <select class="select msg-tuisong" name="status" id="status">
+                            <option value="" selected>全部</option>-->
+                            <!-- <option value="-1">草稿</option>
+                            <option value="0">未发送</option>
+                            <option value="1">已发送</option>
+                            <option value="2">发送失败</option>-->
+                        <!--</select>
+                    </div>
+                    <div class="f-l mr-15 mb-15">
+                        <span class="text-c f-l">消息版块</span>
+                        <select class="select msg-bankuai name="insidepushtype" id="insidePushType">
+                            <option value="" selected>全部</option>-->
+                            <!--  <option value="1">系统通知</option>
+                             <option value="2">活动精选</option>-->
+                        <!--</select>
+                    </div>-->
+                    <div class="text-l m-t10 mb-15 f-r">
+                        <button type="button" onclick="listScreen()" class="btn btn-primary" id="screeBtn" name=""><i class="Hui-iconfont">&#xe665;</i> 筛选</button>
+                        <button type="button" class="btn btn-primary" id="resetBtn" name=""><i class="Hui-iconfont">&#xe66b;</i> 重置</button>
+                        <button class="btn btn-primary " onclick="window.location='createMessage.html'" type="button"><i class="Hui-iconfont">&#xe604;</i> 新建</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="mt-20">
+            <table style="min-width: 900px;" class="table table-border table-bordered table-hover table-bg table-sort">
+                <thead>
+                    <tr class="text-c">
+                        <th width="200px">日期</th>
+                        <th width="100px">电销员</th>
+                        <th width="200px">工号</th>
+                        <th width="100px">分配量</th>
+                        <th width="200px">呼出量</th>
+                        <th width="100px">空号</th>
+                        <th width="200px">停机</th>
+                        <th width="100px">关机</th>
+                        <th width="200px">无人接听</th>
+                        <th width="100px">拒绝接听</th>
+                        <th width="200px">开场白挂</th>
+                        <th width="100px">需要考虑</th>
+                        <th width="200px">销售拒绝</th>
+                        <th width="100px">答应办理</th>
+                        <th width="200px">未注册</th>
+                        <th width="100px">未申请</th>
+                        <th width="200px">录入中</th>
+                        <th width="200px">待审核</th>
+                        <th width="200px">审核暂不通过</th>
+                        <th width="200px">拒绝</th>
+                        <th width="200px">通过</th>
+                        <th width="200px">已提现</th>
+                        <th width="200px">已提现金额</th>
+                        <th width="200px">已消费</th>
+                        <th width="200px">已消费金额</th>
+                    </tr>
+                    <!--<tr>
+                    	<td>2017-09-12/2017-10-12</td>
+                    	<td>哈哈哈</td>
+                    	<td>101</td>
+                    	<td>1000</td>
+                    	<td>500</td>
+                    	<td>100</td>
+                    	<td>100</td>
+                    	<td>100</td>
+                    	<td>50</td>
+                    	<td>50</td>
+                    	<td>100</td>
+                    	<td>100</td>
+                    	<td>50</td>
+                    	<td>500</td>
+                    	<td>300</td>
+                    	<td>100</td>
+                    	<td>50</td>
+                    	<td>60</td>
+                    	<td>80</td>
+                    	<td>100</td>
+                    	<td>300</td>
+                    	<td>50</td>
+                    	<td>50</td>
+                    	<td>100</td>
+                    	<td>100</td>
+                    </tr>-->
+                </thead>
+                <tbody id="itemsList">
+                    <tr>
+                        <td colspan="25" style="text-align:center;">暂无相关数据！</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="pagination cl mt-20 mb-20" id="pagination"></div>
+        </div>
+    </div>
+
+    <!--_footer 作为公共模版分离出去-->
+    <script type="text/javascript" src="../../lib/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="../../lib/layer/2.4/layer.js"></script>
+    <script type="text/javascript" src="../../static/h-ui/js/H-ui.min.js"></script>
+    <script type="text/javascript" src="../../static/h-ui.admin/js/H-ui.admin.js"></script>
+    <script type="text/javascript" src="../../js/base/public.js?rev=@@hash"></script>
+    <!--/_footer 作为公共模版分离出去-->
+    <!--请在下方写此页面业务相关的脚本-->
+    <script type="text/javascript" src="../../lib/My97DatePicker/4.8/WdatePicker.js"></script>
+    <script type="text/javascript" src="../../lib/doT/doT.min.js"></script>
+    <script type="text/javascript" src="../../lib/laypage/1.2/laypage.js"></script>
+    <script type="text/javascript" src="../../js/page/electricManagement.js?rev=@@hash"></script>
+
+    <script id="itemsListTmp" type="text/x-dot-template">
+        {{~it.data:item}}
+        <tr class="text-c clear">
+            <td>{{=item.title || ''}}</td>
+            <td style="text-align:left;"><span class="t-elipsis" title="{{=item.context || ''}}">{{=item.context || ''}}</span></td>
+            {{?item.pushType == 0 && item.statusStr == "草稿"}}
+            <td>草稿</td>
+            {{??item.pushType == 0 && item.statusStr != "草稿"}}
+            <td></td>
+            {{??item.pushType == 1}}
+            <td>{{=item.statusStr || ''}}</td>
+            {{?}}
+            <td>{{=item.pushTypeStr || ''}}</td>
+            <td>{{=item.insidePushTypeStr || ''}}</td>
+            <td>{{=item.pushBookTime.substring(0,10) || ''}}</td>
+            <td>{{=item.pushTime.substring(0,10) || ''}}</td>
+            {{?item.status == -1}}
+            <!--href="createMessage.html?groupId={{=item.groupId}}"-->
+            <td><a onclick="getDetailMsg({{= item.groupId}},this,'1',{{=item.pushType}});" class="btn btn-primary-outline size-S">编辑 <i class="Hui-iconfont Hui-iconfont-edit"></i></a></td>
+            {{??}}
+            <td><a onclick="getDetailMsg({{= item.groupId}},this,'2',{{=item.pushType}});" class="btn btn-primary-outline size-S" id="">详情 <i class="Hui-iconfont Hui-iconfont-yulan"></i></a></td>
+            {{?}}
+        </tr>
+        {{~}}
+    </script>
+</body>
+
+</html>

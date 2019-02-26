@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+	    <meta http-equiv="Cache-Control" content="no-siteapp" />
+	    <title>用户下单记录表</title>
+
+	    <link rel="stylesheet" type="text/css" href="../../static/h-ui/css/H-ui.min.css" />
+	    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/H-ui.admin.css" />
+	    <link rel="stylesheet" type="text/css" href="../../lib/Hui-iconfont/1.0.8/iconfont.css" />
+	    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/skin/default/skin.css" id="skin" />
+	    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/style.css" />
+	    <link rel="stylesheet" type="text/css" href="../../lib/laypage/1.2/skin/laypage.css">
+	    <link rel="stylesheet" type="text/css" href="../../css/reset.css?rev=@@hash"/>
+	    <link rel="stylesheet" type="text/css" href="../../css/stageSuccess.css?rev=@@hash"/>
+	</head>
+	<body>
+		<nav class="breadcrumb">
+	        <i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 商城管理 <span class="c-gray en">&gt;</span> <span class="fileName">用户下单记录表</span>
+	        <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a>
+	        <!--<a id="getOut" class="btn btn-success r" style="line-height:1.6em;margin-top:3px;margin-right: 10px; background: #5a98de;border-color: #5a98de;" href="javascript:$('#mymodal').modal('show');">导出</a>-->
+	        <a id="getOut" class="btn btn-success r" style="line-height:1.6em;margin-top:3px;margin-right: 10px; background: #5a98de;border-color: #5a98de;" href="javascript:;">导出</a>
+		</nav>
+
+	    <div class="Hui-article">
+	    	<!--查询条件板块-->
+	    	<div class="panel panel-default">
+	    		<form class="search-form">
+					<div class="panel-body pb-0 cl search">
+				        
+				        <div class="f-l mr-15 mb-15">
+		                    <span class="text-c f-l">订单号</span>
+		                    <input type="text" value="" class="input-text withdrawNo" name="tradeId" style="width: 180px;" />
+		                </div>
+		                
+		                <div class="f-l mr-15 mb-15">
+		                    <span class="text-c f-l">合同号</span>
+		                    <input type="text" value="" class="input-text withdrawNo" name="orderId" style="width: 180px;" />
+		                </div>
+		                
+		                <div class="f-l mr-15 mb-15">
+		                    <span class="text-c f-l">商品信息</span>
+		                    <input type="text" value="" class="input-text withdrawNo" name="keyword" style="width: 180px;" />
+		                </div>
+				        
+		                <div class="f-l mr-15 mb-15">
+		                    <span class="text-c f-l">订单类型</span>
+		                    <select class="select" name="tradeType">
+		                        <option value="0" selected>全部</option>
+		                        <option value="1" >实物订单</option>
+		                        <option value="2" >虚拟订单</option>
+		                    </select>
+		                </div>
+
+
+				        <div class="f-l mr-15 mb-15">
+		                    <span class="text-c f-l" >用户下单时间</span>
+		                    <input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'endTradeTime\')||\'%y-%M-%d\'}' })" id="beginTradeTime" class="input-text Wdate f-l" readonly name="beginTradeTime" />
+		                    <span class="f-l">至</span>
+		                    <input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'beginTradeTime\')}',maxDate:'%y-%M-%d' })" id="endTradeTime" class="input-text Wdate f-l" readonly name="endTradeTime" />
+		               </div>
+						
+						<div class="f-l mr-15 mb-15">
+		                    <span class="text-c f-l" >付款成功时间</span>
+		                    <input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'endPayTime\')||\'%y-%M-%d\'}' })" id="beginPayTime" class="input-text Wdate f-l" readonly name="beginPayTime" />
+		                    <span class="f-l">至</span>
+		                    <input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'beginPayTime\')}',maxDate:'%y-%M-%d' })" id="endPayTime" class="input-text Wdate f-l" readonly name="endPayTime" />
+		               </div>
+		               
+		               <div class="f-l mr-15 mb-15">
+		                    <span class="text-c f-l">数据来源</span>
+		                    <select class="select dataChannel" name="dataSource">
+		                        <option value="0" selected>全部</option>
+		                    </select>
+		                </div>
+						
+				        <div class="text-l m-t10 mb-15 f-r">
+				            <button type="button" class="btn btn-primary mr-15" id="screeBtn" name=""><i class="Hui-iconfont">&#xe665;</i> 筛选</button>
+				            <button type="button" class="btn btn-primary" id="resetBtn" name=""><i class="Hui-iconfont">&#xe66b;</i> 重置</button>
+				        </div>
+
+			        </div>
+			    </form>
+			</div>
+	        <!--<div class="cl pd-5 bg-1 bk-gray mt-20"><span class="r">共有数据：<strong>88</strong> 条</span> </div>-->
+
+	        <!--数据表格-->
+	        <div class="mt-20 mb-20 table-con">
+	            <table style="min-width: 2900px;" class="table table-bg table-border table-bordered table-hover zhc-table">
+	                <thead>
+                    <tr class="text-c">
+                        <th width="160px">订单号</th>
+                        <th width="160px">渠道订单号</th>
+                        <th width="160px">售后服务单号</th>
+                        <th width="250px">合同号</th>
+                        <th width="80px">订单类型</th>
+                        <th width="180px">商品信息</th>
+                        <th width="100px">所属分类</th>
+                        <th width="80px">客户姓名</th>
+                        <th width="80px">订单金额</th>
+                        <th width="140px">商城订单优惠券</th>
+                        <th width="80px">京东运费</th>
+                        <th width="80px">用户运费</th>
+                        <th width="80px">应付金额</th>
+                        <th width="120px">支付渠道来源</th>
+                        <th width="180px">支付/退款流水号</th>
+                        <th width="80px">现金支付</th>
+                        <th width="100px">分期金额</th>
+                        <th width="100px">分期数</th>
+                        <th width="80px">每期还款</th>
+                        <th width="160px">用户下单时间</th>
+                        <th width="160px">付款成功时间</th>
+                        <th width="160px">采购时间</th>
+                        <th width="120px">数据来源</th>
+                    </tr>
+                </thead>
+	                <tbody id="tableList">
+	                	
+				  	</tbody>
+
+	            </table>
+	        </div>
+	        
+	        <!--分页-->
+			<div class="pagination cl" id="pagination"></div>
+	    </div>
+
+		
+		
+		<!--导出-->
+		<div id="mymodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		    <div class="modal-dialog">
+		        <div class="modal-content radius">
+		            <div class="modal-header">
+		                <h3 class="modal-title">导出</h3>
+		                <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void(0);">×</a>
+		            </div>
+		            <div class="modal-body">
+		                <div class="export">
+		                    <label>文件名</label><input type="text" onfocus="javascript:$('.p').hide()" id="fileName" />
+		                    <p class="p">请输入文件名</p>
+		                </div>
+		                <p>提示：<br />1、导出的目标数据是根据搜索条件搜索后的数据；若需导出全部数据，请在导出之前清除搜索条件。<br />2、文件名命名可以自定义</p>
+		            </div>
+		            <div class="modal-footer">
+		                <button class="btn btn-primary" onclick="afterSale.export();">确定</button>
+		                <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+		            </div>
+		        </div>
+		    </div>
+		</div>
+		
+		<!--组件-->
+		<script type="text/javascript" src="../../lib/jquery/1.9.1/jquery.min.js"></script>
+		<script type="text/javascript" src="../../lib/My97DatePicker/4.8/WdatePicker.js"></script>
+	    <script type="text/javascript" src="../../lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+	    <script type="text/javascript" src="../../lib/laypage/1.2/laypage.js"></script>
+	    <script src="../../js/common/jquery.tmpl.min.js" type="text/javascript"></script>
+	    <script type="text/javascript" src="../../lib/layer/2.4/layer.js"></script>
+	    <script type="text/javascript" src="../../static/h-ui/js/H-ui.min.js"></script>
+	    <script type="text/javascript" src="../../static/h-ui.admin/js/H-ui.admin.js"></script>
+
+	    <!--业务逻辑-->
+	    <script type="text/javascript" src="../../js/base/public.js?rev=@@hash"></script>
+	    <script src="../../js/page/stageSuccess.js?rev=@@hash" type="text/javascript" charset="utf-8"></script>
+	    <script id="stageSuccessList" type="text/x-jquery-tmpl">
+	    	{{if dataSource == 1}}
+	    		<tr class="text-c">
+	    			<td><a class="order-detail" href="javascript:;">{{= tradeId ||''}}</a></td>
+	    			<td>{{= channelOrderId ||''}}</td>
+			  		<td><a class="toDetail" assServiceId="{{= assServiceId}}" href="javascript:;">{{= assServiceId ||''}}</a></td>
+			  		<td>{{= orderId ||''}}</td>
+			  		<td>{{= tradeTypeStr ||''}}</td>
+			  		<td>{{= goodsName ||''}}</td>
+			  		<td>{{= catName ||''}}</td>
+			  		<td>{{= userName ||''}}</td>
+			  		<td>{{= tradeAmount ||''}}</td>
+			  		<td>{{= couponAmount ||''}}</td>
+			  		<td>{{= postage ||'包邮'}}</td>
+			  		<td>{{= userPostage ||'包邮'}}</td>
+			  		<td>{{= amount ||''}}</td>
+			  		<td>{{= payTypeStr ||''}}</td>
+			  		<td>{{= requestNo ||''}}</td>
+			  		<td>{{= payAmount ||''}}</td>
+			  		<td>{{= loanAmount ||''}}</td>
+			  		<td>{{= loanDay ||''}}</td>
+			  		<td>{{= perRepaymentAmount ||''}}</td>
+			  		<td>{{= tradeTime ||''}}</td>
+			  		<td>{{= payTime ||''}}</td>
+			  		<td>{{= purchaseTime ||''}}</td>
+			  		<td>{{= dataSourceStr ||''}}</td>
+		  		</tr>
+		  	{{else}}
+		  		<tr class="text-c">
+	    			<td><a class="order-detail red" href="javascript:;">{{= tradeId ||''}}</a></td>
+	    			<td class="red">{{= channelOrderId ||''}}</td>
+			  		<td><a class="toDetail red" assServiceId="{{= assServiceId}}" href="javascript:;">{{= assServiceId ||''}}</a></td>
+			  		<td class="red">{{= orderId ||''}}</td>
+			  		<td class="red">{{= tradeTypeStr ||''}}</td>
+			  		<td class="red">{{= goodsName ||''}}</td>
+			  		<td class="red">{{= catName ||''}}</td>
+			  		<td class="red">{{= userName ||''}}</td>
+			  		<td class="red">{{= tradeAmount ||''}}</td>
+			  		<td class="red">{{= couponAmount ||''}}</td>
+			  		<td class="red">{{= postage ||'包邮'}}</td>
+			  		<td class="red">{{= userPostage ||'包邮'}}</td>
+			  		<td class="red">{{= amount ||''}}</td>
+			  		<td class="red">{{= payTypeStr ||''}}</td>
+			  		<td class="red">{{= requestNo ||''}}</td>
+			  		<td class="red">{{= payAmount ||''}}</td>
+			  		<td class="red">{{= loanAmount ||''}}</td>
+			  		<td class="red">{{= loanDay ||''}}</td>
+			  		<td class="red">{{= perRepaymentAmount ||''}}</td>
+			  		<td class="red">{{= tradeTime ||''}}</td>
+			  		<td class="red">{{= payTime ||''}}</td>
+			  		<td class="red">{{= purchaseTime ||''}}</td>
+			  		<td class="red">{{= dataSourceStr ||''}}</td>
+		  		</tr>
+		  	{{/if}}
+	    </script>
+	</body>
+</html>

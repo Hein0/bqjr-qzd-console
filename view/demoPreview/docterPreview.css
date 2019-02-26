@@ -1,0 +1,167 @@
+*{
+    line-height: 100%;
+}
+* {
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	-webkit-tap-highlight-color: transparent;
+}
+
+*::-webkit-scrollbar {
+	width: 0px;
+	height: 0px;
+}
+
+input,
+textarea {
+	border: 0;
+	-webkit-appearance: none;
+}
+
+* ::-webkit-scrollbar-thumb {
+	border-radius: 0px;
+	-webkit-box-shadow: inset 0 0 0px rgba(0, 0, 0, 0);
+	background: rgba(0, 0, 0, 0);
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+	display: none;
+}
+
+html,
+body,
+#app {
+	width: 100%;
+	height: 100%;
+}
+
+body {
+	/* position: relative; */
+	overflow: hidden;
+	overflow-y: hidden;
+	/* top: 0; */
+}
+ul li{list-style-type:none}
+#app {
+	overflow: hidden;
+}
+#doctorInfo{
+    width: 100%;
+    height: 100%;
+    background-color: #f8f8f8;
+    /* margin-bottom: 1.4667rem; */
+    display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */ 
+    display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */ 
+    display: -ms-flexbox; /* TWEENER - IE 10 */
+    display: -webkit-flex; /* NEW - Chrome */ 
+    display: flex; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+    flex-direction: column;
+    overflow: hidden;
+    flex-wrap: nowrap;
+}
+#doctorInfo .container{
+    -webkit-box-flex: 1; /* OLD - iOS 6-, Safari 3.1-6 */ 
+    -moz-box-flex: 1; /* OLD - Firefox 19- */ 
+    /* width: 20%; For old syntax, otherwise collapses. */
+    -webkit-flex: 1; /* Chrome */ 
+    -ms-flex: 1; /* IE 10 */ 
+    flex: 1; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+    flex: 1 1 auto;
+    overflow-x: hidden;
+    overflow-y: auto;
+    /*解决ios上滑动不流畅*/
+    -webkit-overflow-scrolling: touch;
+    position: relative;
+    /* height: 100%; */
+}
+#doctorInfo::-webkit-scrollbar {
+    display: none;
+}
+#doctorInfo .container #title,#doctorInfo .container #titles{
+    font-size: 0.32rem;
+    color: #787878;
+}
+
+/* base */
+#doctorInfo .container .base{
+    margin-top: 0.2667rem;
+    background-color: #fff;
+    padding: 0.32rem 0.4rem;
+}
+#doctorInfo .container .base li{
+    display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */ 
+    display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */ 
+    display: -ms-flexbox; /* TWEENER - IE 10 */
+    display: -webkit-flex; /* NEW - Chrome */ 
+    display: flex; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+    align-items: center;
+    justify-content: space-between;
+    height: 0.88rem;
+    border-bottom: 1px solid #e6e6e6;
+}
+#doctorInfo .container .base li:first-of-type{
+    height: 0.56rem;
+    align-items: flex-start;
+}
+#doctorInfo .container .base li:last-of-type{
+    height: 0.56rem;
+    align-items: flex-end;
+    border: none;
+}
+#doctorInfo .container .base li span{
+    color: #787878;
+    font-size: 0.3733rem;
+}
+#doctorInfo .container .base li span:first-of-type{
+    color: #282828;
+}
+/* introduce */
+#doctorInfo .container .introduce{
+    margin-top: 0.2667rem;
+    background-color: #fff;
+    padding:0 0.4rem;
+}
+#doctorInfo .container .introduce h4{
+    height: 0.8933rem;
+    line-height: 0.8933rem;
+    border-bottom: 1px solid #e6e6e6;
+}
+#doctorInfo .container .introduce p{
+    color: #505050;
+    font-size: 0.3733rem;
+    margin-top: 0.4rem;
+    padding-bottom: 0.3467rem;
+    line-height: 1.15;
+}
+#doctorInfo .container .Photo{
+    margin-top: 0.2667rem;
+    background-color: #fff;
+    padding:0 0.4rem;
+}
+#doctorInfo .container .Photo h4{
+    height: 0.8933rem;
+    line-height: 0.8933rem;
+    border-bottom: 1px solid #e6e6e6;
+}
+#doctorInfo .container .Photo .photoList{
+    display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */ 
+    display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */ 
+    display: -ms-flexbox; /* TWEENER - IE 10 */
+    display: -webkit-flex; /* NEW - Chrome */ 
+    display: flex; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+    flex-wrap: wrap;
+    margin-top: 0.3467rem;
+}
+#doctorInfo .container .Photo .photoList li{
+    margin-right: 0.08rem;
+    margin-bottom: 0.08rem;
+}
+#doctorInfo .container .Photo .photoList li:last-child{
+    margin-bottom: 0.3467rem;
+}
+#doctorInfo .container .Photo .photoList li img{
+    width: 2.9867rem;
+    height: 2.24rem;
+    border-radius: 0.0667rem;
+}

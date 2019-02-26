@@ -1,0 +1,52 @@
+.mt20{margin-top: 20px;}
+.ml-100{margin-left: 100px;}
+/*详情*/
+.marginLeft10{margin-left: 10px;}
+.inlineBlock{display: inline-block;width: 300px;}
+.dtWithdrawNo{margin-left: 1em;margin-right: 15em;}
+.applyTime{margin-left: 1em;margin-right: 15em;}
+.currStatus{margin-left: 1em;}
+.updataTime{margin-left: 1em;}
+.contractNo{margin: 0 15em 0 1em;}
+.contractStatus{margin: 0 14em 0 1em;}
+.dtWdType,.wdAmount{margin: 0 16em 0 5em;}
+.couponId{margin-left: 56em;}
+.periods{margin-left: 7em;}
+.timePay{margin-left: 1em;}
+.interest{margin-left: 6em;}
+.charge{margin-left: 5em;}
+.dtUserName{margin-left: 7em;}
+.dtMobile{margin-left: 7em;}
+.no-express{height: 5rem;line-height: 5rem;text-align: center;}
+.statusBtn, .cancelBtn{color: dodgerblue;}
+.border-b{border-bottom: 1px solid #ddd;}
+/*.dropDown_A:hover{width: 5rem; height: 2rem;line-height: 2rem;display: inline-block;text-align: center;background: #5a98de;color: white;font-weight: normal;margin-top: -0.3rem;}
+.dropDown_A{width: 5rem; height: 2rem;line-height: 2rem;display: inline-block;background: #5a98de;color: white;text-align: center;font-weight: normal;margin-top: -0.3rem;}*/
+.dropDown_A{font-weight: normal;color: deepskyblue;}
+.infoTitle{float: left;}
+.infoBox{margin-left: 1em;width: 45rem;}
+.imgWrap{margin-top: 10px;}
+.imgTitle{letter-spacing: 2em;}
+.imgWrap img{margin-left: 1rem;}
+.imgList{display: inline-block;}
+.imgSmall{width: 5rem;height: 5rem;}
+.imgSize{width: 50%;height: 50%;}
+.accontName, .dealRes, .goodsPrice{margin: 0 10.5rem 0 1rem;}
+.goodsQty{margin: 0 12.4rem 0 1rem;}
+.dealTime{margin-left: 1rem;}
+
+.expressBg{background: #f5f5f5;}
+.expressStatus, .channelExpressNo, .customExpressNo{margin-left: 20rem;}
+.expListStatus{margin-left: 13rem;}
+
+.order-detail:hover {
+    text-decoration: underline;
+    cursor: pointer;
+    color: #0a6999;
+}
+.toDetail:hover {
+    text-decoration: underline;
+    cursor: pointer;
+    color: #0a6999;
+}
+.red{color: red;}

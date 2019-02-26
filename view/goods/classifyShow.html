@@ -1,0 +1,374 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <title>分类展示</title>
+	<link rel="stylesheet" type="text/css" href="../../lib/bootstrap-3.3.5-dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../../lib/bootstrap-3.3.5-dist/css/bootstrap-theme.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui/css/H-ui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/H-ui.admin.css"/>
+    <link rel="stylesheet" type="text/css" href="../../lib/Hui-iconfont/1.0.8/iconfont.css"/>
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/skin/default/skin.css" id="skin"/>
+    <link rel="stylesheet" type="text/css" href="../../lib/laypage/1.2/skin/laypage.css?rev=@@hash">
+    <link rel="stylesheet" type="text/css" href="../../css/reset.css?rev=@@hash"/>
+    <link rel="stylesheet" type="text/css" href="../../css/imgUp.css?rev=@@hash"/>
+    <link rel="stylesheet" type="text/css" href="../../css/classsifyShow.css?rev=@@hash"/>
+    
+    
+    
+   
+</head>
+
+<body>
+<nav class="breadcrumb">
+    <i class="Hui-iconfont">&#xe67f;</i>
+    首页 <span class="c-gray en">&gt;</span>
+    商品管理 <span class="c-gray en">&gt;</span>
+    分类展示
+    <!--<a class="btn btn-success r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a>-->
+    <!--<input class="btn btn-primary f-r mr-10"  onclick="wallet.openExport()" style="margin-top: 3px;" type="button" value="导出">-->
+</nav>
+<div class="wrap">
+	
+
+<div id="classify-list" class="page-container">
+    <div class="panel panel-default">
+        <form class="search-form">
+            <div class="panel-body pb-0 cl search">
+                
+                <div class="text-l m-t10 f-l">
+                    <button level="parent" type="button" class="btn btn-primary mb-15" id="add">添加</button>
+                </div>
+                
+                <div class="f-l mr-15 mb-15 ml-50">
+                    <span class="text-c f-l">搜索</span>
+                    <input type="text" value="" class="input-text" style="width: 200px;" name="menuName" placeholder="输入左向菜单名称"/>
+                </div>
+                
+                <div class="text-l m-t10">
+                    <button type="button" class="btn btn-primary mb-15" id="check" > 查询</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="mt-20 table-con2">
+        <table style="width: 1000px;" id="classify" class="table table-border table-bordered table-hover table-bg table-sort">
+            <thead>
+                <tr class="text-c">
+                    <th width="25%">左向菜单名称</th>
+                    <th width="17%">左向菜单名称排序</th>
+                    <th width="25%">右向菜单名称</th>
+                    <th width="17%">右向菜单名称排序</th>
+                    <th width="16%">操作</th>
+                </tr>
+            </thead>
+            <tbody id="tableList">
+				<!--<tr class="text-c" data-id="1" data-parent="">
+					<td class="leftMenu text-l" leftId="leftId">手机</td>
+					<td class="leftSort">1</td>
+					<td class="rightMenu" rightId="rightId"><img class="add_icon" src="../../images/add.png"/>增加右向菜单</td>
+					<td>1</td>
+					<td><a class="edit" href="javascript:;">编辑</a><a class="isUse" href="javascript:;">启用</a></td>
+				</tr>-->
+				<!--<tr class="text-c" data-parent="1">
+					<td class="text-l"></td>
+					<td><img src="../../images/sub.gif"/></td>
+					<td><img src="../../images/add.png"/>商务本</td>
+					<td>2</td>
+					<td><a href="javascript:;">编辑</a><a href="javascript:;">启用</a></td>
+				</tr>-->
+				<!--<tr class="text-c" data-parent="1">
+					<td class="text-l"></td>
+					<td><img src="../../images/sub.gif"/></td>
+					<td><img src="../../images/add.png"/>游戏本</td>
+					<td>3</td>
+					<td><a href="javascript:;">编辑</a><a href="javascript:;">启用</a></td>
+				</tr>-->
+				<!--<tr class="text-c" data-parent="1">
+					<td class="text-l"></td>
+					<td><img src="../../images/sub.gif"/></td>
+					<td><img src="../../images/add.png"/>台式机</td>
+					<td>4</td>
+					<td><a href="javascript:;">编辑</a><a href="javascript:;">启用</a></td>
+				</tr>-->
+
+
+            	<tr><td colspan='5'  style='text-align:center; color:#ddd;'>请输入查询条件查询数据！</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!--分页-->
+    <div class="pagination mt-20" id="pagination"></div>
+</div>
+
+<!--添加弹窗-->
+<div class="pop_add">
+	<div class="left_name bdbt height_100">
+		<p>左向菜单名称</p>
+		<input class="input_text mt-10" type="text" name="" id="pop_left_name" placeholder="| 名称"/>
+	</div>
+	<div class="left_num bdbt height_100">
+		<p>左向菜单名称排序</p>
+		<input class="input_text mt-10" type="text" name="" id="pop_left_sort" placeholder="请输入自然数"/>
+		<span>请填写自然数。商品分类将会根据排序进行由小到大排列显示</span>
+	</div>
+	
+	<div class="left_name bdbt height_100">
+		<p>左向菜单类型</p>
+		<select class="input_text mt-10 leftMenuType" name="" id="pop_left_type">
+			<!--<option value="0">发现</option>
+			<option value="1">充值</option>
+			<option value="2">其他</option>-->
+		</select>
+	</div>
+	
+	<div class="left_img bdbt height_180">
+		<p>左向菜单图片</p>
+			<div class="img-box full">
+				<section class=" img-section">
+					<div class="z_photo upimg-div clear" >
+			               	 <section class="z_file fl up_img_box">
+			               	 	<img src="../../images/a11.png" class="add-img">
+			               	 	<input type="file" name="file" id="file" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple />
+			               	 </section>
+			         </div>
+				 </section>
+			</div>
+	        <aside class="mask works-mask">
+				<div class="mask-content">
+					<p class="del-p">您确定要删除图片吗？</p>
+					<p class="check-p"><span class="del-com wsdel-ok">确定</span><span class="wsdel-no">取消</span></p>
+				</div>
+			</aside>
+		<span>建议上传图片尺寸：<span class="img_size">92*92</span></span>
+	</div>
+	
+	<div class="right_panel">
+		<div class="right_name bdbt height_100">
+			<p>右菜单名称</p>
+			<input class="input_text mt-10" type="text" name="" id="pop_right_name" placeholder="| 名称"/>
+		</div>
+		<div class="right_img bdbt height_180">
+			<p>右向菜单图片</p>
+				<div class="img-box full">
+					<section class=" img-section">
+						<!--<p class="up-p">作品图片：<span class="up-span">最多可以上传5张图片，马上上传</span></p>-->
+						<div class="z_photo upimg-div clear" >
+				               <!--<section class="up-section fl">
+				               		<span class="up-span"></span>
+				               		<img src="/img/buyerCenter/a7.png" class="close-upimg">
+				               		<img src="/img/buyerCenter/3c.png" class="type-upimg" alt="添加标签">
+				               		<img src="/img/test2.jpg" class="up-img">
+				               	    <p class="img-namep"></p>
+				               	    <input id="taglocation" name="taglocation" value="" type="hidden">
+				               	    <input id="tags" name="tags" value="" type="hidden">
+				               	</section>-->
+				               	<!--<div class="up-section fl loading edit-img-box">
+				               		<span class="up-span"></span>
+				               		<img src="../../images/a7.png" class="close-upimg">
+				               		<img class="edit-img" src=""/>
+				               	</div>-->
+				               	 <section class="z_file fl up_img_box">
+				               	 	<img src="../../images/a11.png" class="add-img">
+				               	 	<input type="file" name="file" id="file" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple />
+				               	 </section>
+				         </div>
+					 </section>
+				</div>
+		        <aside class="mask works-mask">
+					<div class="mask-content">
+						<p class="del-p">您确定要删除图片吗？</p>
+						<p class="check-p"><span class="del-com wsdel-ok">确定</span><span class="wsdel-no">取消</span></p>
+					</div>
+				</aside>
+			<span>建议上传图片尺寸：<span class="img_size">92*92</span></span>
+		</div>
+		<div class="right_num bdbt height_100">
+			<p>右向菜单名称排序</p>
+			<input class="input_text mt-10" type="text" name="" id="pop_right_sort" placeholder="请输入自然数"/>
+			<span>请填写自然数。商品分类将会根据排序进行由小到排列显示</span>
+		</div>
+		
+		<div class="right_name bdbt height_100">
+			<p>右向菜单类型</p>
+			<select class="input_text mt-10 rightMenuType" name="" id="pop_right_type">
+				<!--<option value="0">实物商品</option>
+				<option value="1">话费充值</option>
+				<option value="2">流量充值</option>
+				<option value="3">Q币充值</option>
+				<option value="4">会员充值</option>-->
+			</select>
+		</div>
+		
+		<div class="right_select bdbt height_100">
+			<p><span class="radio_wrap"><input id="input_text_goods" typeNo="1" type="radio" name="right" class="right_link" />右向菜单关联商品</span>
+				<span class="radio_wrap"><input id="input_text_cary" typeNo="2" class="margin_l_100 radio_dis" type="radio" name="right" class="right_link" />右向菜单关联分类/品牌</span>
+			</p>
+			<a class="choose_goods" href="javascript:;">
+		        <span class="span_box">选择商品</span>
+		        <input class="input_text" style="margin: -3px 0 0 -5px;" type="text" name="brand_inp" id="contact_goods" value="请选择关联商品" />
+	        </a>  
+	        <a class="choose_kind" href="javascript:;">
+		        <span class="margin_l_100 span_box">选择分类</span>
+		        <input class="input_text" style="margin: -3px 0 0 -5px;" type="text" name="kind_inp" id="kind_inp" value="请选择分类" />
+		    </a>
+		     <a class="choose_brand" href="javascript:;">
+		        <span class="margin_5 span_box">品牌</span>
+		        <input class="input_text" style="margin: -3px 0 0 -5px;" type="text" name="brand_inp" id="brand_inp" value="请选择品牌" />
+	       </a>
+	        <!--选择品牌弹窗-->
+	        <div class="name-select-panel">
+		        <div class="search-bar">
+		            <input type="text" class="" id="" value="">
+		            <i class="Hui-iconfont">&#xe709;</i>
+		        </div>
+		        <ul class="brandList">
+		            <!--<li>三星（SAMSUNG）</li>
+		            <li>华为（HUAWEI）</li>
+		            <li>小米（MI）</li>
+		            <li>联想（Lenovo）</li>
+		            <li>魅族（MEIZU）</li>
+		            <li>中兴（ZTE）</li>
+		            <li>惠普（HP）</li>
+		            <li>苹果（Apple）</li>
+		            <li>vivo</li>
+		            <li>OPPO</li>
+		            <li>戴尔（DELL）</li>
+		            <li>华硕（ASUS）</li>
+		            <li>微软（Microsoft）</li>-->
+		        </ul>
+		    </div>
+	    </div>
+	</div>
+    <!--<div class="is_use bdbt height_100">
+    	<p>是否启用</p>
+    	<span><input isUse="0" type="radio" name="isOpen" />开启</span>
+    	<span><input isUse="1" type="radio" name="isOpen" checked/>关闭</span>
+    </div>-->
+    <div class="btn_box">
+    	<button class="submit_btn">确定</button>
+    	<button class="cancel">返回</button>
+    </div>
+  
+</div>
+<div class="mark_pop"><!--弹窗蒙层-->
+</div><!--弹窗蒙层end-->
+<!--选择分类弹窗-->
+    <div class="type-select-panel condition-panel">
+        <div class="top-part cl">
+            <ul class="ul-1">
+                <!--<li class="check">家用电器</li>
+                <li>家用电器</li>
+                <li>家用电器</li>
+                <li>家用电器</li>
+                <li>家用电器</li>-->
+            </ul>
+            <ul class="ul-2"></ul>
+            <ul class="ul-3"></ul>
+            <ul class="ul-4"></ul>
+        </div>
+        <div class="bottom-part cl">
+            <p class="result">您当前已选择的分类：<em><span class="choose-kind-1"></span><span class="choose-kind-2"></span><span class="choose-kind-3"></span><span class="choose-kind-4"></span></em></p>
+            <button type="button" class="btn btn-primary close-panel">关闭</button>
+            <button type="button" class="btn btn-primary get-result">确认选择</button>
+        </div>
+    </div>
+
+<!--关联商品弹窗-->
+<div class="pop_goods">
+	<div class="pop_goods_head">
+		<p>选择关联商品</p>
+	</div>
+	<!--<form class="search-form">-->
+		<div class="condition pt-20">
+			<div class="f-l margin_t_10 checkbox">
+				<input type="radio" name="sign" id="no-choose" value="1" /><label style="padding-left: 0;margin-right: 10px;" for="no-choose">未选择商品</label>
+				<input type="radio" name="sign" id="have-choose" value="2" /><label style="padding-left: 0;margin-right: 10px;" for="have-choose">已选择商品</label>
+				<input type="radio" name="sign" id="all-goods" value="3" checked="checked"/><label style="padding-left: 0;margin-right: 10px;" for="all-goods">全部商品</label>
+			</div>
+			
+	        <div class="f-l ml-20">
+	        	<span class="span_box">搜索</span>
+	       		<input type="text" name="" id="keyword" value="" placeholder="输入商品名称/价格"/>
+	        </div>
+	        
+	        <div class="f-l ml-20">
+	        	<span>状态</span>
+	        	<select id="popstatus" name="">
+	        		<option value="">全部</option>
+	        		<option value="1">已上架</option>
+	        		<option value="0">已下架</option>
+	        	</select>
+	        </div>
+	        <div class="f-l ml-20">
+	        	<a class="link_kind_btn" href="javascript:;">
+		        	<span style="width: 80px;">商品分类</span>
+		        	<input class="input_text" style="margin: -3px 0 0 -5px;" type="text" name="link_kind_inp" id="link_kind_inp" value="请选择分类" />
+	        	</a>
+	        </div>
+	        <button class="ml-20 pop_check">查询</button>
+		</div>
+	<!--</form>-->
+	<div class="list_head">
+		<span style="width: 35%;" class="list_head_name"><div class="all-wrap"><input type="checkbox" name="" id="all" value="" /><label style="margin-right: 50px;" for="all">全部</label></div>商品名称</span>
+		|
+		<span style="width: 12%;" class="list_head_price">价格</span>
+		|
+		<span style="width: 12%;" class="list_head_kind">所属分类</span>
+		|
+		<span style="width: 12%;" class="list_head_status">状态</span>
+		|
+		<span style="width: 7%;" class="list_head_role">角色</span>
+		|
+		<span style="width: 15%;" class="list_head_time">创建时间</span>
+	</div>
+	<ul id="link_goods" class="link_goods">
+		<!--<li skuId="2222">
+			<input type="checkbox" name="" id="aaa" value="" />
+			<img src="../../images/goods.png"/>
+			<span class="link_name">超好看的裤子只要999不要9999快来买啊</span>
+			<span class="link_price">￥2448</span>
+			<span class="link_kind">裤装</span>
+			<span class="link_status">已下架</span>
+			<span class="link_role">京东</span>
+			<span class="link_time">2016-11-11</span>
+		</li>-->
+	</ul>
+	
+	<!--分页-->
+    <div class="pagination mt-20" id="pop_pagination"></div>
+    
+    <ul class="btnLi">
+    	<li class="pop_cancel">取消</li>
+    	<li class="pop_goods_submit">确认</li>
+    </ul>
+</div>
+</div> <!--wrap-->
+
+<!--_footer 作为公共模版分离出去-->
+	<script type="text/javascript" src="../../lib/jquery/1.9.1/jquery.min.js?rev=@@hash"></script>
+	<script type="text/javascript" src="../../lib/layer/2.4/layer.js?rev=@@hash"></script>
+	<script type="text/javascript" src="../../static/h-ui/js/H-ui.min.js?rev=@@hash"></script>
+	<script type="text/javascript" src="../../static/h-ui.admin/js/H-ui.admin.js?rev=@@hash"></script>
+	<script type="text/javascript" src="../../js/base/public.js?rev=@@hash"></script>
+	<!--/_footer 作为公共模版分离出去-->
+	
+	<!--请在下方写此页面业务相关的脚本-->
+	<script type="text/javascript" src="../../lib/My97DatePicker/4.8/WdatePicker.js?rev=@@hash"></script>
+	<script type="text/javascript" src="../../lib/laypage/1.2/laypage.js?rev=@@hash"></script>
+	<script src="../../js/common/jquery.tmpl.min.js?rev=@@hash"></script>
+	<script src="../../lib/bootstrap-3.3.5-dist/js/bootstrap.min.js?rev=@@hash"></script>
+	<script src="../../js/common/jquery.aCollapTable.min.js?rev=@@hash" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/common/imgPlugin.js?rev=@@hash" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" src="../../js/page/classifyShow.js?rev=@@hash"></script>
+</body>
+
+</html>

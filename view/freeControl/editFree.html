@@ -1,0 +1,294 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <title>添加免息</title>
+
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="../../lib/Hui-iconfont/1.0.8/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/skin/default/skin.css" id="skin" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/style.css" />
+
+    <link rel="stylesheet" type="text/css" href="../../lib/laypage/1.2/skin/laypage.css">
+    <link rel="stylesheet" type="text/css" href="../../lib/layer/2.4/skin/layer.css" />
+    <link rel="stylesheet" type="text/css" href="../../lib/My97DatePicker/4.8/skin/WdatePicker.css">
+    <link rel="stylesheet" type="text/css" href="../../css/shoppingOrder.css?rev=@@hash">
+    <link rel="stylesheet" type="text/css" href="../../css/goodsList.css?rev=@@hash">
+
+    <style type="text/css">
+        .red-tip {
+            color: red;
+        }
+        
+        .input-string,
+        .input-time,
+        .discount-num {
+            box-sizing: border-box;
+            display: inline-block;
+            height: 31px;
+            line-height: 1.42857;
+            padding: 4px;
+            border: solid 1px #ddd;
+            font-size: 14px;
+        }
+        
+        .input-string {
+            width: 300px;
+        }
+        
+        .input-time {
+            width: 200px;
+        }
+        
+        .discount-num {
+            width: 40px;
+            margin: 0 10px;
+        }
+        
+        .count-wrap {
+            display: inline-block;
+            width: 150px;
+        }
+        
+        .name-area,
+        .ctn-area {
+            float: left;
+            width: 1000px;
+        }
+        
+        .name-area {
+            width: 150px;
+        }
+        
+        .pointer {
+            cursor: pointer;
+        }
+        
+        .add-free-goods {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="breadcrumb">
+        <i class="Hui-iconfont">&#xe67f;</i> 首页
+        <span class="c-gray en">&gt;</span> 免息活动
+        <span class="c-gray en">&gt;</span> 添加免息
+        <a class="btn btn-success radius r" style="line-height:1.6em;margin:3px 0 0 20px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a>
+    </nav>
+
+    <div class="Hui-article" style="padding-bottom:35px;">
+
+        <article class="cl pd-20">
+
+            <!--订单状态选择按钮-->
+            <div class="btn-group mb-50">
+                <a href="#" class="btn btn-primary">添加免息</a>
+                <a href="freeList.html" class="btn btn-default">免息列表</a>
+            </div>
+
+            <form class="form form-horizontal" style="width:1150px;">
+
+                <div class="row cl">
+                    <label class="form-label name-area"></label>
+                    <div class="formControls ctn-area" id="freeTypeWrap">
+                        <label style="margin-right:50px;"><input type="radio" name="freetype" value="all" checked="checked">全场商品免息</label>
+                        <label><input type="radio" name="freetype" value="spec">指定商品免息</label>
+                    </div>
+                </div>
+
+                <div class="row cl">
+                    <label class="form-label name-area"><b class="red-tip">*</b>主题：</label>
+                    <div class="formControls ctn-area">
+                        <input type="text" class="input-string" id="actTitle" autocomplete="off" placeholder="请输入活动主题">
+                    </div>
+                </div>
+
+                <div class="row cl">
+                    <label class="form-label name-area"><b class="red-tip">*</b>活动时间：</label>
+                    <div class="formControls ctn-area">
+                        <input type="text" class="input-time Wdate" id="freeStart" name="" value="" onClick=" WdatePicker({minDate:'%y-%M-%d',maxDate:'#F{$dp.$D(\'freeEnd\')}',dateFmt:'yyyy-M-d H:mm:ss'})">
+                        <span style="margin:0 10px;">到</span>
+                        <input type="text" class="input-time Wdate" id="freeEnd" name="" value="" onClick="WdatePicker({minDate:'#F{$dp.$D(\'freeStart\')}',dateFmt:'yyyy-M-d  H:mm:ss'})">
+                    </div>
+                </div>
+
+                <div class="row cl">
+                    <label class="form-label name-area"><b class="red-tip">*</b>免息方案：</label>
+                    <div class="formControls ctn-area" id="freeCountWrap">
+                        <p>
+                            <label class="count-wrap">&nbsp;&nbsp;1期<input class="discount-num" type="text" data-type="1" value="10">折</label>
+                            <label class="count-wrap">&nbsp;&nbsp;2期<input class="discount-num" type="text" data-type="2" value="10">折</label>
+                            <label class="count-wrap">&nbsp;&nbsp;3期<input class="discount-num" type="text" data-type="3" value="10">折</label>
+                        </p>
+                        <p>
+                            <label class="count-wrap">&nbsp;&nbsp;6期<input class="discount-num" type="text" data-type="6" value="10">折</label>
+                            <label class="count-wrap">&nbsp;&nbsp;9期<input class="discount-num" type="text" data-type="9" value="10">折</label>
+                            <label class="count-wrap">12期<input class="discount-num" type="text" data-type="12" value="10">折</label>
+                        </p>
+                        <p>
+                            <label class="count-wrap">15期<input class="discount-num" type="text" data-type="15" value="10">折</label>
+                            <label class="count-wrap">18期<input class="discount-num" type="text" data-type="18" value="10">折</label>
+                            <label class="count-wrap">24期<input class="discount-num" type="text" data-type="24" value="10">折</label>
+                        </p>
+                        <p style="color:#999;">折扣输入大于等于0 至 小于等于10，<span class="red-tip">0折代表利息全免</span></p>
+                    </div>
+                </div>
+
+                <div class="row cl">
+                    <label class="form-label name-area">备注：</label>
+                    <div class="formControls ctn-area">
+                        <p>
+                            <input type="text" class="input-string" id="extendInfo" autocomplete="off" maxlength="12">
+                            <span style="margin-left:10px;color:#999;">限12个字符</span>
+                        </p>
+                        <p style="color:#999;">商品详情页和确认订单页面展示的免息标签，若未设置，则默认为免息</p>
+                    </div>
+                </div>
+
+                <div class="row cl add-free-goods" id="addFreeGoods">
+                    <label class="form-label name-area">已选择的商品：</label>
+                    <div class="formControls ctn-area">
+                        <p>
+                            <button id="addGoods" type="button" class="btn btn-primary"><i class="Hui-iconfont">&#xe604;</i> <span>添加商品</span></button>
+                            <button id="removeGoods" type="button" class="btn btn-default" style="margin-left:20px;"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</button>
+                        </p>
+                        <div style="width:1000px;">
+                            <table class="table table-border table-bordered table-hover">
+                                <thead class="text-c">
+                                    <tr>
+                                        <th width="10%"><label style="cursor:pointer;"><input type="checkbox" class="check-all">全选</label></th>
+                                        <th width="25%">商品名称</th>
+                                        <th width="15%">货号</th>
+                                        <th width="10%">市场价</th>
+                                        <th width="10%">专柜价</th>
+                                        <th width="20%" style="color:red">免息价（用户端下单价）</th>
+                                        <th width="10%">操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-c" id="addGoodsListWrap"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </article>
+
+    </div>
+
+    <div style="position:fixed;width:100%;bottom:0;left:150px;padding-bottom:20px;background:#fff;z-index:9;">
+        <button class="btn btn-primary" id="saveFreeAct"><i class="Hui-iconfont">&#xe632;</i> 保存</button><a href="freeList.html" class="btn btn-default" style="margin-left:20px;">取消</a>
+    </div>
+
+    <div id="addGoodsPanel" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" style="width: 1100px;">
+            <div class="modal-content radius">
+                <div class="modal-header">
+                    <h3 class="modal-title">添加商品</h3>
+                    <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>
+                </div>
+                <div class="modal-body">
+
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <!--筛选条件区域-->
+                            <div class="condition-wrap cl common-form-wrap" id="pageSearchForm">
+
+                                <div class="condition-parent cl">
+                                    <span class="title">按分类</span>
+                                    <div class="long-ipt">
+                                        <span class="value-wrap select-classify">请选择分类</span>
+                                        <i class="Hui-iconfont">&#xe698;</i>
+                                        <div class="type-select-panel condition-panel">
+                                            <div class="top-part cl">
+                                                <ul class="ul-1"></ul>
+                                                <ul class="ul-2"></ul>
+                                                <ul class="ul-3"></ul>
+                                                <ul class="ul-4"></ul>
+                                            </div>
+                                            <div class="bottom-part cl">
+                                                <p class="result">您当前已选择的分类:<em></em></p>
+                                                <button type="button" class="btn btn-primary close-panel">关闭</button>
+                                                <button type="button" class="btn btn-primary get-result">确认选择</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="condition-parent cl">
+                                    <span class="title">按品牌</span>
+                                    <div class="long-ipt">
+                                        <span class="value-wrap select-brand">请选择品牌</span>
+                                        <i class="Hui-iconfont">&#xe698;</i>
+                                        <div class="name-select-panel">
+                                            <div class="search-bar">
+                                                <input type="text" value="">
+                                                <i class="Hui-iconfont">&#xe709;</i>
+                                            </div>
+                                            <ul></ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="condition-parent cl">
+                                    <span class="title">搜索</span>
+                                    <input class="long-ipt" type="text" name="searchName" id="searchName" value="" placeholder="输入商品名称/货号/条码">
+                                </div>
+
+                                <div class="button-wrap">
+                                    <button type="button" class="btn btn-primary" id="screeBtn"><i class="Hui-iconfont">&#xe665;</i> 筛选</button><button type="button" class="btn btn-primary" id="resetBtn"><i class="Hui-iconfont">&#xe66b;</i> 重置</button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 商品列表展示区域 -->
+                    <div class="table-wrap" style="overflow-y:auto;max-height:400px;margin-top:20px;">
+                        <table class="table table-border table-bordered table-hover">
+                            <thead class="text-c">
+                                <tr>
+                                    <th width="10%"><label style="cursor:pointer;"><input type="checkbox" class="check-all">全选</label></th>
+                                    <th width="40%">商品名称</th>
+                                    <th width="30%">货号</th>
+                                    <th width="20%">市场价</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-c" id="addGoodsWrap"></tbody>
+                        </table>
+                    </div>
+
+                    <div class="cl" id="pagination" style="margin-top:20px;"></div>
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" id="addSelect">确定</button>
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--_footer 作为公共模版分离出去-->
+    <script type="text/javascript" src="../../lib/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="../../lib/layer/2.4/layer.js"></script>
+    <script type="text/javascript" src="../../static/h-ui/js/H-ui.min.js"></script>
+    <script type="text/javascript" src="../../static/h-ui.admin/js/H-ui.admin.js"></script>
+    <script type="text/javascript" src="../../js/base/public.js?rev=@@hash"></script>
+    <!--/_footer 作为公共模版分离出去-->
+    <script type="text/javascript" src="../../lib/laypage/1.2/laypage.js"></script>
+    <script type="text/javascript" src="../../lib/layer/2.4/layer.js"></script>
+    <script type="text/javascript" src="../../lib/My97DatePicker/4.8/WdatePicker.js"></script>
+    <script type="text/javascript" src="../../js/page/freeControl.js?rev=@@hash"></script>
+</body>
+
+</html>

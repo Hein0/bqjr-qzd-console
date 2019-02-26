@@ -1,0 +1,745 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <title>批量采购</title>
+
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="../../lib/Hui-iconfont/1.0.8/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/skin/default/skin.css" id="skin" />
+    <link rel="stylesheet" type="text/css" href="../../lib/laypage/1.2/skin/laypage.css">
+    <link rel="stylesheet" type="text/css" href="../../lib/laypage/1.2/skin/laypage.css">
+    <link rel="stylesheet" type="text/css" href="../../css/reset.css" />
+    <link rel="stylesheet" type="text/css" href="../../lib/layer/2.4/skin/layer.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/goods.css" />
+    <style type="text/css">
+        .shadebox {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            top: 0;
+            display: none;
+        }
+
+        .shadeboxcon {
+            position: absolute;
+            width: 60%;
+            min-height: 300px;
+            background: white;
+            z-index: 200;
+            left: 20%;
+            top: 100px;
+            border: 1px solid #DEDEDE;
+            box-shadow: 0 0 4px #000000;
+            padding-bottom: 50px;
+            display: none;
+        }
+
+        .title {
+            height: 60px;
+            border-bottom: 1px solid #DEDEDE;
+        }
+
+        .title span:nth-child(1) {
+            line-height: 50px;
+            margin-left: 20px;
+            font-size: 18px;
+        }
+
+        .title img {
+            float: right;
+            margin: 10px 20px 0 0;
+        }
+
+        .conlist {
+            max-height: 350px;
+            overflow: auto;
+        }
+
+        .conlisttab {
+            width: 90%;
+            margin: 0 auto;
+            margin-top: 20px;
+        }
+
+        .conlisttab th,
+        .conlisttab td {
+            border: 1px solid #DEDEDE;
+            text-align: center;
+            line-height: 30px;
+        }
+
+        .statusbar {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .statusbar button {
+            width: 80px;
+            height: 30px;
+            margin: 0 20px;
+        }
+
+        .table th,
+        .table td {
+            border: 1px solid #DEDEDE;
+        }
+
+        .text-c input {
+            border: 1px solid #DEDEDE;
+            text-align: center;
+        }
+
+        .input-text {
+            width: 80px;
+        }
+        
+        .price-input-text {
+            width: 80px;
+            height: 30px;
+        }
+
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+        }
+        .relative-td {
+            position: relative;
+        }
+        .relative-td .price-tips {
+            position: absolute;
+            height: 26px;
+            line-height: 26px;
+            top: 3px;
+            left: 50%;
+            margin-left: 35px;
+            border: 1px solid red;
+            color: red;
+            white-space: nowrap;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="breadcrumb">
+        <i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 商品管理 <span class="c-gray en">&gt;</span> 批量采购
+        <a class="btn btn-success r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a>
+    </nav>
+
+    <div class="page-container">
+        <div class="pro-con">
+            <p class="shop_name">商品：<span></span></p>
+            <p class="shop_canshu">规格：<span></span></p>
+            <p class="shop_price">商品单价：<span></span></p>
+            <p class="shop_num">订单数量：<span></span> (商品数量：<i class="shop" style="font-style: normal;">00</i>)</p>
+            <p class="JDbalance">京东账户余额：¥<span></span></p>
+        </div>
+        <div class="mt-20 table-con">
+            <table class="table table-border table-hover table-bg table-sort" style="min-width: 0;">
+                <thead>
+                    <tr class="text-c">
+                        <th>编号</th>
+                        <th>采购渠道</th>
+                        <th style="width: 450px;">渠道价</th>
+                        <th>今日库存</th>
+                        <th>订单数量</th>
+                        <th>数量</th>
+                        <th>采购总金额</th>
+                    </tr>
+                </thead>
+                <tbody id="list">
+                    <!--<tr class="text-c">
+                    <td>1</td>
+                    <td>京东商城</td>
+                    <td><input type="text" name="Channelprice" id="" value="" class="input-text"/></td>
+                    <td><input type="text" name="Stock" id="" value="" class="input-text"/></td>
+                    <td><input type="text" name="ordernumber" id="" value="" class="input-text"/></td>
+                    <td class="allprice">0</td>
+                    <td><a class="tab-A">分配</a></td>
+                </tr>     -->
+                </tbody>
+            </table>
+        </div>
+        <button type="button" class="btn btn-primary mt-30" onclick="purchasebatch()"> 批量采购</button>
+    </div>
+    <div class="shadebox"></div>
+    <div class="shadeboxcon">
+        <div class="title">
+            <span>分配</span>
+            <span><img src='../../images/guanbi.png'/></span>
+        </div>
+        <div class="panel-body pb-0 cl search">
+            <div class="f-l mr-15 mb-15">
+                <span class="text-c f-l">订单号</span>
+                <input type="text" placeholder="输入商品名称/货号" style="width: 180px;" class="input-text" name="ordernum" />
+            </div>
+            <div class="f-l mr-15 mb-15">
+                <span class="text-c f-l">下单姓名</span>
+                <input type="text" placeholder="输入下单姓名" style="width: 180px;" class="input-text" name="ordername" />
+            </div>
+            <div class="f-l mr-15 mb-15">
+                <span class="text-c f-l">下单手机</span>
+                <input type="text" placeholder="输入下单手机" style="width: 180px;" class="input-text" name="orderphone" />
+            </div>
+            <div class="f-l mr-15 mb-15">
+                <span class="text-c f-l">区域</span>
+                <select class="select user-status" id="province" name="province">
+                <option>全部</option>
+            </select>
+                <select class="select user-status" id="city" name="city">
+                <option>全部</option>
+            </select>
+            </div>
+            <div class="text-l m-t10 f-r">
+                <button type="button" class="btn btn-primary mr-10 mb-15" id="screeBtn" onclick="Queryorder()"><i class="Hui-iconfont">&#xe665;</i> 筛选</button>
+                <button type="button" class="btn btn-primary mb-15" id="resetBtn" onclick="util.reset()"><i class="Hui-iconfont">&#xe66b;</i> 重置</button>
+            </div>
+        </div>
+        <div class="conlist">
+            <table class="conlisttab">
+                <thead>
+                    <tr style="background: #F2F2F2;">
+                        <th><input type="checkbox" name="controlAll" id="controlAll" value="1" onclick="selectAll()" /></th>
+                        <th>订单号</th>
+                        <th>用户下单时间</th>
+                        <th>省份/城市</th>
+                        <th>下单姓名</th>
+                        <th>下单手机</th>
+                        <th>收货姓名</th>
+                        <th>收货手机</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!--<tr>
+	    			<td><input type='checkbox' name='selected' id='' value='2' /></td>
+	    			<td>170605741</td>
+	    			<td>2011年12月27日20:20:59</td>
+	    			<td>广东省/深圳市</td>
+	    			<td>李四</td>
+	    			<td>15118057858</td>
+	    			<td>张三</td>
+	    			<td>15118057969</td>
+	    		</tr>-->
+                </tbody>
+            </table>
+        </div>
+        <div class="statusbar">
+            <button>确认</button>
+            <button>取消</button>
+        </div>
+
+    </div>
+    <!--_footer 作为公共模版分离出去-->
+    <script type="text/javascript" src="../../lib/jquery/1.9.1/jquery.min.js?rev=@@hash"></script>
+    <script type="text/javascript" src="../../lib/layer/2.4/layer.js?rev=@@hash"></script>
+    <script type="text/javascript" src="../../static/h-ui/js/H-ui.min.js?rev=@@hash"></script>
+    <script type="text/javascript" src="../../static/h-ui.admin/js/H-ui.admin.js?rev=@@hash"></script>
+    <script type="text/javascript" src="../../js/base/public.js?rev=@@hash"></script>
+    <!--/_footer 作为公共模版分离出去-->
+
+    <!--请在下方写此页面业务相关的脚本-->
+    <script type="text/javascript" src="../../lib/My97DatePicker/4.8/WdatePicker.js?rev=@@hash"></script>
+    <script type="text/javascript" src="../../lib/laypage/1.2/laypage.js?rev=@@hash"></script>
+    <script src="../../js/common/jquery.tmpl.min.js?rev=@@hash"></script>
+    <script type="text/javascript" src="../../js/common/imgPlugin.js?rev=@@hash"></script>
+    <script src="../../lib/layer/2.4/layer.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+        //储存订单数量
+        var Orderform
+            // 每个供应商分配的订单数
+        var cpyList = {}
+		//采购渠道价格
+		var channelPrice = [];
+		
+        //获取商品信息
+        var shopsmes = sessionStorage.getItem('BatchPurchaseData')
+        $('.shop_name').find('span').html(JSON.parse(shopsmes).skuName);
+        var Specification = '';
+        for (var i = 0; i < JSON.parse(JSON.parse(shopsmes).spec).length; i++) {
+            Specification += (" " + JSON.parse(JSON.parse(shopsmes).spec)[i].value);
+        }
+        $('.shop_canshu').find('span').html(Specification);
+
+        $('.shop_price').find('span').html('¥' + JSON.parse(shopsmes).unitPrice);
+
+        //确认批量采购
+        //渠道列表
+        var channelList;
+
+        function purchasebatch() {
+
+        	var channelPrice = [];
+
+            for (var i = 0; i < channelList.length; i++) { //遍历渠道列表表里面渠道的信息
+                if (cpyList['list' + i].length != 0) {
+                    flag = true;
+                    var obj = {}
+                    var channelId = channelList[i].id;
+                    var channelName = channelList[i].companyName;
+                    if (channelName.indexOf('接口') > -1) {
+                        var tradeAmount = $('.Channelprice').find('.jd-price').html()
+
+                    } else {
+                        var tradeAmount = $('#list').find('tr').eq(i).find('input[name=Channelprice]').val()
+                    };
+                    var purchaseAmount = $('.allprice').html()
+                    var tradeList = [];
+                    for (var j = 0; j < cpyList['list' + i].length; j++) { //遍历每一个渠道的所有的订单，得到每单个订单里面的值
+                        var obj1 = {}
+                        obj1.tradeId = cpyList['list' + i][j].tradeId;
+                        obj1.tradeCount = cpyList['list' + i][j].tradeCount;
+                        obj1.amount = 263;
+                        tradeList.push(obj1)
+                    };
+                    obj.channelId = channelId
+                    obj.channelName = channelName
+                    obj.tradeAmount = tradeAmount
+                    obj.purchaseAmount = purchaseAmount
+                    obj.tradeList = tradeList
+                    obj.skuId = JSON.parse(shopsmes).skuId
+                    channelPrice.push(obj.tradeAmount)
+                }
+            }
+            var orderPrice = JSON.parse(shopsmes).unitPrice;
+            var hightPrice = false;
+            var yesFn = '';
+            for (var i in channelPrice) {
+            	if (Number(channelPrice[i]) > orderPrice) {
+            		hightPrice = true;
+            	}
+            }
+        	
+        	if (hightPrice) {
+        		yesFn = purchasebatchSure;
+        	} else{
+        		yesFn = surePurchase;
+        	}
+        	
+            layer.open({
+                content: '确认采购？',
+                btn: ["确认", "取消"],
+                yes: yesFn
+            })
+        }
+        function purchasebatchSure () {
+        	layer.closeAll()
+        	 layer.open({
+                content: '渠道价高于用户下单商品单价，确认采购吗？',
+                btn: ["确认", "取消"],
+                yes: surePurchase
+            })
+        }
+        //确定采购
+        function surePurchase () {
+        	layer.closeAll()
+            var flag = false;
+            var batchPurchaseListJson = [];
+
+            for (var i = 0; i < channelList.length; i++) { //遍历渠道列表表里面渠道的信息
+                if (cpyList['list' + i].length != 0) {
+                    flag = true;
+                    var obj = {}
+                    var channelId = channelList[i].id;
+                    var channelName = channelList[i].companyName;
+                    if (channelName.indexOf('接口') > -1) {
+                        var tradeAmount = $('.Channelprice .jd-price').html()
+
+                    } else {
+                        var tradeAmount = $('#list').find('tr').eq(i).find('input[name=Channelprice]').val()
+                    };
+                    var purchaseAmount = $('.allprice').eq(i).html()
+                    var tradeList = [];
+                    for (var j = 0; j < cpyList['list' + i].length; j++) { //遍历每一个渠道的所有的订单，得到每单个订单里面的值
+                        var obj1 = {}
+                        obj1.tradeId = cpyList['list' + i][j].tradeId;
+                        obj1.tradeCount = cpyList['list' + i][j].tradeCount;
+                        obj1.amount = 263;
+                        tradeList.push(obj1)
+                    };
+                    obj.channelId = channelId
+                    obj.channelName = channelName
+                    obj.tradeAmount = tradeAmount
+                    obj.purchaseAmount = purchaseAmount
+                    obj.tradeList = tradeList
+                    obj.skuId = JSON.parse(shopsmes).skuId
+                    batchPurchaseListJson.push(obj)
+                }
+            }
+
+            // for (var i = 0; i < batchPurchaseListJson.length; i++) {
+            //     if (!batchPurchaseListJson[i].tradeAmount) {
+            //         $.Huimodalalert('请输入渠道价', 1000);
+            //         return;
+            //     }
+            // }
+
+            if (flag) {
+                $.post(base + 'purchase/batchPurchase.do', {
+                    batchPurchaseListJson: JSON.stringify(batchPurchaseListJson)
+                }, function(res) {
+
+                    if (res.status == '0') {
+
+                        $.Huimodalalert(res.message, 2000);
+                        location.href = 'procurement.html'
+                    } else if (res.status == '9999') {
+                        // 未登录
+                        window.top.location.href = '../../login.html';
+                    } else {
+                        $.Huimodalalert(res.message, 2500);
+                    }
+                })
+            } else {
+                $.Huimodalalert('请输入订单信息', 2000);
+            }
+        }
+        
+
+        //获取京东账户余额
+        $.get(base + 'purchase/getJDbalance.do', function(res) {
+            if (res.status == '0' && res.data) {
+                $('.JDbalance').find('span').html(res.data)
+            } else if (res.status == '9999') {
+                // 未登录
+                window.top.location.href = '../../login.html';
+            } else {
+                console.log(789)
+            }
+        })
+        
+        //获取京东接口库存
+        function getJDstore () {
+        	/*$.get(base + 'purchase/getJDstore.do',function (res) {
+	        	if (res.status == 0) {
+	        		$('#list #jd_store').val(res.data)
+	        	} else {
+	        		$.Huimodalalert('查询京东商城(接口)库存失败', 2000);
+	        	}
+	        })*/
+        }
+        
+
+        //选择列表
+        function selectAll() {
+            var checklist = document.getElementsByName("selected");
+            if (document.getElementById("controlAll").checked) {
+                for (var i = 0; i < checklist.length; i++) {
+                    checklist[i].checked = 1;
+                }
+            } else {
+                for (var j = 0; j < checklist.length; j++) {
+                    checklist[j].checked = 0;
+                }
+            }
+        }
+
+        //渠道价格中的信息
+        var bind_name = 'input';
+        var Channelprice;
+        var Stock;
+
+
+        //分配订单数量
+        //记录之前的订单数
+        var ordernumpre = 0;
+        var obj = {};
+        var residueArr = [];
+
+        // 分配
+        function ordernumber(event, index) {
+            // 检测变化
+            var $self = $(event.target),
+                oldNum = cpyList['list' + index].length,
+                newNum = $self.val() || 0,
+                diff = newNum - oldNum,
+                length = 0,
+                temp = [],
+                storeNum = $self.parents('tr').find('.sply-store').val();
+			
+            if (diff === 0) {
+                return false;
+            }
+
+            if (diff > 0) {
+                // 需要增加
+                length = Orderform.length;
+                //length = 10;
+                if (diff > length) {
+                    $.Huimodalalert('分配订单数量和不能大于总订单数量', 1000);
+                    diff = length;
+                    $self.val(oldNum + diff);
+                }
+                cpyList['list' + index] = cpyList['list' + index].concat(Orderform.splice(0, diff));
+                
+            } else if (diff < 0) {
+                // 需要退回
+                diff = Math.abs(diff);
+                temp = cpyList['list' + index].splice(cpyList['list' + index].length - diff, diff);
+                Orderform = temp.concat(Orderform);
+            }
+
+            calcCount(index,storeNum);
+        }
+
+        function calcCount(index,jdStore) {
+            var result = 0;
+            var allprice = 0;
+            $.each(cpyList['list' + index], function(index, ele) {
+                result += ele.tradeCount;
+            })
+            if ($('#list').find("tr").eq(index).find('td').eq(1).text().indexOf('接口') > -1) {
+
+                var UnitPrice = $('.Channelprice').eq(index).find('.jd-price').text()
+            } else {
+
+                var UnitPrice = $('.Channelprice').eq(index).val()
+            }
+			
+            allprice = UnitPrice * result;
+            $('#list').find('.shopnumber').eq(index).text(result);
+
+            $('.allprice').eq(index).html(allprice.toFixed(2))
+            
+            //判断采购数量和库存数量
+			/*if (jdStore < result) {
+				$.Huimodalalert('分配商品数量和不能大于库存数量', 1000);
+            	 return false;
+			}*/
+        }
+        //更改价格
+        function changeprice(index,self) {
+			 var $self = $(self),
+                $parent = $self.parent(),
+                html = '';
+            var UnitPrice = $('.Channelprice').eq(index).val();
+			
+            var result = $('.shopnumber').eq(index).html()
+            allprice = UnitPrice * result;
+            $('.allprice').eq(index).html(allprice)
+            console.log(UnitPrice)
+            if (UnitPrice > JSON.parse(shopsmes).unitPrice) {
+                if (!$parent.find('.price-tips').length) {
+                    html = '<span class="price-tips">成本渠道价高于客户购买价</span>'
+                    $parent.append(html)
+                }
+            } else {
+                $parent.find('.price-tips').remove()
+            }
+            
+        }
+
+        //批量渠道列表
+        $.post(base + 'company/batch', function(res) {
+            var jdPriceSpec = 0;
+
+            // 获取京东渠道价
+            $.ajax({
+                url: base + 'purchase/getJdPrice.do',
+                type: 'POST',
+                async: false,
+                data: {
+                    'sn': JSON.parse(shopsmes).sn
+                },
+                success: function(res) {
+                    if (res.status == '0') {
+                        jdPriceSpec = res.data;
+                    } else {
+                        $.Huimodalalert('系统异常，请刷新页面后继续操作', 2000);
+                    }
+                }
+            })
+			
+			//如果京东渠道价高于成本价显示预警
+			var unitPrice = JSON.parse(shopsmes).unitPrice;
+			var tips = '';
+			if (jdPriceSpec > unitPrice) {
+				tips = "<span class='price-tips'>成本渠道价高于客户购买价</span>"
+			}
+			
+            if (res.status == '0' && res.data) {
+                // 过滤掉其他供应商
+//              res.data = $(res.data).map(function(index, item) {
+//                  if (item.redirectType == 2) {
+//                      return item
+//                  }
+//              }).get();
+
+                channelList = res.data
+
+                for (var i = 0; i < res.data.length; i++) {
+                    var Tr = $("<tr class='text-c'></tr>")
+                    var Td1 = $("<td>" + [i + 1] + "</td>")
+                    var Td2 = $("<td>" + res.data[i].companyName + "</td>");
+                    var jdId;
+                    //京东接口库存ID
+                    if (res.data[i].id == 4) {
+                    	jdId = 'jd_store';
+                    } else {
+                    	jdId = '';
+                    }
+                    
+                    if (res.data[i].companyName.indexOf('接口') > -1) {
+                    	if (jdPriceSpec > unitPrice) {
+                    		 var Td3 = $("<td class='Channelprice relative-td'><span class='jd-price'>" + jdPriceSpec + "</span><span class='price-tips'>成本渠道价高于客户购买价</span></td>")
+                    	} else {
+                    		 var Td3 = $("<td class='Channelprice'><span class='jd-price'>" + jdPriceSpec + "</span></td>")
+                    	}
+                       
+                    } else {
+                        var Td3 = $("<td class='relative-td'><input  onkeyup='changeprice(" + i + ",this)' onkeyup= 'testinteger1(this)' class='Channelprice price-input-text' type='text' name='Channelprice' id='' value='' /></td>")
+                    }
+                    var Td4 = $("<td><input type='text' onkeyup= 'testinteger(this)' name='Stock' id='" + jdId + "' value='' class='input-text sply-store'/></td>")
+                    var Td5 = $("<td><input type='number' onkeyup= 'testinteger(this)' name='ordernumber' min='0'  onblur=ordernumber(event," + i + ") class='ordernumber input-text'/></td>")
+                    var Td6 = $("<td class='shopnumber'>0</td>")
+                    var Td7 = $("<td class='allprice'>0</td>")
+                    Tr.append(Td1)
+                    Tr.append(Td2)
+                    Tr.append(Td3)
+                    Tr.append(Td4)
+                    Tr.append(Td5)
+                    Tr.append(Td6)
+                    Tr.append(Td7)
+                    $('#list').append(Tr)
+                    cpyList['list' + i] = []
+                }
+                getJDstore()
+            } else if (res.status == '9999') {
+                // 未登录
+                window.top.location.href = '../../login.html';
+            } else {
+                console.log(789)
+            }
+        })
+
+        function testinteger(el) {
+            if (!/^\d+$/.test(el.value)) {
+                el.value = ''
+            }
+        }
+
+        function testinteger1(el) {
+            if (!/^[0-9].*$/.test(el.value)) {
+                el.value = ''
+            }
+        }
+        //模糊搜索
+        var bind_name = 'input';
+        if (navigator.userAgent.indexOf("MSIE") != -1) {
+            bind_name = 'propertychange';
+        }
+        $(".input-text").bind(bind_name, function() {
+                Queryorder()
+            })
+            //查询订单
+
+        Queryorder()
+
+        function Queryorder() {
+            //console.log(JSON.parse(shopsmes))
+            $.post(base + 'purchase/allot.do', {
+                skuId: JSON.parse(shopsmes).skuId,
+                unitPrice: JSON.parse(shopsmes).unitPrice
+            }, function(res) {
+
+                if (res.status == '0') {
+                    Orderform = res.data.length <= 100 ? res.data : res.data.slice(0, 100)
+                        //console.log(Orderform)
+                    $('.shop_num').find('span').html(Orderform.length)
+                    var shop = 0;
+                    for (var i = 0; i < Orderform.length; i++) {
+                        shop += Number(Orderform[i].tradeCount);
+                    }
+                    $('.shop').html(shop);
+                } else if (res.status == '9999') {
+                    // 未登录
+                    window.top.location.href = '../../login.html';
+                } else {
+                    console.log(789)
+                }
+            })
+        }
+        //重置
+        $("#resetBtn").on('click', function() {
+                $('#city').children().remove();
+                $('#city').append('<option>全部</option>')
+            })
+            //分配
+        function distribution() {
+            $('.shadeboxcon').show();
+            $('.shadebox').show();
+            //获取省份
+            getArea(1)
+        }
+        //关闭
+        $('.title').find('img').on("click", function() {
+                $('.shadeboxcon').hide();
+                $('.shadebox').hide();
+            })
+            //取消
+        $('.statusbar').find('button').eq(0).on("click", function() {
+                $('.shadeboxcon').hide();
+                $('.shadebox').hide();
+            })
+            //确定
+        $('.statusbar').find('button').eq(1).on("click", function() {
+                $('.shadeboxcon').hide();
+                $('.shadebox').hide();
+            })
+            //获取省市区
+        $('#province').on('change', function() {
+            var code = $('#province').find('option:checked').attr('value');
+            if (code) {
+                $.post(base + 'purchase/getArea.do', {
+                    parentid: code,
+                }, function(res) {
+                    if (res.status == '0' && res.data) {
+                        $('#city').children().remove();
+                        $('#city').append('<option>全部</option>')
+                        for (var i = 0; i < res.data.length; i++) {
+                            $('#city').append('<option value=' + res.data[i].code + '>' + res.data[i].name + '</option>')
+                        }
+                    } else if (res.status == '9999') {
+                        // 未登录
+                        window.top.location.href = '../../login.html';
+                    } else {
+                        console.log(789)
+                    }
+                })
+            } else {
+                $('#city').children().remove();
+                $('#city').append('<option>全部</option>')
+            }
+        })
+
+        function getArea(level) {
+            $.post(base + 'purchase/getArea.do', {
+                level: level,
+            }, function(res) {
+                if (res.status == '0' && res.data) {
+                    for (var i = 0; i < res.data.length; i++) {
+                        $('#province').append('<option value=' + res.data[i].code + '>' + res.data[i].name + '</option>')
+                    }
+                } else if (res.status == '9999') {
+                    // 未登录
+                    window.top.location.href = '../../login.html';
+                } else {
+                    console.log(789)
+                }
+            })
+        }
+    </script>
+</body>
+
+</html>

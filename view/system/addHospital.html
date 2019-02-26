@@ -1,0 +1,298 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <title>新增医院账号</title>
+
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui/css/H-ui.min.css?rev=@@hash" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/H-ui.admin.css?rev=@@hash" />
+    <link rel="stylesheet" type="text/css" href="../../lib/Hui-iconfont/1.0.8/iconfont.css?rev=@@hash" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/skin/default/skin.css?rev=@@hash" id="skin" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/style.css?rev=@@hash" />
+
+    <!--分页样式表，需要分页的页面加入-->
+    <link rel="stylesheet" type="text/css" href="../../lib/laypage/1.2/skin/laypage.css?rev=@@hash">
+    <link rel="stylesheet" type="text/css" href="../../lib/zTree/v3/css/zTreeStyle/zTreeStyle.css?rev=@@hash">
+    <link rel="stylesheet" type="text/css" href="../../css/hospitalOrder.css?rev=@@hash">
+    <link rel="stylesheet" type="text/css" href="../../css/role.css?rev=@@hash">
+    <style type="text/css">
+    	.table-bordered th, .table-bordered td {border-left:none !important;}
+        .form.form-horizontal{
+            width: 1150px;
+        }
+        .registerForm{
+            width: 100%;
+            display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */ 
+            display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */ 
+            display: -ms-flexbox; /* TWEENER - IE 10 */
+            display: -webkit-flex; /* NEW - Chrome */ 
+            display: flex; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+            justify-content: center;
+            align-items: center;
+        }
+        .form.form-horizontal .form-label{
+            text-align:right;
+        }
+        .red{
+            color: red;
+        }
+        .tips{
+            font-size: 12px;
+            color: red;
+        }
+    </style>
+
+</head>
+
+<body>
+    <nav class="breadcrumb">
+        <i class="Hui-iconfont">&#xe67f;</i> 首页
+        <span class="c-gray en">&gt;</span> 系统管理
+        <span class="c-gray en">&gt;</span> 新增医院账号
+        <a class="btn btn-success radius r" style="line-height:1.6em;margin:3px 0 0 20px" href="javascript:location.replace(location.href);"
+            title="刷新">
+            <i class="Hui-iconfont">&#xe68f;</i>刷新
+        </a>
+    </nav>
+
+    <div class="registerForm">
+        <form class="form form-horizontal" id="demoform-1">
+            <div class="row cl">
+                <legend class="col-xs-10 col-sm-10 col-sm-offset-1">创建医院帐号</legend>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-2 col-sm-2 col-offset-1">申请人姓名：</label>
+                <div class="formControls col-xs-5 col-sm-6">
+                    <input type="text" class="input-text" autocomplete="off" placeholder="医院帐号申请人姓名" id="name">
+                </div>
+                <span class="Validform_checktip col-xs-2 col-sm-2 red">*必填</span>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-2 col-sm-2 col-offset-1">身份证号码：</label>
+                <div class="formControls col-xs-5 col-sm-6">
+                    <input type="text" class="input-text" autocomplete="off" placeholder="申请人身份证号码" id="id_card">
+                </div>
+                <span class="Validform_checktip col-xs-2 col-sm-2 red">*必填</span>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-2 col-sm-2 col-offset-1">手机号：</label>
+                <div class="formControls col-xs-5 col-sm-6">
+                    <input type="text" class="input-text" autocomplete="off" placeholder="申请人手机号" id="telphone">
+                </div>
+                <span class="Validform_checktip col-xs-2 col-sm-2 red">*必填</span>
+            </div>
+            <div class="row cl">
+                <div class="col-xs-7 col-sm-8 col-xs-offset-3">
+                    <span class="tips">温馨提示：创建成功后，帐号密码将发送到申请人手机号，请仔细核对！</span>
+                </div>
+            </div>
+            <div class="row cl">
+                <div class="col-xs-7 col-sm-8 col-xs-offset-3">
+                    <input class="btn btn-primary radius" type="submit" value="提交" id="creat">
+                </div>
+            </div>
+        </form>
+    
+    </div>
+    
+    <!--footer 作为公共模版分离出去-->
+    <script type="text/javascript" src="../../lib/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="../../lib/layer/2.4/layer.js"></script>
+    <script type="text/javascript" src="../../static/h-ui/js/H-ui.min.js"></script>
+    <script type="text/javascript" src="../../static/h-ui.admin/js/H-ui.admin.js"></script>
+    <script type="text/javascript" src="../../lib/My97DatePicker/4.8/WdatePicker.js"></script>
+    <!--footer 作为公共模版分离出去-->
+    <script type="text/javascript" src="../../lib/ueditor/1.4.3/ueditor.config.js"></script>
+    <script type="text/javascript" src="../../lib/ueditor/1.4.3/ueditor.all.min.js"></script>
+    <script type="text/javascript" src="../../lib/laypage/1.2/laypage.js"></script>
+    <script type="text/javascript" src="../../lib/arttemplate/template-web.js"></script>
+    <script type="text/javascript" src="../../lib/zTree/v3/js/jquery.ztree.all-3.5.min.js"></script>
+    <script type="text/javascript" src="../../js/base/public.js?rev=@@hash"></script>
+    <script type="text/javascript" src="../../js/common/idCard.js"></script>
+
+    <script type="text/javascript">
+        $(function(){
+            var register={};
+            $('#name').on('blur',function(){
+                var name = $.trim($("#name").val());
+                if (name.length == 0) {
+                    $("#name").parent().next().attr('class','Validform_checktip Validform_wrong col-xs-2 col-sm-2 red').text('申请人姓名不能为空！')
+                    register.rightName=false;
+                    return false;
+                } else if (!/^[\u4e00-\u9fa5]{2,6}$/.test(name)) {
+                    $("#name").parent().next().attr('class','Validform_checktip Validform_wrong col-xs-2 col-sm-2 red').text('请输入真实姓名！')
+                    register.rightName=false;
+                    return false;
+                } else {
+                    $("#name").parent().next().attr('class','Validform_checktip Validform_right col-xs-2 col-sm-2 red').text('')
+                    register.rightName=true;
+                }
+            })
+            .on('focus',function(){
+                $("#name").parent().next().attr('class','Validform_checktip col-xs-2 col-sm-2 red').text('*必填')
+            });
+            $('#id_card').on('blur',function(){
+                var id_card = $.trim($("#id_card").val());
+                var checkFlag = new clsIDCard(id_card);
+                if (id_card.length == 0) {
+                    $("#id_card").parent().next().attr('class','Validform_checktip Validform_wrong col-xs-2 col-sm-2 red').text('身份证号码不能为空！')
+                    register.rightId_card=false;
+                    return false;
+                } else if (!checkFlag.IsValid()) {
+                    $("#id_card").parent().next().attr('class','Validform_checktip Validform_wrong col-xs-2 col-sm-2 red').text('输入的身份证号无效,请输入真实的身份证号！')
+                    register.rightId_card=false;
+                    return false;
+                } else {
+                    $("#id_card").parent().next().attr('class','Validform_checktip Validform_right col-xs-2 col-sm-2 red').text('')
+                    register.rightId_card=true;
+                }
+            }).on('focus',function(){
+                $("#id_card").parent().next().attr('class','Validform_checktip col-xs-2 col-sm-2 red').text('*必填')
+            });
+            $('#telphone').on('blur',function(){
+                var telphone = $.trim($("#telphone").val());
+                var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1})|(16[0-9]{1})|(17[0-9]{1}))+\d{8})$/;
+                if (telphone.length == 0) {
+                    $("#telphone").parent().next().attr('class','Validform_checktip Validform_wrong col-xs-2 col-sm-2 red').text('手机号不能为空！')
+                    register.rightTelphone=false;
+                    return false;
+                } else if (!myreg.test(telphone)) {
+                    $("#telphone").parent().next().attr('class','Validform_checktip Validform_wrong col-xs-2 col-sm-2 red').text('请输入正确的手机号！')
+                    register.rightTelphone=false;
+                    return false;
+                } else {
+                    var data = {};
+                    data.account = $.trim($("#telphone").val());
+                    $.ajax({
+                        type: "post",
+                        url: base + "sys/getUser",
+                        processData: false,
+                        contentType: "application/json;charset=utf-8", //这个是发送信息至服务器时内容编码类型
+                        dataType: "json",
+                        data: JSON.stringify(data),
+                        success: function(jsonData) {
+                            var result = typeof jsonData;
+                            if (result == "string") {
+                                jsonData = JSON.parse(jsonData);
+                            }
+                            if (jsonData.status == "0") {
+                                if (jsonData.dataCount > 0) {
+                                    $("#telphone").parent().next().attr('class','Validform_checktip Validform_wrong col-xs-2 col-sm-2 red').text('手机号已被注册！')
+                                    register.rightTelphone = false;
+                                } else {
+                                    $("#telphone").parent().next().attr('class','Validform_checktip Validform_right col-xs-2 col-sm-2 red').text('')
+                                    register.rightTelphone=true;
+                                }
+                            } else {
+                                $.Huimodalalert(jsonData.message, 1500);
+                            }
+                        }
+                    });
+                }
+            })
+            .on('focus',function(){
+                $("#telphone").parent().next().attr('class','Validform_checktip col-xs-2 col-sm-2 red').text('*必填')
+            });
+            var registerFlag=true;
+            $(".registerForm").submit(function(e){
+                e.preventDefault()
+                if(registerFlag){
+                    registerFlag=false;
+                    if(register.rightName && register.rightId_card && register.rightTelphone){
+                        var data = {};
+                        data.name=$.trim($("#name").val());
+                        data.id_card=$.trim($("#id_card").val());
+                        data.telphone=$.trim($("#telphone").val());
+                        $.ajax({
+                            type: "post",
+                            url: base + "sys/addHospitalUser",
+                            processData: false,
+                            contentType: "application/json;charset=utf-8", //这个是发送信息至服务器时内容编码类型
+                            dataType: "json",
+                            data: JSON.stringify(data),
+                            success: function(jsonData) {
+                                registerFlag=true;
+                                var result = typeof jsonData;
+                                if (result == "string") {
+                                    jsonData = JSON.parse(jsonData);
+                                }
+                                if (jsonData.status == "0") {
+                                    var html = template("successModal", {});
+                                    layer.open({
+                                        type: 1,
+                                        area: ['400px', '450px'],
+                                        fix: false, //不固定
+                                        title:false,
+                                        closeBtn: 0, //不显示关闭按钮
+                                        shade: 0.4,
+                                        anim: 2,
+                                        content: html,
+                                        success: function (layero, index) {
+                                            $('#confirm').on('click',function(){
+                                                layer.close(index);
+                                                location.replace(location.href);
+                                            })
+                                            var ableAgain=true;
+                                            $('#again').on('click',function(){
+                                                if(ableAgain){
+                                                    ableAgain=false;
+                                                    $.get(base+'sys/againSendHospitalUser',{
+                                                        telphone:data.telphone
+                                                    },function(res){
+                                                        var result = typeof res;
+                                                        if (result == "string") {
+                                                            res = JSON.parse(res);
+                                                        }
+                                                        if(res.status=='0'){
+                                                            var timer=3*60
+                                                            var clock=window.setInterval(function(){
+                                                                if(timer>0){
+                                                                    $('#again').attr('class','btn disabled').text('重新发送('+timer+')');
+                                                                    timer--;
+                                                                }else{
+                                                                    $('#again').attr('class','btn').text('重新发送');
+                                                                    ableAgain=true;
+                                                                    clearInterval(clock);
+                                                                }
+                                                            },1000);
+                                                        }else{
+                                                            $.Huimodalalert(res.message, 1500);
+                                                        }
+                                                    })
+                                                }
+                                            })
+                                        }
+                                    })
+                                } else {
+                                    $.Huimodalalert(jsonData.message, 1500);
+                                }
+                            }
+                        })
+                    }else{
+                        registerFlag=true;
+                    }
+                }else{
+                }
+            });
+        });
+    </script>
+
+</body>
+<script id="successModal" type="text/html">
+    <div class="modal-header">
+        <h2 style="text-align:center;">医院帐号创建成功！</h2>
+    </div>
+    <div class="modal-body" style="height:180px;">
+        <p style="padding:20px;text-indent:2em;font-size:16px;">系统已将医院帐号和密码发送到申请人手机号，请与申请人确认短信是否成功送达。</p>
+    </div>
+    <div class="bootom" style="height:100px;display: -webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;justify-content: space-around;align-items: center;">
+        <button class="btn btn-primary" id="confirm">确认送达</button>
+        <button class="btn" id="again">重新发送</button>
+    </div>
+</script>
+</html>

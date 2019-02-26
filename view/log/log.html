@@ -1,0 +1,427 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <title>案例列表管理</title>
+
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="../../lib/Hui-iconfont/1.0.8/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/skin/default/skin.css" id="skin" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/style.css" />
+
+    <!--分页样式表，需要分页的页面加入-->
+    <link rel="stylesheet" type="text/css" href="../../lib/laypage/1.2/skin/laypage.css">
+    <link rel="stylesheet" type="text/css" href="../../css/logOrder.css?rev=@@hash">
+    <link rel="stylesheet" type="text/css" href="../../css/logList.css?rev=@@hash">
+    <style>
+        .type-select-panel {
+            height: initial;
+        }
+
+        .select-classify+i+.type-select-panel {
+            width: 200%;
+            height: initial;
+        }
+
+        .type-select-panel .top-part ul {
+            width: 30%;
+        }
+
+        .select-city+i+.type-select-panel .top-part ul {
+            width: 46%;
+        }
+
+        .type-select-panel .bottom-part .result {
+            float: none;
+        }
+        .Delete{margin:0 5px;}
+		.deleteWrap{padding:20px;}
+		.submitIput{text-align: center;margin: 20px auto 0;}
+    </style>
+</head>
+
+<body>
+    <nav class="breadcrumb">
+        <i class="Hui-iconfont">&#xe67f;</i> 首页
+        <span class="c-gray en">&gt;</span> 案例管理
+        <span class="c-gray en">&gt;</span> 案例列表
+        <a class="btn btn-success radius r" style="line-height:1.6em;margin:3px 0 0 20px" href="javascript:location.replace(location.href);"
+            title="刷新">
+            <i class="Hui-iconfont">&#xe68f;</i>刷新
+        </a>
+    </nav>
+
+    <div class="Hui-article">
+        <article class="cl pd-20">
+
+            <div class="panel panel-default search-bar-width">
+                <div class="panel-body">
+
+
+
+                    <!--筛选条件区域-->
+                    <div class="condition-wrap cl common-form-wrap" id="pageSearchForm">
+
+                        <!-- <div class="condition-parent cl">
+                            <span class="title">创建日期</span>
+                            <div class="long-ipt">
+                                <input type="text" onfocus="WdatePicker({ maxDate:'%y-%M-%d' })" style="width:100%;height:100%;box-sizing:border-box;" id="operationTime"
+                                    class="input-text Wdate f-l" readonly name="operationTime" />
+                            </div>
+                        </div> -->
+
+                        <div class="condition-parent cl">
+                            <span class="title">审核进度</span>
+                            <select class="white-list s-status" id="progress">
+                                <option value="">全部</option>
+                                <option value="1">初审中</option>
+                                <option value="2">初审失败</option>
+                                <option value="3">复审中</option>
+                                <option value="4">复审失败</option>
+                                <option value="5">审核成功</option>
+                            </select>
+                        </div>
+                        <div class="condition-parent cl">
+                            <span class="title">分类</span>
+                            <div class="long-ipt">
+                                <span class="value-wrap select-classify"></span>
+                                <i class="Hui-iconfont">&#xe698;</i>
+                                <div class="type-select-panel condition-panel classify">
+                                    <div class="top-part cl">
+                                        <ul class="ul-1"></ul>
+                                        <ul class="ul-2"></ul>
+                                        <ul class="ul-3"></ul>
+                                    </div>
+                                    <div class="bottom-part cl">
+                                        <p class="result">您当前已选择的项目:
+                                            <em></em>
+                                        </p>
+                                        <button type="button" class="btn btn-primary close-panel">关闭</button>
+                                        <button type="button" class="btn btn-primary get-result">确认选择</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="condition-parent cl">
+                            <span class="title">所在城市</span>
+                            <div class="long-ipt">
+                                <span class="value-wrap select-city">请选择城市</span>
+                                <i class="Hui-iconfont">&#xe698;</i>
+                                <div class="type-select-panel condition-panel city" style="width:460px;">
+                                    <div class="top-part cl">
+                                        <ul class="ul-1"></ul>
+                                        <ul class="ul-2"></ul>
+                                    </div>
+                                    <div class="bottom-part cl">
+                                        <p class="result">您当前已选择的城市:
+                                            <em></em>
+                                        </p>
+                                        <button type="button" class="btn btn-primary close-panel">关闭</button>
+                                        <button type="button" class="btn btn-primary get-result">确认选择</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="condition-parent cl">
+                            <span class="title">医院</span>
+                            <div class="long-ipt">
+                                <span class="value-wrap select-hospital">请选择医院</span>
+                                <i class="Hui-iconfont">&#xe698;</i>
+                                <div class="name-select-panel hospital">
+                                    <div class="search-bar">
+                                        <input type="text" value="" id="hospital_id">
+                                        <i class="Hui-iconfont">&#xe709;</i>
+                                    </div>
+                                    <ul></ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="condition-parent cl">
+                            <span class="title">案例ID</span>
+                            <input class="long-ipt" type="number" name="caseId" id="caseId" value="" placeholder="输入案例ID">
+                        </div>
+
+                        <div class="button-wrap">
+                            <button type="button" class="btn btn-primary" id="screeBtn">
+                                <i class="Hui-iconfont">&#xe665;</i> 筛选</button>
+                            <button type="button" class="btn btn-primary" id="resetBtn">
+                                <i class="Hui-iconfont">&#xe66b;</i> 重置</button>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="control-panel">
+                <button id="addBtn" type="button" class="btn btn-primary">
+                    <i class="Hui-iconfont">&#xe600;</i> 添加</button>
+            </div>
+
+            <div class="goods-list">
+                <table class="table table-border table-bordered table-hover table-bg">
+                    <thead>
+                        <tr class="text-c">
+                        	<th width="60">案例ID</th>
+                            <th width="60">分类</th>
+                            <th width="60">所在医院</th>
+                            <th width="60">主治医生</th>
+                            <th width="60">商品名称</th>
+                            <th width="60">地区</th>
+                            <th width="60">术前照片</th>
+                            <th width="60">术后照片</th>
+                            <th width="60">提交时间</th>
+                            <th width="60">状态</th>
+                            <th width="60">相关联系人</th>
+                            <th width="60">审核进度</th>
+                            <th width="70">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id="listCtnWrap">
+
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="pagination cl" id="pagination"></div>
+
+        </article>
+    </div>
+
+
+    <!--footer 作为公共模版分离出去-->
+    <script type="text/javascript" src="../../lib/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="../../lib/layer/2.4/layer.js"></script>
+    <script type="text/javascript" src="../../static/h-ui/js/H-ui.min.js"></script>
+    <script type="text/javascript" src="../../static/h-ui.admin/js/H-ui.admin.js"></script>
+    <script type="text/javascript" src="../../lib/My97DatePicker/4.8/WdatePicker.js"></script>
+    <!--footer 作为公共模版分离出去-->
+
+    <script type="text/javascript" src="../../lib/ueditor/1.4.3/ueditor.config.js"></script>
+    <script type="text/javascript" src="../../lib/ueditor/1.4.3/ueditor.all.min.js"></script>
+    <script type="text/javascript" src="../../lib/arttemplate/template-web.js"></script>
+    <script type="text/javascript" src="../../lib/laypage/1.2/laypage.js"></script>
+    <script type="text/javascript" src="../../js/base/public.js?rev=@@hash"></script>
+    <script type="text/javascript" src="../../js/common/common.js"></script>
+    <script type="text/javascript" src="../../js/logList.js?rev=@@hash"></script>
+
+    <script type="text/javascript">
+        // window.UEDITOR_CONFIG.serverUrl = base + 'ueditor/getConfig'
+
+        // var editor = UE.getEditor('specEditor', {
+        //     initialFrameWidth: null,
+        //     initialFrameHeight: 300,
+        //     autoHeightEnabled: false,
+        //     autoFloatEnabled: true
+        // });
+
+        // UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;
+        // UE.Editor.prototype.getActionUrl = function (action) {
+        //     if (action == 'uploadimage' || action == 'uploadfile') {
+        //         return base + 'common/ueditorUpload';
+        //     } else {
+        //         return this._bkGetActionUrl.call(this, action);
+        //     }
+        // };
+    </script>
+
+</body>
+<script id="check" type="text/html">
+    <div class="container pd-10">
+        <div class="row cl">
+            <table class="table table-border table-striped">
+                <div class="header">
+                    <h3 style="text-align:center;">案例详情</h3>
+                </div>
+                <tbody>
+                    <tr>
+                        <th width="20%">记录人</th>
+                        <td>{{user_id||''}}</td>
+                    </tr>
+                    <tr>
+                        <th>手术时间</th>
+                        <td>{{operationTime||''}}</td>
+                    </tr>
+                    <tr>
+                        <th>项目</th>
+                        <td>{{goods_key_word||''}}</td>
+                    </tr>
+                    <tr>
+                        <th>搜索关键字</th>
+                        <td>{{user_key_word||''}}</td>
+                    </tr>
+                    <tr>
+                        <th>所在医院</th>
+                        <td>{{hospital_name||''}}</td>
+                    </tr>
+                    <tr>
+                        <th>商品</th>
+                        <td>{{goods_name||''}}</td>
+                    </tr>
+                    <tr>
+                        <th>主治医生</th>
+                        <td>{{doctor_name||''}}</td>
+                    </tr>
+                    <tr>
+                        <th>评分</th>
+                        <td>{{scoreNum||''}}</td>
+                    </tr>
+                    <tr>
+                        <th>术前照片</th>
+                        <td>
+                        
+                        <img src="{{imgPath+before_main}}" class="img-responsive" width="50%" alt="">
+                        <img src="{{imgPath+before_two}}" class="img-responsive" width="50%" alt="">
+                        <img src="{{imgPath+before_three}}" class="img-responsive" width="50%" alt="">
+                        
+        
+                        </td>
+                    </tr>
+                    {{if case_slaves}}
+                        
+                        <tr>
+                            <th>日记内容</th>
+                            <td>{{case_slaves[0].content||''}}</td>
+                        </tr>
+                        <tr>
+                            <th>术后照片</th>
+                            <td>
+                                {{if case_slaves[0].after_pics.length}}
+                                    {{each case_slaves[0].after_pics imgItem j}}
+                                    <img src="{{imgPath+imgItem}}" class="img-responsive" width="50%" alt="">
+                                    {{/each}}
+                                {{/if}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>显示状态</th>
+                            <td>{{case_slaves[0].show_status||''}}</td>
+                        </tr>
+                        <tr>
+                            <th>满意度</th>
+                            <td>{{case_slaves[0].satisfaction||''}}</td>
+                        </tr>
+                        <tr>
+                            <th>肿胀度</th>
+                            <td>{{case_slaves[0].swelling||''}}</td>
+                        </tr>
+                        <tr>
+                            <th>疼痛感</th>
+                            <td>{{case_slaves[0].pain||''}}</td>
+                        </tr>
+                        <tr>
+                            <th>疤痕度</th>
+                            <td>{{case_slaves[0].scar||''}}</td>
+                        </tr>
+                    {{/if}}
+                    {{if case_slaves}}
+		                {{each case_slaves item i}}
+		                	{{if i !=0}}
+				                <tr>
+				                    <th style="line-height:80px;color:red;">
+				                        	续写{{i}}
+				                    </th>
+				                    <td></td>
+				                </tr>
+				                <tr>
+			                        <th>术后</th>
+			                        <td>{{item.oper_after_day||''}}天</td>  
+			                    </tr>
+			                	<tr>
+			                        <th>日记内容</th>
+			                        <td>{{item.content||''}}</td>
+			                    </tr>
+			                    <tr>
+			                        <th>术后照片</th>
+			                        <td>
+			                            {{if item.after_pics.length}}
+			                                {{each item.after_pics imgItem j}}
+			                                <img src="{{imgPath+imgItem}}" class="img-responsive" width="50%" alt="">
+			                                {{/each}}
+			                            {{/if}}
+			                        </td>
+			                    </tr>
+			                    <tr>
+			                        <th>显示状态</th>
+			                        <td>{{item.show_status||''}}</td>
+			                    </tr>
+			                    <tr>
+			                        <th>满意度</th>
+			                        <td>{{item.satisfaction||''}}</td>
+			                    </tr>
+			                    <tr>
+			                        <th>肿胀度</th>
+			                        <td>{{item.swelling||''}}</td>
+			                    </tr>
+			                    <tr>
+			                        <th>疼痛感</th>
+			                        <td>{{item.pain||''}}</td>
+			                    </tr>
+			                    <tr>
+			                        <th>疤痕度</th>
+			                        <td>{{item.scar||''}}</td>
+			                    </tr>
+				            {{/if}}    
+		                {{/each}}
+		            {{/if}}
+                </tbody>
+            </table>
+        </div>
+        <div class="checkFooter" style="margin-top:20px;display: -webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;justify-content: space-around;width:100%;">
+                <button class="btn btn-primary size-XL" style="width:20%;" id="pass">通过</button>
+                <button class="btn btn-primary size-XL" style="width:20%;" id="refuse">拒绝</button>
+        </div>
+    </div>
+</script>
+<script id="contact" type="text/html">
+    <div class="goods-list">
+        <table class="table table-border table-bordered table-hover table-bg">
+            <thead>
+                <tr class="text-c">
+                    <th width="20%">审核状态</th>
+                    <th width="20%">审核结果</th>
+                    <th width="20%">审核拒绝原因</th>
+                    <th width="20%">审核人姓名</th>
+                    <th width="20%">审核人联系方式</th>
+                </tr>
+            </thead>
+            <tbody id="contactList">
+                {{each data item i}}
+                <tr class="text-c list-line">
+                    <td>{{item.status=="1"?"初审":(item.status=="3"?"复审":"")}}</td>
+                    <td>{{item.result=="1"?"通过":(item.result=="2"?"拒绝":"")}}</td>
+                    <td>{{item.msg||""}}</td>
+                    <td>{{item.name||""}}</td>
+                    <td>{{item.telphone||""}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</script>
+<!--删除-->
+<script id="delete" type="text/html">
+    <div class="deleteWrap" data-id="{{id}}" data-hisid="{{hisid}}" data-status="{{status}}">
+        <div class=" cl">
+            <label class="form-label col-xs-2 col-sm-2">
+                <span class="red">*</span>删除原因：</label>
+            <div class="formControls col-xs-10 col-sm-10">
+                <textarea id="delete_msg" class="textarea" type="text" name="delete_msg" placeholder="请输入删除原因" maxlength="350"></textarea>
+            </div>
+        </div>
+        <div class="row cl">
+            <div class="submitIput">
+                <input class="btn btn-primary submitDelete" value="提交" type="button">
+            </div>
+        </div>
+    </div>
+</script>
+</html>

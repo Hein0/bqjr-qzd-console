@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+	    <meta http-equiv="Cache-Control" content="no-siteapp" />
+	    <title>供应商管理</title>
+
+	    <link rel="stylesheet" type="text/css" href="../../static/h-ui/css/H-ui.min.css" />
+	    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/H-ui.admin.css" />
+	    <link rel="stylesheet" type="text/css" href="../../lib/Hui-iconfont/1.0.8/iconfont.css" />
+	    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/skin/default/skin.css" id="skin" />
+	    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/style.css" />
+	    <link rel="stylesheet" type="text/css" href="../../lib/laypage/1.2/skin/laypage.css">
+	    <link rel="stylesheet" type="text/css" href="../../css/reset.css?rev=@@hash"/>
+	    <link rel="stylesheet" type="text/css" href="../../css/supplyAddress.css?rev=@@hash"/>
+	</head>
+	<body>
+		<nav class="breadcrumb">
+	        <i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 商城管理 <span class="c-gray en">&gt;</span> <span class="fileName">供应商管理</span>
+	        <!--<a class="btn btn-success r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a>-->
+	        <!--<a id="getOut" class="btn btn-success r" style="line-height:1.6em;margin-top:3px;margin-right: 10px; background: #5a98de;border-color: #5a98de;" href="javascript:;">导出</a>-->
+    	
+		</nav>
+
+	    <div class="Hui-article">
+	    	
+	    	<!--查询条件板块-->
+	    	<div class="panel panel-default">
+	    		<form class="search-form">
+					<div class="panel-body pb-0 cl search">
+				        <div class="f-l mr-15 mb-15">
+		                    <span class="text-c f-l">搜索</span>
+		                    <input type="text" value="" class="input-text searchName" name="" placeholder="输入供应商名称搜索" style="width: 180px;" />
+		                </div>
+		                
+				        <div class="text-l m-t10 f-r">
+				            <button type="button" class="btn btn-primary mr-15" id="screeBtn" name=""><i class="Hui-iconfont">&#xe665;</i> 筛选</button>
+				            <button type="button" class="btn btn-primary" id="resetBtn" name=""><i class="Hui-iconfont">&#xe66b;</i> 重置</button>
+				        </div>
+
+			        </div>
+			    </form>
+			</div>
+			<a class="creat" href="javascripy:;">添加</a>
+	        <!--数据表格-->
+	        <div class="mt-20 mb-20 table-con">
+	            <table style="min-width: 1000px;" class="table table-bg table-border table-bordered table-hover zhc-table">
+	                <thead>
+	                    <tr class="text-c">
+	                        <th width="10%">供应商名称</th>
+	                        <th width="10%">是否常用</th>
+					    	<th width="10%">供应商属性</th>
+					    	<th width="10%">供应商排序</th>
+					    	<th width="10%">收件人</th>
+					    	<th width="15%">电话</th>
+					    	<th width="20%">地址</th>
+					    	<th width="15%">操作</th>
+	                    </tr>
+	                </thead>
+	                <tbody id="tableList">
+	                	
+				  	</tbody>
+
+	            </table>
+	        </div>
+	        
+	        <!--分页-->
+			<div class="pagination cl" id="pagination"></div>
+	    </div>
+
+		<!--新建弹窗-->
+		<div id="modal-demo" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content radius">
+					<div class="modal-header">
+						<h3 class="modal-title">确认删除该供应商吗？</h3>
+						<a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>
+					</div>
+					<div class="pop_creat">
+						<p class="mt-30">
+							<label for="supplySelect" class="">供应商名称</label>
+							<input class="ml-20" type="text" id="supplyName" value="" />
+						</p>
+						<p class="mt-30">
+							<label for="supplySelect" class="">是否常用</label>
+							<select class="ml-35" id="oftenUse" name="supply">
+								<option value="1">不常用</option>
+								<option value="2">常用</option>
+							</select>
+						</p>
+						<p class="mt-30">
+							<label for="supplySelect" class="">供应商属性</label>
+							<select class="ml-20" id="supplyProp" name="supply">
+								<option value="2">京东接口/线下供应商</option>
+								<option value="3">第三方商城</option>
+							</select>
+						</p>
+						<p class="mt-30">
+							<label for="supplySelect" class="">供应商排序</label>
+							<input class="ml-20" type="text" id="supplySort" value="" />
+						</p>
+						<p class="mt-30">
+							<label for="supplySelect" class="">收件人</label>
+							<input class="ml-47" type="text" id="receiveName" value="" />
+						</p>
+						<p class="mt-30">
+							<label for="supplySelect" class="">电话</label>
+							<input class="ml-60" type="text" id="mobile" value="" />
+						</p>
+						<p class="pop_info_detail mt-20">
+							<label for="info_txt" class=" f-l">供应商地址</label>
+							<textarea class="ml-20" id="address" name="" rows="" cols=""></textarea>
+						</p>
+						<p class="pop_info_detail mt-20">
+							<label for="info_txt" class=" f-l">描述</label>
+							<textarea class="ml-60" id="info_txt" name="" rows="" cols=""></textarea>
+						</p>
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-primary pop_sure">确定</button>
+						<button style="margin-left: 100px;" class="btn add_link_btn" data-dismiss="modal" aria-hidden="true">取消</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!--导出-->
+		<div id="mymodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		    <div class="modal-dialog">
+		        <div class="modal-content radius">
+		            <div class="modal-header">
+		                <h3 class="modal-title">导出</h3>
+		                <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void(0);">×</a>
+		            </div>
+		            <div class="modal-body">
+		                <div class="export">
+		                    <label>文件名</label><input type="text" onfocus="javascript:$('.p').hide()" id="fileName" />
+		                    <p class="p">请输入文件名</p>
+		                </div>
+		                <p>提示：<br />1、导出的目标数据是根据搜索条件搜索后的数据；若需导出全部数据，请在导出之前清除搜索条件。<br />2、文件名命名可以自定义</p>
+		            </div>
+		            <div class="modal-footer">
+		                <button class="btn btn-primary" onclick="refundList.export();">确定</button>
+		                <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+		            </div>
+		        </div>
+		    </div>
+		</div>
+		
+		<!--组件-->
+		<script type="text/javascript" src="../../lib/jquery/1.9.1/jquery.min.js"></script>
+		<script type="text/javascript" src="../../lib/My97DatePicker/4.8/WdatePicker.js"></script>
+	    <script type="text/javascript" src="../../lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+	    <script type="text/javascript" src="../../lib/laypage/1.2/laypage.js"></script>
+	    <script src="../../js/common/jquery.tmpl.min.js" type="text/javascript"></script>
+	    <script type="text/javascript" src="../../lib/layer/2.4/layer.js"></script>
+	    <script type="text/javascript" src="../../static/h-ui/js/H-ui.min.js"></script>
+	    <script type="text/javascript" src="../../static/h-ui.admin/js/H-ui.admin.js"></script>
+
+	    <!--业务逻辑-->
+	    <script type="text/javascript" src="../../js/base/public.js?rev=@@hash"></script>
+	    <script src="../../js/page/supply.js?rev=@@hash" type="text/javascript" charset="utf-8"></script>
+	    <script id="supplyList" type="text/x-jquery-tmpl">
+	    		<tr class="text-c">
+			  		<td>{{= companyName || ''}}</td>
+			  		{{if showType == 1}}
+			  		<td>{{= '不常用'}}</td>
+			  		{{else}}
+			  		<td>{{= '常用'}}</td>
+			  		{{/if}}
+			  		{{if type == 1}}
+			  		<td>{{= '引流商户'}}</td>
+			  		{{else type == 2}}
+			  		<td>{{= '京东接口/线下供应商'}}</td>
+			  		{{else type == 3}}
+			  		<td>{{= '第三方商城'}}</td>
+			  		{{/if}}
+			  		{{if sort == 0}}
+			  		<td>{{= 0}}</td>
+			  		{{else}}
+			  		<td>{{= sort || ''}}</td>
+			  		{{/if}}
+			  		<td>{{= contacts || ''}}</td>
+			  		<td>{{= mobile || ''}}</td>
+			  		<td>{{= addressDetail || ''}}</td>
+			  		<td><a supplyId="{{= id}}" companyName="{{= companyName}}" showType="{{= showType}}" type="{{= type}}" sort="{{= sort}}" contacts="{{= contacts}}" mobile="{{= mobile}}" addressDetail="{{= addressDetail}}" cooperationIntention="{{= cooperationIntention}}" class="mr-30 edit" href="javascript:;">编辑</a><a supplyId="{{= id}}" class="delete" href="javascript:;">删除</a></td>
+		  		</tr>
+	    </script>
+	</body>
+</html>

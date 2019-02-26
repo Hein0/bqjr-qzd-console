@@ -1,0 +1,589 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <title>资源管理</title>
+
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui/css/H-ui.min.css?rev=@@hash" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/H-ui.admin.css?rev=@@hash" />
+    <link rel="stylesheet" type="text/css" href="../../lib/Hui-iconfont/1.0.8/iconfont.css?rev=@@hash" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/skin/default/skin.css?rev=@@hash" id="skin" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/style.css?rev=@@hash" />
+
+    <!--分页样式表，需要分页的页面加入-->
+    <link rel="stylesheet" type="text/css" href="../../lib/laypage/1.2/skin/laypage.css?rev=@@hash">
+    <link rel="stylesheet" type="text/css" href="../../lib/zTree/v3/css/zTreeStyle/zTreeStyle.css?rev=@@hash">
+    <link rel="stylesheet" type="text/css" href="../../css/hospitalOrder.css?rev=@@hash">
+    <link rel="stylesheet" type="text/css" href="../../css/resource.css?rev=@@hash">
+    <style type="text/css">
+    	.table-bordered th, .table-bordered td {border-left:none !important;}
+    	.form .row{    margin-left: 0px;margin-right: 0px;}
+    </style>
+
+</head>
+
+<body>
+    <nav class="breadcrumb">
+        <i class="Hui-iconfont">&#xe67f;</i> 首页
+        <span class="c-gray en">&gt;</span> 系统管理
+        <span class="c-gray en">&gt;</span> 资源管理
+        <a class="btn btn-success radius r" style="line-height:1.6em;margin:3px 0 0 20px" href="javascript:location.replace(location.href);"
+            title="刷新">
+            <i class="Hui-iconfont">&#xe68f;</i>刷新
+        </a>
+    </nav>
+
+    <div class="Hui-article">
+        <article class="cl pd-20">
+
+            <div class="panel panel-default search-bar-width">
+                <div class="panel-body">
+					<form id="searchForm">
+	                    <!--筛选条件区域-->
+	                    <div class="condition-wrap cl common-form-wrap" id="pageSearchForm">
+	                    	
+							<div class="condition-parent cl">
+	                            <span class="title">日期范围</span>
+	                            <div class="long-ipt">
+	                                <input type="text" onfocus="WdatePicker({ maxDate:'%y-%M-%d' })" style="width:100%;height:100%;box-sizing:border-box;" id="addTime"
+	                                    class="input-text Wdate f-l" readonly name="create_time_start" />
+	                            </div>
+	                            <div class="long-ipt">
+	                                <input type="text" onfocus="WdatePicker({ maxDate:'%y-%M-%d' })" style="width:100%;height:100%;box-sizing:border-box;" id="addTime"
+	                                    class="input-text Wdate f-l" readonly name="create_time_end" />
+	                            </div>
+	                        </div>
+	                        
+	                        <div class="condition-parent cl">
+	                            <span class="title">资源代码</span>
+	                            <input class="long-ipt" type="text" name="code" id="searchName" value="" placeholder="输入资源代码">
+	                        </div>
+	                        
+							<div class="condition-parent cl">
+	                            <span class="title">资源名称</span>
+	                            <input class="long-ipt" type="text" name="name" id="searchName" value="" placeholder="输入资源名称">
+	                        </div>
+	
+	                        <div class="condition-parent cl">
+	                            <span class="title">上级菜单</span>
+	                            <input class="long-ipt" type="text" name="parentName" id="searchName" value="" placeholder="输入上级菜单">
+	                        </div>
+	
+	                        <div class="button-wrap">
+	                            <button type="button" class="btn btn-primary" id="screeBtn" onclick="search()">
+	                                <i class="Hui-iconfont">&#xe665;</i> 筛选</button>
+	                            <button type="button" class="btn btn-primary" id="resetBtn" onclick="resetBtns()">
+	                                <i class="Hui-iconfont">&#xe66b;</i> 重置</button>
+	                        </div>
+	
+	                    </div>
+					</form>
+                </div>
+            </div>
+
+            <div class="control-panel">
+                <button id="addBtn" type="button" class="btn btn-primary" onclick="admin_role_add()">
+                    <i class="Hui-iconfont">&#xe600;</i> 添加
+                </button>
+               	<!--<button id="deleteBtn" type="button" class="btn btn-danger radius">
+                    <i class="Hui-iconfont">&#xe609;</i> 批量删除
+               	</button>-->
+            </div>
+
+            <div class="goods-list">
+                <table class="table table-border table-bordered table-hover table-bg">
+		            <thead>
+			            <tr class="text-c">
+			                <th width="20">
+			                    <input type="checkbox" value="" name="">
+			                </th>
+			                <th width="60">资源编码</th>
+			                <th width="60">资源名称</th>
+			                <th width="60">资源类型</th>
+			                <th width="60">上级菜单</th>
+			                <th width="60">菜单级别</th>
+			                <th width="60">菜单序号</th>
+			                <th width="60">状态</th>
+			                <th width="70">创建时间</th>
+			                <!--<th width="70">创建人</th>-->
+			                <th width="70">操作</th>
+			            </tr>
+		            </thead>
+		            <tbody id="listCtnWrap">
+		            	
+		            </tbody>
+		        </table>
+            </div>
+
+            <div class="pagination cl" id="pagination"></div>
+
+        </article>
+    </div>
+	
+
+
+    <!--footer 作为公共模版分离出去-->
+    <script type="text/javascript" src="../../lib/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="../../lib/layer/2.4/layer.js"></script>
+    <script type="text/javascript" src="../../static/h-ui/js/H-ui.min.js"></script>
+    <script type="text/javascript" src="../../static/h-ui.admin/js/H-ui.admin.js"></script>
+    <script type="text/javascript" src="../../lib/My97DatePicker/4.8/WdatePicker.js"></script>
+    <!--footer 作为公共模版分离出去-->
+    <script type="text/javascript" src="../../lib/laypage/1.2/laypage.js"></script>
+    <script type="text/javascript" src="../../lib/arttemplate/template-web.js"></script>
+    <script type="text/javascript" src="../../lib/zTree/v3/js/jquery.ztree.all-3.5.min.js?rev=@@hash"></script>
+    <script type="text/javascript" src="../../js/base/public.js?rev=@@hash"></script>
+    <!--渲染列表-->
+    <script id="artTemp" type="text/html">
+	    {{each data item i}}
+	    	<tr class="text-c">
+		        <td>
+		            <input type="checkbox" value="" name="" data-id="{{item.id}}">
+		        </td>
+		        <td>{{item.code}}</td>
+		        <td>{{item.name}}</td>
+		        <td>{{if item.type ==1}}
+		        	菜单
+		        	{{else}}
+		        	按钮
+		        	{{/if}}</td>
+		        <td>{{item.parentName}}</td>
+		        <td>{{item.menu_level}}</td>
+		        <td>{{item.menu_index}}</td>
+		        <td>{{if item.valid_ind == 0}}
+		            	无效
+		            {{else}}
+		            	有效
+		            {{/if}}</td>
+		        <td>{{item.create_time}}</td>
+		        <!--<td>{{item.create_user}}</td>-->
+		        <td class="f-14">
+		            <a class="edit resourceEdit" data-id="{{item.id}}" id="" title="编辑" href="javascript:;" onclick="edit($(this))" style="text-decoration:none;"><i class="Hui-iconfont">&#xe6df;</i></a>
+		            <a class="del resourceDel" data-id="{{item.id}}" id="" title="删除" href="javascript:;" onclick="admin_role_del($(this),del)" class="ml-5 " style="text-decoration:none;"><i class="Hui-iconfont">&#xe6e2;</i></a>
+		        </td>
+		    </tr>
+	    {{/each}}
+	</script>
+	<!--添加弹窗-->
+	<script id="admin_role_add" type="text/html">
+		<form id="form-admin-role-add" class="form form-horizontal form-step active spu-cont" action="#" method="post">
+            <div class="row cl">
+
+	            <ul class="left">
+					<li><span>资源编码:</span></li>
+	                <li><span>资源名称:</span></li>
+	                <li><span>类型:</span></li>
+	                <li><span>上级菜单:</span></li>
+	                <li><span>URL:</span></li>
+	                <li><span>资源图标:</span></li>
+	                <li><span>资源样式:</span></li>
+	                <li><span>状态:</span></li>
+	                <li><span>菜单级别:</span></li>
+	                <li><span>菜单序号:</span></li>
+	
+	            </ul>
+	            <ul class="right" style="">
+	                <li>
+	                    <input type="text" class="input-text" value="" placeholder="" name="code">
+	                </li>
+	                <li>
+	                    <input type="text" class="input-text" value="" placeholder="" name="name">
+	                </li>
+	                <li>
+	                    <select class="" name="type">
+	                        <option value="1">菜单</option>
+	                        <option value="2">按钮</option>
+	                    </select>
+	                </li>
+	                <input type="hidden" class="input-text" value="" placeholder="" id="parentId" name="parent_id" readonly>
+	                <li>
+	                    <input style="width: 70%" type="text" class="input-text" value="" placeholder="" id="parentName" readonly onclick="showMenu(); return false;">
+	                </li>
+	                <li>
+	                    <input type="text" class="input-text"  value="" placeholder="" name="url">
+	                </li>
+	                <li>
+	                    <input type="text" class="input-text" value="" placeholder="" name="icon">
+	                </li>
+	                <li>
+	                    <input type="text" class="input-text" value="" placeholder="" name="css">
+	                </li>
+	                <li>
+	                    <select class="" name="valid_ind">
+	                        <option value="1">有效</option>
+	                        <option value="2">无效</option>
+	                    </select>
+	                </li>
+	                <li>
+	                    <input type="text" class="input-text"value="" placeholder="" name="menu_level">
+	                </li>
+	                <li>
+	                    <input type="text" class="input-text" value="" placeholder="" name="menu_index">
+	                </li>
+	            </ul>
+	            <div class="sub_btn">
+	                <button type="submit" class="btn btn-primary radius" id="admin-role-save" data-id="data.id">确定</button>
+	            </div>
+	            
+	        </div>
+	        <div id="menuContent" class="menuContent" style="display:none; position: absolute;">
+	            <ul id="treeDemo" class="ztree"></ul>
+	        </div>
+            
+        </form>
+	</script>
+	<!--编辑弹窗-->
+	<script id="admin_role_edit" type="text/html">
+		<form id="form-admin-role-edit" class="form form-horizontal form-step active spu-cont" action="#" method="post" >
+            <div class="row cl">
+	            <ul class="left">
+					<li><span>资源编码:</span></li>
+	                <li><span>资源名称:</span></li>
+	                <li><span>类型:</span></li>
+	                <li><span>上级菜单:</span></li>
+	                <li><span>URL:</span></li>
+	                <li><span>资源图标:</span></li>
+	                <li><span>资源样式:</span></li>
+	                <li><span>状态:</span></li>
+	                <li><span>菜单级别:</span></li>
+	                <li><span>菜单序号:</span></li>
+	
+	            </ul>
+	            <ul class="right" style="">
+	            	{{if data&& data[0]}}
+		                <li>
+		                	<input type="hidden" class="input-text" value="{{data[0].id}}" name="id">
+		                    <input type="text" class="input-text" value="{{data[0].code}}" placeholder="" name="code">
+		                </li>
+		                <li>
+		                    <input type="text" class="input-text" value="{{data[0].name}}" placeholder="" name="name">
+		                </li>
+		                <li>
+		                    <select class="" name="type">
+		                        <option value="1" {{if data[0].type== 1}} selected {{/if}} >菜单</option>
+                        		<option value="2" {{if data[0].type== 2}} selected {{/if}}>按钮</option>
+		                    </select>
+		                </li>
+		                <input type="hidden" class="input-text" value="" placeholder="" id="parentId" name="parent_id" readonly>
+		                <li>
+		                    <input style="width: 70%" type="text" class="input-text" value="{{data[0].parentName}}" placeholder="" id="parentName" readonly onclick="showMenu(); return false;">
+		                </li>
+		                <li>
+		                    <input type="text" class="input-text"  value="{{data[0].url}}" placeholder="" name="url">
+		                </li>
+		                <li>
+		                    <input type="text" class="input-text" value="{{data[0].icon}}" placeholder="" name="icon">
+		                </li>
+		                <li>
+		                    <input type="text" class="input-text" value="{{data[0].css}}" placeholder="" name="css">
+		                </li>
+		                <li>
+		                    <select class="" name="valid_ind">
+		                        <option value="1" {{if data[0].valid_ind== 1}} selected {{/if}}>有效</option>
+                        		<option value="2" {{if data[0].valid_ind== 2}} selected {{/if}}>无效</option>
+		                    </select>
+		                </li>
+		                <li>
+		                    <input type="text" class="input-text"value="{{data[0].menu_level}}" placeholder="" name="menu_level">
+		                </li>
+		                <li>
+		                    <input type="text" class="input-text" value="{{data[0].menu_index}}" placeholder="" name="menu_index">
+		                </li>
+	                {{/if}}
+	            </ul>
+	            <div class="sub_btn">
+	                <button type="submit" class="btn btn-primary radius" id="admin-role-save" data-id="data.id">确定</button>
+	            </div>
+	            
+	        </div>
+	        <div id="menuContent" class="menuContent" style="display:none; position: absolute;">
+	            <ul id="treeDemo" class="ztree"></ul>
+	        </div>
+            
+        </form>
+	</script>
+
+    <script type="text/javascript">
+    	var pageUtil = {
+    		"cache":{},
+    	};
+		//初始化数据
+    	search();
+    	// 获取商品列表
+	    function search (obj) {
+	        var params = $("#searchForm").serializeObject();
+	
+	        params.pageNum = (obj && obj.curr) || 1; // 默认第1页
+	        params.pageSize = (obj && obj.pageSize) || 20; // 默认一页20条数据
+	
+	        pageUtil.cache.pageInfo = {
+	            curr: params.pageNum,
+	            pageSize: params.size
+	        };
+	
+	        params = filterEmpty(params);
+	        
+	        $.ajax({
+	            type: 'post',
+	            url: base + 'sys/getResource',
+	            data: JSON.stringify(params),
+		    	contentType:'application/json;charset=utf-8',
+	            success: function (res) {
+	            	if (res.status == '0'&& res.data) {
+	            		pageUtil.cache.listCache = res.data;
+	            		var html = template("artTemp", res)
+                    	$('#listCtnWrap').html(html);
+	            		// 设置分页
+		                setPagination({
+		                    elem: $('#pagination'),
+		                    totalCount: res.dataCount,
+		                    curr: params['pageNum'],
+		                    callback: function (obj) {
+		                        search(obj);
+		                    }
+		                });
+		                
+		            }else if (res.status == '9999') {
+	                // 未登录
+		                window.top.location.href = '../../login.html';
+		            } else {
+		                $('#listCtnWrap').html('');
+		                $.Huimodalalert(res.message, 2000);
+		            }
+	            }
+	
+	        });
+	
+	    };
+		 // 过滤空参数
+	    function filterEmpty(obj) {
+	        var keys = Object.keys(obj),
+	            i = 0,
+	            length = keys.length;
+	
+	        for (i; i < length; i++) {
+	            if (!obj[keys[i]]) {
+	                delete obj[keys[i]];
+	            }
+	        }
+	
+	        return obj;
+	    };
+	    // /*添加*/
+    	function admin_role_add() {
+	        var html = template("admin_role_add", {});
+	        layer.open({
+	            type: 1,
+	            area: ['700px', '600px'],
+	            fix: false, //不固定
+	            maxmin: false,
+	            shade: 0.4,
+	            anim: 2,
+	            title: "添加",
+	            content: html,
+	            success: function (layero, index) {
+	                $.ajax({
+	                    type: "get",
+	                    dataType: "json",
+	                    url: base + "sys/getResourceTree",
+	                    success: function (data) {
+	                        $.fn.zTree.init($("#treeDemo"), setting, data.data);
+	                        
+	                        $("#admin-role-save").on("click", function () {
+	                            $('#form-admin-role-add').one('submit', function () {
+	                                var AjaxURL = base + "sys/addResource";
+							        var params = $(this).serializeObject();
+							
+							        $.ajax({
+							            type: 'post',
+							            url: AjaxURL,
+							            data: JSON.stringify(params),
+								    	contentType:'application/json;charset=utf-8',
+							            success: function (data) {
+							            	if (data.status == '0') {
+								                layer.close(index);
+	                                            search();
+								            }else{
+								            	$.Huimodalalert(data.message, 1500);
+								            }
+							            }
+							
+							        });
+	                                return false; // 阻止表单自动提交事件
+	                            });
+	                        })
+	                    }
+	                });
+	            }
+	        })
+	        
+	    }
+    	/*编辑、提交*/
+	    function edit(obj) {
+	        var txt = obj.attr("title");
+	        var id = obj.attr("data-id");
+	        var datas = {};
+	        	datas.id=id;
+	        $.ajax({
+	            url: base + "sys/getResource" ,
+	            type: 'post',
+	            dataType: 'json',
+	            data: JSON.stringify(datas),
+		    	contentType:'application/json;charset=utf-8',
+	        })
+	            .done(function (data) {
+	                console.log(data)	
+	                var html = template("admin_role_edit", data);
+	
+	                layer.open({
+	                    type: 1,
+			            area: ['700px', '600px'],
+			            fix: false, //不固定
+			            maxmin: false,
+			            shade: 0.4,
+			            anim: 2,
+			            title: "编辑/修改",
+	                    content: html,
+	                    success: function (layero, index) {
+	
+	                        $.ajax({
+	                            type: "get",
+	                            dataType: "json",
+	                            url: base + "sys/getResourceTree",
+	                            success: function (data) {
+	                                $.fn.zTree.init($("#treeDemo"), setting, data.data);
+	
+	                                $("#admin-role-save").on("click", function () {
+	                                    $('#form-admin-role-edit').one('submit', function () {
+	                                    	var AjaxURL = base + "sys/uptResource";
+									        var params = $(this).serializeObject();
+									
+									        $.ajax({
+									            type: 'post',
+									            url: AjaxURL,
+									            data: JSON.stringify(params),
+										    	contentType:'application/json;charset=utf-8',
+									            success: function (data) {
+									            	if (data.status == '0') {
+										                layer.close(index);
+			                                            search();
+										            }else{
+										            	$.Huimodalalert(data.message, 1500);
+										            }
+									            }
+									        });
+	                                        return false; // 阻止表单自动提交事件
+	                                    });
+	                                })
+	                            }
+	                        })
+	                    }
+	                })
+	            })
+	    }
+	    /*管理员-角色-删除*/
+	    function admin_role_del(obj, callback) {
+	    	var id = obj.attr("data-id");
+	        layer.confirm('确认要删除吗？', function (index) {
+	
+	            callback(obj)
+	            layer.msg('已删除!', {
+	                icon: 1,
+	                time: 1000
+	            })
+	        })
+	    }
+	    /*删除用户之前角色需要清空*/
+	    /*单个删除*/
+	    function del(obj) {
+	        var id = obj.attr("data-id");
+	        $.ajax({
+	            url: base + "sys/delResource?id=" + id,
+	            type: 'get',
+	            dataType: 'json',
+	        })
+	            .done(function (data) {
+	                console.log("success")
+	                search()
+	            })
+	    }
+    	
+    	//重置
+    	function resetBtns(){
+    		var $wrap = $('#searchForm');
+    		$wrap.find("input").val("");
+    	}
+	    
+	    //ztree
+	    var setting = {
+	        view: {
+	            dblClickExpand: false
+	        },
+	        data: {
+	            key:{
+	            	children:'resourceList'
+	            }
+	        },
+	        callback: {
+	            /*beforeClick: beforeClick,*/
+	            onClick: onClick
+	        }
+	    };
+	
+	    function onClick(e, treeId, treeNode) {
+	        var zTree = $.fn.zTree.getZTreeObj("treeDemo"),
+	            nodes = zTree.getSelectedNodes(),
+	            v = "",
+	            k = "";
+	        console.log(nodes);
+	        nodes.sort(function compare(a, b) {
+	            return a.id - b.id;
+	        });
+	        for (var i = 0, l = nodes.length; i < l; i++) {
+	            k += nodes[i].id + ",";
+	            v += nodes[i].name + ",";
+	        }
+	        console.log(k)
+	        if (v.length > 0) v = v.substring(0, v.length - 1);
+	        var cityObj = $("#parentName");
+	        cityObj.attr("value", v);
+	        if (k.length > 0) k = k.substring(0, k.length - 1);
+	        var kObj = $("#parentId");
+	        kObj.attr("value", k);
+	    }
+	
+	    function showMenu() {
+	        var cityOffset = $("#parentName").position();
+	        var cityObj = $("#parentName")
+	        var scrollTop = $(".layui-layer-content").scrollTop();
+	        var width = $("#parentName").parent().width() * 0.7;
+	        console.log($(".layui-layer-content").scrollTop())
+	        $("#menuContent").css({
+	            width: width + "px",
+	            left: cityOffset.left + parseInt(cityObj.css("marginLeft")) + "px",
+	            top: cityOffset.top + cityObj.height() + 2 * parseInt(cityObj.css("marginTop")) + scrollTop + "px"
+	        }).slideDown("fast");
+	        $("body").bind("mousedown", onBodyDown);
+	    }
+	
+	    function hideMenu() {
+	        $("#menuContent").fadeOut("fast");
+	        $("body").unbind("mousedown", onBodyDown);
+	    }
+	
+	    function onBodyDown(event) {
+	        if (!(event.target.id == "menuBtn" || event.target.id == "menuContent" || $(event.target).parents("#menuContent").length > 0)) {
+	            hideMenu();
+	        }
+	    }
+	    
+    </script>
+
+</body>
+
+</html>

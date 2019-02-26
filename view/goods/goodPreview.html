@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta content="yes" name="apple-touch-fullscreen">
+    <meta content="telephone=no,email=no" name="format-detection">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1,maximum-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <!-- <script src="http://g.tbcdn.cn/mtb/lib-flexible/0.3.4/??flexible_css.js,flexible.js"></script> -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="x5-fullscreen" content="true">
+    <meta name="full-screen" content="yes">
+    <meta name="renderer" content="webkit">
+    <meta content="telephone=no" name="format-detection" />
+    <meta http-equiv="Cache-Control"content="no-cache"/>
+    <meta http-equiv="x-rim-auto-match" content="none"> 
+    <title>仟姿惠</title>
+    <link rel="stylesheet" href="../../lib/swiper/swiper-4.1.6.min.css">
+    <style>
+        body{ margin: 0;padding: 0;font-family: "微软雅黑";}
+        body,html{-webkit-text-size-adjust: none;width: 100%;height: 100%;}
+        *{text-decoration: none;list-style: none;}
+        img{border: 0px;vertical-align: middle;text-align: center;}
+        ul,li,dl,dd,dt,p,ol,h1,h2,h3,h4,h5{font-size: 12px;font-weight: 100;padding: 0;margin: 0;}
+        .wrap{margin: 0 auto;}
+        .fl{float: left;}
+        .fr{float: right;}
+        .index{overflow: hidden;}
+        .clr{clear:both; height:0px; width:100%; font-size:1px; line-height:0px; visibility:hidden; overflow:hidden;}
+        .pointer{cursor:pointer;}
+        a,input,button{ outline:none; }
+        ::-moz-focus-inner{border:0px;}
+        /*a:link {color:#0f0;text-decoration:none;} 
+        a:visited {color: #FFFF00; text-decoration:none;} 
+        a:hover {color: #00FF00; text-decoration:underline;} 
+        a:active {color: #0000FF; text-decoration:underline;}*/
+        a{color: #000;}
+        .wrapper{clear: both;width: 100%;}
+        /* word-break:break-all 文字换行 */
+        /*white-space:nowrap 文字不换行*/
+
+        /*默认滚动条样式修改ie9 google Firefox 等高版本浏览器有效*/
+        /* ::selection {background: #D03333;color: white;text-shadow: none;}
+        ::-webkit-scrollbar-track-piece{width:10px;background-color:#f2f2f2}
+        ::-webkit-scrollbar{width:10px;height:6px}
+        ::-webkit-scrollbar-thumb{height:50px;background-color:rgba(0,0,0,.3);}
+        ::-webkit-scrollbar-thumb:hover{background:#cc0000} */
+
+
+        /*渐变*/
+        /*background-image: -moz-linear-gradient(top, #8fa1ff, #3757fa);
+        background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #ff4f02), color-stop(1, #8f2c00)); Saf4+, Chrome 
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#c6ff00', endColorstr='#538300', GradientType='0'); IE*/
+        * {
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        *::-webkit-scrollbar {
+            width: 0px;
+            height: 0px;
+        }
+
+        input,
+        textarea {
+        border: 0; 
+        -webkit-appearance: none; 
+        }   
+
+        * ::-webkit-scrollbar-thumb {
+            border-radius: 0px;
+            -webkit-box-shadow: inset 0 0 0px rgba(0, 0, 0, 0);
+            background: rgba(0, 0, 0, 0);
+        }
+
+        html::-webkit-scrollbar,
+        body::-webkit-scrollbar {
+            display: none;
+        }
+
+        html,
+        body,
+        #app {
+            width: 100%;
+            height: 100%;
+        }
+
+        body {
+            /* position: relative; */
+            overflow: hidden;
+            overflow-y: hidden;
+            /* top: 0; */
+        }
+
+        #app {
+            overflow: hidden;
+        }
+        #detail {
+            width: 100%;
+            height: 100%;
+            background-color: #f8f8f8;
+            /* margin-bottom: 1.4667rem; */
+            display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */ 
+            display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */ 
+            display: -ms-flexbox; /* TWEENER - IE 10 */
+            display: -webkit-flex; /* NEW - Chrome */ 
+            display: flex; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+            flex-direction: column;
+            overflow: hidden;
+            flex-wrap: nowrap;
+        }
+        #detail .container{
+            -webkit-box-flex: 1; /* OLD - iOS 6-, Safari 3.1-6 */ 
+            -moz-box-flex: 1; /* OLD - Firefox 19- */ 
+            /* width: 20%; For old syntax, otherwise collapses. */
+            -webkit-flex: 1; /* Chrome */ 
+            -ms-flex: 1; /* IE 10 */ 
+            flex: 1; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+            flex: 1 1 auto;
+            overflow-x: hidden;
+            overflow-y: auto;
+            /*解决ios上滑动不流畅*/
+            -webkit-overflow-scrolling: touch;
+            position: relative;
+            /* height: 100%; */
+        }
+        #detail::-webkit-scrollbar {
+            display: none;
+        }
+        #detail .container .header{
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 0.8rem;
+            background-color: #f8f8f8;
+            z-index: 1;
+            display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */ 
+            display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */ 
+            display: -ms-flexbox; /* TWEENER - IE 10 */
+            display: -webkit-flex; /* NEW - Chrome */ 
+            display: flex; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+            justify-content: space-around;
+            align-items: center;
+            opacity: 0;
+        }
+        #detail .container .header li{
+            color: #787878;
+            font-size: 0.32rem;
+        }
+        #detail .container .header li.active{
+            color: #ff5c7e;
+        }
+        /* 图片轮播 */
+        #detail .swiper-container {
+            width: 100%;
+            height: 5.6rem;
+        }
+        #detail .swiper-container  img{
+            width: 100%;
+            height: 100%;
+        }
+        /* 产品信息 */
+        #detail .info{
+            display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */ 
+            display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */ 
+            display: -ms-flexbox; /* TWEENER - IE 10 */
+            display: -webkit-flex; /* NEW - Chrome */ 
+            display: flex; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+            flex-direction: column;
+            background-color: #fff;
+            padding-left: 0.3733rem;
+            padding-right: 0.3733rem;
+            margin-bottom: 0.4rem;
+        }
+        #detail .info .priceInfo{
+            margin-top: 0.2933rem;
+            margin-bottom: 0.2133rem;
+            display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */ 
+            display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */ 
+            display: -ms-flexbox; /* TWEENER - IE 10 */
+            display: -webkit-flex; /* NEW - Chrome */ 
+            display: flex; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+            align-items: center;
+        }
+        #detail .info .priceInfo .scalePrice{
+            font-size: 0.56rem;
+            margin-right: 0.32rem;
+            color: #ff5c7e;
+        }
+        #detail .info .priceInfo .scale{
+            width: 0.8533rem;
+            height: 0.4rem;
+            border-radius: 0.0533rem;
+            font-size: 0.32rem;
+            color: #fff;
+            background-color: #ff5c7e;
+            text-align: center;
+            line-height: 0.4rem;
+        }
+        #detail .info .bookInfo{
+            display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */ 
+            display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */ 
+            display: -ms-flexbox; /* TWEENER - IE 10 */
+            display: -webkit-flex; /* NEW - Chrome */ 
+            display: flex; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+            align-items: center;
+            font-size: 0.32rem;
+            color: #787878;
+            margin-bottom: 0.2667rem;
+        }
+        #detail .info .bookInfo .shoppe{
+            margin-right: 0.24rem;
+        }
+        #detail .info .bookInfo .price{
+            color: #c8c8c8;
+            margin-right: 0.32rem;
+            text-decoration: line-through;
+        }
+        #detail .info .bookInfo .book em{
+            margin-left: 0.24rem;
+            font-style: normal;
+        }
+        #detail .info .otherInfo{
+            display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */ 
+            display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */ 
+            display: -ms-flexbox; /* TWEENER - IE 10 */
+            display: -webkit-flex; /* NEW - Chrome */ 
+            display: flex; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+            align-items: center;
+            font-size: 0.32rem;
+            line-height: 0.3867rem;
+            padding-bottom: 0.1867rem;
+            border-bottom: 0.0133rem solid #c8c8c8;
+            color: #a0a0a0;
+            overflow: hidden;
+            justify-content: space-between
+        }
+        #detail .info .otherInfo span{
+            display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */ 
+            display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */ 
+            display: -ms-flexbox; /* TWEENER - IE 10 */
+            display: -webkit-flex; /* NEW - Chrome */ 
+            display: flex; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+            align-items: center;
+        }
+        #detail .info .otherInfo i{
+            /* display: inline-block; */
+            width: 0.4rem;
+            height: 0.4rem;
+            margin-right: 0.1067rem;
+        }
+        .location-icon{
+            background-image: url("../../images/dinwei_tb_@2.png");
+            background-repeat: no-repeat;
+            background-size: contain;
+        }
+        .return-icon{
+            background-image: url("../../images/xianshi_tb_@2.png");
+            background-repeat: no-repeat;
+            background-size: contain;
+        }
+        .diary-icon{
+            background-image: url("../../images/bianji_tb_@2.png");
+            background-repeat: no-repeat;
+            background-size: contain;
+        }
+        /* #detail .info .otherInfo .location{
+            margin-right: 1.4667rem;
+        }
+        #detail .info .otherInfo .return{
+            margin-right: 1.0667rem;;
+        }
+        #detail .info .otherInfo .diary{
+            margin-right: 0.1867rem;
+        } */
+        #detail .info .otherInfo .returnCash{
+            margin-right: 0.1867rem;
+        }
+
+        #detail .info .title{
+            padding: 0.2933rem 0;
+            font-size: 0.3733rem;
+            color: #282828;
+            font-weight: bold;
+        }
+        /* 优惠 */
+        #detail .discounts{
+            background-color: #fff;
+            padding: 0 0.3733rem;
+            margin-bottom: 0.4rem;
+        }
+        #detail .discounts .discount{
+            height: 0.9333rem;
+            line-height: 0.9333rem;
+            position: relative;
+            border-bottom: 0.0133rem solid #c8c8c8;
+        }
+        #detail .discounts .discount:last-of-type{
+            border: none;
+        }
+        #detail .discounts .discount::before{
+            content: '';
+            display: block;
+            clear: both;
+        }
+        /* #detail .discounts .discount::after{
+            content: '';
+            display: block;
+            border: solid 0.0267rem #c8c8c8;
+            border-bottom-width: 0;
+            border-left-width: 0;
+            position: absolute;
+            top: 50%;
+            right: 0.2667rem;
+            width: 0.1333rem;
+            height: 0.1333rem;
+            -webkit-transform: translateY(-50%) rotate(45deg);
+            transform: translateY(-50%) rotate(45deg);
+        } */
+        #detail .discounts .discount .discount-icon{
+            float: left;
+            width: 0.4rem;
+            height: 0.4rem;
+            font-size: 0.2667rem;
+            line-height: 0.4rem; 
+            margin-top: 0.2667rem;
+            border-radius: 0.0667rem;
+            color: #fff;
+            text-align: center;
+            font-style: normal;
+            background-color: #5fc5ff;
+            margin-right: 0.2667rem;
+        }
+        #detail .discounts .discount .discount-icon.red{
+            background-color: #ff5c7e;
+        }
+        #detail .discounts .discount .discount-text{
+            font-size: 0.32rem;
+            color: #787878;
+        }
+        #detail .discounts .discount .discount-text em{
+            font-style: normal;
+            color: #ff5c7e;
+        }
+        /* 医院信息 */
+        #detail .hospital{
+            display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */ 
+            display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */ 
+            display: -ms-flexbox; /* TWEENER - IE 10 */
+            display: -webkit-flex; /* NEW - Chrome */ 
+            display: flex; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+            flex-direction: column;
+            background-color: #fff;
+            padding: 0.56rem 0.3733rem 0.2933rem;
+            margin-bottom: 0.4rem;
+        }
+        #detail .hospital .hospitalInfo{
+            display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */ 
+            display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */ 
+            display: -ms-flexbox; /* TWEENER - IE 10 */
+            display: -webkit-flex; /* NEW - Chrome */ 
+            display: flex; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+            margin-bottom: 0.4rem;
+        }
+        #detail .hospital .hospitalInfo .hospital-icon{
+            width: 1.7333rem;
+            height: 1.7333rem;
+            margin-right: 0.3733rem;
+        }
+        #detail .hospital .hospitalInfo .hospital-text{
+            flex: 1;
+        }
+        #detail .hospital .hospitalInfo .hospital-text h4{
+            font-size: 0.3733rem;
+            color: #282828;
+            font-weight: bold;
+            overflow: hidden;
+            margin-bottom: 0.24rem;
+            position: relative;
+        }
+        #detail .hospital .hospitalInfo .hospital-text h4 i{
+            width: 0.4533rem;
+            height: 0.4533rem;
+            position: absolute;
+            background-image: url("../../images/renzheng_tb_@2.png");
+            background-repeat: no-repeat;
+            background-size: 100%;
+        }
+        #detail .hospital .hospitalInfo .hospital-text p{
+            font-size: 0.32rem;
+            color: #787878;
+        }
+        #detail .hospital .hospitalInfo .hospital-text p:first-of-type{
+            margin-bottom: 0.16rem;
+        }
+        #detail .hospital .buttons{
+            margin-left: 2.1066rem;
+            display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */ 
+            display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */ 
+            display: -ms-flexbox; /* TWEENER - IE 10 */
+            display: -webkit-flex; /* NEW - Chrome */ 
+            display: flex; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+            justify-content: space-between;
+        }
+        #detail .hospital .buttons a{
+            background-color: #fff;
+            border: 0.0267rem solid #5fc5ff;
+            color: #5fc5ff;
+            border-radius: 0.3067rem;
+            width: 3.0133rem;
+            height: 0.6133rem;
+            line-height: 0.5867rem;
+            font-size: 0.32rem;
+            overflow: hidden;
+            padding: 0;
+            text-align: left;
+        }
+        #detail .hospital .buttons a i{
+            float: left;
+            margin-left: 0.5333rem;
+            margin-right: 0.1067rem;
+            width: 0.4533rem;
+            height: 0.4533rem;
+            margin-top: 0.0533rem;
+        }
+        #detail .hospital .buttons .tel i{
+            background-image: url("../../images/bohao_tb_@2.png");
+            background-repeat: no-repeat;
+            background-size: 100%;
+        }
+        #detail .hospital .buttons .online i{
+            background-image: url("../../images/zixun_tb_@2.png");
+            background-repeat: no-repeat;
+            background-size: 100%;
+        }
+        /* 评分开始 */
+        .all{
+            position: relative;
+        }
+        .all>input{
+            opacity:0;
+            position: absolute;
+            width:0.4rem;
+            height:0.4rem;
+            margin:0;
+            margin-top: 0.25335rem;
+        }
+        .all>input:nth-of-type(1),
+        .all>span:nth-of-type(1){
+            display:none;
+        }
+        .all>span{
+            display: inline-block;
+            width: 0.4rem;
+            height: 0.4rem;
+            border-radius: 0.0667rem;
+            font-size:0.3733rem;
+            line-height: 0.4rem;
+            color:#fff;
+            background-color: #ff5c7e;
+            text-align: center;
+            -webkit-transition:color .2s;
+            transition:color .2s;
+            font-weight: bold;
+            /* margin-right: 0.1333rem; */
+        }
+        .all>input:checked~span{
+            color:#fff;
+            background-color: #D3D3D3;
+        }
+        .all>input:checked+span{
+            color:#fff;
+            background-color: #ff5c7e;
+        }
+        /* 评分结束 */
+        /* 评论 */
+        #detail .comment{
+            background-color: #fff;
+            padding: 0 0.3733rem;
+            /* margin-bottom: 0.4rem; */
+        }
+        #detail .comment .commentHead{
+            height: 0.9067rem;
+            /* border-bottom:  0.0133rem solid #c8c8c8; */
+            line-height: 0.9067rem;
+            font-size: 0.32rem;
+            color: #787878;
+        }
+        #detail .comment .commentHead span:first-of-type{
+            margin-right: 0.3467rem;
+        }
+        #detail .comment .commentHead b{
+            color: #282828;
+            font-weight: bold;
+            margin-right: 0.1333rem;
+            font-size: 0.3733rem;
+        }
+        #detail .comment .tips ul{
+            display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */ 
+            display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */ 
+            display: -ms-flexbox; /* TWEENER - IE 10 */
+            display: -webkit-flex; /* NEW - Chrome */ 
+            display: flex; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+            flex-wrap: wrap;
+            padding-bottom: 0.4rem;
+        }
+        #detail .comment .tips ul li{
+            padding: 0 0.2667rem;
+            font-size: 0.32rem;
+            color: #b1b1b1;
+            background-color: #eee;
+            margin-top: 0.4rem;
+            height: 0.6133rem;
+            line-height: 0.6133rem;
+            border-radius: 0.3067rem;
+            margin-right: 0.24rem;
+        }
+        /* 日志列表 */
+        #detail .diaryList .diaryInfo{
+            margin-top: 0.4rem;
+            padding: 0.4rem 0.5067rem;
+            display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */ 
+            display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */ 
+            display: -ms-flexbox; /* TWEENER - IE 10 */
+            display: -webkit-flex; /* NEW - Chrome */ 
+            display: flex; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+            flex-direction: column;
+            background-color: #fff;
+        }
+        #detail .diaryList .diaryInfo .diary-img{
+            display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */ 
+            display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */ 
+            display: -ms-flexbox; /* TWEENER - IE 10 */
+            display: -webkit-flex; /* NEW - Chrome */ 
+            display: flex; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+            justify-content: space-between;
+            margin-bottom: 0.3733rem;
+        }
+        #detail .diaryList .diaryInfo .diary-img img{
+            width: 4.4267rem;
+            height: 2.96rem;
+            border-radius: 0.1333rem;
+        }
+        #detail .diaryList .diaryInfo .authorInfo{
+            display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */ 
+            display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */ 
+            display: -ms-flexbox; /* TWEENER - IE 10 */
+            display: -webkit-flex; /* NEW - Chrome */ 
+            display: flex; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+            margin-bottom: 0.4533rem;
+        }
+        #detail .diaryList .diaryInfo .authorInfo img{
+            width: 1.3867rem;
+            height: 1.3867rem;
+            margin-right: 0.2667rem;
+            border-radius: 50%;
+        }
+        #detail .diaryList .diaryInfo .authorInfo .author{
+            display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */ 
+            display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */ 
+            display: -ms-flexbox; /* TWEENER - IE 10 */
+            display: -webkit-flex; /* NEW - Chrome */ 
+            display: flex; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+            flex-direction: column;
+            justify-content: space-between;
+            flex: 1;
+        }
+        #detail .diaryList .diaryInfo .authorInfo .author h4{
+            font-size: 0.4267rem;
+            color: #282828;
+            font-weight: bold;
+        }
+        #detail .diaryList .diaryInfo .authorInfo .author h4 .time{
+            float: right;
+            font-size: 0.32rem;
+            color: #b1b1b1;
+            line-height: 0.4267rem;
+            font-weight: normal;
+        }
+        #detail .diaryList .diaryInfo .authorInfo .author .authorComment{
+            font-size: 0.3733rem;
+            color: #b1b1b1;
+        }
+        #detail .diaryList .diaryInfo .authorInfo .author .authorComment b{
+            color: #282828;
+        }
+        #detail .diaryList .diaryInfo .authorInfo .author .authorComment .all input{
+            margin-top: 0;
+        }
+        #detail .diaryList .content{
+            font-size: 0.3733rem;
+            color: #282828;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+            line-height: 150%;
+            overflow: hidden;
+        }
+
+        /* 底部 */
+        #detail .footer{
+            width: 100%;
+            height: 1.3333rem;
+            /* position: absolute; */
+            /* bottom: 0; */
+            display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */ 
+            display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */ 
+            display: -ms-flexbox; /* TWEENER - IE 10 */
+            display: -webkit-flex; /* NEW - Chrome */ 
+            display: flex; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+            background-color: #fff;
+            overflow: hidden;
+            flex: 0 0 auto;
+        }
+        #detail .footer .payInfo{
+            /* width: 2.9067rem; */
+            display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */ 
+            display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */ 
+            display: -ms-flexbox; /* TWEENER - IE 10 */
+            display: -webkit-flex; /* NEW - Chrome */ 
+            display: flex; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+            flex-direction: column;
+            justify-content: space-around;
+            /* text-align: center; */
+            padding: 0 0.3733rem;
+            border-right: 1px solid #DFDFDF;
+        }
+        #detail .footer .payInfo p{
+            font-size: 0.32rem;
+            color: #787878;
+        }
+        #detail .footer .payInfo p span{
+            color: #ff5c7e;
+        }
+        #detail .footer .consult{
+            display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */ 
+            display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */ 
+            display: -ms-flexbox; /* TWEENER - IE 10 */
+            display: -webkit-flex; /* NEW - Chrome */ 
+            display: flex; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+            padding: 0 0.3333rem;
+        }
+        #detail .footer .consult i{
+            width: 0.4533rem;
+            height: 0.4533rem;
+            background-image: url("../../images/zixun2_tb_@2.png");
+            background-repeat: no-repeat;
+            background-size: 100%;
+        }
+        #detail .footer .consult span{
+            font-size: 0.32rem;
+            color: #787878;
+        }
+        #detail .footer .toShoppingCart,
+        #detail .footer .payNow{
+            font-size: 0.4533rem;
+            color: #fff;
+            line-height: 1.3333rem;
+            text-align: center;
+            background-color: #FF7592;
+            flex: 1;
+        }
+        #detail .footer .payNow{
+            background-color: #ff5c7e;
+        }
+        #detail #detailImg{
+            margin-top: 0.4rem;
+            width: 100%;
+            background-color: #fff;
+        }
+        #detail #detailImg h4{
+            text-align: center;
+            line-height: 1.3333rem;
+            font-size: 0.32rem;
+            color: #282828
+        }
+        #detail #detailImg img{
+            width:100%;
+        }
+        #detail #notice{
+            margin-top: 0.4rem;
+            width: 100%;
+            background-color: #fff;
+        }
+        #detail #notice h4{
+            text-align: center;
+            line-height: 1.3333rem;
+            font-size: 0.32rem;
+            color: #282828
+        }
+        .main_pay_box {padding: 0 10px 10px;}
+        .main_pay_box ul {padding: 10px 0;border-bottom: 1px solid #f0f0f0;}
+        .main_pay_box h3 {font-size: 14px;color: #333;margin: 5px 0;}
+        .main_pay_box li {color: #777;margin-top: 5px;    font-size: 13px;line-height: 1.5;}
+        .detail-page {
+            padding: 10px;
+            font-size: 14px;
+        }
+        .detail-page ol li {
+            list-style-type: decimal;
+        }
+        .detail-page ol, .detail-page ul {
+            padding-left: 20px
+        }
+        .detail-page ul li {;
+            list-style-type: disc;
+        }
+    </style>
+</head>
+
+<body scoll=no style="height:100%;">
+    <div id="app">
+        <div id="detail">
+            
+        </div>
+    </div>
+</body>
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="../../lib/arttemplate/template-web.js"></script>
+<script type="text/javascript" src="../../js/base/public.js?rev=@@hash"></script>
+<script src="../../lib/swiper/swiper-4.1.6.min.js"></script>
+<script>
+    /**
+ * 设置html-动态font-size rem
+ */
+    (function (win, lib) {
+        var doc = win.document;
+        var docEl = doc.documentElement;
+        var metaEl = doc.querySelector('meta[name="viewport"]');
+        var flexibleEl = doc.querySelector('meta[name="flexible"]');
+        var dpr = 0;
+        var scale = 0;
+        var tid;
+        var flexible = lib.flexible || (lib.flexible = {});
+
+        if (metaEl) {
+            console.warn('将根据已有的meta标签来设置缩放比例');
+            var match = metaEl.getAttribute('content').match(/initial\-scale=([\d\.]+)/);
+            if (match) {
+                scale = parseFloat(match[1]);
+                dpr = parseInt(1 / scale);
+            }
+        } else if (flexibleEl) {
+            var content = flexibleEl.getAttribute('content');
+            if (content) {
+                var initialDpr = content.match(/initial\-dpr=([\d\.]+)/);
+                var maximumDpr = content.match(/maximum\-dpr=([\d\.]+)/);
+                if (initialDpr) {
+                    dpr = parseFloat(initialDpr[1]);
+                    scale = parseFloat((1 / dpr).toFixed(2));
+                }
+                if (maximumDpr) {
+                    dpr = parseFloat(maximumDpr[1]);
+                    scale = parseFloat((1 / dpr).toFixed(2));
+                }
+            }
+        }
+
+        if (!dpr && !scale) {
+            var isAndroid = win.navigator.appVersion.match(/android/gi);
+            var isIPhone = win.navigator.appVersion.match(/iphone/gi);
+            var devicePixelRatio = win.devicePixelRatio;
+            if (isIPhone) {
+                // iOS下，对于2和3的屏，用2倍的方案，其余的用1倍方案
+                if (devicePixelRatio >= 3 && (!dpr || dpr >= 3)) {
+                    dpr = 3;
+                } else if (devicePixelRatio >= 2 && (!dpr || dpr >= 2)) {
+                    dpr = 2;
+                } else {
+                    dpr = 1;
+                }
+            } else {
+                // 其他设备下，仍旧使用1倍的方案
+                dpr = 1;
+            }
+            scale = 1 / dpr;
+        }
+
+        docEl.setAttribute('data-dpr', dpr);
+        if (!metaEl) {
+            metaEl = doc.createElement('meta');
+            metaEl.setAttribute('name', 'viewport');
+            metaEl.setAttribute('content', 'initial-scale=' + scale + ', maximum-scale=' + scale + ', minimum-scale=' + scale + ', user-scalable=no');
+            if (docEl.firstElementChild) {
+                docEl.firstElementChild.appendChild(metaEl);
+            } else {
+                var wrap = doc.createElement('div');
+                wrap.appendChild(metaEl);
+                doc.write(wrap.innerHTML);
+            }
+        }
+
+        function refreshRem() {
+            var width = docEl.getBoundingClientRect().width;
+            var rem = width / 10;
+            docEl.style.fontSize = rem + 'px';
+            flexible.rem = win.rem = rem;
+        }
+
+        win.addEventListener('resize', function () {
+            clearTimeout(tid);
+            tid = setTimeout(refreshRem, 300);
+        }, false);
+        win.addEventListener('pageshow', function (e) {
+            if (e.persisted) {
+                clearTimeout(tid);
+                tid = setTimeout(refreshRem, 300);
+            }
+        }, false);
+
+        if (doc.readyState === 'complete') {
+            doc.body.style.fontSize = 12 * dpr + 'px';
+        } else {
+            doc.addEventListener('DOMContentLoaded', function (e) {
+                doc.body.style.fontSize = 12 * dpr + 'px';
+            }, false);
+        }
+
+
+        refreshRem();
+
+        flexible.dpr = win.dpr = dpr;
+        flexible.refreshRem = refreshRem;
+        flexible.rem2px = function (d) {
+            var val = parseFloat(d) * this.rem;
+            if (typeof d === 'string' && d.match(/rem$/)) {
+                val += 'px';
+            }
+            return val;
+        }
+        flexible.px2rem = function (d) {
+            var val = parseFloat(d) / this.rem;
+            if (typeof d === 'string' && d.match(/px$/)) {
+                val += 'rem';
+            }
+            return val;
+        }
+
+    })(window, window['lib'] || (window['lib'] = {}));
+
+
+    /**
+     * ios阻止缩放 
+    */
+    window.onload = function () {
+        document.addEventListener('gesturestart', function (e) {
+            e.preventDefault();
+        });
+        document.addEventListener('dblclick', function (e) {
+            e.preventDefault();
+        });
+        document.addEventListener('touchstart', function (event) {
+            if (event.touches.length > 1) {
+                event.preventDefault();
+            }
+        });
+        var lastTouchEnd = 0;
+        document.addEventListener('touchend', function (event) {
+            var now = (new Date()).getTime();
+            if (now - lastTouchEnd <= 300) {
+                event.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
+    };
+    document.documentElement.addEventListener('touchstart', function (event) {
+        if (event.touches.length > 1) {
+            event.preventDefault();
+        }
+    }, false);
+    var lastTouchEnd = 0;
+    document.documentElement.addEventListener('touchend', function (event) {
+        var now = Date.now();
+        if (now - lastTouchEnd <= 300) {
+            event.preventDefault();
+        }
+        lastTouchEnd = now;
+    }, false);
+
+</script>
+<script>
+    var detailUtil = {
+            'cache': {},
+            //初始化
+            'init': function () {
+                var path = location.href;
+                if (path.indexOf('?') >= 0) {
+                    var params = path.substring(path.indexOf('?')+1, path.length).split('&'),
+                        id = '',
+                        his_id = '',
+                        status = '';
+                    for (var i = 0; i < params.length; i++) {
+                        if (params[i].indexOf('id')!=-1) {
+                            id = params[i].split('=')[1];
+                        }else if (params[i].indexOf("hisId")!=-1) {
+                            his_id = params[i].split("=")[1];
+                        }else if (params[i].indexOf("status")!=-1) {
+                            status = params[i].split("=")[1];
+                        }
+                    }
+                    if(status){
+                        detailUtil.status=status;
+                    }
+                    if(status=="10"||status=="11"){
+                        if (id) {
+                            detailUtil.id=id;
+                            detailUtil.getGoodInfo(id,true);
+                        }
+                    }else{
+                        if(his_id){
+                            detailUtil.his_id=his_id;
+                            detailUtil.getGoodInfo(his_id,false);
+                        }
+                    }
+                }
+            },
+            'getGoodInfo': function (id,boolean) {
+                var url= base,
+                    data={};
+                if(boolean){
+                    url+='mall/getGoods';
+                    data.id=id;
+                }else{
+                    url+='mall/getGoodsByHisId';
+                    data.his_id=id;
+                }     
+                $.get(url, data, function (res) {
+                    if (res.message) {
+                        $('#detail').html('');
+                        $.Huimodalalert(res.message, 2000);
+                    } else if (!res.message) {
+                        detailUtil.cache.details = res.data;
+                        $.get(base+"case/getHospitalInfoById.do",{id:res.data.hospital_id},function(hosRes){
+                            if(hosRes.message){
+                                $('#detail').html('');
+                                $.Huimodalalert(hosRes.message, 2000);
+                            }else if(!hosRes.message){
+                                res.data.hospitalInfo=hosRes.data;
+                                detailUtil.renderGoodDetails(res);
+                            }else{
+                                $('#detail').html('');
+                            }
+                        })
+                        
+                    } else {
+                        $('#detail').html('');
+                    }
+                })
+            },
+            // 渲染详情
+            'renderGoodDetails': function (data) {
+                data.data.imgPath=imgPath;
+                var html = template("goodInfo", data.data);
+                $('#detail').html(html);
+                $('#detail .detail-page').length &&   $('#detail .detail-page').append($('#detail .detail-page').attr('data-html'))
+                var mySwiper = new Swiper ('.swiper-container', {
+                    loop: true,
+                })
+            }
+        }
+    $(function(){
+        detailUtil.init();
+    })
+</script>
+<script id="goodInfo" type="text/html">
+    <div class="container">
+            <ul class="header">
+              <li>宝贝</li>
+              <li>详情</li>
+              <li>购买须知</li>
+              <li>评论</li>
+            </ul>
+            <div class="swiper-container swipe">
+                <div class="swiper-wrapper">
+                    {{each goods_urls item i}}
+                    <div class="swiper-slide"><img src="../../images/default.png" alt="" class="preview-img" style="background: url('{{imgPath+item}}') no-repeat center;background-size:cover;"></div>
+                    {{/each}}
+                </div>
+            </div>
+            <div class="info">
+              <div class="priceInfo">
+                <span class="scalePrice">￥ {{qzd_price}}</span>
+                <span class="scale">{{discount}}折</span>
+              </div>
+              <div class="bookInfo">
+                <span class="shoppe">原价</span>
+                <span class="price">￥ {{hos_price}}</span>
+                <span class="book">预约数：<em>{{appoint_count||999}}</em></span>
+              </div>
+              <div class="otherInfo">
+                <span class="location"><i class="location-icon"></i>{{hospitalInfo.cityName}}</span>
+                <span class="return"><i class="return-icon"></i>闪电退</span>
+                <span class="diary"><i class="diary-icon"></i>写日记</span>
+                <span class="returnCash">仟姿返现100元</span>
+              </div>
+              <p class="title">
+                {{name}}
+              </p>
+            </div>
+            <ul class="discounts">
+              <li class="discount">
+                <i class="discount-icon">分</i>
+                <span class="discount-text"><em>￥ XXX</em>×XX期，支持仟姿分期，花呗</span>
+              </li>
+              <li class="discount">
+                <i class="discount-icon red">券</i>
+                <span class="discount-text">满XXX减XX</span>
+              </li>
+            </ul>
+            <div class="hospital">
+              <div class="hospitalInfo">
+                <img src="{{imgPath+hospitalInfo.logo}}" alt="" class="hospital-icon">
+                <div class="hospital-text">
+                  <h4>{{hospital_name}}&nbsp;<i></i></h4>
+                  <p>资质： {{hospitalInfo.qualifications}}</p>
+                  <p>地址： {{hospitalInfo.cityName}}</p>
+                </div>
+              </div>
+              <div class="buttons">
+                <a class="tel" :href="'tel:0755-84379544'">
+                  <i></i>电话咨询</a>
+                <a class="online">
+                  <i></i>
+                  在线咨询
+                </a>
+              </div>
+            </div>
+            <div class="comment">
+              <div class="commentHead">
+                <span>闺蜜们这样评价</span>
+                <b v-if="goodDetail.scoreNum">5.0</b>
+                <span class="all">
+                  <input type="radio" name="scoreNum" value="0" v-model="goodDetail.grade" disabled/><span>★</span>
+                  <input type="radio" name="scoreNum" value="1" v-model="goodDetail.grade" disabled/><span>★</span>
+                  <input type="radio" name="scoreNum" value="2" v-model="goodDetail.grade" disabled/><span>★</span>
+                  <input type="radio" name="scoreNum" value="3" v-model="goodDetail.grade" disabled/><span>★</span>
+                  <input type="radio" name="scoreNum" value="4" v-model="goodDetail.grade" disabled/><span>★</span>
+                  <input type="radio" name="scoreNum" value="5" v-model="goodDetail.grade" disabled/><span>★</span>
+                </span>
+              </div>
+              <div class="tips">
+                <!-- <ul>
+                  <li>厉害了</li>
+                  <li>医生技术好</li>
+                  <li>效果棒棒哒&nbsp;<span>18</span></li>
+                  <li>产品真实可靠&nbsp;<span>18</span></li>
+                  <li>医院干净整洁&nbsp;<span>18</span></li>
+                  <li>服务很贴心&nbsp;<span>19</span></li>
+                </ul> -->
+              </div>
+            </div>
+            <scroller v-if="!no_data" v-on:load="loadMore" ref="scroller" :auto-fill="false">
+              <ul class="diaryList">
+                <li class="diaryInfo" v-for="(item,index) in goodCaseDetailInfo">
+                  <div class="diary-img">
+                    <img src="../../images/default.png" alt="" class="preview-img" style="background: url('../../images/tp1_@2.png') no-repeat center;background-size:cover;">
+                    <img src="../../images/default.png" alt="" class="preview-img" style="background: url('../../images/tp2_tb_@2.png') no-repeat center;background-size:cover;">
+                  </div>
+                  <div class="authorInfo">
+                    <img src="../../images/touxiang_tp_@2.png" alt="">
+                    <div class="author">
+                      <h4 class="name" :data-id="item.user_id">xxx<span class="time">xx月xx日</span></h4>
+                      <div class="authorComment">
+                        <span>评价：</span>
+                        <b>5.0</b>
+                        <span class="all">
+                          <input type="radio" :name="'grade'+index" value="0" v-model="goodCaseDetailInfo[index].grade" disabled/><span>★</span>
+                          <input type="radio" :name="'grade'+index" value="1" v-model="goodCaseDetailInfo[index].grade" disabled/><span>★</span>
+                          <input type="radio" :name="'grade'+index" value="2" v-model="goodCaseDetailInfo[index].grade" disabled/><span>★</span>
+                          <input type="radio" :name="'grade'+index" value="3" v-model="goodCaseDetailInfo[index].grade" disabled/><span>★</span>
+                          <input type="radio" :name="'grade'+index" value="4" v-model="goodCaseDetailInfo[index].grade" disabled/><span>★</span>
+                          <input type="radio" :name="'grade'+index" value="5" v-model="goodCaseDetailInfo[index].grade" disabled/><span>★</span>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <p class="content">xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</p>
+                </li>
+              </ul>
+            </scroller>
+            <div id="detailImg" v-if="goodDetail.goods_detail_url">
+              <h4>商品详情</h4>
+                {{if goods_detail_url}}
+              <img src="{{imgPath+goods_detail_url}}" alt="">
+                {{/if}}
+                {{if detail_page}}
+                <div data-html= "{{detail_page}}" class="detail-page">
+                </div>
+                {{/if}}
+            </div>
+            <div id="notice">
+                <h4>购买须知</h4>
+                <div class="main_pay_box">
+                        <ul style="padding-top: 0;">
+                            <h3>【消费流程】</h3>
+                            <li>1. 下订单并支付预约金</li>
+                            <li>2. 咨询客服，客服会帮您完成咨询预约面诊</li>
+                            <li>3. 手术前将支付凭证给医生进行验证，并支付余下手术费用</li>
+                        </ul>
+                        <ul>
+                            <h3>【如何预约】</h3>
+                            <li>点击页面上方的咨询或电话，和仟姿客服人员预约面诊时间。</li>
+                        </ul>
+                        <ul>
+                            <h3>【如何退款】</h3>
+                            <li>点击APP右下角“我的”，在我的-我的订单-点击“售后/退款”，即可拨打客服电话，仟姿客服人员将尽快协助您完成退款。</li>
+                        </ul>
+                
+                        <ul>
+                            <h3>【消费须知】</h3>
+                            <li>1. 下单后，在仟姿APP的任何一个咨询入口，都可联系到仟姿客服，客服人员将帮您完成预约服务。</li>
+                            <li>2. 请在确定手术后，再将支付凭证交给医生，支付凭证交给医生后，视为已经手术您将无法完成退款。</li>
+                            <li>3. 该商品支付成功后，支付凭证至支付之日起三个月内有效，请尽快到医院使用。</li>
+                            <li>4. 下单后，您到医院还需缴纳（仟姿价-预约金）元，请您下单时备注购买的具体项目内容。</li>
+                            <li>5. 若您还有其他疑问，请在工作日的<span style="color:#282828">10：00-18：00</span>间，拨打仟姿客服电话：<span style="color:#282828">0755-84379544</span></li>
+                        </ul>
+                    </div>
+                
+            </div>
+          </div>
+          <div class="footer">
+            <div class="payInfo">
+              <p>预约金：<span>￥{{appo_price}}</span></p>
+              <p>到院再付：￥{{left_price}}</p>
+            </div>
+            <div class="consult">
+              <i></i>
+              <span>咨询</span>
+            </div>
+            <div class="toShoppingCart">加入购物车</div>
+            <div class="payNow">立即购买</div>
+          </div>
+</script>
+</html>

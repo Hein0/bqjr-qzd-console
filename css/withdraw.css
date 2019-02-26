@@ -1,0 +1,23 @@
+.table{margin-bottom: 30px;}
+.zhc-table {
+    table-layout: fixed;
+    margin-top: 20px;
+}
+
+/*详情*/
+.marginLeft10{margin-left: 10px;}
+.inlineBlock{display: inline-block;width: 300px;}
+.dtWithdrawNo{margin-left: 5em;margin-right: 15em;}
+.applyTime{margin-left: 4em;margin-right: 15em;}
+.currStatus{margin-left: 6em;}
+.updataTime{margin-left: 4em;}
+.contractNo{margin: 0 15em 0 6em;}
+.contractStatus{margin: 0 15em 0 5em;}
+.dtWdType,.wdAmount{margin: 0 16em 0 5em;}
+.couponId{margin-left: 56em;}
+.periods{margin-left: 7em;}
+.timePay{margin-left: 6em;}
+.interest{margin-left: 6em;}
+.charge{margin-left: 5em;}
+.dtUserName{margin-left: 7em;}
+.dtMobile{margin-left: 7em;}

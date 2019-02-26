@@ -1,0 +1,177 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <title>分类</title>
+
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui/css/H-ui.min.css?rev=@@hash"/>
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/H-ui.admin.css?rev=@@hash"/>
+    <link rel="stylesheet" type="text/css" href="../../lib/Hui-iconfont/1.0.8/iconfont.css?rev=@@hash"/>
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/skin/default/skin.css?rev=@@hash" id="skin"/>
+    <link rel="stylesheet" type="text/css" href="../../lib/laypage/1.2/skin/laypage.css?rev=@@hash">
+    <link rel="stylesheet" type="text/css" href="../../lib/laypage/1.2/skin/laypage.css?rev=@@hash">
+    <link rel="stylesheet" type="text/css" href="../../css/reset.css?rev=@@hash"/>
+    <link rel="stylesheet" type="text/css" href="../../css/goods.css?rev=@@hash"/>
+    <link rel="stylesheet" type="text/css" href="../../css/category.css?rev=@@hash">
+</head>
+
+<body>
+
+<nav class="breadcrumb">
+    <i class="Hui-iconfont">&#xe67f;</i>
+    首页 <span class="c-gray en">&gt;</span>
+    商品管理 <span class="c-gray en">&gt;</span>
+    商品分类
+    <a class="btn btn-success r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新">
+    	<i class="Hui-iconfont">&#xe68f;</i>刷新
+    </a>
+</nav>
+
+<div class="page-container">
+    <button type="button" class="btn btn-primary mr-10 mb-15" id="screeBtn" onclick="category.addFirst()"> 添加</button>
+    <div class="cate">
+        <div class="cate-head">
+        	<span style="width: 80%;">分类名称</span>
+        	<span style="width: 20%;">操作</span>
+        </div>
+        <div class="cate-con">
+
+            <!--<div class="opt">
+                <div class="opt-f">
+                    <div class="opt-fcon">
+                        <div class="opt-fn">
+                            <span onclick="category.toggle(this)"></span><input type="text" />
+                        </div>
+                        <div class="opt-time text-c">2017-5-19</div>
+                        <div class="opt-operate text-c"><a href="javascript:" class="tab-A" onclick="category.del(this)">删除</a><a href="javascript:" class="tab-A edit" onclick="category.save(this)">保存</a></div>
+                    </div>
+                    <div class="opt-fsub">
+                        <a class="opt-add"><span></span><i onclick="category.addSecond(this)">添加二级分类</i></a>
+                        <div class="opt-s">
+                            <div class="opt-fcon">
+                                <div class="opt-sn">
+                                    <span onclick="category.toggle(this)"></span><samp></samp><input type="text" />
+                                </div>
+                                <div class="opt-time text-c">2017-5-19</div>
+                                <div class="opt-operate text-c"><a href="javascript:" class="tab-A" onclick="category.del(this)">删除</a><a href="javascript:" class="tab-A edit" onclick="category.save(this)">保存</a></div>
+                            </div>
+                            <div class="opt-ssub">
+                                <a class="opt-add"><span></span><i onclick="category.addThird(this)">添加三级分类</i></a>
+                                <div class="opt-t">
+                                    <div class="opt-fcon">
+                                        <div class="opt-tn">
+                                            <span onclick="category.toggle(this)"></span><samp></samp><input type="text" />
+                                        </div>
+                                        <div class="opt-time text-c">2017-5-19</div>
+                                        <div class="opt-operate text-c"><a href="javascript:" class="tab-A" onclick="category.del(this)">删除</a><a href="javascript:" class="tab-A edit" onclick="category.save(this)">保存</a></div>
+                                    </div>
+                                    <div class="opt-tsub">
+                                        <a class="opt-add"><span></span><i onclick="category.addFour(this)">添加四级分类</i></a>
+                                        <div class="opt-ff">
+                                            <div class="opt-fcon">
+                                                <div class="opt-tn">
+                                                    <samp></samp><input type="text" />
+                                                </div>
+                                                <div class="opt-time text-c">2017-5-19</div>
+                                                <div class="opt-operate text-c"><a href="javascript:" class="tab-A" onclick="category.del(this)">删除</a><a href="javascript:" class="tab-A edit" onclick="category.save(this)">保存</a></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>-->
+
+        </div>
+    </div>
+</div>
+
+<!--添加图片的内容-->
+<div class="Hui-article" id="Hui-article" style="display: none;">
+    <article class="cl pd-20">
+        <div class="spu-cont">
+            <form id="form-step-1" class="form form-horizontal form-step active" action="#" method="post">
+				<input type="hidden" id="userId" />
+                <div class="row cl role-row active">
+                    <div class="upload-pic-wrap default-pic-wrap">
+                        <div class="upload-pic-content">
+                            <div class="pic-wrap">
+                            </div>
+                            <div class="loadpic">
+                                <input name="file" class="loadpic-input" accept="image/jpg,image/jpeg,image/png" type="file" id="before_main">
+                                <label class="loadpic-label">
+                                    <i class="Hui-iconfont">&#xe600;</i>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="spec-items">
+                    </div>
+                    <div class="sku-pic-wrap"></div>
+                </div>
+
+                <div class="row cl">
+                    <div class="col-xs-10 col-sm-10 col-xs-offset-2 col-sm-offset-2">
+                        <input class="btn btn-primary submitBtn" value="提交" type="button">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </article>
+</div>
+
+<!--关联部位弹窗 -->
+<div class="Hui-article" id="relevance-article" style="display: none;">
+    <article class="cl pd-20">
+        <div class="spu-cont spu-conts">
+            <form id="form-step-1" class="form form-horizontal form-step active" action="#" method="post">
+				<input type="hidden" id="commodityId" />
+                <div class=" cl role-row active content-all">
+                    <div class=" default-pic-wrap">
+                        <div class="upload-pic-contents">
+                            <div class="pic-wrap wrap-contents">
+                            	<ul class="wrap-ul" id="wrap-ul">
+                            		
+                            	</ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class=" cl">
+                    <div class="col-xs-10 col-sm-10 col-xs-offset-2 col-sm-offset-2">
+                        <input class="btn btn-primary commodityBtn" value="提交" type="button">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </article>
+</div>
+
+
+<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="../../lib/jquery/1.9.1/jquery.min.js?rev=@@hash"></script>
+<script type="text/javascript" src="../../lib/layer/2.4/layer.js?rev=@@hash"></script>
+<script type="text/javascript" src="../../static/h-ui/js/H-ui.min.js?rev=@@hash"></script>
+<script type="text/javascript" src="../../static/h-ui.admin/js/H-ui.admin.js?rev=@@hash"></script>
+<script type="text/javascript" src="../../js/base/public.js?rev=@@hash"></script>
+<script type="text/javascript" src="../../js/common/common.js?rev=@@hash"></script>
+<!--/_footer 作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="../../lib/My97DatePicker/4.8/WdatePicker.js?rev=@@hash"></script>
+<script type="text/javascript" src="../../lib/laypage/1.2/laypage.js?rev=@@hash"></script>
+<script src="../../js/common/jquery.tmpl.min.js?rev=@@hash"></script>
+<script type="text/javascript" src="../../js/page/category.js?rev=@@hash"></script>
+<script type="text/javascript" src="../../lib/lrz.bundle.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>提现订单详情</title>
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="../../lib/Hui-iconfont/1.0.8/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/skin/default/skin.css" id="skin" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="../../lib/laypage/1.2/skin/laypage.css">
+    <link rel="stylesheet" type="text/css" href="../../css/withdraw.css?rev=@@hash" />
+    <style>
+        #dissOrder {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="breadcrumb">
+        <i class="Hui-iconfont">&#xe67f;</i> 订单管理 <span class="c-gray en">&gt;</span> 提现订单 <span class="c-gray en">&gt;</span> 提现详情 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);"
+            title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a>
+    </nav>
+    <div class="panel panel-default">
+        <div class="panel-header cl">提现详情 <button class="btn btn-warning radius f-r" id="dissOrder">合同撤销</button></div>
+        <div class="panel-body">
+            <p><span>提现订单号</span><span class="dtWithdrawNo inlineBlock"></span><span>当前状态</span><span class="currStatus"></span></p>
+            <p><span>提现申请时间</span><span class="applyTime inlineBlock"></span><span>状态更新时间</span><span class="updataTime"></span></p>
+        </div>
+        <div class="panel-header marginLeft10">合同信息</div>
+        <div class="panel-body marginLeft10">
+            <p><span>合同号</span><span class="inlineBlock contractNo"></span><span>分期数</span><span class="periods"></span></p>
+            <p><span>合同状态</span><span class="inlineBlock contractStatus"></span><span>每期还款</span><span class="timePay"></span><br />
+                <span class="couponId"></span>
+            </p>
+            <p><span>提现类型</span><span class="inlineBlock dtWdType"></span><span>含利息</span><span class="interest"></span></p>
+            <p><span>提现金额</span><span class="inlineBlock wdAmount"></span><span>含手续费</span><span class="charge"></span></p>
+        </div>
+        <div class="panel-header marginLeft10">用户信息</div>
+        <div class="panel-body marginLeft10">
+            <p>姓名<span class="dtUserName"></span></p>
+            <p>手机<span class="dtMobile"></span></p>
+        </div>
+    </div>
+    <script type="text/javascript" src="../../lib/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="../../lib/layer/2.4/layer.js"></script>
+    <script type="text/javascript" src="../../static/h-ui/js/H-ui.min.js"></script>
+    <script type="text/javascript" src="../../static/h-ui.admin/js/H-ui.admin.js"></script>
+    <script type="text/javascript" src="../../js/base/public.js?rev=@@hash?rev=@@hash"></script>
+    <script type="text/javascript">
+        $(function() {
+            var orderId = util.getQueryString("orderId");
+            $.post(base + 'order/getOrderDetail.do', {
+                "orderId": orderId
+            }, function(res) {
+                $('.dtWithdrawNo').text(res.data.orderId);
+                $('.currStatus').text(res.data.statusStr);
+                $('.applyTime').text(res.data.createTime);
+                $('.updataTime').text(res.data.updateTime);
+                $('.contractNo').text(res.data.contractId);
+                $('.periods').text(res.data.loanDay);
+                $('.contractStatus').text(res.data.contractStatus);
+                $('.wdAmount').text(res.data.money);
+                $('.timePay').text(res.data.monthPay);
+                $('.couponId').text('(' + res.data.orderCouponList + ')');
+                $('.dtWdType').text(res.data.loanCodeStr);
+                $('.interest').text(res.data.interest);
+                $('.charge').text(res.data.srvFee);
+                $('.dtUserName').text(res.data.realName);
+                $('.dtMobile').text(res.data.mobile);
+
+                if (res.data.status == 30 || res.data.status == 40) {
+                    (res.data.loanCode == '5002') && $('#dissOrder').show()
+                }
+			})
+
+			$('#dissOrder').click(function() {
+				layer.confirm('撤销合同需谨慎，确定撤销吗？', {icon: 0, title:'提醒'}, function (index) {
+                    var data = JSON.parse(localStorage.getItem('storData'))
+
+                    $.post(base + 'order/cancelOrder.do', {
+                        'operationUserId': data.accountId,
+                        'orderId': orderId
+                    }, function(res) {
+
+                        layer.close(index)
+
+                        if (res.status == '0') {
+
+                            $.Huimodalalert(res.message, 1500)
+
+                            // 调用成功后刷新页面
+                            setTimeout(function() {
+                                location.href = location.href
+                            }, 1500)
+                        } else {
+                            $.Huimodalalert(res.message, 1500)
+                        }
+
+                    })
+
+				})
+			})
+        })
+    </script>
+</body>
+
+</html>

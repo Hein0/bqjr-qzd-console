@@ -1,0 +1,108 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <title>钱包详情</title>
+
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui/css/H-ui.min.css?rev=@@hash"/>
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/H-ui.admin.css?rev=@@hash"/>
+    <link rel="stylesheet" type="text/css" href="../../lib/Hui-iconfont/1.0.8/iconfont.css?rev=@@hash"/>
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/skin/default/skin.css?rev=@@hash" id="skin"/>
+    <link rel="stylesheet" type="text/css" href="../../lib/laypage/1.2/skin/laypage.css?rev=@@hash">
+    <link rel="stylesheet" type="text/css" href="../../lib/laypage/1.2/skin/laypage.css">
+    <link rel="stylesheet" type="text/css" href="../../css/reset.css?rev=@@hash"/>
+</head>
+
+<body>
+
+<nav class="breadcrumb">
+    <i class="Hui-iconfont">&#xe67f;</i>
+    钱包管理 <span class="c-gray en">&gt;</span>
+    钱包列表 <span class="c-gray en">&gt;</span>
+    钱包详情
+</nav>
+
+<div class="page-container">
+    <div class="panel panel-default">
+        <form class="search-form">
+            <div class="panel-body pb-0 cl search">
+                <div class="f-l mr-15 mb-15">
+                    <span class="text-c f-l">订单号</span>
+                    <input type="text" class="input-text" style="width: 220px;" name="orderId" />
+                </div>
+                <div class="f-l mr-15 mb-15">
+                    <span class="text-c f-l">类型</span>
+                    <select name="checkType" class="checkType">
+                        <option value="">全部</option>
+                    </select>
+                </div>
+                <div class="f-l mr-15 mb-15">
+                    <span class="text-c f-l">变更时间</span>
+                    <input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}' })" id="datemin" class="input-text Wdate f-l" readonly name="startTime" />
+                    <span class="f-l">至</span>
+                    <input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'datemin\')}',maxDate:'%y-%M-%d' })" id="datemax" class="input-text Wdate f-l" readonly name="endTime" />
+                </div>
+                <div class="text-l m-t10 f-r">
+                    <button type="button" class="btn btn-primary mr-10 mb-15" id="screeBtn" onclick="wallet.detSearch()"><i class="Hui-iconfont">&#xe665;</i> 筛选</button>
+                    <button type="button" class="btn btn-primary mb-15" id="resetBtn" onclick="reset()"><i class="Hui-iconfont">&#xe66b;</i> 重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="mt-20 table-con">
+        <table class="table table-border table-bordered table-hover table-bg table-sort" style="min-width: 100%;">
+            <thead>
+            <tr class="text-c">
+                <th width="16%">订单号</th>
+                <th width="16%">流水号</th>
+                <th width="16%">类型</th>
+                <th width="20%">收（支）金额</th>
+                <th width="16%">事由</th>
+                <th width="16%">时间</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
+    <!--分页-->
+    <div class="pagination mt-20" id="pagination"></div>
+</div>
+
+<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="../../lib/jquery/1.9.1/jquery.min.js?rev=@@hash"></script>
+<script type="text/javascript" src="../../lib/layer/2.4/layer.js?rev=@@hash"></script>
+<script type="text/javascript" src="../../static/h-ui/js/H-ui.min.js?rev=@@hash"></script>
+<script type="text/javascript" src="../../static/h-ui.admin/js/H-ui.admin.js?rev=@@hash"></script>
+<script type="text/javascript" src="../../lib/laypage/1.2/laypage.js?rev=@@hash"></script>
+<script type="text/javascript" src="../../js/base/public.js?rev=@@hash"></script>
+<!--/_footer 作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="../../lib/My97DatePicker/4.8/WdatePicker.js?rev=@@hash"></script>
+<script type="text/javascript" src="../../lib/laypage/1.2/laypage.js?rev=@@hash"></script>
+<script src="../../js/common/jquery.tmpl.min.js?rev=@@hash"></script>
+<script type="text/javascript" src="../../js/page/wallet.js?rev=@@hash"></script>
+<script type="text/html" id="walletDetList">
+    {{each(i,item) data}}
+    <tr class="text-c">
+        <td>${item.orderId}</td>
+        <td>${item.requestNo}</td>
+        <td>${item.updateType}</td>
+        <td>-${item.accountMoney}</td>
+        <td>${item.remark}</td>
+        <td>${item.updateTime}</td>
+    </tr>
+    {{/each}}
+</script>
+</body>
+
+</html>

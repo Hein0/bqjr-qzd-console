@@ -1,0 +1,243 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <title>热搜词管理</title>
+
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui/css/H-ui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/H-ui.admin.css"/>
+    <link rel="stylesheet" type="text/css" href="../../lib/Hui-iconfont/1.0.8/iconfont.css"/>
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/skin/default/skin.css" id="skin"/>
+    <link rel="stylesheet" type="text/css" href="../../lib/laypage/1.2/skin/laypage.css">
+    <link rel="stylesheet" type="text/css" href="../../lib/laypage/1.2/skin/laypage.css">
+    <link rel="stylesheet" type="text/css" href="../../css/reset.css?rev=@@hash"/>
+    <link rel="stylesheet" type="text/css" href="../../css/hotWord.css?rev=@@hash"/>
+</head>
+
+<body>
+
+<nav class="breadcrumb">
+    <i class="Hui-iconfont">&#xe67f;</i>
+    首页 <span class="c-gray en">&gt;</span>
+    商品管理 <span class="c-gray en">&gt;</span>
+    热搜词管理
+    <!--<a class="btn btn-success r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a>-->
+    <!--<input class="btn btn-primary f-r mr-10"  onclick="wallet.openExport()" style="margin-top: 3px;" type="button" value="导出">-->
+</nav>
+
+<div class="page-container">
+    <div class="panel panel-default">
+        <div class="panel-body pb-0 cl search">
+        	<h2 class="title">创建热搜词</h2>
+            <div class="f-l mr-15 mb-15">
+            	<input id="hot_word_inp" style="width: 200px;" type="text" value="" placeholder="请输入热搜词" class="input-text f-l" name="name" />
+                <span id="save" class="text-c f-l">保存</span>
+            </div>
+            
+        </div>
+    </div>
+	
+	<div class="table_panel">
+		<div class="table_head">
+			<p class="hot_word f-l">
+				<span>热搜词</span>
+			</p>
+			<p class="actions f-l">
+				<span>操作</span>
+			</p>
+		</div>
+		<ul class="table_list">
+			<!--<li searchId="23123">
+				<p class="hot_word_box f-l"><input searchId="123" class="hot_word_change" type="text" name="" id="" value="Iphone7大销售Iphone7大销售" readonly="readonly"/></p>
+				<p class="actions_box f-l">
+					<a class="addGoods" href="javascript:;">添加商品</a>
+					<a btnType="addLink" class="addLink" href="javascript:;" onClick="hotWord.modaldemo()">添加链接</a>
+					<a class="checkGoods" href="javascript:;">查看商品</a>
+					<a btnType="isUse" class="isUse" href="javascript:;">停用</a>
+					<a btnType="delect" class="delect" href="javascript:;">删除</a>
+				</p>
+			</li>-->
+			
+		</ul>
+	</div>
+
+    <!--分页-->
+    <div class="pagination mt-20" id="pagination"></div>
+</div>
+
+<div class="mark_pop"><!--弹窗蒙层-->
+	</div><!--弹窗蒙层end-->
+<!--添加链接弹窗-->
+<div id="modal-demo" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content radius">
+			<div class="modal-header">
+				<h3 class="modal-title">选择添加链接</h3>
+				<a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>
+			</div>
+			<div class="modal-body">
+				<p class="add_link"></p>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-primary pop_sure">确定</button>
+				<button class="btn add_link_btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!--添加商品弹窗-->
+<div class="pop_goods" id="pop_goods">
+	<div class="pop_goods_head">
+		<p>选择需要添加的商品<a class="close_btn" href="javasctipt:;">X</a></p>
+	</div>
+	
+	<div class="condition pt-20 mb-20">
+			<p class="goods_title">参与商品：</p>
+	        <div class="f-l ml-20">
+	        	<span class="span_box">商品查询：</span>
+	       		<input type="text" name="" id="keyword" value="" placeholder="输入商品名称/价格"/>
+	        </div>
+	        
+	        <div class="f-l ml-20">
+	        	<span>状态</span>
+	        	<select id="popstatus" name="">
+	        		<option value="">全部</option>
+	        		<option value="1">已上架</option>
+	        		<option value="0">已下架</option>
+	        	</select>
+	        </div>
+	        <button class="ml-20 pop_check">查询</button>
+		</div>
+	
+	<div class="main">
+		
+		<div class="left_side f-l">
+			<div id="menuTree" class="menuTree"></div>
+		</div>
+		<div class="right_body f-l">
+			
+			<div class="list_head">
+				<input type="checkbox" name="all" id="all" value="" /><label for="all">全部</label>
+				<span style="width: 25%;" class="list_head_name">商品名称</span>
+				|
+				<span style="width: 14%;" class="list_head_price">价格</span>
+				|
+				<span style="width: 14%;" class="list_head_kind">所属分类</span>
+				|
+				<span style="width: 14%;" class="list_head_status">状态</span>
+				|
+				<span style="width: 5%;" class="list_head_role">角色</span>
+				|
+				<span style="width: 14%;" class="list_head_time">创建时间</span>
+			</div>
+			<ul id="link_goods" class="link_goods">
+				<!--<li skuId="2222">
+					<input type="radio" name="goods" id="aaa" value="" />
+					<img src="../../images/goods.png"/>
+					<span class="link_name">超好看的裤子只要999不要9999快来买啊</span>
+					<span class="link_price">￥2448</span>
+					<span class="link_kind">裤装</span>
+					<span class="link_status">已下架</span>
+					<span class="link_role">京东</span>
+					<span class="link_time">2016-11-11</span>
+				</li>-->
+			</ul>
+		
+		<!--分页-->
+	    	<div class="pagination mt-20" id="pop_pagination"></div>
+	    
+		    <ul class="btnLi">
+		    	<li class="pop_cancel">取消</li>
+		    	<li class="pop_goods_submit">确认</li>
+		    </ul>
+		</div>
+	</div>
+</div>
+
+<!--查看商品弹窗-->
+<div class="check_goods">
+	<div class="pop_goods_head">
+		<p>查看已关联商品<a class="close_btn" href="javasctipt:;">X</a></p>
+		
+	</div>
+	<div class="right_body f-l">
+			<div class="check_list_head">
+				<span style="width: 25%;" class="list_head_name">商品名称</span>
+				|
+				<span style="width: 15%;" class="list_head_price">价格</span>
+				|
+				<span style="width: 15%;" class="list_head_kind">所属分类</span>
+				|
+				<span style="width: 15%;" class="list_head_status">状态</span>
+				|
+				<span style="width: 5%;" class="list_head_role">角色</span>
+				|
+				<span style="width: 15%;" class="list_head_time">创建时间</span>
+			</div>
+			<ul id="check_link_goods" class="check_link_goods">
+				<!--<li skuId="2222">
+					<span class="dis_none"></span>
+					<img src="../../images/goods.png"/>
+					<span class="check_link_name">超好看的裤子只要999不要9999快来买啊</span>
+					<span class="check_link_price">￥2448</span>
+					<span class="check_link_kind">裤装</span>
+					<span class="check_link_status">已下架</span>
+					<span class="check_link_role">京东</span>
+					<span class="check_link_time">2016-11-11</span>
+				</li>-->
+			</ul>
+			<!--分页-->
+	    	<div class="pagination mt-20" id="pagination"></div>
+		    <button class="check_sure">确认</button>
+		</div>
+</div>
+
+<!--_footer 作为公共模版分离出去-->
+	<script type="text/javascript" src="../../lib/jquery/1.9.1/jquery.min.js?rev=@@hash"></script>
+	<script type="text/javascript" src="../../lib/layer/2.4/layer.js?rev=@@hash"></script>
+	<script type="text/javascript" src="../../static/h-ui/js/H-ui.min.js?rev=@@hash"></script>
+	<script type="text/javascript" src="../../static/h-ui.admin/js/H-ui.admin.js?rev=@@hash"></script>
+	<script type="text/javascript" src="../../js/base/public.js?rev=@@hash"></script>
+<!--/_footer 作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="../../lib/laypage/1.2/laypage.js?rev=@@hash"></script>
+<script src="../../js/common/jquery.tmpl.min.js?rev=@@hash"></script>
+<script type="text/javascript" src="../../js/page/hotWord.js?rev=@@hash"></script>
+<script type="text/html" id="hotWordList">
+    <li searchId="${searchId}" skuIds="${skuIds}">
+		<p class="hot_word_box f-l"><input searchId="${searchId}" class="hot_word_change" type="text" name="" id="" value="${searchName}" readonly="readonly"/></p>
+		<p class="actions_box f-l">
+			{{if linkUrl}}
+				<a skuIds="{{= skuIds}}" class="addGoods" isGray="true" style="color: lightgray;" href="javascript:;">添加商品</a>
+			{{else}}
+				<a skuIds="{{= skuIds}}" class="addGoods" href="javascript:;">添加商品</a>
+			{{/if}}
+			
+			{{if skuIds}}
+				<a style="color: lightgray;" isGray="true" btnType="addLink" class="addLink" href="javascript:;" disabled>添加链接</a>
+			{{else}}
+				<a btnType="addLink" linkUrl="{{= linkUrl}}" class="addLink" href="javascript:;" onClick="hotWord.modaldemo(this)">添加链接</a>
+			{{/if}}
+			
+			<a class="checkGoods" href="javascript:;">查看商品</a>
+			{{if status == 1}}
+			<a btnType="isUse" class="isUse" href="javascript:;">启用</a>
+			{{else}}
+			<a btnType="isUse" class="isUse" href="javascript:;">停用</a>
+			{{/if}}
+			<a btnType="delect" class="delect" href="javascript:;">删除</a>
+		</p>
+	</li>
+</script>
+</body>
+
+</html>

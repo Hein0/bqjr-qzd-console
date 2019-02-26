@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+	    <meta http-equiv="Cache-Control" content="no-siteapp" />
+	    <title>电销转化统计列表</title>
+
+	    <link rel="stylesheet" type="text/css" href="../../static/h-ui/css/H-ui.min.css" />
+	    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/H-ui.admin.css" />
+	    <link rel="stylesheet" type="text/css" href="../../lib/Hui-iconfont/1.0.8/iconfont.css" />
+	    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/skin/default/skin.css" id="skin" />
+	    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/style.css" />
+	    <link rel="stylesheet" type="text/css" href="../../lib/laypage/1.2/skin/laypage.css">
+	    	<link rel="stylesheet" type="text/css" href="../../css/reset.css?rev=@@hash"/>
+	    <link rel="stylesheet" type="text/css" href="../../css/teleStatisticsList.css?rev=@@hash"/>
+	</head>
+	<body>
+		<nav class="breadcrumb">
+	        <i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 电销管理 <span class="c-gray en">&gt;</span> <span class="fileName">电销转化统计列表</span>
+	        <a class="btn btn-success r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a>
+	        <a id="getOut" class="btn btn-success r outs" style="line-height:1.6em;margin-top:3px;margin-right: 10px; background: #5a98de;border-color: #5a98de;" href="javascript:;">导出</a>
+    		<!--<input id="getOut" class="btn btn-primary f-r mr-10" style="margin-top: 3px;" type="button" value="导出">-->
+		</nav>
+
+	    <div class="page-container">
+	    	<!--电销管理状态选择按钮-->
+            <div class="btn-group mb-20">
+            	<span val="" class="btn allbut btn-default btn-primary">批次转化数据</span>
+                <span val="1" class="btn btn-default">日转化数据</span>
+            </div>
+	    	<!--查询条件板块-->
+	    	<div class="panel panel-default panelShow">
+	    		<form class="search-form">
+					<div class="panel-body pb-0 cl search">
+						<div class="search-batch">
+							<div class="f-l mr-15 mb-15 batch-no">
+								<span class="text-c f-l">批次</span>
+								<input type="text" value="" class="input-text batchNo" name="batchNo" />
+							</div>
+							<!--营销时间-->
+							<div class="f-l mr-15 mb-15 market-day">
+								<span class="text-c f-l">营销时间</span>
+								<input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'endDay\')||\'%y-%M-%d\'}' })" id="startDay" class="input-text Wdate f-l" readonly name="startDay" />
+								<span class="f-l">至</span>
+								<input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'startDay\')}',maxDate:'%y-%M-%d' })" id="endDay" class="input-text Wdate f-l" readonly name="endDay" />
+							</div>
+
+							<!--转化日期-->
+							<div class="f-l mr-15 mb-15 change-day hidden">
+								<span class="text-c f-l" >转化日期</span>
+								<input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'endDate\')||\'%y-%M-%d\'}' })" id="startDate" class="input-text Wdate f-l" readonly name="startDate" />
+								<span class="f-l">至</span>
+								<input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'startDate\')}',maxDate:'%y-%M-%d' })" id="endDate" class="input-text Wdate f-l" readonly name="endDate" />
+							</div>
+
+							<div class="f-l mr-15 mb-15">
+								<span class="text-c f-l">名单归属</span>
+								<input type="text" value="" class="input-text nameBelong" name="nameBelong" />
+							</div>
+							<!--批次时间-->
+							<div class="f-l mr-15 mb-15 batch-day">
+								<span class="text-c f-l" >批次时间</span>
+								<input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'endBatchTime\')||\'%y-%M-%d\'}' })" id="startBatchTime" class="input-text Wdate f-l" readonly name="startBatchTime" />
+								<span class="f-l">至</span>
+								<input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'startBatchTime\')}',maxDate:'%y-%M-%d' })" id="endBatchTime" class="input-text Wdate f-l" readonly name="endBatchTime" />
+							</div>
+						</div>
+		                
+				        <div class="text-l m-t10 f-r">
+				            <button type="button" class="btn btn-primary mr-15" id="screeBtn" name=""><i class="Hui-iconfont">&#xe665;</i> 筛选</button>
+				            <button type="button" class="btn btn-primary" id="resetBtn" name=""><i class="Hui-iconfont">&#xe66b;</i> 重置</button>
+				        </div>
+
+			        </div>
+			    </form>
+			</div>
+	        <!--<div class="cl pd-5 bg-1 bk-gray mt-20"><span class="r">共有数据：<strong>88</strong> 条</span> </div>-->
+
+	        <!--日转化数据-->
+	        <div class="mt-20 table-con tableTwo" style="display: none;">
+	            <table class="table table-bg table-border table-bordered table-hover zhc-table">
+	                <thead>
+	                    <tr class="text-c">
+	                        <th width="140px">日期</th>
+					    	<th width="70px">名单归属</th>
+					    	<th width="100px">名单初始状态</th>
+					    	<th width="150px">已完成的外呼名单总量</th>
+					    	<th width="70px">接通量</th>
+					    	<th width="70px">意向量</th>
+					    	<th width="120px">短信发送用户总量</th>
+					    	<th width="80px">预注册量</th>
+					    	<th width="80px">APP注册量</th>
+							<th width="70px">步骤1</th>
+							<th width="70px">步骤2</th>
+							<th width="70px">步骤3</th>
+							<th width="70px">步骤4</th>
+							<th width="80px">审核通过</th>
+							<th width="80px">审核不通过</th>
+							<th width="80px">审核拒绝</th>
+							<th width="90px">取现订单量</th>
+							<th width="80px">取现成功</th>
+							<th width="80px">取现失败</th>
+							<th width="90px">消费订单量</th>
+							<th width="80px">消费成功</th>
+							<th width="80px">消费失败</th>
+	                    </tr>
+	                </thead>
+	                <tbody id="tableTwoList">
+	                	
+				  	</tbody>
+	            </table>
+	        </div>
+	        
+	        <!--批次化数据-->
+	        <div class="mt-20 table-con tableAll" style="display: none;">
+	            <table class="table table-bg table-border table-bordered table-hover zhc-table">
+	                <thead>
+	                    <tr class="text-c">
+	                        <th width="100px">批次</th>
+							<th width="100px">营销到期时间</th>
+	                        <th width="70px">名单归属</th>
+					    	<th width="100px">名单初始状态</th>
+					    	<th width="150px">已完成的外呼名单总量</th>
+					    	<th width="70px">接通量</th>
+					    	<th width="70px">意向量</th>
+					    	<th width="120px">短信发送用户总量</th>
+					    	<th width="80px">预注册量</th>
+					    	<th width="80px">APP注册量</th>
+							<th width="100px">预注册转化率</th>
+							<th width="80px">APP下载率</th>
+					    	<th width="70px">步骤1</th>
+					    	<th width="70px">步骤2</th>
+					    	<th width="70px">步骤3</th>
+					    	<th width="70px">步骤4</th>
+					    	<th width="80px">审核通过</th>
+					    	<th width="80px">审核不通过</th>
+					    	<th width="80px">审核拒绝</th>
+					    	<th width="90px">取现订单量</th>
+					    	<th width="80px">取现成功</th>
+					    	<th width="80px">取现失败</th>
+					    	<th width="90px">消费订单量</th>
+					    	<th width="80px">消费成功</th>
+					    	<th width="80px">消费失败</th>
+	                    </tr>
+	                </thead>
+	                <tbody id="tableAllList">
+	                	
+				  	</tbody>
+	            </table>
+	        </div>
+	        
+	        <!--分页-->
+			<div class="pagination cl" id="pagination"></div>
+	    </div>
+
+		<!--导出-->
+		<div id="mymodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		    <div class="modal-dialog">
+		        <div class="modal-content radius">
+		            <div class="modal-header">
+		                <h3 class="modal-title">导出</h3>
+		                <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void(0);">×</a>
+		            </div>
+		            <div class="modal-body">
+		                <div class="export">
+		                    <label>文件名</label><input type="text" onfocus="javascript:$('.p').hide()" id="fileName" />
+		                    <p class="p">请输入文件名</p>
+		                </div>
+		                <p>提示：<br />1、导出的目标数据是根据搜索条件搜索后的数据；若需导出全部数据，请在导出之前清除搜索条件。<br />2、文件名命名可以自定义</p>
+		            </div>
+		            <div class="modal-footer">
+		                <button class="btn btn-primary" onclick="withdraw.export();">确定</button>
+		                <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+		            </div>
+		        </div>
+		    </div>
+		</div>
+		
+		
+		<!--loadings-->
+		<div class="loadings">
+			<img src="../../images/loading.gif" class="load-img" />
+		</div>
+		
+		<!--组件-->
+		<script type="text/javascript" src="../../lib/jquery/1.9.1/jquery.min.js"></script>
+		<script type="text/javascript" src="../../lib/My97DatePicker/4.8/WdatePicker.js"></script>
+	    <script type="text/javascript" src="../../lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+	    <script type="text/javascript" src="../../lib/laypage/1.2/laypage.js"></script>
+	    <script src="../../js/common/jquery.tmpl.min.js" type="text/javascript"></script>
+	    <script type="text/javascript" src="../../lib/layer/2.4/layer.js"></script>
+	    <script type="text/javascript" src="../../static/h-ui/js/H-ui.min.js"></script>
+	    <script type="text/javascript" src="../../static/h-ui.admin/js/H-ui.admin.js"></script>
+
+	    <!--业务逻辑-->
+	    <script type="text/javascript" src="../../js/base/public.js?rev=@@hash"></script>
+	    <script src="../../js/page/teleConversionList.js?rev=@@hash" type="text/javascript" charset="utf-8"></script>
+	    <!--日转化数据-->
+	    <script id="twoList" type="text/x-jquery-tmpl">
+	    	<tr class="text-c">
+		  		<td>${dayFormat}</td>
+		  		<td>${nameBelong}</td>
+		  		<td>${initStatusStr}</td>
+		  		<td>${feedbackCount}</td>
+		  		<td>${connectCount}</td>
+		  		<td>${intentionCount}</td>
+		  		<td>${messageCount}</td>
+		  		<td>${preRegisterCount}</td>
+		  		<td>${registerCount}</td>
+		  		<td>${status5Count}</td>
+		  		<td>${status10Count}</td>
+		  		<td>${status15Count}</td>
+		  		<td>${status20Count}</td>
+		  		<td>${status30Count}</td>
+		  		<td>${status27Count}</td>
+		  		<td>${status99Count}</td>
+		  		<td>${cashOrderCount}</td>
+		  		<td>${cashOrderSuccessCount}</td>
+		  		<td>${cashOrderFailCount}</td>
+		  		<td>${tradeOrderCount}</td>
+		  		<td>${tradeOrderSuccessCount}</td>
+		  		<td>${tradeOrderFailCount}</td>
+	  		</tr>
+	    </script>
+	    <!--批次转化数据-->
+	    <script id="allList" type="text/x-jquery-tmpl">
+	    	<tr class="text-c">
+		  		<td>${batchNo}</td>
+		  		<td>${saleEndTimeFormat}</td>
+		  		<td>${nameBelong}</td>
+		  		<td>${initStatusStr}</td>
+		  		<td>${feedbackCount}</td>
+		  		<td>${connectCount}</td>
+		  		<td>${intentionCount}</td>
+		  		<td>${messageCount}</td>
+		  		<td>${preRegisterCount}</td>
+		  		<td>${registerCount}</td>
+		  		<td>${preRegisterRate}</td>
+		  		<td>${registerCountRate}</td>
+		  		<td>${status5Count}</td>
+		  		<td>${status10Count}</td>
+		  		<td>${status15Count}</td>
+		  		<td>${status20Count}</td>
+		  		<td>${status30Count}</td>
+		  		<td>${status27Count}</td>
+		  		<td>${status99Count}</td>
+		  		<td>${cashOrderCount}</td>
+		  		<td>${cashOrderSuccessCount}</td>
+		  		<td>${cashOrderFailCount}</td>
+		  		<td>${tradeOrderCount}</td>
+		  		<td>${tradeOrderSuccessCount}</td>
+		  		<td>${tradeOrderFailCount}</td>
+	  		</tr>
+	    </script>
+	   
+
+	</body>
+</html>
